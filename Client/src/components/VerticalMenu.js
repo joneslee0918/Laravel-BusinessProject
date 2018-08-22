@@ -1,8 +1,14 @@
 import React from 'react';
+import {NavLink} from "react-router-dom";
 
-const VerticalMenu = () => (
+const VerticalMenu = ({ menuItems }) => (
     <div>
-        This is the vertical menu
+        <div>This is the profile info</div>
+        <div>
+            {menuItems.map((item) => {
+                <NavLink to={item}>item</NavLink>
+            })}
+        </div>
     </div>
 );
 
