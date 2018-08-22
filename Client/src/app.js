@@ -1,18 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {Provider} from "react-redux";
+import { Provider } from "react-redux";
 import configStore from "./store/configStore";
 import AppRouter from "./routes/AppRouter";
 import "normalize.css/normalize.css";
 import "./styles/styles.scss";
 
-const store = configStore();
+// const store = configStore();
 
 const jsx = (
     <div>
-        <Provider store={store}>
-            <AppRouter />
-        </Provider>
+        <AppRouter />
     </div>
 );
 

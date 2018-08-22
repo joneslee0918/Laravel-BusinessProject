@@ -16,7 +16,7 @@ const AppRouter = () => (
             <TopMenu />
             <Switch>
                 <Route path="/" component={LoginPage} exact={true}/>
-                <Route path="/manage/dashboard" component={Manage} />
+                <Route path="/manage" component={Manage} />
                 <Route path="/scheduled" component={Scheduled} />
                 <Route path="/accounts" component={Accounts} />
                 <Route component={NotFoundPage}/>
