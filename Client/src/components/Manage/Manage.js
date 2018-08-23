@@ -7,7 +7,11 @@ const Manage = () => {
     return (
         <div>This is the manage page.
             <VerticalMenu menuItems={MenuItems}/>
-            <ManageRouter />
+            <div className="body-container">
+                <div className="main-section">
+                    <ManageRouter />
+                </div>
+            </div>
         </div>  
     );
 };
