@@ -6,17 +6,17 @@ const TopMenu = () => (
         <a href="#" className="brand"><img src="/images/uniclix.png"/></a>
 
         <ul className="top-menu">
-            <li><NavLink to="/manage/dashboard" activeClassName="is-active">Manage</NavLink></li> 
-            <li><NavLink to="/scheduled" activeClassName="is-active">Scheduled</NavLink></li>  
-            <li><NavLink to="/accounts" activeClassName="is-active">Accounts</NavLink></li>  
+            <li><NavLink to="/manage/dashboard" activeClassName="is-active">MANAGE</NavLink></li> 
+            <li><NavLink to="/scheduled" activeClassName="is-active">SCHEDULED</NavLink></li>  
+            <li><NavLink to="/accounts" activeClassName="is-active">ACCOUNTS</NavLink></li>  
         </ul>
 
         <ul className="nav-buttons">
-            <li><button className="upgrade-btn">Upgrade for more features</button></li> 
-            <li><span className="top-icons"><i className="fa fa-bell"></i></span></li>  
-            <li><span className="top-icons"><i className="fa fa-bell"></i></span></li>
+            <li><a href="#" className="upgrade-btn">Upgrade for more features</a></li> 
+            <li><a href="#" className="top-icons"><i className="fa fa-bell"></i></a></li>  
+            <li><a href="#" className="top-icons"><i className="fa fa-gear"></i></a></li>
             <li>
-                <button className="compose-btn">Compose</button>
+                <a href="#" className="compose-btn">Compose</a>
             </li>  
         </ul>
     </div>
