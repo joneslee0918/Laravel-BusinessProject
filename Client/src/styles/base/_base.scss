@@ -87,6 +87,10 @@ input {
     overflow:hidden;
 }
 
+.sortLabel {
+    margin-right: 10px;
+}
+
 .list-header{
     overflow: hidden;
     color: #b1b1b1;
@@ -702,6 +706,10 @@ aside .btn-group {
     color: #777;
     width: 200px;
     border-bottom: 1px solid #deeafb;
+}
+
+.action-count-title{
+    text-transform: capitalize;
 }
 
 .follow-count {
