@@ -1,16 +1,16 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Dashboard from '../components/Manage/Dashboard';
-import AccountTargets from '../components/Manage/AccountTargets';
-import KeywordTargets from '../components/Manage/KeywordTargets';
-import Fans from '../components/Manage/Fans';
-import NonFollowers from '../components/Manage/NonFollowers';
-import RecentUnfollowers from '../components/Manage/RecentUnfollowers';
-import RecentFollowers from '../components/Manage/RecentFollowers';
-import InactiveFollowing from '../components/Manage/InactiveFollowing';
-import Following from '../components/Manage/Following';
-import WhiteList from '../components/Manage/WhiteList';
-import BlackList from '../components/Manage/BlackList';
+import Dashboard from '../components/Manage/Sections/Dashboard';
+import AccountTargets from '../components/Manage/Sections/AccountTargets';
+import KeywordTargets from '../components/Manage/Sections/KeywordTargets';
+import Fans from '../components/Manage/Sections/Fans';
+import NonFollowers from '../components/Manage/Sections/NonFollowers';
+import RecentUnfollowers from '../components/Manage/Sections/RecentUnfollowers';
+import RecentFollowers from '../components/Manage/Sections/RecentFollowers';
+import InactiveFollowing from '../components/Manage/Sections/InactiveFollowing';
+import Following from '../components/Manage/Sections/Following';
+import WhiteList from '../components/Manage/Sections/WhiteList';
+import BlackList from '../components/Manage/Sections/BlackList';
 
 const ManageRouter = () => (
     <div>

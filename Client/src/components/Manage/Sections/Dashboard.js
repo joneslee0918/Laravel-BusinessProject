@@ -1,4 +1,5 @@
 import React from 'react';
+
 const Dashboard = () => (
     <div>
         <h3>Dashboard</h3>

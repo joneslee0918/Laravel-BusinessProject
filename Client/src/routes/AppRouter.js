@@ -1,11 +1,11 @@
 import React from "react";
 import {Router, Route, Switch} from "react-router-dom";
 import createHistory from "history/createBrowserHistory";
-import Manage from "../components/Manage";
-import Scheduled from "../components/Scheduled";
-import Accounts from "../components/Accounts";
+import Manage from "../components/Manage/Manage";
+import Scheduled from "../components/Scheduled/Scheduled";
+import Accounts from "../components/Accounts/Accounts";
 import LoginPage from "../components/LoginPage";
-import TopMenu from "../components/TopMenu";
+import TopMenu from "../components/Menus/TopMenu";
 import NotFoundPage from "../components/NotFoundPage";
 
 export const history = createHistory();

@@ -1,5 +1,5 @@
 import React from 'react';
-import VerticalMenu from "./VerticalMenu";
+import VerticalMenu from "../Menus/VerticalMenu";
 
 const menuItems = [
     {   
