@@ -32,6 +32,7 @@ function formatBigNums($input){
         return str_replace(".0", "", (string) $input);
     }
 }
+
 /**
  * @param $url
  * @param $payload
