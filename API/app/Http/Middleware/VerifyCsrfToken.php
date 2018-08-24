@@ -12,6 +12,9 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'sync/twitter/following/ids',
+        'sync/twitter/follower/ids',
+        'twitter/follow',
+        'twitter/unfollow',
     ];
 }
