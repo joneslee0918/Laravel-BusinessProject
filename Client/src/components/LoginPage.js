@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {login} from "../actions/auth";
+import {startLogin} from "../actions/auth";
 
 const LoginPage = ({startLogin}) => (
     <div>
@@ -9,7 +9,7 @@ const LoginPage = ({startLogin}) => (
 );
 
 const mapDispatchToProps = (dispatch) => ({
-    startLogin: () => dispatch(login(1))
+    startLogin: () => dispatch(startLogin())
 });
 
 export default connect(undefined, mapDispatchToProps)(LoginPage);

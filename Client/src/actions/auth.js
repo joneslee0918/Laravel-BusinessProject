@@ -4,8 +4,9 @@ export const login = (uid) => ({
 });
 
 export const startLogin = () => {
-    return () => {
-       //Login logic
+    return (dispatch) => {
+       localStorage.setItem("uid", 1);
+       dispatch(login(1));
     };
 };
 
@@ -15,6 +16,6 @@ export const logout = () => ({
 
 export const startLogout = () => {
     return () => {
-        //Logout logic
+        localStorage.setItem("uid", undefined);
     };
 };
