@@ -9,20 +9,22 @@ import { login } from "./actions/auth";
 
 const store = configStore();
 
-const jsx = (
-    <div>
-        <Provider store={store}>
-            <AppRouter />
-        </Provider>    
-    </div>
-);
+class Root extends React.Component {
+    componentDidMount = () => {
+        const uid = localStorage.getItem("uid") || undefined;
+        console.log(uid);
+        store.dispatch(login(uid));
+    };
 
-ReactDOM.render(jsx, document.getElementById("app"));
+    render(){
+        return (
+            <div>
+                <Provider store={store}>
+                    <AppRouter />
+                </Provider>    
+            </div>
+        );
+    }
+}
 
-const checkAuth = () => {
-    
-    const uid = localStorage.getItem("uid") || undefined;
-    store.dispatch(login(uid));
-};
-
-checkAuth();
+ReactDOM.render(<Root />, document.getElementById("app"));
