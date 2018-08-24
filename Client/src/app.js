@@ -6,11 +6,13 @@ import AppRouter from "./routes/AppRouter";
 import "normalize.css/normalize.css";
 import "./styles/styles.scss";
 
-// const store = configStore();
+const store = configStore();
 
 const jsx = (
     <div>
-        <AppRouter />
+        <Provider store={store}>
+            <AppRouter />
+        </Provider>    
     </div>
 );
 

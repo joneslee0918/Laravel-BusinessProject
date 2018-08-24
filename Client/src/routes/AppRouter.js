@@ -7,18 +7,19 @@ import Accounts from "../components/Accounts/Accounts";
 import LoginPage from "../components/LoginPage";
 import TopMenu from "../components/Menus/TopMenu";
 import NotFoundPage from "../components/NotFoundPage";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 
 export const history = createHistory();
 
 const AppRouter = () => (
     <Router history={history}>
         <div>
-            <TopMenu />
             <Switch>
-                <Route path="/" component={LoginPage} exact={true}/>
-                <Route path="/manage" component={Manage} />
-                <Route path="/scheduled" component={Scheduled} />
-                <Route path="/accounts" component={Accounts} />
+                <PublicRoute path="/" component={LoginPage} exact={true}/>
+                <PrivateRoute path="/manage" component={Manage} />
+                <PrivateRoute path="/scheduled" component={Scheduled} />
+                <PrivateRoute path="/accounts" component={Accounts} />
                 <Route component={NotFoundPage}/>
             </Switch>
         </div>
