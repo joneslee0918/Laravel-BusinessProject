@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', ['as' => 'homepage.index', 'uses' => 'HomepageController@index']);
+Route::get('/', ['as' => 'welcome', 'uses' => 'WelcomeController@index']);
 
 Route::post('/test', function(){
     $req = Request::all();

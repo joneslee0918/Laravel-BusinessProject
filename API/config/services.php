@@ -34,5 +34,10 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    'twitter' => [
+        'client_id'        => function_exists('env') ? env('TWITTER_CONSUMER_KEY', '') : '',
+        'client_secret'     => function_exists('env') ? env('TWITTER_CONSUMER_SECRET', '') : '',
+        'redirect'        => '/',
+    ],
 
 ];
