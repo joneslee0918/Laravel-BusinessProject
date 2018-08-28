@@ -14,14 +14,8 @@
 Route::get('/', ['as' => 'welcome', 'uses' => 'WelcomeController@index']);
 
 Route::get('/test', function(){
-    $req = Request::all();
-
-    $user = \App\Models\User::first();
-
-    $twitterChannel = $user->twitterChannels()->first();
-
-    multiRequest(route("sync.follower.ids"), [$twitterChannel], ["sleep" => 0]);
-    return response()->json("test");
+    $c = cache('oauth_request_token');
+    return response()->json($c);
 })->name("test");
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);

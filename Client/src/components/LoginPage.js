@@ -4,8 +4,8 @@ import {startLogin} from "../actions/auth";
 import TwitterLogin  from "react-twitter-auth";
 
 export class LoginPage extends React.Component{
-    onFailure = () => {console.log("failure")};
-    onSuccess = () => {console.log("success")};
+    onFailure = (response) => {console.log(response)};
+    onSuccess = (response) => {console.log(response)};
     render(){
         return (
               <div>
