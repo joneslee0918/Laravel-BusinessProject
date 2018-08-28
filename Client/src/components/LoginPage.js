@@ -1,12 +1,25 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {startLogin} from "../actions/auth";
+import TwitterLogin  from "react-twitter-auth";
 
-const LoginPage = ({startLogin}) => (
-    <div>
+export class LoginPage extends React.Component{
+    onFailure = () => {console.log("failure")};
+    onSuccess = () => {console.log("success")};
+    render(){
+        return (
+              <div>
         <button onClick={startLogin}>Login</button>
-    </div>
-);
+        <TwitterLogin loginUrl="http://uniclix.test/api/twitter/login"
+                    onFailure={this.onFailure} onSuccess={this.onSuccess}
+                    requestTokenUrl="http://uniclix.test/api/twitter/reverse"
+                    showIcon={true}>
+            <b>Custom</b> Twitter <i>Login</i> content
+        </TwitterLogin>
+        </div>  
+        );
+    }
+};
 
 const mapDispatchToProps = (dispatch) => ({
     startLogin: () => dispatch(startLogin())

@@ -26,3 +26,6 @@ Route::get('twitter/user', function(Request $request){
     //Twitter::reconfig($request_token);
     return response()->json(Socialite::driver("twitter")->userFromTokenAndSecret("19484596-vIphwXHo2CYrtMv1vq2aIj5y5NdAP0zxLpsITaVhE", "JIRXtXmkH2InKbnIT3bnljFJjJ7w98I4QI8rJxtpkthHm"));
 });
+
+Route::get("/twitter/login", "Twitter\AuthController@login")->name("api.twitter.login");
+Route::post("/twitter/reverse", "Twitter\AuthController@reverse")->name("api.twitter.reverse");

@@ -24,8 +24,8 @@ Route::get('/test', function(){
     return response()->json("test");
 })->name("test");
 
-Route::get('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
-Route::get('twitter/callback', ['as' => 'twitter.callback', 'uses' => 'Twitter\ChannelController@callback']);
+Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
+Route::post('twitter/callback', ['as' => 'twitter.callback', 'uses' => 'Twitter\ChannelController@callback']);
 Route::get('twitter/error', ['as' => 'twitter.error', 'Twitter\ChannelController@error']);
 Route::get('twitter/logout', ['as' => 'twitter.logout', 'uses' => 'Twitter\ChannelController@error']);
 
