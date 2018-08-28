@@ -5,7 +5,6 @@ import Manage from "../components/Manage/Manage";
 import Scheduled from "../components/Scheduled/Scheduled";
 import Accounts from "../components/Accounts/Accounts";
 import LoginPage from "../components/LoginPage";
-import TopMenu from "../components/Menus/TopMenu";
 import NotFoundPage from "../components/NotFoundPage";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
