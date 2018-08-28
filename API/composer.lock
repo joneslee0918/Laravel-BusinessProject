@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fcf582cc26e607670e3061494ba57573",
+    "content-hash": "93aeecf4a293e2af90780a562b673736",
     "packages": [
+        {
+            "name": "adaojunior/passport-social-grant",
+            "version": "v3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/adaojunior/passport-social-grant.git",
+                "reference": "46e03e332651710a76421e875f30dcd356b9db2d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/adaojunior/passport-social-grant/zipball/46e03e332651710a76421e875f30dcd356b9db2d",
+                "reference": "46e03e332651710a76421e875f30dcd356b9db2d",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/passport": "^2.0|^3.0|^4.0|^5.0|^6.0|^7.0",
+                "php": ">=5.6.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Adaojunior\\Passport\\SocialGrantServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Adaojunior\\Passport\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adão Júnior",
+                    "email": "itsjunnior@gmail.com",
+                    "homepage": "https://github.com/adaojunior",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Social guard for Laravel Passport",
+            "homepage": "https://github.com/adaojunior/passport-social-grant",
+            "keywords": [
+                "guard",
+                "laravel",
+                "oauth",
+                "passport",
+                "social"
+            ],
+            "time": "2018-08-21T22:09:05+00:00"
+        },
         {
             "name": "defuse/php-encryption",
             "version": "v2.2.1",

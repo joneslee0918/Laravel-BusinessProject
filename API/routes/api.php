@@ -19,10 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('twitter/user', function(Request $request){
     $request_token = [
-        'token' => "974286749739421696-EWmg5Fmpy2gkELc7sgfW5bHSYnGdr4j",
-        'secret' => "d158EDs1xjPgiyMJR9XDJu3pIEwWFREsAfvv6mgxSdvr6",
+        'token' => "19484596-vIphwXHo2CYrtMv1vq2aIj5y5NdAP0zxLpsITaVhE",
+        'secret' => "JIRXtXmkH2InKbnIT3bnljFJjJ7w98I4QI8rJxtpkthHm",
     ];
 
-    Twitter::reconfig($request_token);
-    return response()->json(Twitter::getCredentials());
+    //Twitter::reconfig($request_token);
+    return response()->json(Socialite::driver("twitter")->userFromTokenAndSecret("19484596-vIphwXHo2CYrtMv1vq2aIj5y5NdAP0zxLpsITaVhE", "JIRXtXmkH2InKbnIT3bnljFJjJ7w98I4QI8rJxtpkthHm"));
 });

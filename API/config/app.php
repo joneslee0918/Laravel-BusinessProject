@@ -160,6 +160,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Thujohn\Twitter\TwitterServiceProvider::class,
+        Adaojunior\Passport\SocialGrantServiceProvider::class,
     ],
 
     /*

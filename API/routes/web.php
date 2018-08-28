@@ -13,10 +13,15 @@
 
 Route::get('/', ['as' => 'welcome', 'uses' => 'WelcomeController@index']);
 
-Route::post('/test', function(){
+Route::get('/test', function(){
     $req = Request::all();
 
-    return response()->json($req);
+    $user = \App\Models\User::first();
+
+    $twitterChannel = $user->twitterChannels()->first();
+
+    multiRequest(route("sync.follower.ids"), [$twitterChannel], ["sleep" => 0]);
+    return response()->json("test");
 })->name("test");
 
 Route::get('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
