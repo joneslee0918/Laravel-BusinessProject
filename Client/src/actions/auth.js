@@ -1,12 +1,26 @@
-export const login = (uid) => ({
+import axios from "axios";
+import {oathTokenUrl, clientId, clientSecret} from "../config/api";
+
+export const login = (tokens) => ({
     type: "LOGIN",
-    uid
+    tokens
 });
 
-export const startLogin = () => {
+export const startLogin = (body) => {
     return (dispatch) => {
-       localStorage.setItem("uid", 1);
-       dispatch(login(1));
+        return axios.post(oathTokenUrl, {
+                grant_type: "social",
+                client_id: clientId,
+                client_secret: clientSecret,
+                network: "twitter",
+                access_token: body.oauth_token,
+                access_token_secret: body.oauth_token_secret
+            }).then((response) => {
+                localStorage.setItem("tokens", response.data);
+                dispatch(login(response.data));
+            }).catch((error) => {
+                console.log(error);
+            });
     };
 };
 

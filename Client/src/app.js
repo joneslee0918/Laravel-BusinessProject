@@ -11,9 +11,8 @@ const store = configStore();
 
 class Root extends React.Component {
     componentDidMount = () => {
-        const uid = localStorage.getItem("uid") || undefined;
-        console.log(uid);
-        store.dispatch(login(uid));
+        const tokens = localStorage.getItem("tokens") || undefined;
+        store.dispatch(login(tokens));
     };
 
     render(){

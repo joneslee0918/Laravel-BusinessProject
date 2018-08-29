@@ -28,4 +28,5 @@ Route::get('twitter/user', function(Request $request){
 });
 
 Route::get("/twitter/login", "Twitter\AuthController@login")->name("api.twitter.login");
+Route::post("/twitter/access", "Twitter\AuthController@access")->name("api.twitter.access");
 Route::post("/twitter/reverse", "Twitter\AuthController@reverse")->name("api.twitter.reverse");

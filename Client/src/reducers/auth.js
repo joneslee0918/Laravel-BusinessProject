@@ -2,7 +2,7 @@ export default (state = {}, action) => {
     switch(action.type){
         case "LOGIN":
             return {
-                uid: action.uid
+                tokens: action.tokens
             };
         case "LOGOUT":
             return {};

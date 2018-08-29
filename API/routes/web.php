@@ -14,7 +14,8 @@
 Route::get('/', ['as' => 'welcome', 'uses' => 'WelcomeController@index']);
 
 Route::get('/test', function(){
-    $c = cache('oauth_request_token');
+    Twitter::reconfig(["token" => "kscINQAAAAAA8WgBAAABZYVY8-M","secret" => ""]);
+    $c = Twitter::getAccessToken("QedYKOvSTFUhkPU98eKY2MdY1zcPzcNu");
     return response()->json($c);
 })->name("test");
 
