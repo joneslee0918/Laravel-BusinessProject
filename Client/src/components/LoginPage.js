@@ -6,13 +6,17 @@ import {twitterRequestTokenUrl, twitterAccessTokenUrl} from "../config/api";
 
 export class LoginPage extends React.Component{
 
+    constructor(props) {
+        super(props);
+    }
+
     onFailure = (response) => {
         console.log(response);
     };
 
     onSuccess = (response) => {
         response.json().then(body => {
-            startLogin(body);
+            this.props.startLogin(body);
         });
     };
 

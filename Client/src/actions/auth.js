@@ -1,9 +1,9 @@
 import axios from "axios";
 import {oathTokenUrl, clientId, clientSecret} from "../config/api";
 
-export const login = (tokens) => ({
+export const login = (token) => ({
     type: "LOGIN",
-    tokens
+    token
 });
 
 export const startLogin = (body) => {
@@ -16,10 +16,13 @@ export const startLogin = (body) => {
                 access_token: body.oauth_token,
                 access_token_secret: body.oauth_token_secret
             }).then((response) => {
-                localStorage.setItem("tokens", response.data);
-                dispatch(login(response.data));
+                const token = response.data.access_token;
+                localStorage.setItem("token", token);
+                dispatch(login(token));
+                return token;
             }).catch((error) => {
                 console.log(error);
+                return error;
             });
     };
 };
@@ -29,7 +32,8 @@ export const logout = () => ({
 });
 
 export const startLogout = () => {
-    return () => {
-        localStorage.setItem("uid", undefined);
+    return (dispatch) => {
+        localStorage.setItem("token", undefined);
+        dispatch(logout());
     };
 };
