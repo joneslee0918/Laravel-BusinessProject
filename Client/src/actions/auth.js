@@ -1,5 +1,6 @@
 import axios from "axios";
 import {oathTokenUrl, clientId, clientSecret} from "../config/api";
+import setAuthorizationHeader from "../utils/setAuthorizationHeader";
 
 export const login = (token) => ({
     type: "LOGIN",
@@ -18,6 +19,7 @@ export const startLogin = (body) => {
             }).then((response) => {
                 const token = response.data.access_token;
                 localStorage.setItem("token", token);
+                setAuthorizationHeader(token);
                 dispatch(login(token));
                 return token;
             }).catch((error) => {

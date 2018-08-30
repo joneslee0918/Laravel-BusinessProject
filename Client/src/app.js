@@ -6,6 +6,7 @@ import AppRouter from "./routes/AppRouter";
 import "normalize.css/normalize.css";
 import "./styles/styles.scss";
 import { login } from "./actions/auth";
+import setAuthorizationHeader from "./utils/setAuthorizationHeader";
 
 const store = configStore();
 
@@ -13,7 +14,7 @@ class Root extends React.Component {
     componentDidMount = () => {
         const token = localStorage.getItem("token") || undefined;
         store.dispatch(login(token));
-        console.log(JSON.stringify(token));
+        setAuthorizationHeader(token);
     };
 
     render(){

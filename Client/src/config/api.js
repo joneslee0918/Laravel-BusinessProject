@@ -10,4 +10,4 @@ export const twitterAccessTokenUrl = `${apiUrl}/twitter/access`;
 
 export const clientId = 1;
 
-export const clientSecret = 'Q3jnlwlEcdfouTqTdtj8ippHPVEV8IvMHt35AEhR';
+export const clientSecret = 'SPZ82BtU1zDeeazQgg4jQJZ1RPmHNHM2dxfBSvKQ';
