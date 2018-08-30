@@ -12,6 +12,7 @@ export const startSetChannels = () => {
                 .then((response) => {
                     const channels = response.data;
                     dispatch(setChannels(channels));
+                    localStorage.setItem("channels", JSON.stringify(channels));
                     return channels;
                 });
     };
