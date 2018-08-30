@@ -17,6 +17,8 @@ class ChannelController extends Controller
             $channel->attributes = @$channel->attributes;
             $channel->attributes->payload = @unserialize($channel->attributes->payload);
             $channel->avatar = @$channel->attributes->payload->avatar;
+            $channel->name = @$channel->attributes->payload->name;
+            $channel->username = @$channel->attributes->payload->nickname;
             return $channel;
         });
     }

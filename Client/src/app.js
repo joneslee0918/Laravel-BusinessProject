@@ -18,7 +18,6 @@ class Root extends React.Component {
         setAuthorizationHeader(token);
 
         if(token){
-            console.log(token);
             store.dispatch(startSetChannels());
         }
     };

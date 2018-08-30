@@ -1,14 +1,14 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 
-const VerticalMenu = ({ menuItems }) => {
+const VerticalMenu = ({ menuItems, channels, selectedChannel }) => {
     return (
         <div>
             <aside className="vertical-menu gradient-background-teal-blue">
 
                 <div className="btn-group">
-                    <ProfileInfo />
-                    <ProfileSelectionDropDown />
+                    <ProfileInfo selectedChannel = {selectedChannel} />
+                    <ProfileSelectionDropDown channels = {channels} />
                 </div>
         
                 <MenuItems menuItems={ menuItems } />
@@ -18,13 +18,13 @@ const VerticalMenu = ({ menuItems }) => {
     );
 };
 
-const ProfileInfo = () => (
+const ProfileInfo = ({ selectedChannel }) => (
     <div className="user-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div className="profile-info pull-right">
-            <img className="pull-left" src="" />
+            <img className="pull-left" src={selectedChannel.avatar} />
             <div className="pull-left">
-                <p className="profile-name">Albert Feka</p>
-                <p className="profile-username">anime.masters89</p>
+                <p className="profile-name">{selectedChannel.name}</p>
+                <p className="profile-username">@{selectedChannel.username}</p>
             </div>
             <div className="pull-right down-arrow">
                 <i className="fa fa-angle-down"></i>
@@ -33,20 +33,28 @@ const ProfileInfo = () => (
     </div>
 );
 
-const ProfileSelectionDropDown = () => (
+const ProfileSelectionDropDown = ({ channels }) => (
     <div className="dropdown-menu select-channel">
-        <div className="channel-container">
-            <a href="#" className="block-urls">
-                <div className="profile-info pull-right">
-                    <img className="pull-left" src="" />
-                    <div className="pull-left">
-                        <p className="profile-name">Albert Feka</p>
-                        <p className="profile-username">anime.masters89</p>
-                    </div>
-                </div>
-            </a>
-        </div>
+        {!!channels.length && 
+            channels.map((channel) => (
+                <ProfileSelectionItem key={channel.id} channel={channel} />
+            ))
+        }
         <button className="add-channel-btn block-urls">Add new channel</button>
+    </div>
+);
+
+const ProfileSelectionItem = ({ channel }) => (
+    <div className="channel-container">
+        <a href="#" className="block-urls">
+            <div className="profile-info pull-right">
+                <img className="pull-left" src={channel.avatar} />
+                <div className="pull-left">
+                    <p className="profile-name">{channel.name}</p>
+                    <p className="profile-username">@{channel.username}</p>
+                </div>
+            </div>
+        </a>
     </div>
 );
 
