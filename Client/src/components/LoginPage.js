@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import TwitterLogin  from "react-twitter-auth";
 import {startLogin} from "../actions/auth";
+import {startSetChannels} from "../actions/channels";
 import {twitterRequestTokenUrl, twitterAccessTokenUrl} from "../config/api";
 
 export class LoginPage extends React.Component{
@@ -16,7 +17,9 @@ export class LoginPage extends React.Component{
 
     onSuccess = (response) => {
         response.json().then(body => {
-            this.props.startLogin(body);
+            this.props.startLogin(body).then(() => {
+                this.props.startSetChannels();
+            });
         });
     };
 
@@ -35,7 +38,8 @@ export class LoginPage extends React.Component{
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    startLogin: (body) => dispatch(startLogin(body))
+    startLogin: (body) => dispatch(startLogin(body)),
+    startSetChannels: () => dispatch(startSetChannels())
 });
 
 export default connect(undefined, mapDispatchToProps)(LoginPage);
