@@ -7,6 +7,7 @@ import "normalize.css/normalize.css";
 import "./styles/styles.scss";
 import { login } from "./actions/auth";
 import setAuthorizationHeader from "./utils/setAuthorizationHeader";
+import { startSetChannels } from "./actions/channels";
 
 const store = configStore();
 
@@ -15,6 +16,11 @@ class Root extends React.Component {
         const token = localStorage.getItem("token") || undefined;
         store.dispatch(login(token));
         setAuthorizationHeader(token);
+
+        if(token){
+            console.log(token);
+            store.dispatch(startSetChannels());
+        }
     };
 
     render(){

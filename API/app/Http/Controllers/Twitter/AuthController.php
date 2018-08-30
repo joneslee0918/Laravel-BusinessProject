@@ -20,7 +20,6 @@ class AuthController extends Controller
         return redirect("$clientUrl?oauth_verifier=$verifier&oauth_token=$token");
     }
 
-
     public function reverse(Request $request)
     {   
         Twitter::reconfig(['token' => '', 'secret' => '']);

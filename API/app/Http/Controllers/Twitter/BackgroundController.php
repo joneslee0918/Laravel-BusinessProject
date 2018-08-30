@@ -24,7 +24,6 @@ class BackgroundController extends Controller
         try{
             $channel->syncFollowerIds($sleep);
         }catch(\Exception $e){
-            Log::critical($e->getMessage());
             //TODO, skip for now to stop the running process
         }
 
@@ -47,7 +46,6 @@ class BackgroundController extends Controller
         try{
             $channel->syncFollowingIds($sleep);
         }catch(\Exception $e){
-            Log::critical($e->getMessage());
             //TODO, skip for now to stop the running process
         }
 
