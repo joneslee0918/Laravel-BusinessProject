@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import VerticalMenu from "../Menus/VerticalMenu";
 import channelSelector from "../../selectors/channels";
+import { selectGlobalChannel } from '../../actions/channels';
 
 const menuItems = [
     {   
@@ -16,9 +17,14 @@ const menuItems = [
     }
 ];
 
-const Scheduled = ({channels, selectedChannel}) => (
+const Scheduled = ({channels, selectedChannel, selectChannel}) => (
     <div>This is the Scheduled page.
-        <VerticalMenu menuItems={menuItems} channels={channels} selectedChannel={selectedChannel}/>
+        <VerticalMenu 
+            menuItems={menuItems} 
+            channels={channels} 
+            selectedChannel={selectedChannel}
+            selectChannel={selectChannel}
+            />
     </div>
 );
 
@@ -36,4 +42,8 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(Scheduled);
+const mapDispatchToProps = (dispatch) => ({
+    selectChannel: (id) => dispatch(selectGlobalChannel(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Scheduled);
