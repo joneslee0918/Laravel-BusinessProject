@@ -14,10 +14,17 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->group(function(){
-    Route::get('/channels', 'Twitter\ChannelController@channels');
+    Route::get('/channels', 'ChannelController@channels');
+    Route::put('/channels/select/{id}', 'ChannelController@select');
 });
 
 //Twitter login
-Route::get("/twitter/login", "Twitter\AuthController@login")->name("api.twitter.login");
-Route::post("/twitter/access", "Twitter\AuthController@access")->name("api.twitter.access");
-Route::post("/twitter/reverse", "Twitter\AuthController@reverse")->name("api.twitter.reverse");
+Route::prefix("twitter")->group(function(){
+    Route::get("login", "Twitter\AuthController@login")->name("api.twitter.login");
+    Route::post("access", "Twitter\AuthController@access")->name("api.twitter.access");
+    Route::post("reverse", "Twitter\AuthController@reverse")->name("api.twitter.reverse"); 
+
+    Route::middleware('auth:api')->group(function(){
+        Route::patch('channels/select/{id}', 'Twitter\ChannelController@select');
+    });
+});

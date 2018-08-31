@@ -95,7 +95,7 @@ class SocialUserResolver implements SocialUserResolverInterface
                 );
 
                 $channel = $user->channels()->create(["type" => "twitter"]);
-                $twitterChannel = $channel->attributes()->create(
+                $twitterChannel = $channel->details()->create(
                     [
                     "user_id" => $user->id, 
                     "username" => $credentials->nickname, 

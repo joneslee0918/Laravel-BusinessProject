@@ -35,6 +35,23 @@ class User extends Authenticatable
         return $this->hasMany(Channel::class);
     }
 
+    public function formattedChannels(){
+
+        if($channels = $this->channels()->get()){
+            
+            return collect($channels)->map(function($channel){
+                    $channel->details = @$channel->details;
+                    $channel->details->payload = @unserialize($channel->details->payload);
+                    $channel->avatar = @$channel->details->payload->avatar;
+                    $channel->name = @$channel->details->payload->name;
+                    $channel->username = @$channel->details->payload->nickname;
+                    return $channel;
+                });
+        }
+
+        return [];
+    }
+
     public function selectedChannel()
     {
         return $this->channels()->where("selected", 1)->first();

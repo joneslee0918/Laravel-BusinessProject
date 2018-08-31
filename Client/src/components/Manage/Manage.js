@@ -4,11 +4,17 @@ import VerticalMenu from "../Menus/VerticalMenu";
 import MenuItems from "./Fixtures/MenuItems";
 import ManageRouter from "../../routes/ManageRouter";
 import channelSelector from "../../selectors/channels";
+import { selectTwitterChannel } from '../../actions/channels';
 
-const Manage = ({channels, selectedChannel}) => { 
+const Manage = ({channels, selectedChannel, selectChannel}) => { 
     return (
         <div>
-            <VerticalMenu menuItems={MenuItems} channels={channels} selectedChannel={selectedChannel}/>
+            <VerticalMenu 
+                menuItems={MenuItems} 
+                channels={channels} 
+                selectedChannel={selectedChannel}
+                selectChannel={selectChannel}
+                />
             <div className="body-container">
                 <div className="main-section">
                     <ManageRouter />
@@ -32,4 +38,8 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(Manage);
+const mapDispatchToProps = (dispatch) => ({
+    selectChannel: (id) => dispatch(selectTwitterChannel(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Manage);

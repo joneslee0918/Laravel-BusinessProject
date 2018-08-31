@@ -1,16 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Twitter;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
 class ChannelController extends Controller
 {
 
-    public function select($id)
-    {
+    public function channels() {
         $user = auth()->user();
-        $channel = $user->twitterChannels()->find($id);
+        return $user->formattedChannels();
+    }
+
+    public function select($id)
+    {   
+        $user = auth()->user();
+        $channel = $user->channels()->find($id);
 
         if($channel){
             $channel->select();

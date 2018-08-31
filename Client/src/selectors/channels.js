@@ -11,7 +11,7 @@ export default (channels = [], {selected, provider}) => {
 
         if(!isNaN(selected)){
             if(provider){
-                filter = filter && channel.attributes.selected == selected;
+                filter = filter && channel.details.selected == selected;
             }else{
                 filter = filter && channel.selected == selected;
             }

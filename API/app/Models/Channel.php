@@ -19,7 +19,7 @@ class Channel extends Model
         "updated_at",
     ];
 
-    public function attributes()
+    public function details()
     {
         $classType = "\App\Models\\" . ucfirst($this->type) . "\Channel";
 
@@ -28,6 +28,6 @@ class Channel extends Model
 
     public function getData()
     {
-        return $this->attributes()->first()->getData();
+        return $this->details()->first()->getData();
     }
 }

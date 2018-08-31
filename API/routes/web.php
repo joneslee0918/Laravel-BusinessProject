@@ -14,9 +14,7 @@
 Route::get('/', ['as' => 'welcome', 'uses' => 'WelcomeController@index']);
 
 Route::get('/test', function(){
-    Twitter::reconfig(["token" => "kscINQAAAAAA8WgBAAABZYVY8-M","secret" => ""]);
-    $c = Twitter::getAccessToken("QedYKOvSTFUhkPU98eKY2MdY1zcPzcNu");
-    return response()->json($c);
+    return App\Models\Channel::find(6)->attributes;
 })->name("test");
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);

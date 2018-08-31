@@ -17,3 +17,27 @@ export const startSetChannels = () => {
                 });
     };
 };
+
+export const selectGlobalChannel = (id) => {
+    return dispatch => {
+        return axios.patch(`${apiUrl}/channels/select/${id}`)
+            .then((response) => {
+                const channels = response.data;
+                dispatch(setChannels(channels));
+                localStorage.setItem("channels", JSON.stringify(channels));
+                return channels;
+            });
+    }
+}
+
+export const selectTwitterChannel = (id) => {
+    return dispatch => {
+        return axios.patch(`${apiUrl}/twitter/channels/select/${id}`)
+            .then((response) => {
+                const channels = response.data;
+                dispatch(setChannels(channels));
+                localStorage.setItem("channels", JSON.stringify(channels));
+                return channels;
+            });
+    }
+}

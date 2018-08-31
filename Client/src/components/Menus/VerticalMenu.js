@@ -1,14 +1,14 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 
-const VerticalMenu = ({ menuItems, channels, selectedChannel }) => {
+const VerticalMenu = ({ menuItems, channels, selectedChannel, selectChannel }) => {
     return (
         <div>
             <aside className="vertical-menu gradient-background-teal-blue">
 
                 <div className="btn-group">
                     <ProfileInfo selectedChannel = {selectedChannel} />
-                    <ProfileSelectionDropDown channels = {channels} />
+                    <ProfileSelectionDropDown channels = {channels} selectChannel={selectChannel} />
                 </div>
         
                 <MenuItems menuItems={ menuItems } />
@@ -33,20 +33,20 @@ const ProfileInfo = ({ selectedChannel }) => (
     </div>
 );
 
-const ProfileSelectionDropDown = ({ channels }) => (
+const ProfileSelectionDropDown = ({ channels, selectChannel }) => (
     <div className="dropdown-menu select-channel">
         {!!channels.length && 
             channels.map((channel) => (
-                <ProfileSelectionItem key={channel.id} channel={channel} />
+                <ProfileSelectionItem key={channel.id} channel={channel} selectChannel={selectChannel}/>
             ))
         }
         <button className="add-channel-btn block-urls">Add new channel</button>
     </div>
 );
 
-const ProfileSelectionItem = ({ channel }) => (
+const ProfileSelectionItem = ({ channel, selectChannel }) => (
     <div className="channel-container">
-        <a href="#" className="block-urls">
+        <a href="#" className="block-urls" onClick={(e) => { selectChannel(channel.id) }}>
             <div className="profile-info pull-right">
                 <img className="pull-left" src={channel.avatar} />
                 <div className="pull-left">
