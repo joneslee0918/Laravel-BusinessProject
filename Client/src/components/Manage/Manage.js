@@ -17,7 +17,7 @@ const Manage = ({channels, selectedChannel, selectChannel}) => {
                 />
             <div className="body-container">
                 <div className="main-section">
-                    <ManageRouter selectedChannel={selectedChannel}/>
+                    <ManageRouter/>
                 </div>
             </div>
         </div>  

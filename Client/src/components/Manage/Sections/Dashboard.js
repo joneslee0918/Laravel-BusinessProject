@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from "axios";
-import {apiUrl} from "../../../config/api";
+import { connect } from "react-redux";
+import { apiUrl } from "../../../config/api";
+import channelSelector from "../../../selectors/channels";
 
 class Dashboard extends React.Component {
 
@@ -12,14 +14,25 @@ class Dashboard extends React.Component {
         data: false
     }
     
-    componentDidUpdate() {
-        console.log(this.props);
-        // axios.get(`${apiUrl}/twitter/dashboard`)
-        // .then((response) => {
-        //     this.setState(() => ({
-        //         data: response.data
-        //     }));
-        // });
+    componentDidMount() {
+        axios.get(`${apiUrl}/twitter/dashboard`)
+            .then((response) => {
+                this.setState(() => ({
+                    data: response.data
+                }));
+            });
+    }
+
+    componentDidUpdate(prevProps) {
+
+        if(this.props.selectedChannel !== prevProps.selectedChannel){
+            axios.get(`${apiUrl}/twitter/dashboard`)
+                .then((response) => {
+                    this.setState(() => ({
+                        data: response.data
+                    }));
+                });
+        }
     }
 
     render(){
@@ -71,4 +84,14 @@ class Dashboard extends React.Component {
     }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+
+    const selectedTwitterChannel = {selected: 1, provider: "twitter"};    
+    const selectedChannel = channelSelector(state.channels, selectedTwitterChannel);
+
+    return {
+        selectedChannel: selectedChannel.length ? selectedChannel[0] : {}
+    };
+};
+
+export default connect(mapStateToProps)(Dashboard);
