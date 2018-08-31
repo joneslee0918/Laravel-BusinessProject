@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->group(function(){
     Route::get('/channels', 'ChannelController@channels');
-    Route::put('/channels/select/{id}', 'ChannelController@select');
+    Route::patch('/channels/select/{id}', 'ChannelController@select');
 });
 
 //Twitter login
