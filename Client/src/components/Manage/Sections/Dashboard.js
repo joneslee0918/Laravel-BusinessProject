@@ -1,32 +1,50 @@
 import React from 'react';
 import axios from "axios";
+import {apiUrl} from "../../../config/api";
 
 class Dashboard extends React.Component {
-    componentDidMount() {
-        //
+
+    constructor(props){
+        super(props);
     }
+
+    state = {
+        data: false
+    }
+    
+    componentDidUpdate() {
+        console.log(this.props);
+        // axios.get(`${apiUrl}/twitter/dashboard`)
+        // .then((response) => {
+        //     this.setState(() => ({
+        //         data: response.data
+        //     }));
+        // });
+    }
+
     render(){
+        const data = this.state.data;
         return (
             <div>
                 <h2>DASHBOARD</h2>
 
-                <div className="row">
+                {this.state.data ? <div className="row">
                     <div className="col-xs-12">
 
                         <ul className="dashboard-info shadow-box">
                             <li>
                                 <p className="title">Followers</p>
-                                <p className="count">200k</p>
+                                <p className="count">{data.followers_count}</p>
                                 <p className="description">People who follow you</p>
                             </li>
                             <li>
                                 <p className="title">You follow</p>
-                                <p className="count">130k</p>
+                                <p className="count">{data.friends_count}</p>
                                 <p className="description">People you follow</p>
                             </li>
                             <li>
                                 <p className="title">Tweets</p>
-                                <p className="count">600</p>
+                                <p className="count">{data.statuses_count}</p>
                                 <p className="description">The tweets you posted</p>
                             </li>
                             <li>
@@ -36,7 +54,7 @@ class Dashboard extends React.Component {
 
                         </ul>
                     </div>
-                </div>
+                </div>: "Loading..."}
 
                 <div className="row">
                     <div className="col-xs-12">

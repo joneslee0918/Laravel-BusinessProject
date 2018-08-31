@@ -13,9 +13,9 @@ import WhiteList from '../components/Manage/Sections/WhiteList';
 import BlackList from '../components/Manage/Sections/BlackList';
 import PrivateRoute from "../routes/PrivateRoute";
 
-const ManageRouter = () => (
+const ManageRouter = (props) => (
     <div>
-        <Route path={`/manage/dashboard`} component={Dashboard} />
+        <Route path={`/manage/dashboard`} {...props} component={Dashboard} />
         <Route path={`/manage/account-targets`} component={AccountTargets} />
         <Route path={`/manage/keyword-targets`} component={KeywordTargets} />
         <Route path={`/manage/fans`} component={Fans} />

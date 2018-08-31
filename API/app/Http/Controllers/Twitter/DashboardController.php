@@ -7,22 +7,17 @@ use App\Http\Controllers\Controller;
 class DashboardController extends Controller
 {
 
-    private $user;
-    private $selectedChannel;
-
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            $this->user = auth()->user();
-            $this->selectedChannel = $this->user->selectedTwitterChannel();
-            return $next($request);
-        });
-    }
-
     public function index()
     {
-        $twitterData = $this->selectedChannel->getData();
+        $user = auth()->user();
+        $channel = $user->selectedTwitterChannel();
 
-        return view('backend.manage.dashboard', compact('twitterData'));
+        try{
+            if($channel){
+                return response()->json($channel->getData());
+            }
+        }catch(\Exception $e){}
+
+        return response()->json(['error' => 'No channel found'], 404);
     }
 }

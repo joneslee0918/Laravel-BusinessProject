@@ -25,6 +25,7 @@ Route::prefix("twitter")->group(function(){
     Route::post("reverse", "Twitter\AuthController@reverse")->name("api.twitter.reverse"); 
 
     Route::middleware('auth:api')->group(function(){
+        Route::get('dashboard/{id}', 'Twitter\DashboardController@index');
         Route::patch('channels/select/{id}', 'Twitter\ChannelController@select');
     });
 });
