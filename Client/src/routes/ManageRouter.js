@@ -11,7 +11,6 @@ import InactiveFollowing from '../components/Manage/Sections/InactiveFollowing';
 import Following from '../components/Manage/Sections/Following';
 import WhiteList from '../components/Manage/Sections/WhiteList';
 import BlackList from '../components/Manage/Sections/BlackList';
-import PrivateRoute from "../routes/PrivateRoute";
 
 const ManageRouter = () => (
     <div>

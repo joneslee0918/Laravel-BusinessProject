@@ -807,6 +807,66 @@ aside .btn-group {
     color:#bbb;
 }
 
+.accounts-container{
+    margin: 100px auto;
+    width: 90%;
+}
+
+.accounts-container h2{
+    font-family: open-sans, sans-serif;
+    font-size: 20px;
+    color: #666;
+}
+
+.accounts-container__logo, .accounts-container__content{
+    margin-top:30px;
+}
+
+.accounts-container__logo{
+    border-radius:100%;
+    width:130px;
+    height:130px;
+    min-width:130px;
+    min-height:130px;
+    margin-right: 20px;
+    border: 1px solid #d4d4d4;
+    text-align:center;
+    font-size:$xl-size;
+    color:#25A2F0;
+    line-height: 2.5;
+    overflow:hidden;
+}
+
+.accounts-container__content__wrapper,
+.accounts-container__content__wrapper__footer{
+    border: 1px solid #eee;
+    border-radius:3px;
+    box-shadow: 0px 0px 1px 0px #ececec;
+}
+
+.accounts-container .profile-info{
+    margin:0;
+    color:#666;
+}
+
+.accounts-container .item-actions{
+    line-height:3;
+    font-size:$m-size;
+}
+
+.accounts-container__content__wrapper__heading, 
+.accounts-container__content__wrapper__body{
+    border-bottom: 1px solid #ececec;
+    border-radius:3px;
+    margin:0 20px;
+    padding:10px;
+}
+
+.accounts-container__content__wrapper__footer{
+    margin-top:20px;
+    padding:10px 20px;
+}
+
 @keyframes lds-ripple {
     0% {
         top: 28px;
