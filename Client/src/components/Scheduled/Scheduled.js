@@ -33,8 +33,8 @@ const mapStateToProps = (state) => {
     const unselectedGlobalChannels = {selected: 0, provider: undefined};
     const selectedGlobalChannel = {selected: 1, provider: undefined};
     
-    const channels = channelSelector(state.channels, unselectedGlobalChannels);
-    const selectedChannel = channelSelector(state.channels, selectedGlobalChannel);
+    const channels = channelSelector(state.channels.list, unselectedGlobalChannels);
+    const selectedChannel = channelSelector(state.channels.list, selectedGlobalChannel);
 
     return {
         channels,

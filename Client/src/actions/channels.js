@@ -26,8 +26,8 @@ export const startSetChannels = () => {
 };
 
 export const selectGlobalChannel = (id) => {
-    dispatch(setChannelsLoading(true));
     return dispatch => {
+        dispatch(setChannelsLoading(true));
         return axios.patch(`${apiUrl}/channels/select/${id}`)
             .then((response) => {
                 const channels = response.data;
