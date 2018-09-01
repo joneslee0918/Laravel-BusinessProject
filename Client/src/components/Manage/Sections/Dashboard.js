@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import channelSelector from "../../../selectors/channels";
-import { getDashboard } from "../../../requests/channels";
+import { getDashboard } from "../../../requests/twitter/channels";
 
 class Dashboard extends React.Component {
 

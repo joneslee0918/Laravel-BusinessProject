@@ -18,8 +18,10 @@ Route::middleware('auth:api')->group(function(){
     Route::patch('/channels/select/{id}', 'ChannelController@select');
 });
 
-//Twitter login
+
 Route::prefix("twitter")->group(function(){
+    
+    //Twitter login
     Route::get("login", "Twitter\AuthController@login")->name("api.twitter.login");
     Route::post("access", "Twitter\AuthController@access")->name("api.twitter.access");
     Route::post("reverse", "Twitter\AuthController@reverse")->name("api.twitter.reverse"); 
@@ -27,5 +29,7 @@ Route::prefix("twitter")->group(function(){
     Route::middleware('auth:api')->group(function(){
         Route::get('dashboard', 'Twitter\DashboardController@index');
         Route::patch('channels/select/{id}', 'Twitter\ChannelController@select');
+
+        Route::get('account-targets/feed', 'Twitter\AccountTargetsController@feed');
     });
 });

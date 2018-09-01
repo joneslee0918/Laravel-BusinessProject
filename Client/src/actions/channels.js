@@ -1,4 +1,5 @@
-import { getChannels, selectGlobalChannel, selectTwitterChannel } from "../requests/channels";
+import { getChannels, selectChannel as selectGlobalChannel } from "../requests/channels";
+import { selectChannel as selectTwitterChannel } from "../requests/twitter/channels";
 
 export const setChannels = (list) => ({
     type: "SET_CHANNELS",

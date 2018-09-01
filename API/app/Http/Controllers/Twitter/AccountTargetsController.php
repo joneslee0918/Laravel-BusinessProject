@@ -21,24 +21,16 @@ class AccountTargetsController extends Controller
     }
 
 
-    public function show(Request $request)
+    public function feed(Request $request)
     {
         try {
-            $title = $this->title;
+
             $items = [];
             $feed = $this->selectedChannel->accountTargetsFeed();
             $currentTargetIds = $feed->groupBy("target_id")->pluck("target_id")->toArray();
             $targets = $this->selectedChannel->accountTargets();
 
-            $orderAction = false;
-            $actionBtn = "add-btn";
-            $action = route('twitter.follow');
-            $actionsToday = $this->selectedChannel->getDailyStatisticsFor("follows");
-            $targetAction = route('add.account.targets');
-            $targetType = "account";
-
             if ($target = $targets->whereNotIn("id", $currentTargetIds)->latest()->first()) {
-
 
                 $feedIds = $this->selectedChannel->getFollowerIds(5000, -1, $target->account);
 
@@ -73,33 +65,16 @@ class AccountTargetsController extends Controller
                 $items = $this->selectedChannel->getUsersLookup($feedIds);
             }
 
-            $items = $this->filterFollowing($items);
-
-            if(count($items) < 1) return redirect()->route("add.account.targets");
+            return response()->json($this->filterFollowing($items));
 
         } catch (\Exception $e) {
             return response()->json(["error" => $e->getMessage()], 500);
         }
-
-        $view = view('backend.manage.targets.accounts.list', compact('title', 'items', 'targetType', 'orderAction', 'action', 'actionsToday', 'actionBtn', 'targetAction'));
-
-        if ($request->ajax()) {
-            return response()->json(['html' => $view->render()]);
-        }
-
-        return $view;
     }
 
-    public function add()
-    {
-        $title = $this->title;
-        $accounts = $this->getAccounts();
-        return view('backend.manage.targets.accounts.search', compact('title', 'accounts'));
-    }
 
     public function store(Request $request)
     {
-        $title = $this->title;
         $username = str_replace("@", "", $request->input("username"));
         $target = $this->selectedChannel->accountTargets()->where("account", $username);
 
@@ -110,19 +85,12 @@ class AccountTargetsController extends Controller
 
                 $target->create(["account" => $username]);
                 $accounts = $this->getAccounts();
-                if ($request->ajax()) {
-
-                    $view = view('backend.manage.targets.accounts.search', compact('title', 'accounts'))->render();
-                    return response()->json(['html' => $view]);
-                }
+ 
+                return response()->json($accounts);
             }
         }
 
-        if ($request->ajax()) {
-            return response()->json([], 404);
-        }
-
-        return redirect()->back();
+        return response()->json(['error' => 'Target not found.'], 404);
     }
 
     public function destroy(Request $request)
@@ -131,7 +99,7 @@ class AccountTargetsController extends Controller
 
         $this->selectedChannel->accountTargets()->where("account", $username)->delete();
 
-        return response()->json([], 200);
+        return response()->json(['message' => 'deleted'], 200);
     }
 
     private function getAccounts()
