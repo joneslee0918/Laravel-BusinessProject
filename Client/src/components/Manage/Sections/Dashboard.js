@@ -1,8 +1,7 @@
 import React from 'react';
-import axios from "axios";
 import { connect } from "react-redux";
-import { apiUrl } from "../../../config/api";
 import channelSelector from "../../../selectors/channels";
+import { getDashboard } from "../../../requests/channels";
 
 class Dashboard extends React.Component {
 
@@ -17,12 +16,11 @@ class Dashboard extends React.Component {
     componentDidMount() {
         
         if(!this.props.channelsLoading){
-            axios.get(`${apiUrl}/twitter/dashboard`)
+            getDashboard()
                 .then((response) => {
                     this.setState(() => ({
-                        data: response.data
+                        data: response
                     }));
-                    console.log("Loaded from mount");
                 });
         }
     }
@@ -30,13 +28,11 @@ class Dashboard extends React.Component {
     componentDidUpdate(prevProps) {
     
         if(this.props.selectedChannel !== prevProps.selectedChannel){
-            axios.get(`${apiUrl}/twitter/dashboard`)
+            getDashboard()
                 .then((response) => {
                     this.setState(() => ({
-                        data: response.data
+                        data: response
                     }));
-
-                    console.log("Loaded from update");
                 });
         }
     }

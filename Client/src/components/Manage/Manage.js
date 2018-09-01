@@ -4,7 +4,7 @@ import VerticalMenu from "../Menus/VerticalMenu";
 import MenuItems from "./Fixtures/MenuItems";
 import ManageRouter from "../../routes/ManageRouter";
 import channelSelector from "../../selectors/channels";
-import { selectTwitterChannel } from '../../actions/channels';
+import { setTwitterChannel } from '../../actions/channels';
 
 const Manage = ({channels, selectedChannel, selectChannel}) => { 
     return (
@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    selectChannel: (id) => dispatch(selectTwitterChannel(id))
+    selectChannel: (id) => dispatch(setTwitterChannel(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Manage);

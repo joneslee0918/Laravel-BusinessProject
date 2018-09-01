@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import VerticalMenu from "../Menus/VerticalMenu";
 import channelSelector from "../../selectors/channels";
-import { selectGlobalChannel } from '../../actions/channels';
+import { setGlobalChannel } from '../../actions/channels';
 
 const menuItems = [
     {   
@@ -43,7 +43,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    selectChannel: (id) => dispatch(selectGlobalChannel(id))
+    selectChannel: (id) => dispatch(setGlobalChannel(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Scheduled);

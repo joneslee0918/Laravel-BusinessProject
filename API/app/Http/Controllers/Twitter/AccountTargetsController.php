@@ -10,27 +10,16 @@ class AccountTargetsController extends Controller
 {
     private $user;
     private $selectedChannel;
-    private $title;
 
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
             $this->user = auth()->user();
-            $this->title = "ACCOUNT TARGETS";
             $this->selectedChannel = $this->user->selectedTwitterChannel();
             return $next($request);
         });
     }
 
-    public function index()
-    {
-        $route = 'add.account.targets';
-        if ($this->selectedChannel->accountTargets()->count() > 0) {
-            $route = 'show.account.targets';
-        }
-
-        return redirect()->route($route);
-    }
 
     public function show(Request $request)
     {

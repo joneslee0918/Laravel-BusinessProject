@@ -1,5 +1,4 @@
-import axios from "axios";
-import {apiUrl} from "../config/api";
+import { getChannels, selectGlobalChannel, selectTwitterChannel } from "../requests/channels";
 
 export const setChannels = (list) => ({
     type: "SET_CHANNELS",
@@ -14,41 +13,38 @@ export const setChannelsLoading = (loading = false) => ({
 export const startSetChannels = () => {
     return dispatch => {
         dispatch(setChannelsLoading(true));
-        return axios.get(`${apiUrl}/channels`)
+        return getChannels()
                 .then((response) => {
-                    const channels = response.data;
-                    dispatch(setChannels(channels));
-                    localStorage.setItem("channels", JSON.stringify(channels));
+                    dispatch(setChannels(response));
+                    localStorage.setItem("channels", JSON.stringify(response));
                     dispatch(setChannelsLoading(false));
-                    return channels;
+                    return response;
                 });
     };
 };
 
-export const selectGlobalChannel = (id) => {
+export const setGlobalChannel = (id) => {
     return dispatch => {
         dispatch(setChannelsLoading(true));
-        return axios.patch(`${apiUrl}/channels/select/${id}`)
-            .then((response) => {
-                const channels = response.data;
-                dispatch(setChannels(channels));
-                localStorage.setItem("channels", JSON.stringify(channels));
-                dispatch(setChannelsLoading(false));
-                return channels;
-            });
+        return selectGlobalChannel(id)
+                .then((response) => {
+                    dispatch(setChannels(response));
+                    localStorage.setItem("channels", JSON.stringify(response));
+                    dispatch(setChannelsLoading(false));
+                    return response;
+                });
     }
 }
 
-export const selectTwitterChannel = (id) => {
+export const setTwitterChannel = (id) => {
     return dispatch => {
         dispatch(setChannelsLoading(true));
-        return axios.patch(`${apiUrl}/twitter/channels/select/${id}`)
-            .then((response) => {
-                const channels = response.data;
-                dispatch(setChannels(channels));
-                localStorage.setItem("channels", JSON.stringify(channels));
-                dispatch(setChannelsLoading(false));
-                return channels;
-            });
+        return selectTwitterChannel(id)
+                .then((response) => {
+                    dispatch(setChannels(response));
+                    localStorage.setItem("channels", JSON.stringify(response));
+                    dispatch(setChannelsLoading(false));
+                    return response;
+                });
     }
 }
