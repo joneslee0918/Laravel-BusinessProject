@@ -15,22 +15,28 @@ class Dashboard extends React.Component {
     }
     
     componentDidMount() {
-        axios.get(`${apiUrl}/twitter/dashboard`)
-            .then((response) => {
-                this.setState(() => ({
-                    data: response.data
-                }));
-            });
+        
+        if(!this.props.channelsLoading){
+            axios.get(`${apiUrl}/twitter/dashboard`)
+                .then((response) => {
+                    this.setState(() => ({
+                        data: response.data
+                    }));
+                    console.log("Loaded from mount");
+                });
+        }
     }
 
     componentDidUpdate(prevProps) {
-
+    
         if(this.props.selectedChannel !== prevProps.selectedChannel){
             axios.get(`${apiUrl}/twitter/dashboard`)
                 .then((response) => {
                     this.setState(() => ({
                         data: response.data
                     }));
+
+                    console.log("Loaded from update");
                 });
         }
     }
@@ -85,11 +91,11 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-
-    const selectedTwitterChannel = {selected: 1, provider: "twitter"};    
-    const selectedChannel = channelSelector(state.channels, selectedTwitterChannel);
+    const selectedTwitterChannel = {selected: 1, provider: "twitter"};
+    const selectedChannel = channelSelector(state.channels.list, selectedTwitterChannel);
 
     return {
+        channelsLoading: state.channels.loading,
         selectedChannel: selectedChannel.length ? selectedChannel[0] : {}
     };
 };

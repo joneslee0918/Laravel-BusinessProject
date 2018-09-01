@@ -28,9 +28,9 @@ const mapStateToProps = (state) => {
 
     const unselectedTwitterChannels = {selected: 0, provider: "twitter"};
     const selectedTwitterChannel = {selected: 1, provider: "twitter"};
-    
-    const channels = channelSelector(state.channels, unselectedTwitterChannels);
-    const selectedChannel = channelSelector(state.channels, selectedTwitterChannel);
+
+    const channels = channelSelector(state.channels.list, unselectedTwitterChannels);
+    const selectedChannel = channelSelector(state.channels.list, selectedTwitterChannel);
 
     return {
         channels,
