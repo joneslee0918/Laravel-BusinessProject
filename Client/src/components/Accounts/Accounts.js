@@ -38,9 +38,8 @@ class Accounts extends React.Component {
                             <h2>Let's grow your audience using Twitter!</h2>
                         </div> 
                         
-                        {!!this.props.loading ? 
-                            <Loader />
-                            :<ChannelItems channels={this.props.channels} /> }
+                        <ChannelItems channels={this.props.channels} /> 
+                        {!!this.props.loading && <Loader />}
                     </div> 
         
                     <div className="accounts-container__content__wrapper__footer">
@@ -89,7 +88,6 @@ const mapStateToProps = (state) => {
 
     const twitterChannelsFilter = {selected: undefined, provider: "twitter"};
     const channels = channelSelector(state.channels.list, twitterChannelsFilter);
-    console.log(channels);
     return {
         channels,
         loading: state.channels.loading

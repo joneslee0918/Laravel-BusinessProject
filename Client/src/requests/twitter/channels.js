@@ -12,6 +12,7 @@ export const getDashboard = () => {
 export const selectChannel = (id) => {
     return axios.patch(`${apiUrl}/twitter/channels/select/${id}`)
             .then((response) => {
+                console.log(response);
                 return response.data;
             });
 };

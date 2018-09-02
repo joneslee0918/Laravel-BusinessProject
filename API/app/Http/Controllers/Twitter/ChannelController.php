@@ -53,10 +53,10 @@ class ChannelController extends Controller
     public function select($id)
     {
         $user = auth()->user();
-        $channel = $user->twitterChannels()->find($id);
+        $channel = $user->channels()->find($id);
 
         if($channel){
-            $channel->select();
+            $channel->details->select();
         }
 
         return $user->formattedChannels();
