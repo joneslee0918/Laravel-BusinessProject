@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from "react-router-dom";
+import {NavLink, Link} from "react-router-dom";
 
 const VerticalMenu = ({ menuItems, channels, selectedChannel, selectChannel }) => {
     return (
@@ -40,7 +40,7 @@ const ProfileSelectionDropDown = ({ channels, selectChannel }) => (
                 <ProfileSelectionItem key={channel.id} channel={channel} selectChannel={selectChannel}/>
             ))
         }
-        <button className="add-channel-btn block-urls">Add new channel</button>
+        <Link to="/accounts" className="add-channel-btn block-urls">Add new channel</Link>
     </div>
 );
 

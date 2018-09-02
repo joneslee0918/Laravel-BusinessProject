@@ -17,7 +17,7 @@ class AuthController extends Controller
         $verifier = $request->input("oauth_verifier");
         $token = $request->input("oauth_token");
         $clientUrl = config('frontendclient.client_url');
-        return redirect("$clientUrl?oauth_verifier=$verifier&oauth_token=$token");
+        return redirect("$clientUrl/redirect?oauth_verifier=$verifier&oauth_token=$token");
     }
 
     public function reverse(Request $request)

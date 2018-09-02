@@ -689,6 +689,21 @@ input {
     font-size: 14px;
 }
 
+.add-channel-plus-btn{
+    background:none;
+    padding:20px 25px;
+    border: 1px solid #46b9e6;
+    font-size: $l-size;
+    border-radius:10px;
+    color: #c1c1c1;
+    outline:none;
+}
+
+.left-side-label{
+    font-size:$m-size;
+    margin-left:10px;
+}
+
 aside .btn-group {
     width: 100% !important;
 }
@@ -742,7 +757,6 @@ aside .btn-group {
 }
 
 .lds-ripple {
-    display: none;
     z-index: 1001;
     width: 64px;
     height: 64px;
@@ -852,6 +866,7 @@ aside .btn-group {
 .accounts-container .item-actions{
     line-height:3;
     font-size:$m-size;
+    color:#c1c1c1;
 }
 
 .accounts-container__content__wrapper__heading, 

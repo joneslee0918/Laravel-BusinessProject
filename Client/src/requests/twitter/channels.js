@@ -15,3 +15,12 @@ export const selectChannel = (id) => {
                 return response.data;
             });
 };
+
+export const addChannel = (accessToken, accessTokenSecret) => {
+    return axios.post(`${apiUrl}/twitter/channels/add`, {
+                oauth_token: accessToken,
+                oauth_token_secret: accessTokenSecret
+            }).then((response) => {
+                return response.data;
+            });
+}
