@@ -29,6 +29,7 @@ class AccountTargetsController extends Controller
             $feed = $this->selectedChannel->accountTargetsFeed();
             $currentTargetIds = $feed->groupBy("target_id")->pluck("target_id")->toArray();
             $targets = $this->selectedChannel->accountTargets();
+            $actionsToday = $this->selectedChannel->getDailyStatisticsFor("follows");
 
             if ($target = $targets->whereNotIn("id", $currentTargetIds)->latest()->first()) {
 
@@ -65,7 +66,10 @@ class AccountTargetsController extends Controller
                 $items = $this->selectedChannel->getUsersLookup($feedIds);
             }
 
-            return response()->json($this->filterFollowing($items));
+            return response()->json([
+                "items" => $this->filterFollowing($items),
+                "actions" => $actionsToday
+            ]);
 
         } catch (\Exception $e) {
             return response()->json(["error" => $e->getMessage()], 500);

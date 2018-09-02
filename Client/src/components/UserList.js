@@ -1,12 +1,15 @@
 import React from 'react';
+import Loader from '../components/Loader';
 
 const UserList = (
         {   
             userItems = [],
+            loading = false,
             showTargetLink = false,
             targetType = "account", 
             showSortOption = false,
-            actionType = "follow"
+            actionType = "follow",
+            actions = 0
         }
     ) => { 
     
@@ -14,40 +17,42 @@ const UserList = (
 
     return (
         <div>
-
-            <ListActions actionType={ actionType }/>
-
-            {
-                userItems.length < 1 ? 
+            {userItems.length < 1 ? 
                             
-                <div class="no-data">
-                    Nothing to do. <br/>Please check back later! <br /> :)
-                </div> :
+                (loading ? <Loader />
+                    : 
+                    <div className="no-data">
+                        No data, nothing to do... :(
+                    </div>
+                ) :
 
-                <div className="row">
-                    <div className="col-xs-12">
-                        <div className="item-list shadow-box">
-                            <div className="item-header">
-                                { showTargetLink &&  <TargetsLink targetType={ targetType }/> }
-                                { showSortOption && <SortOption /> }
+                <div>
+                    <ListActions actionType={ actionType } actions={ actions } />
+                    <div className="row">
+                        <div className="col-xs-12">
+                            <div className="item-list shadow-box">
+                                <div className="item-header">
+                                    { showTargetLink &&  <TargetsLink targetType={ targetType }/> }
+                                    { showSortOption && <SortOption /> }
+                                </div>
+
+                                {userItems.map((item) => (
+                                    <UserItem key={item.id} userItem={ item } actionButton={ actionButton } />
+                                ))}
+                                
                             </div>
-
-                            {userItems.map((item) => (
-                                <UserItem key={item.id} userItem={ item } actionButton={ actionButton } />
-                            ))}
-                            
                         </div>
                     </div>
-                </div> 
+                </div>
             }
-
-        </div>
+        </div>     
+        
     );
 }
 
-const ListActions = ({ actionType }) => (
+const ListActions = ({ actionType, actions }) => (
     <div className="action-count pull-right">
-        <p><span className="action-count-title">{ actionType }s</span> : <span className={`${actionType}-count daily-actions`}>23</span></p>
+        <p><span className="action-count-title">{ actionType }s</span> : <span className={`${actionType}-count daily-actions`}>{actions}</span></p>
     </div>
 );
 
@@ -74,15 +79,14 @@ const SortOption = () => (
 const UserItem = ({ userItem, actionButton }) => (
     <div className="item-row">
         <div className="profile-info pull-left">
-            <img className="pull-left" src="" />
+            <img className="pull-left" src={userItem.profile_image_url} />
             <div className="pull-left">
-                <input type="hidden" className="user_id" value=""/>
-                <p className="profile-name">{ userItem.name } <span className="profile-username">{ userItem.username }</span></p>
-                <p className="profile-title">{ userItem.title }</p>
+                <p className="profile-name">{ userItem.name } <span className="profile-username">{ userItem.screen_name }</span></p>
+                <p className="profile-title">{ userItem.description }</p>
                 <ul className="bottom-info">
-                    <li><p>{ userItem.tweets }</p></li>
-                    <li><p>{ userItem.followers }</p></li>
-                    <li><p>{ userItem.following }</p></li>
+                    <li><p>{ userItem.statuses_count }</p></li>
+                    <li><p>{ userItem.followers_count }</p></li>
+                    <li><p>{ userItem.friends_count }</p></li>
                 </ul>
             </div>
         </div>

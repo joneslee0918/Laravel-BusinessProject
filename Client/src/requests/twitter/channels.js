@@ -12,7 +12,6 @@ export const getDashboard = () => {
 export const selectChannel = (id) => {
     return axios.patch(`${apiUrl}/twitter/channels/select/${id}`)
             .then((response) => {
-                console.log(response);
                 return response.data;
             });
 };
@@ -24,4 +23,12 @@ export const addChannel = (accessToken, accessTokenSecret) => {
             }).then((response) => {
                 return response.data;
             });
+}
+
+
+export const getAccountTargets = () => {
+    return axios.get(`${apiUrl}/twitter/account-targets/feed`)
+    .then((response) => {
+        return response.data;
+    });
 }
