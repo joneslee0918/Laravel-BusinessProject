@@ -103,6 +103,10 @@ input {
     display:none;
 }
 
+.zero-padding {
+    padding:0;
+}
+
 .trash-btn{
     color:#e2e2e2;
     cursor:pointer;
@@ -114,6 +118,10 @@ input {
 
 .trash-btn:hover .delete-text{
     display:inline-block;
+}
+
+.txt-center{
+    text-align:center;
 }
 
 .vertical-menu {

@@ -8,7 +8,8 @@ class AccountTargets extends React.Component{
     state = {
         userItems: [],
         actions: 0,
-        loading: this.props.channelsLoading
+        loading: this.props.channelsLoading,
+        searchView: false
     }
 
     componentDidMount() {
@@ -41,6 +42,12 @@ class AccountTargets extends React.Component{
         }
     }
 
+    showSearchView = (searchView = false) => {
+        this.setState(() => ({
+            searchView
+        }));
+    }
+
     setLoading = (loading = false) => {
         this.setState(() => ({
             loading
@@ -55,6 +62,8 @@ class AccountTargets extends React.Component{
                     userItems={ this.state.userItems }
                     actionType="follow"
                     showTargetLink={true}
+                    searchView={this.state.searchView}
+                    showSearchView={this.showSearchView}
                     targetType="account"
                     actions={this.state.actions}
                     loading={this.state.loading}

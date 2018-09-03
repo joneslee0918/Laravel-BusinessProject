@@ -1,12 +1,17 @@
 import React from 'react';
 import Loader from '../components/Loader';
+import AccountTargetSearchList from './Manage/AccountTargetSearchList';
+import KeywordTargetSearchList from './Manage/KeywordTargetSearchList';
 
 const UserList = (
         {   
             userItems = [],
             loading = false,
             showTargetLink = false,
+            searchView = false,
+            showSearchView = (searchView = false) => {},
             targetType = "account", 
+            targets = [],
             showSortOption = false,
             actionType = "follow",
             actions = 0
@@ -21,29 +26,48 @@ const UserList = (
                             
                 (loading ? <Loader />
                     : 
+                    (showTargetLink ? 
+
+                      (targetType == "account" ? 
+                        <AccountTargetSearchList targets={targets} showSearchView={showSearchView} /> 
+                        : 
+                        <KeywordTargetSearchList targets={targets} showSearchView={showSearchView}/>)
+
+                    :
+
                     <div className="no-data">
                         No data, nothing to do... :(
                     </div>
+                    )
                 ) :
+                
+                (  searchView ? 
+                    (targetType == "account" ? 
 
-                <div>
-                    <ListActions actionType={ actionType } actions={ actions } />
-                    <div className="row">
-                        <div className="col-xs-12">
-                            <div className="item-list shadow-box">
-                                <div className="item-header">
-                                    { showTargetLink &&  <TargetsLink targetType={ targetType }/> }
-                                    { showSortOption && <SortOption /> }
+                        <AccountTargetSearchList targets={targets} showSearchView={showSearchView} /> 
+                        : 
+
+                        <KeywordTargetSearchList targets={targets} showSearchView={showSearchView}/>)
+                    :
+                    <div>
+                        <ListActions actionType={ actionType } actions={ actions } />
+                        <div className="row">
+                            <div className="col-xs-12">
+                                <div className="item-list shadow-box">
+                                    <div className="item-header">
+                                        { showTargetLink &&  <TargetsLink targetType={ targetType } showSearchView={showSearchView} /> }
+                                        { showSortOption && <SortOption /> }
+                                    </div>
+
+                                    {userItems.map((item) => (
+                                        <UserItem key={item.id} userItem={ item } actionButton={ actionButton } />
+                                    ))}
+                                    
                                 </div>
-
-                                {userItems.map((item) => (
-                                    <UserItem key={item.id} userItem={ item } actionButton={ actionButton } />
-                                ))}
-                                
                             </div>
                         </div>
                     </div>
-                </div>
+                )
             }
         </div>     
         
@@ -56,11 +80,13 @@ const ListActions = ({ actionType, actions }) => (
     </div>
 );
 
-const TargetsLink = ({ targetType }) => (
+const TargetsLink = ({ targetType, showSearchView }) => (
     <div className="pull-left">
-        Showing list of accounts based on your <a href="#" >{ targetType } targets <i className="fa fa-pencil"></i></a>
+        Showing list of accounts based on your <button className="btn btn-link zero-padding" onClick={() => showSearchView(true) }>{ targetType } targets <i className="fa fa-pencil"></i></button>
     </div>
 );
+
+
 
 const SortOption = () => (
     <div className="pull-right form-inline sort-options">
