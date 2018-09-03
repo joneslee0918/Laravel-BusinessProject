@@ -19,14 +19,10 @@ class RecentUnfollowersController extends Controller
         });
     }
 
-    public function index(Request $request)
+    public function feed(Request $request)
     {
         $perPage = 100;
         $order = $request->input('order') ? $request->input('order') : 'desc';
-        $title = "RECENT UNFOLLOWERS";
-        $orderAction = route('manage.recent.unfollowers');
-        $actionBtn = "sub-btn";
-        $action = route('twitter.unfollow');
         $items = [];
         $followingIds = $this->selectedChannel->followingIds()->whereNotNull("unfollowed_at")->pluck("user_id");
         $followerIds = $this->selectedChannel->followerIds()
@@ -43,12 +39,9 @@ class RecentUnfollowersController extends Controller
             $items = $this->selectedChannel->getUsersLookup($followerIds);
         }
 
-        $view = view('backend.manage.list', compact('title', 'items', 'orderAction', 'order', 'actionBtn', 'actionsToday', 'action'));
-
-        if ($request->ajax()) {
-            return response()->json(['html'=>$view->render()]);
-        }
-
-        return $view;
+        return response()->json([
+            "items" => $items,
+            "actions" => $actionsToday
+        ]);
     }
 }

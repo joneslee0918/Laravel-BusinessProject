@@ -19,7 +19,7 @@ class FollowingController extends Controller
         });
     }
 
-    public function index(Request $request)
+    public function feed(Request $request)
     {
         $perPage = 100;
         $order = $request->input('order') ? $request->input('order') : 'desc';
@@ -32,21 +32,15 @@ class FollowingController extends Controller
             ->toArray();
 
         $items = [];
-        $orderAction = route('manage.following');
-        $action = route('twitter.unfollow');
-        $actionBtn = "sub-btn";
-        $title = "FOLLOWING";
         $actionsToday = $this->selectedChannel->getDailyStatisticsFor("unfollows");
 
         if(count($followingIds)){
             $items = $this->selectedChannel->getUsersLookup($followingIds);
         }
 
-        $view = view('backend.manage.list', compact('title', 'items', 'orderAction', 'order', 'actionBtn', 'actionsToday', 'action'));
-        if ($request->ajax()) {
-            return response()->json(['html'=>$view->render()]);
-        }
-
-        return $view;
+        return response()->json([
+            "items" => $items,
+            "actions" => $actionsToday
+        ]);
     }
 }

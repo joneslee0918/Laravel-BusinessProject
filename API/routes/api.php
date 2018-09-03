@@ -41,5 +41,9 @@ Route::prefix("twitter")->group(function(){
 
         Route::get('fans', 'Twitter\FansController@feed');
         Route::get('non-followers', 'Twitter\NonFollowersController@feed');
+        Route::get('recent-unfollowers', 'Twitter\RecentUnfollowersController@feed');
+        Route::get('recent-followers', 'Twitter\RecentFollowersController@feed');
+        Route::get('inactive-following', 'Twitter\InactiveFollowingController@feed');
+        Route::get('following', 'Twitter\FollowingController@feed');
     });
 });

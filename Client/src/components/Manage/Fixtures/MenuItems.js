@@ -44,16 +44,16 @@ const MenuItems = [
         displayName: "Following",
         uri: "/manage/following" 
     },
-    {   
-        id: "manage_whitelist",
-        displayName: "White List",
-        uri: "/manage/whitelist" 
-    },
-    {   
-        id: "manage_blacklist",
-        displayName: "Black List",
-        uri: "/manage/blacklist" 
-    },
+    // {   
+    //     id: "manage_whitelist",
+    //     displayName: "White List",
+    //     uri: "/manage/whitelist" 
+    // },
+    // {   
+    //     id: "manage_blacklist",
+    //     displayName: "Black List",
+    //     uri: "/manage/blacklist" 
+    // },
 ];
 
 export default MenuItems;

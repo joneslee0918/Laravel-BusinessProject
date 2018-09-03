@@ -81,11 +81,39 @@ export const getFans = () => {
     .then((response) => {
         return response.data;
     });
-}
+};
 
 export const getNonFollowers = () => {
     return axios.get(`${apiUrl}/twitter/non-followers`)
     .then((response) => {
         return response.data;
     });
-}
+};
+
+export const getRecentUnfollowers = () => {
+    return axios.get(`${apiUrl}/twitter/recent-unfollowers`)
+    .then((response) => {
+        return response.data;
+    });
+};
+
+export const getRecentFollowers = () => {
+    return axios.get(`${apiUrl}/twitter/recent-followers`)
+    .then((response) => {
+        return response.data;
+    });
+};
+
+export const getInactiveFollowing = () => {
+    return axios.get(`${apiUrl}/twitter/inactive-following`)
+    .then((response) => {
+        return response.data;
+    });
+};
+
+export const getFollowing = () => {
+    return axios.get(`${apiUrl}/twitter/following`)
+    .then((response) => {
+        return response.data;
+    });
+};

@@ -20,7 +20,7 @@ class RecentFollowersController extends Controller
         });
     }
 
-    public function index(Request $request)
+    public function feed(Request $request)
     {
         $perPage = 100;
         $order = $request->input('order') ? $request->input('order') : 'desc';
@@ -42,21 +42,16 @@ class RecentFollowersController extends Controller
             ->toArray();
 
         $items = [];
-        $orderAction = route('manage.recent.followers');
-        $actionBtn = "add-btn";
-        $action = route('twitter.follow');
-        $title = "RECENT FOLLOWERS";
+
         $actionsToday = $this->selectedChannel->getDailyStatisticsFor("follows");
 
         if(count($followerIds)){
             $items = $this->selectedChannel->getUsersLookup($followerIds);
         }
 
-        $view = view('backend.manage.list', compact('title', 'items', 'orderAction', 'order', 'actionBtn', 'actionsToday', 'action'));
-        if ($request->ajax()) {
-            return response()->json(['html'=>$view->render()]);
-        }
-
-        return $view;
+        return response()->json([
+            "items" => $items,
+            "actions" => $actionsToday
+        ]);
     }
 }
