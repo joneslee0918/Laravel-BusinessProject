@@ -40,5 +40,6 @@ Route::prefix("twitter")->group(function(){
         Route::delete('keyword-targets/destroy/{username}', 'Twitter\KeywordTargetsController@destroy');
 
         Route::get('fans', 'Twitter\FansController@feed');
+        Route::get('non-followers', 'Twitter\NonFollowersController@feed');
     });
 });

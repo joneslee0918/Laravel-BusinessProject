@@ -82,3 +82,10 @@ export const getFans = () => {
         return response.data;
     });
 }
+
+export const getNonFollowers = () => {
+    return axios.get(`${apiUrl}/twitter/non-followers`)
+    .then((response) => {
+        return response.data;
+    });
+}
