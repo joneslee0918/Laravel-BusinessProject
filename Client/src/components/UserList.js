@@ -10,6 +10,7 @@ const UserList = (
             showTargetLink = false,
             searchView = false,
             showSearchView = (searchView = false) => {},
+            reloadTargets = () => {},
             targetType = "account", 
             targets = [],
             showSortOption = false,
@@ -20,6 +21,22 @@ const UserList = (
     
     const actionButton = actionType === "follow" ? "add" : "sub";
 
+    const targetSearchView = (
+        (targetType == "account" ? 
+        <AccountTargetSearchList 
+        targets={targets} 
+        showSearchView={showSearchView} 
+        reloadTargets={reloadTargets}    
+        /> 
+        : 
+        <KeywordTargetSearchList 
+            targets={targets} 
+            showSearchView={showSearchView}
+            reloadTargets={reloadTargets}
+            />
+        )
+    );
+
     return (
         <div>
             {userItems.length < 1 ? 
@@ -28,10 +45,7 @@ const UserList = (
                     : 
                     (showTargetLink ? 
 
-                      (targetType == "account" ? 
-                        <AccountTargetSearchList targets={targets} showSearchView={showSearchView} /> 
-                        : 
-                        <KeywordTargetSearchList targets={targets} showSearchView={showSearchView}/>)
+                     targetSearchView
 
                     :
 
@@ -42,12 +56,7 @@ const UserList = (
                 ) :
                 
                 (  searchView ? 
-                    (targetType == "account" ? 
-
-                        <AccountTargetSearchList targets={targets} showSearchView={showSearchView} /> 
-                        : 
-
-                        <KeywordTargetSearchList targets={targets} showSearchView={showSearchView}/>)
+                        targetSearchView
                     :
                     <div>
                         <ListActions actionType={ actionType } actions={ actions } />
@@ -85,7 +94,6 @@ const TargetsLink = ({ targetType, showSearchView }) => (
         Showing list of accounts based on your <button className="btn btn-link zero-padding" onClick={() => showSearchView(true) }>{ targetType } targets <i className="fa fa-pencil"></i></button>
     </div>
 );
-
 
 
 const SortOption = () => (

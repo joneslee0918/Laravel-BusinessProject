@@ -17,26 +17,25 @@ class Dashboard extends React.Component {
     componentDidMount() {
         
         if(!this.props.channelsLoading){
-            getDashboard()
-                .then((response) => {
-                    this.setState(() => ({
-                        data: response
-                    }));
-                });
+            this.fetchDashboard();
         }
     }
 
     componentDidUpdate(prevProps) {
     
         if(this.props.selectedChannel !== prevProps.selectedChannel){
-            getDashboard()
-                .then((response) => {
-                    this.setState(() => ({
-                        data: response
-                    }));
-                });
+            this.fetchDashboard();
         }
     }
+
+    fetchDashboard = () => {
+        getDashboard()
+        .then((response) => {
+            this.setState(() => ({
+                data: response
+            }));
+        });
+    };
 
     render(){
         const data = this.state.data;

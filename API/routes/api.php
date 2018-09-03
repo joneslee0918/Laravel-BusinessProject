@@ -32,5 +32,7 @@ Route::prefix("twitter")->group(function(){
         Route::post('channels/add', 'Twitter\ChannelController@add');
 
         Route::get('account-targets/feed', 'Twitter\AccountTargetsController@feed');
+        Route::post('account-targets/store', 'Twitter\AccountTargetsController@store');
+        Route::delete('account-targets/destroy/{username}', 'Twitter\AccountTargetsController@destroy');
     });
 });

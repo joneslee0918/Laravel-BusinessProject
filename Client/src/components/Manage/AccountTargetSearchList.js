@@ -1,8 +1,50 @@
 import React from 'react';
+import {addAccountTarget, destroyAccountTarget} from '../../requests/twitter/channels';
+import Loader from '../../components/Loader';
 
 export default class AccountTargetSearchList extends React.Component{
     constructor(props){
         super(props);
+    }
+
+    state = {
+        target: "",
+        loading: false
+    };
+
+    onChange = (e) => {
+        const target = e.target.value;
+        this.setState(() => ({
+            target
+        }));
+    };
+
+    onSubmit = (e) => {
+        this.setLoading(true);
+        e.preventDefault();
+        const target = this.state.target;
+        if(target.length){
+          addAccountTarget(target)
+          .then((response) => {
+              this.props.reloadTargets(response);
+              this.setLoading(false);
+            });  
+        }
+    };
+
+    setLoading = (loading = false) => {
+        this.setState(() => ({
+            loading
+        }));
+    }
+
+    removeTarget = (target) => {
+        this.setLoading(true);
+        destroyAccountTarget(target)
+        .then((response) => {
+            this.props.reloadTargets(response);
+            this.setLoading(false);
+        });
     }
 
     render(){
@@ -14,14 +56,20 @@ export default class AccountTargetSearchList extends React.Component{
                             <button onClick={() => this.props.showSearchView(false)} className="gradient-background-teal-blue default-button">Done</button>
                         </div>
                         <div className="search-bar mt20">
-                            <div className="form-row">
-                                <div className="col-md-11 mb-3 p10-5">
-                                    <input type="text" className="form-control p20 full-radius" id="username" name="username" placeholder="@ Enter Channel" />
+                            <form onSubmit={this.onSubmit}>
+                                <div className="form-row">
+                                    <div className="col-md-11 mb-3 p10-5">
+                                        <input type="text" 
+                                            className="form-control p20 full-radius" 
+                                            onChange={this.onChange} id="username" 
+                                            name="username" value={this.state.target} 
+                                            placeholder="@ Enter Channel" />
+                                    </div>
+                                    <div className="col-md-1 mb-3 p10-5">
+                                        <button className="gradient-background-teal-blue white-button add-target">ADD</button>
+                                    </div>
                                 </div>
-                                <div className="col-md-1 mb-3 p10-5">
-                                    <a className="gradient-background-teal-blue white-button add-target">ADD</a>
-                                </div>
-                            </div>
+                            </form>
                         </div>
         
                         <div className="added">
@@ -31,8 +79,8 @@ export default class AccountTargetSearchList extends React.Component{
                                         <div className="list-header">Saved Accounts</div>
                                         <div className="added-items">
                                         
-                                            {this.props.targets.map((target) => <TargetItem key={target.id} target={target} />)}
-                    
+                                            {this.props.targets.map((target) => <TargetItem key={target.id} target={target} removeTarget={this.removeTarget} />)}
+                                            {this.state.loading && <Loader />}
                                         </div>
                                     </div>
                                 }
@@ -45,7 +93,7 @@ export default class AccountTargetSearchList extends React.Component{
     }
 } 
 
-const TargetItem = ({target}) => (
+const TargetItem = ({target, removeTarget}) => (
     <div className="item-row">
         <div className="profile-info pull-left">
             <img className="pull-left" src={target.profile_image_url} />
@@ -56,7 +104,7 @@ const TargetItem = ({target}) => (
         </div>
         <div className="item-actions pull-right">
             <ul>
-                <li className="btn-links"><div className="trash-btn"><i className="fa fa-trash"></i> <span className="delete-text"> Delete</span></div></li>
+                <li onClick={() => removeTarget(target.screen_name)} className="btn-links"><div className="trash-btn"><i className="fa fa-trash"></i> <span className="delete-text"> Delete</span></div></li>
             </ul>
         </div>
     </div>

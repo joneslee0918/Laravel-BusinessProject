@@ -23,7 +23,7 @@ export const addChannel = (accessToken, accessTokenSecret) => {
             }).then((response) => {
                 return response.data;
             });
-}
+};
 
 
 export const getAccountTargets = () => {
@@ -31,4 +31,21 @@ export const getAccountTargets = () => {
     .then((response) => {
         return response.data;
     });
-}
+};
+
+
+export const addAccountTarget = (target) => {
+    return axios.post(`${apiUrl}/twitter/account-targets/store`,{
+        username: target
+    })
+    .then((response) => {
+        return response.data;
+    })
+};
+
+export const destroyAccountTarget = (target) => {
+    return axios.delete(`${apiUrl}/twitter/account-targets/destroy/${target}`)
+    .then((response) => {
+        return response.data;
+    })
+};

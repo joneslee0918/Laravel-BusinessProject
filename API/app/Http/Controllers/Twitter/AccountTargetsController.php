@@ -98,13 +98,13 @@ class AccountTargetsController extends Controller
         return response()->json(['error' => 'Target not found.'], 404);
     }
 
-    public function destroy(Request $request)
+    public function destroy($username)
     {
-        $username = $request->input("username");
+        $username = $username;
 
-        $this->selectedChannel->accountTargets()->where("account", $username)->delete();
+        $target = $this->selectedChannel->accountTargets()->where("account", strtolower($username))->delete();
 
-        return response()->json(['message' => 'deleted'], 200);
+        return response()->json($this->getAccounts());
     }
 
     private function getAccounts()

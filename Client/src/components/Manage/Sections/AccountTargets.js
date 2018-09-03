@@ -16,46 +16,50 @@ class AccountTargets extends React.Component{
     componentDidMount() {
         
         if(!this.props.channelsLoading){
-            this.setLoading(true);
-            getAccountTargets()
-                .then((response) => {
-                    this.setState(() => ({
-                        userItems: response.items,
-                        actions: response.actions,
-                        targets: response.targets,
-                        loading: false
-                    }));
-                });
+            this.fetchTargets();
         }
     }
 
     componentDidUpdate(prevProps) {
-    
-        if(this.props.selectedChannel !== prevProps.selectedChannel){
-            this.setLoading(true);
-            getAccountTargets()
-                .then((response) => {
-                    this.setState(() => ({
-                        userItems: response.items,
-                        actions: response.actions,
-                        targets: response.targets,
-                        loading: false
-                    }));
-                });
+        if((this.props.selectedChannel !== prevProps.selectedChannel)){
+            this.fetchTargets();
         }
     }
 
     showSearchView = (searchView = false) => {
         this.setState(() => ({
             searchView
-        }));
-    }
+        }))
+        
+        if(!searchView){
+            this.fetchTargets();
+        }
+    };
 
     setLoading = (loading = false) => {
         this.setState(() => ({
             loading
         }));
-    }
+    };
+
+    fetchTargets = () => {
+        this.setLoading(true);
+        getAccountTargets()
+            .then((response) => {
+                this.setState(() => ({
+                    userItems: response.items,
+                    actions: response.actions,
+                    targets: response.targets,
+                    loading: false
+                }));
+            });
+    };
+
+    reloadTargets = (targets) =>{
+        this.setState(() => ({
+            targets
+        }));
+    };
 
     render(){
         return (
@@ -67,6 +71,7 @@ class AccountTargets extends React.Component{
                     showTargetLink={true}
                     searchView={this.state.searchView}
                     showSearchView={this.showSearchView}
+                    reloadTargets={this.reloadTargets}
                     targetType="account"
                     targets={this.state.targets}
                     actions={this.state.actions}
