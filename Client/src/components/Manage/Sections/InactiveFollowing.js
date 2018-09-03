@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import UserList from "../../UserList";
 import { getInactiveFollowing } from '../../../requests/twitter/channels';
 import channelSelector from '../../../selectors/channels';
+import Loader from '../../Loader';
 
 class InactiveFollowing extends React.Component{
     state = {
@@ -30,9 +31,9 @@ class InactiveFollowing extends React.Component{
         }));
     };
 
-    fetchData = () => {
+    fetchData = (order = 'desc') => {
         this.setLoading(true);
-        getInactiveFollowing()
+        getInactiveFollowing(order)
             .then((response) => {
                 this.setState(() => ({
                     userItems: response.items,
@@ -54,7 +55,9 @@ class InactiveFollowing extends React.Component{
                     actions={this.state.actions}
                     loading={this.state.loading}
                     showSortOption={true}
+                    fetchData={this.fetchData}
                 />
+                {this.state.loading && <Loader />}
             </div>
         );
     }

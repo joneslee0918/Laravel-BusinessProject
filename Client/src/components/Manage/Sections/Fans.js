@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import UserList from "../../UserList";
 import { getFans } from '../../../requests/twitter/channels';
 import channelSelector from '../../../selectors/channels';
+import Loader from '../../Loader';
 
 class Fans extends React.Component{
     state = {
@@ -30,9 +31,9 @@ class Fans extends React.Component{
         }));
     };
 
-    fetchData = () => {
+    fetchData = (order = 'desc') => {
         this.setLoading(true);
-        getFans()
+        getFans(order)
             .then((response) => {
                 this.setState(() => ({
                     userItems: response.items,
@@ -54,7 +55,9 @@ class Fans extends React.Component{
                     actions={this.state.actions}
                     loading={this.state.loading}
                     showSortOption={true}
+                    fetchData={this.fetchData}
                 />
+                {this.state.loading && <Loader />}
             </div>
         );
     }

@@ -15,7 +15,8 @@ const UserList = (
             targets = [],
             showSortOption = false,
             actionType = "follow",
-            actions = 0
+            actions = 0,
+            fetchData = (order = 'desc') => {}
         }
     ) => { 
     
@@ -65,7 +66,7 @@ const UserList = (
                                 <div className="item-list shadow-box">
                                     <div className="item-header">
                                         { showTargetLink &&  <TargetsLink targetType={ targetType } showSearchView={showSearchView} /> }
-                                        { showSortOption && <SortOption /> }
+                                        { showSortOption && <SortOption sortBy={fetchData} /> }
                                     </div>
 
                                     {userItems.map((item) => (
@@ -96,12 +97,12 @@ const TargetsLink = ({ targetType, showSearchView }) => (
 );
 
 
-const SortOption = () => (
+const SortOption = ({ sortBy }) => (
     <div className="pull-right form-inline sort-options">
     <label className="sortLabel" htmlFor="sort">Sort by: </label>
 
-        <form action="#" className="form-group" id="order_form">
-            <select name="order" id="order">
+        <form className="form-group" id="order_form">
+            <select onChange={(e) => sortBy(e.target.value) } name="order" id="order">
                 <option value="desc" defaultValue >Newest First</option>
                 <option value="asc">Oldest First</option>
             </select>
