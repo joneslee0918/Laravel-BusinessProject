@@ -68,6 +68,7 @@ class AccountTargetsController extends Controller
 
             return response()->json([
                 "items" => $this->filterFollowing($items),
+                "targets" => $this->getAccounts(),
                 "actions" => $actionsToday
             ]);
 

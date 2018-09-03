@@ -8,6 +8,7 @@ class AccountTargets extends React.Component{
     state = {
         userItems: [],
         actions: 0,
+        targets: [],
         loading: this.props.channelsLoading,
         searchView: false
     }
@@ -21,6 +22,7 @@ class AccountTargets extends React.Component{
                     this.setState(() => ({
                         userItems: response.items,
                         actions: response.actions,
+                        targets: response.targets,
                         loading: false
                     }));
                 });
@@ -36,6 +38,7 @@ class AccountTargets extends React.Component{
                     this.setState(() => ({
                         userItems: response.items,
                         actions: response.actions,
+                        targets: response.targets,
                         loading: false
                     }));
                 });
@@ -65,6 +68,7 @@ class AccountTargets extends React.Component{
                     searchView={this.state.searchView}
                     showSearchView={this.showSearchView}
                     targetType="account"
+                    targets={this.state.targets}
                     actions={this.state.actions}
                     loading={this.state.loading}
                 />

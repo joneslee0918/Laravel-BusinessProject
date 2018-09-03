@@ -25,28 +25,18 @@ export default class AccountTargetSearchList extends React.Component{
                         </div>
         
                         <div className="added">
-                        
-                                <div className="list-header">
-                                    Saved Accounts
-                                </div>
-                                <div className="added-items">
-                                
-                                    <div className="item-row">
-                                        <div className="profile-info pull-left">
-                                            <img className="pull-left" src="" />
-                                            <div className="pull-left">
-                                                <input type="hidden" className="user_id" value=""/>
-                                                <p className="profile-name mt15">Naruto <span className="profile-username">@naruto</span></p>
-                                            </div>
-                                        </div>
-                                        <div className="item-actions pull-right">
-                                            <ul>
-                                                <li className="btn-links"><div className="trash-btn"><i className="fa fa-trash"></i> <span className="delete-text"> Delete</span></div></li>
-                                            </ul>
+
+                                {!!this.props.targets.length && 
+                                    <div>
+                                        <div className="list-header">Saved Accounts</div>
+                                        <div className="added-items">
+                                        
+                                            {this.props.targets.map((target) => <TargetItem key={target.id} target={target} />)}
+                    
                                         </div>
                                     </div>
-            
-                                </div>
+                                }
+
                         </div>
                     </div>
                 </div>
@@ -54,3 +44,20 @@ export default class AccountTargetSearchList extends React.Component{
         );
     }
 } 
+
+const TargetItem = ({target}) => (
+    <div className="item-row">
+        <div className="profile-info pull-left">
+            <img className="pull-left" src={target.profile_image_url} />
+            <div className="pull-left">
+                <input type="hidden" className="user_id" value=""/>
+                <p className="profile-name mt15">{target.name} <span className="profile-username">@{target.screen_name}</span></p>
+            </div>
+        </div>
+        <div className="item-actions pull-right">
+            <ul>
+                <li className="btn-links"><div className="trash-btn"><i className="fa fa-trash"></i> <span className="delete-text"> Delete</span></div></li>
+            </ul>
+        </div>
+    </div>
+);
