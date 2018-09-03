@@ -27,7 +27,7 @@ export const addChannel = (accessToken, accessTokenSecret) => {
 
 
 export const getAccountTargets = () => {
-    return axios.get(`${apiUrl}/twitter/account-targets/feed`)
+    return axios.get(`${apiUrl}/twitter/account-targets`)
     .then((response) => {
         return response.data;
     });
@@ -40,19 +40,19 @@ export const addAccountTarget = (target) => {
     })
     .then((response) => {
         return response.data;
-    })
+    });
 };
 
 export const destroyAccountTarget = (target) => {
     return axios.delete(`${apiUrl}/twitter/account-targets/destroy/${target}`)
     .then((response) => {
         return response.data;
-    })
+    });
 };
 
 
 export const getKeywordTargets = () => {
-    return axios.get(`${apiUrl}/twitter/keyword-targets/feed`)
+    return axios.get(`${apiUrl}/twitter/keyword-targets`)
     .then((response) => {
         return response.data;
     });
@@ -65,12 +65,20 @@ export const addKeywordTarget = (target) => {
     })
     .then((response) => {
         return response.data;
-    })
+    });
 };
 
 export const destroyKeywordTarget = (target) => {
     return axios.delete(`${apiUrl}/twitter/keyword-targets/destroy/${target}`)
     .then((response) => {
         return response.data;
-    })
+    });
 };
+
+
+export const getFans = () => {
+    return axios.get(`${apiUrl}/twitter/fans`)
+    .then((response) => {
+        return response.data;
+    });
+}

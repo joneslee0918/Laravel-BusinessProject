@@ -52,6 +52,8 @@ class AccountTargets extends React.Component{
                     targets: response.targets,
                     loading: false
                 }));
+            }).catch((error) => {
+                this.setLoading(false);
             });
     };
 

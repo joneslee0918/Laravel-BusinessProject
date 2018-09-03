@@ -28,6 +28,8 @@ export default class AccountTargetSearchList extends React.Component{
           .then((response) => {
               this.props.reloadTargets(response);
               this.setLoading(false);
+            }).catch((error) => {
+                this.setLoading(false);
             });  
         }
     };
@@ -43,6 +45,8 @@ export default class AccountTargetSearchList extends React.Component{
         destroyAccountTarget(target)
         .then((response) => {
             this.props.reloadTargets(response);
+            this.setLoading(false);
+        }).catch((error) => {
             this.setLoading(false);
         });
     }

@@ -20,7 +20,7 @@ class FansController extends Controller
         });
     }
 
-    public function index(Request $request)
+    public function feed(Request $request)
     {
         $perPage = 100;
         $order = $request->input('order') ? $request->input('order') : 'desc';
@@ -32,21 +32,16 @@ class FansController extends Controller
             ->toArray();
 
         $items = [];
-        $orderAction = route('manage.fans');
-        $action = route('twitter.follow');
-        $actionBtn = "add-btn";
-        $title = "FANS";
+
         $actionsToday = $this->selectedChannel->getDailyStatisticsFor("follows");
 
         if(count($followerIds)){
             $items = $this->selectedChannel->getUsersLookup($followerIds);
         }
 
-        $view = view('backend.manage.list', compact('title', 'items', 'orderAction', 'order', 'actionBtn', 'actionsToday', 'action'));
-        if ($request->ajax()) {
-            return response()->json(['html'=>$view->render()]);
-        }
-
-        return $view;
+        return response()->json([
+            "items" => $items,
+            "actions" => $actionsToday
+        ]);
     }
 }

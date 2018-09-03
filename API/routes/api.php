@@ -31,12 +31,14 @@ Route::prefix("twitter")->group(function(){
         Route::patch('channels/select/{id}', 'Twitter\ChannelController@select');
         Route::post('channels/add', 'Twitter\ChannelController@add');
 
-        Route::get('account-targets/feed', 'Twitter\AccountTargetsController@feed');
+        Route::get('account-targets', 'Twitter\AccountTargetsController@feed');
         Route::post('account-targets/store', 'Twitter\AccountTargetsController@store');
         Route::delete('account-targets/destroy/{username}', 'Twitter\AccountTargetsController@destroy');
 
-        Route::get('keyword-targets/feed', 'Twitter\KeywordTargetsController@feed');
+        Route::get('keyword-targets', 'Twitter\KeywordTargetsController@feed');
         Route::post('keyword-targets/store', 'Twitter\KeywordTargetsController@store');
         Route::delete('keyword-targets/destroy/{username}', 'Twitter\KeywordTargetsController@destroy');
+
+        Route::get('fans', 'Twitter\FansController@feed');
     });
 });
