@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
 import { getKeywordTargets } from '../../../requests/twitter/channels';
 import channelSelector from '../../../selectors/channels';
+import Loader from '../../Loader';
 
 class KeywordTargets extends React.Component{
     state = {
@@ -10,7 +12,8 @@ class KeywordTargets extends React.Component{
         actions: 0,
         targets: [],
         loading: this.props.channelsLoading,
-        searchView: false
+        searchView: false,
+        page: 0
     }
 
     componentDidMount() {
@@ -50,8 +53,25 @@ class KeywordTargets extends React.Component{
                     userItems: response.items,
                     actions: response.actions,
                     targets: response.targets,
+                    loading: false,
+                    page: 1
+                }));
+            });
+    };
+
+    loadMore = () => {
+        this.setLoading(true);
+        let page = this.state.page + 1;
+        getKeywordTargets(page)
+            .then((response) => {
+                this.setState((prevState) => ({
+                    userItems: prevState.userItems.concat(response.items),
+                    actions: response.actions,
+                    page,
                     loading: false
                 }));
+            }).catch((error) => {
+                this.setLoading(false);
             });
     };
 
@@ -77,6 +97,8 @@ class KeywordTargets extends React.Component{
                     actions={this.state.actions}
                     loading={this.state.loading}
                 />
+                <BottomScrollListener onBottom={this.loadMore} />
+                {this.state.loading && <Loader />}
             </div>
         );
     }

@@ -26,8 +26,8 @@ export const addChannel = (accessToken, accessTokenSecret) => {
 };
 
 
-export const getAccountTargets = () => {
-    return axios.get(`${apiUrl}/twitter/account-targets`)
+export const getAccountTargets = (page = 1) => {
+    return axios.get(`${apiUrl}/twitter/account-targets?page=${page}`)
     .then((response) => {
         return response.data;
     });
@@ -51,8 +51,8 @@ export const destroyAccountTarget = (target) => {
 };
 
 
-export const getKeywordTargets = () => {
-    return axios.get(`${apiUrl}/twitter/keyword-targets`)
+export const getKeywordTargets = (page = 1) => {
+    return axios.get(`${apiUrl}/twitter/keyword-targets?page=${page}`)
     .then((response) => {
         return response.data;
     });
@@ -76,43 +76,43 @@ export const destroyKeywordTarget = (target) => {
 };
 
 
-export const getFans = (order = 'desc') => {
-    return axios.get(`${apiUrl}/twitter/fans?order=${order}`)
+export const getFans = (order = 'desc', page = 1) => {
+    return axios.get(`${apiUrl}/twitter/fans?page=${page}&order=${order}`)
     .then((response) => {
         return response.data;
     });
 };
 
-export const getNonFollowers = (order = 'desc') => {
-    return axios.get(`${apiUrl}/twitter/non-followers?order=${order}`)
+export const getNonFollowers = (order = 'desc', page = 1) => {
+    return axios.get(`${apiUrl}/twitter/non-followers?page=${page}&order=${order}`)
     .then((response) => {
         return response.data;
     });
 };
 
-export const getRecentUnfollowers = (order = 'desc') => {
-    return axios.get(`${apiUrl}/twitter/recent-unfollowers?order=${order}`)
+export const getRecentUnfollowers = (order = 'desc', page = 1) => {
+    return axios.get(`${apiUrl}/twitter/recent-unfollowers?page=${page}&order=${order}`)
     .then((response) => {
         return response.data;
     });
 };
 
-export const getRecentFollowers = (order = 'desc') => {
-    return axios.get(`${apiUrl}/twitter/recent-followers?order=${order}`)
+export const getRecentFollowers = (order = 'desc', page = 1) => {
+    return axios.get(`${apiUrl}/twitter/recent-followers?page=${page}&order=${order}`)
     .then((response) => {
         return response.data;
     });
 };
 
-export const getInactiveFollowing = (order = 'desc') => {
-    return axios.get(`${apiUrl}/twitter/inactive-following?order=${order}`)
+export const getInactiveFollowing = (order = 'desc', page = 1) => {
+    return axios.get(`${apiUrl}/twitter/inactive-following?page=${page}&order=${order}`)
     .then((response) => {
         return response.data;
     });
 };
 
-export const getFollowing = (order = 'desc') => {
-    return axios.get(`${apiUrl}/twitter/following?order=${order}`)
+export const getFollowing = (order = 'desc', page = 1) => {
+    return axios.get(`${apiUrl}/twitter/following?page=${page}&order=${order}`)
     .then((response) => {
         return response.data;
     });

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
 import { getRecentFollowers } from '../../../requests/twitter/channels';
 import channelSelector from '../../../selectors/channels';
@@ -9,7 +10,9 @@ class RecentFollowers extends React.Component{
     state = {
         userItems: [],
         actions: 0,
-        loading: this.props.channelsLoading
+        loading: this.props.channelsLoading,
+        page: 0,
+        order: "desc"
     }
 
     componentDidMount() {
@@ -38,6 +41,25 @@ class RecentFollowers extends React.Component{
                 this.setState(() => ({
                     userItems: response.items,
                     actions: response.actions,
+                    loading: false,
+                    page: 1,
+                    order
+                }));
+            }).catch((error) => {
+                this.setLoading(false);
+            });
+    };
+
+    loadMore = () => {
+        this.setLoading(true);
+        let page = this.state.page + 1;
+        const order = this.state.order;
+        getRecentFollowers(order, page)
+            .then((response) => {
+                this.setState((prevState) => ({
+                    userItems: prevState.userItems.concat(response.items),
+                    actions: response.actions,
+                    page,
                     loading: false
                 }));
             }).catch((error) => {
@@ -57,6 +79,7 @@ class RecentFollowers extends React.Component{
                     showSortOption={true}
                     fetchData={this.fetchData}
                 />
+                <BottomScrollListener onBottom={this.loadMore} />
                 {this.state.loading && <Loader />}
             </div>
         );
