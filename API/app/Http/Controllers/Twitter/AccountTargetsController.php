@@ -100,8 +100,6 @@ class AccountTargetsController extends Controller
 
     public function destroy($username)
     {
-        $username = $username;
-
         $target = $this->selectedChannel->accountTargets()->where("account", strtolower($username))->delete();
 
         return response()->json($this->getAccounts());

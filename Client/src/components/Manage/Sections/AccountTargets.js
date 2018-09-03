@@ -29,8 +29,8 @@ class AccountTargets extends React.Component{
     showSearchView = (searchView = false) => {
         this.setState(() => ({
             searchView
-        }))
-        
+        }));
+
         if(!searchView){
             this.fetchTargets();
         }

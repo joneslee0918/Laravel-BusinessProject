@@ -22,31 +22,14 @@ class KeywordTargetsController extends Controller
         });
     }
 
-    public function index()
-    {
-        $route = 'add.keyword.targets';
-        if ($this->selectedChannel->keywordTargets()->count() > 0) {
-            $route = 'show.keyword.targets';
-        }
-
-        return redirect()->route($route);
-    }
-
-    public function show(Request $request)
+    public function feed(Request $request)
     {
         try {
-            $title = $this->title;
             $items = [];
             $feed = $this->selectedChannel->keywordTargetsFeed();
             $currentTargetIds = $feed->groupBy("target_id")->pluck("target_id")->toArray();
             $targets = $this->selectedChannel->keywordTargets();
-
-            $orderAction = false;
-            $actionBtn = "add-btn";
-            $action = route('twitter.follow');
             $actionsToday = $this->selectedChannel->getDailyStatisticsFor("follows");
-            $targetAction = route('add.keyword.targets');
-            $targetType = "keyword";
 
             if ($target = $targets->whereNotIn("id", $currentTargetIds)->latest()->first()) {
 
@@ -85,27 +68,16 @@ class KeywordTargetsController extends Controller
 
             $items = $this->filterFollowing($items);
 
-            if(count($items) < 1) return redirect()->route("add.keyword.targets");
+            return response()->json([
+                "items" => $this->filterFollowing($items),
+                "targets" => $this->getKeywords(),
+                "actions" => $actionsToday
+            ]);
 
         } catch (\Exception $e) {
             throw $e;
             return response()->json(["error" => $e->getMessage()], 500);
         }
-
-        $view = view('backend.manage.targets.keywords.list', compact('title', 'items', 'targetType','orderAction', 'action', 'actionsToday', 'actionBtn', 'targetAction'));
-
-        if ($request->ajax()) {
-            return response()->json(['html' => $view->render()]);
-        }
-
-        return $view;
-    }
-
-    public function add()
-    {
-        $title = $this->title;
-        $keywords = $this->getKeywords();
-        return view('backend.manage.targets.keywords.search', compact('title', 'keywords'));
     }
 
     public function store(Request $request)
@@ -120,25 +92,17 @@ class KeywordTargetsController extends Controller
 
             $target->create(["keyword" => $keyword, "location" => $location]);
             $keywords = $this->getKeywords();
-            if ($request->ajax()) {
 
-                $view = view('backend.manage.targets.keywords.search', compact('title', 'keywords'))->render();
-                return response()->json(['html' => $view]);
-            }
+            return response()->json($keywords);
         }
 
-        if ($request->ajax()) {
-            return response()->json([], 404);
-        }
-
-        return redirect()->back();
+        return response()->json(['error' => 'Keyword is invalid.'], 404);
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $id = $request->input("id");
         $this->selectedChannel->keywordTargets()->where("id", $id)->delete();
-        return response()->json([], 200);
+        return response()->json($this->getKeywords());
     }
 
     private function getKeywords()
@@ -175,7 +139,6 @@ class KeywordTargetsController extends Controller
     {
         $users = [];
         foreach($tweets->statuses as $tweet){
-           // dd($tweet->user);
             $users[] = $tweet->user->id ;
         }
 

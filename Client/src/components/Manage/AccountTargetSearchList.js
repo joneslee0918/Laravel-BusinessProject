@@ -80,11 +80,11 @@ export default class AccountTargetSearchList extends React.Component{
                                         <div className="added-items">
                                         
                                             {this.props.targets.map((target) => <TargetItem key={target.id} target={target} removeTarget={this.removeTarget} />)}
-                                            {this.state.loading && <Loader />}
+                                            
                                         </div>
                                     </div>
                                 }
-
+                                {this.state.loading && <Loader />}
                         </div>
                     </div>
                 </div>

@@ -49,3 +49,28 @@ export const destroyAccountTarget = (target) => {
         return response.data;
     })
 };
+
+
+export const getKeywordTargets = () => {
+    return axios.get(`${apiUrl}/twitter/keyword-targets/feed`)
+    .then((response) => {
+        return response.data;
+    });
+};
+
+
+export const addKeywordTarget = (target) => {
+    return axios.post(`${apiUrl}/twitter/keyword-targets/store`,{
+        keyword: target
+    })
+    .then((response) => {
+        return response.data;
+    })
+};
+
+export const destroyKeywordTarget = (target) => {
+    return axios.delete(`${apiUrl}/twitter/keyword-targets/destroy/${target}`)
+    .then((response) => {
+        return response.data;
+    })
+};
