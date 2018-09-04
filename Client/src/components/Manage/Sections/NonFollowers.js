@@ -11,7 +11,7 @@ class NonFollowers extends React.Component{
         userItems: [],
         actions: 0,
         loading: this.props.channelsLoading,
-        page: 0,
+        page: 1,
         order: "desc"
     }
 

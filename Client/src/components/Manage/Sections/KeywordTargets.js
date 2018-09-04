@@ -13,7 +13,7 @@ class KeywordTargets extends React.Component{
         targets: [],
         loading: this.props.channelsLoading,
         searchView: false,
-        page: 0
+        page: 1
     }
 
     componentDidMount() {

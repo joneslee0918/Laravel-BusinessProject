@@ -10,7 +10,7 @@ class Fans extends React.Component{
     state = {
         userItems: [],
         actions: 0,
-        page: 0,
+        page: 1,
         order: "desc",
         loading: this.props.channelsLoading
     }
