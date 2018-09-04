@@ -3,8 +3,67 @@ import Loader from '../components/Loader';
 import AccountTargetSearchList from './Manage/AccountTargetSearchList';
 import KeywordTargetSearchList from './Manage/KeywordTargetSearchList';
 
-const UserList = (
-        {   
+class UserList extends React.Component{
+
+    constructor(props){
+        super(props);    
+        
+        this.state = {
+            buttons: this.createButtons()
+        };
+    }
+
+    actionButton = this.props.actionType === "follow" ? "add" : "sub";
+    defaultActionSymbol = this.actionButton === "add" ? "fa-plus-circle" : "fa-minus-circle";
+
+    componentDidUpdate(prevProps){
+
+        if(this.props.userItems !== prevProps.userItems){
+            this.setState(() => ({
+                buttons: this.createButtons()
+            })); 
+        }
+    }
+
+    createButtons = () => {
+        return this.props.userItems.map((userItem) => (
+            {
+                name: userItem.id,
+                actionSymbol: this.defaultActionSymbol,
+                action: this.actionButton,
+                disabled: false
+            }
+        ));
+    };
+
+    perform = (index) => {
+        
+        if(!this.state.buttons[index].disabled){
+
+            let buttons = this.state.buttons;
+            buttons[index].disabled = true;
+            buttons[index].actionSymbol = "fa-ban";
+
+            this.setState(() => ({
+                buttons: buttons
+            }));
+
+            this.props.perform(this.state.buttons[index].name)
+            .then((response) => console.log(response))
+            .catch(() => {
+
+                buttons[index].disabled = false;
+                buttons[index].actionSymbol = this.defaultActionSymbol;
+
+                this.setState(() => ({
+                    buttons
+                }));
+            });  
+        }
+    };
+
+    render(){
+        const {   
             userItems = [],
             loading = false,
             showTargetLink = false,
@@ -18,75 +77,74 @@ const UserList = (
             actions = 0,
             fetchData = (order = 'desc') => {},
             perform = (userId) => {}
-        }
-    ) => { 
-    
-    const actionButton = actionType === "follow" ? "add" : "sub";
+        } = this.props;
 
-    const targetSearchView = (
-        (targetType == "account" ? 
-        <AccountTargetSearchList 
-        targets={targets} 
-        showSearchView={showSearchView} 
-        reloadTargets={reloadTargets}    
-        /> 
-        : 
-        <KeywordTargetSearchList 
+        const targetSearchView = (
+            (targetType == "account" ? 
+            <AccountTargetSearchList 
             targets={targets} 
-            showSearchView={showSearchView}
-            reloadTargets={reloadTargets}
-            />
-        )
-    );
-
-    return (
-        <div>
-            {userItems.length < 1 ? 
-                            
-                (loading ? <Loader />
-                    : 
-                    (showTargetLink ? 
-
-                     targetSearchView
-
-                    :
-
-                    <div className="no-data">
-                        No data, nothing to do... :(
-                    </div>
-                    )
-                ) :
-                
-                (  searchView ? 
-                        targetSearchView
-                    :
-                    <div>
-                        <ListActions actionType={ actionType } actions={ actions } />
-                        <div className="row">
-                            <div className="col-xs-12">
-                                <div className="item-list shadow-box">
-                                    <div className="item-header">
-                                        { showTargetLink &&  <TargetsLink targetType={ targetType } showSearchView={showSearchView} /> }
-                                        { showSortOption && <SortOption sortBy={fetchData} /> }
+            showSearchView={showSearchView} 
+            reloadTargets={reloadTargets}    
+            /> 
+            : 
+            <KeywordTargetSearchList 
+                targets={targets} 
+                showSearchView={showSearchView}
+                reloadTargets={reloadTargets}
+                />
+            )
+        );
+    
+        return (
+            <div>
+                {userItems.length < 1 ? 
+                                
+                    (loading ? <Loader />
+                        : 
+                        (showTargetLink ? 
+    
+                         targetSearchView
+    
+                        :
+    
+                        <div className="no-data">
+                            No data, nothing to do... :(
+                        </div>
+                        )
+                    ) :
+                    
+                    (  searchView ? 
+                            targetSearchView
+                        :
+                        <div>
+                            <ListActions actionType={ actionType } actions={ actions } />
+                            <div className="row">
+                                <div className="col-xs-12">
+                                    <div className="item-list shadow-box">
+                                        <div className="item-header">
+                                            { showTargetLink &&  <TargetsLink targetType={ targetType } showSearchView={showSearchView} /> }
+                                            { showSortOption && <SortOption sortBy={fetchData} /> }
+                                        </div>
+    
+                                        {userItems.map((item, index) => (
+                                            <UserItem key={index} 
+                                            indexValue={index}
+                                            userItem={ item } 
+                                            actionButton={ this.state.buttons[index] }
+                                            perform={this.perform}
+                                         />
+                                        ))}
+                                        
                                     </div>
-
-                                    {userItems.map((item) => (
-                                        <UserItem key={item.id} 
-                                        userItem={ item } 
-                                        actionButton={ actionButton }
-                                        perform={perform}
-                                     />
-                                    ))}
-                                    
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )
-            }
-        </div>     
-        
-    );
+                    )
+                }
+            </div>     
+            
+        );
+    }
 }
 
 const ListActions = ({ actionType, actions }) => (
@@ -116,7 +174,7 @@ const SortOption = ({ sortBy }) => (
     </div>
 );
 
-const UserItem = ({ userItem, actionButton, perform }) => (
+const UserItem = ({ userItem, actionButton, perform, indexValue }) => (
     <div className="item-row">
         <div className="profile-info pull-left">
             <img className="pull-left" src={userItem.profile_image_url} />
@@ -131,50 +189,23 @@ const UserItem = ({ userItem, actionButton, perform }) => (
             </div>
         </div>
 
-        <UserActionButtons actionButton={ actionButton } perform={perform} userItem={userItem} />
+        <UserActionButtons indexValue={indexValue} actionButton={ actionButton } perform={perform} userItem={userItem} />
     </div>
 );
 
-class UserActionButtons extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
-    state = {
-        actionSymbol: this.props.actionButton === "add" ? "fa-plus-circle" : "fa-minus-circle",
-        disabled: false
-    };
-
-    perform = () => {
-        const prevActionSymbol = this.state.actionSymbol;
-        if(!this.state.disabled){
-            this.setState(() => ({
-                actionSymbol: "fa-ban",
-                disabled: true
-            }));
-
-            this.props.perform(this.props.userItem.id)
-            .then((response) => console.log(response))
-            .catch(() => {
-                this.setState(() => ({
-                    actionSymbol: prevActionSymbol,
-                    disabled: false
-                }));
-            });  
-        }
-    };
-
-    render(){
-        return (
-            <div className="item-actions pull-right">
-                <ul>
-                    <li className="text-links"><a href="#">Reply</a></li>
-                    <li className="text-links"><a href="#">Whitelist</a></li>
-                    <li className="btn-links"><div onClick={this.perform} className={`${this.props.actionButton}-btn action-btn`}><i className={`fa ${this.state.actionSymbol}`}></i></div></li>
-                </ul>
-            </div>
-        ); 
-    }
-} 
+const UserActionButtons = ({indexValue, actionButton, perform }) => (
+        <div className="item-actions pull-right">
+            <ul>
+                <li className="text-links"><a href="#">Reply</a></li>
+                <li className="text-links"><a href="#">Whitelist</a></li>
+                <li className="btn-links">
+                    {!!actionButton && 
+                    <div onClick={() => perform(indexValue)} className={`${actionButton.action}-btn action-btn`}>
+                        <i className={`fa ${actionButton.actionSymbol}`}></i>
+                    </div>}
+                </li>
+            </ul>
+        </div>
+); 
 
 export default UserList;
