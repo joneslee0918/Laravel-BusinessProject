@@ -29,7 +29,7 @@ const Compose = ({ channels }) => (
                 <div className="modal-body">
                     <form id="draft_form">
                         <DraftEditor />
-                        <div id="imagePlugin"></div>
+                       
                     </form>
                 </div>
                 <div className="editor-icons">

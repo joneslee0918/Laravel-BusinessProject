@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
-import { getAccountTargets } from '../../../requests/twitter/channels';
+import { getAccountTargets, follow } from '../../../requests/twitter/channels';
 import channelSelector from '../../../selectors/channels';
 import Loader from '../../Loader';
 
@@ -37,6 +37,22 @@ class AccountTargets extends React.Component{
         if(!searchView){
             this.fetchTargets();
         }
+    };
+
+    perform = (userId) => {
+        this.setState((prevState) => ({
+            actions: prevState.actions + 1
+        }));
+
+        return follow(userId)
+            .then((response) => response)
+            .catch((error) => {
+                this.setState((prevState) => ({
+                    actions: prevState.actions - 1
+                }));
+
+                return Promise.reject(error);
+            });
     };
 
     setLoading = (loading = false) => {
@@ -98,6 +114,7 @@ class AccountTargets extends React.Component{
                     targets={this.state.targets}
                     actions={this.state.actions}
                     loading={this.state.loading}
+                    perform={this.perform}
                 />
                 <BottomScrollListener onBottom={this.loadMore} />
                 {this.state.loading && <Loader />}

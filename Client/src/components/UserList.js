@@ -16,7 +16,8 @@ const UserList = (
             showSortOption = false,
             actionType = "follow",
             actions = 0,
-            fetchData = (order = 'desc') => {}
+            fetchData = (order = 'desc') => {},
+            perform = (userId) => {}
         }
     ) => { 
     
@@ -70,7 +71,11 @@ const UserList = (
                                     </div>
 
                                     {userItems.map((item) => (
-                                        <UserItem key={item.id} userItem={ item } actionButton={ actionButton } />
+                                        <UserItem key={item.id} 
+                                        userItem={ item } 
+                                        actionButton={ actionButton }
+                                        perform={perform}
+                                     />
                                     ))}
                                     
                                 </div>
@@ -111,7 +116,7 @@ const SortOption = ({ sortBy }) => (
     </div>
 );
 
-const UserItem = ({ userItem, actionButton }) => (
+const UserItem = ({ userItem, actionButton, perform }) => (
     <div className="item-row">
         <div className="profile-info pull-left">
             <img className="pull-left" src={userItem.profile_image_url} />
@@ -126,23 +131,50 @@ const UserItem = ({ userItem, actionButton }) => (
             </div>
         </div>
 
-        <UserActionButtons actionButton={ actionButton } />
+        <UserActionButtons actionButton={ actionButton } perform={perform} userItem={userItem} />
     </div>
 );
 
-const UserActionButtons = ({ actionButton }) => {
+class UserActionButtons extends React.Component{
+    constructor(props){
+        super(props);
+    }
 
-    const actionSymbol = actionButton === "add" ? "plus" : "minus";
+    state = {
+        actionSymbol: this.props.actionButton === "add" ? "fa-plus-circle" : "fa-minus-circle",
+        disabled: false
+    };
 
-    return (
-        <div className="item-actions pull-right">
-            <ul>
-                <li className="text-links"><a href="#">Reply</a></li>
-                <li className="text-links"><a href="#">Whitelist</a></li>
-                <li className="btn-links"><div data-user-id="" className={`${actionButton}-btn action-btn`}><i className={`fa fa-${actionSymbol}-circle`}></i></div></li>
-            </ul>
-        </div>
-    );
-}
+    perform = () => {
+        const prevActionSymbol = this.state.actionSymbol;
+        if(!this.state.disabled){
+            this.setState(() => ({
+                actionSymbol: "fa-ban",
+                disabled: true
+            }));
+
+            this.props.perform(this.props.userItem.id)
+            .then((response) => console.log(response))
+            .catch(() => {
+                this.setState(() => ({
+                    actionSymbol: prevActionSymbol,
+                    disabled: false
+                }));
+            });  
+        }
+    };
+
+    render(){
+        return (
+            <div className="item-actions pull-right">
+                <ul>
+                    <li className="text-links"><a href="#">Reply</a></li>
+                    <li className="text-links"><a href="#">Whitelist</a></li>
+                    <li className="btn-links"><div onClick={this.perform} className={`${this.props.actionButton}-btn action-btn`}><i className={`fa ${this.state.actionSymbol}`}></i></div></li>
+                </ul>
+            </div>
+        ); 
+    }
+} 
 
 export default UserList;

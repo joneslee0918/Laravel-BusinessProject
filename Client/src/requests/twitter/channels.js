@@ -120,14 +120,14 @@ export const getFollowing = (order = 'desc', page = 1) => {
 
 
 export const follow = (userId) => {
-    return axios.get(`${apiUrl}/twitter/follow/${userId}`)
+    return axios.patch(`${apiUrl}/twitter/follow/${userId}`)
     .then((response) => {
         return response.data;
     });
 };
 
 export const unfollow = (userId) => {
-    return axios.get(`${apiUrl}/twitter/unfollow/${userId}`)
+    return axios.patch(`${apiUrl}/twitter/unfollow/${userId}`)
     .then((response) => {
         return response.data;
     });
