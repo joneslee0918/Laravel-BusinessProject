@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Route, Redirect} from 'react-router-dom';
 import TopMenu from "../components/Menus/TopMenu";
+import Composer from "../components/Compose";
 
 export const PrivateRoute = ({
     isAuthenticated, 
@@ -12,6 +13,7 @@ export const PrivateRoute = ({
         (   <div>
                 <TopMenu />
                 <Component {...props} />
+                <Composer />
             </div>
         ) : (
             <Redirect to="/" />

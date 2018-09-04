@@ -16,7 +16,7 @@ const TopMenu = () => (
             <li><a href="#" className="top-icons"><i className="fa fa-bell"></i></a></li>  
             <li><a href="#" className="top-icons"><i className="fa fa-gear"></i></a></li>
             <li>
-                <a href="#" className="compose-btn">Compose</a>
+                <a data-toggle="modal" data-target="#compose" className="compose-btn">Compose</a>
             </li>  
         </ul>
     </div>

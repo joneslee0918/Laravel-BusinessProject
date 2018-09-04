@@ -117,3 +117,18 @@ export const getFollowing = (order = 'desc', page = 1) => {
         return response.data;
     });
 };
+
+
+export const follow = (userId) => {
+    return axios.get(`${apiUrl}/twitter/follow/${userId}`)
+    .then((response) => {
+        return response.data;
+    });
+};
+
+export const unfollow = (userId) => {
+    return axios.get(`${apiUrl}/twitter/unfollow/${userId}`)
+    .then((response) => {
+        return response.data;
+    });
+};

@@ -30,11 +30,11 @@ class FollowController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function follow(Request $request)
+    public function follow($userId)
     {
 
         try{
-            if($userId = $request->input("user_id")){
+            if($userId){
 
                 if($this->user->getLimit("twitter_daily_follows") > $this->selectedChannel->getDailyStatisticsFor("follows")){
 

@@ -27,10 +27,10 @@ class UnfollowController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function unfollow(Request $request)
+    public function unfollow($userId)
     {
         try{
-            if($userId = $request->input("user_id")){
+            if($userId){
 
                 if($this->user->getLimit("twitter_daily_unfollows") > $this->selectedChannel->getDailyStatisticsFor("unfollows")){
 

@@ -45,5 +45,8 @@ Route::prefix("twitter")->group(function(){
         Route::get('recent-followers', 'Twitter\RecentFollowersController@feed');
         Route::get('inactive-following', 'Twitter\InactiveFollowingController@feed');
         Route::get('following', 'Twitter\FollowingController@feed');
+
+        Route::patch('follow/{userId}', 'Twitter\Actions\FollowController@follow');
+        Route::patch('unfollow/{userId}', 'Twitter\Actions\UnfollowController@unfollow');
     });
 });
