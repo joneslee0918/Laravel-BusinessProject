@@ -2,6 +2,8 @@ import React from 'react';
 import Loader from '../components/Loader';
 import AccountTargetSearchList from './Manage/AccountTargetSearchList';
 import KeywordTargetSearchList from './Manage/KeywordTargetSearchList';
+import SweetAlert from 'sweetalert2-react';
+
 
 class UserList extends React.Component{
 
@@ -9,7 +11,11 @@ class UserList extends React.Component{
         super(props);    
         
         this.state = {
-            buttons: this.createButtons()
+            buttons: this.createButtons(),
+            error: {
+                statusText: "",
+                message: ""
+            }
         };
     }
 
@@ -47,7 +53,7 @@ class UserList extends React.Component{
             buttons[index].actionSymbol = this.loadingActionSymbol;
 
             this.setState(() => ({
-                buttons: buttons
+                buttons
             }));
 
             this.props.perform(this.state.buttons[index].name)
@@ -59,13 +65,16 @@ class UserList extends React.Component{
                     buttons
                 }));
             })
-            .catch(() => {
-
+            .catch((error) => {
                 buttons[index].disabled = false;
                 buttons[index].actionSymbol = this.defaultActionSymbol;
 
                 this.setState(() => ({
-                    buttons
+                    buttons,
+                    error: {
+                        statusText:error.response.statusText,
+                        message: error.response.data.message
+                    }
                 }));
             });  
         }
@@ -105,7 +114,16 @@ class UserList extends React.Component{
         );
     
         return (
-            <div>
+            
+            <div> 
+            
+            <SweetAlert
+                show={!!this.state.error.message}
+                title={this.state.error.statusText}
+                text={this.state.error.message}
+                onConfirm={() => this.setState({ error: {statusText: "", message: ""} })}
+            />
+
                 {userItems.length < 1 ? 
                                 
                     (loading ? <Loader />
