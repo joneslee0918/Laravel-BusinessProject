@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
-import { getKeywordTargets } from '../../../requests/twitter/channels';
+import { getKeywordTargets, follow } from '../../../requests/twitter/channels';
 import channelSelector from '../../../selectors/channels';
 import Loader from '../../Loader';
 
@@ -43,6 +43,22 @@ class KeywordTargets extends React.Component{
         this.setState(() => ({
             loading
         }));
+    };
+
+    perform = (userId) => {
+        this.setState((prevState) => ({
+            actions: prevState.actions + 1
+        }));
+
+        return follow(userId)
+            .then((response) => response)
+            .catch((error) => {
+                this.setState((prevState) => ({
+                    actions: prevState.actions - 1
+                }));
+
+                return Promise.reject(error);
+            });
     };
 
     fetchTargets = () => {
@@ -96,6 +112,7 @@ class KeywordTargets extends React.Component{
                     targets={this.state.targets}
                     actions={this.state.actions}
                     loading={this.state.loading}
+                    perform={this.perform}
                 />
                 <BottomScrollListener onBottom={this.loadMore} />
                 {this.state.loading && <Loader />}

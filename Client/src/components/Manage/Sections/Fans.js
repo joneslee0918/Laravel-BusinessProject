@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
-import { getFans } from '../../../requests/twitter/channels';
+import { getFans, follow } from '../../../requests/twitter/channels';
 import channelSelector from '../../../selectors/channels';
 import Loader from '../../Loader';
 
@@ -32,6 +32,22 @@ class Fans extends React.Component{
         this.setState(() => ({
             loading
         }));
+    };
+
+    perform = (userId) => {
+        this.setState((prevState) => ({
+            actions: prevState.actions + 1
+        }));
+
+        return follow(userId)
+            .then((response) => response)
+            .catch((error) => {
+                this.setState((prevState) => ({
+                    actions: prevState.actions - 1
+                }));
+
+                return Promise.reject(error);
+            });
     };
 
     fetchData = (order = 'desc') => {
@@ -78,6 +94,7 @@ class Fans extends React.Component{
                     loading={this.state.loading}
                     showSortOption={true}
                     fetchData={this.fetchData}
+                    perform={this.perform}
                 />
                 <BottomScrollListener onBottom={this.loadMore} />
                 {this.state.loading && <Loader />}
