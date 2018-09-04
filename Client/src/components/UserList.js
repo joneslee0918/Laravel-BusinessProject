@@ -15,6 +15,8 @@ class UserList extends React.Component{
 
     actionButton = this.props.actionType === "follow" ? "add" : "sub";
     defaultActionSymbol = this.actionButton === "add" ? "fa-plus-circle" : "fa-minus-circle";
+    successActionSymbol = "fa-check";
+    loadingActionSymbol = "fa-circle-o-notch fa-spin";
 
     componentDidUpdate(prevProps){
 
@@ -42,14 +44,21 @@ class UserList extends React.Component{
 
             let buttons = this.state.buttons;
             buttons[index].disabled = true;
-            buttons[index].actionSymbol = "fa-ban";
+            buttons[index].actionSymbol = this.loadingActionSymbol;
 
             this.setState(() => ({
                 buttons: buttons
             }));
 
             this.props.perform(this.state.buttons[index].name)
-            .then((response) => console.log(response))
+            .then((response) => {
+                buttons[index].disabled = true;
+                buttons[index].actionSymbol = this.successActionSymbol;
+
+                this.setState(() => ({
+                    buttons
+                }));
+            })
             .catch(() => {
 
                 buttons[index].disabled = false;
@@ -201,7 +210,7 @@ const UserActionButtons = ({indexValue, actionButton, perform }) => (
                 <li className="btn-links">
                     {!!actionButton && 
                     <div onClick={() => perform(indexValue)} className={`${actionButton.action}-btn action-btn`}>
-                        <i className={`fa ${actionButton.actionSymbol}`}></i>
+                        <i className={`fa ${actionButton.actionSymbol} ${actionButton.disabled ? 'grey-txt' : ''}`}></i>
                     </div>}
                 </li>
             </ul>
