@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import Dashboard from '../components/Manage/Sections/Dashboard';
 import AccountTargets from '../components/Manage/Sections/AccountTargets';
 import KeywordTargets from '../components/Manage/Sections/KeywordTargets';
@@ -14,6 +14,7 @@ import BlackList from '../components/Manage/Sections/BlackList';
 
 const ManageRouter = () => (
     <div>
+        <Route exact path={`/manage`} render={() => <Redirect to="/manage/dashboard"/>} />
         <Route path={`/manage/dashboard`} component={Dashboard} />
         <Route path={`/manage/account-targets`} component={AccountTargets} />
         <Route path={`/manage/keyword-targets`} component={KeywordTargets} />

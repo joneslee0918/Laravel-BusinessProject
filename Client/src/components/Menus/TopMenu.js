@@ -6,9 +6,9 @@ const TopMenu = () => (
         <a href="#" className="brand"><img src="/images/uniclix.png"/></a>
 
         <ul className="top-menu">
-            <li><NavLink to="/manage/dashboard" activeClassName="is-active">MANAGE</NavLink></li> 
-            <li><NavLink to="/scheduled" activeClassName="is-active">SCHEDULED</NavLink></li>  
-            <li><NavLink to="/accounts" activeClassName="is-active">ACCOUNTS</NavLink></li>  
+            <li><NavLink to="/manage" activeClassName="active">MANAGE</NavLink></li> 
+            <li><NavLink to="/scheduled" activeClassName="active">SCHEDULED</NavLink></li>  
+            <li><NavLink to="/accounts" activeClassName="active">ACCOUNTS</NavLink></li>  
         </ul>
 
         <ul className="nav-buttons">
