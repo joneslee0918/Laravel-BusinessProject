@@ -1,16 +1,6 @@
 import React from 'react';
 import {convertToRaw} from 'draft-js';
 import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
-import createHashtagPlugin from 'draft-js-hashtag-plugin';
-import createEmojiPlugin from 'draft-js-emoji-plugin';
-// import ImageUploader from 'react-images-upload';
-// import editorStyles from './Plugins/css/editorStyles.css';
-// import hashtagStyles from './Plugins/css/hashtagStyles.css';
-
-const hashtagPlugin = createHashtagPlugin();
-const emojiPlugin = createEmojiPlugin();
-const { EmojiSuggestions} = emojiPlugin;
-const plugins = [hashtagPlugin, emojiPlugin];
 
 
 export default class DraftEditor extends React.Component {
@@ -48,11 +38,11 @@ export default class DraftEditor extends React.Component {
                     <Editor
                         editorState={this.state.editorState}
                         onChange={this.onChange}
-                        plugins={plugins}
+                        plugins={this.props.editorPlugins}
                         placeholder="What's on your mind?"
                         ref={(element) => { this.editor = element; }}
                     />
-                    <EmojiSuggestions />
+                    {this.props.emojiSuggestions}
                 </div>
             </div>
         );

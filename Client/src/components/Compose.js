@@ -2,10 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import channelSelector from '../selectors/channels';
 import DraftEditor from './DraftEditor';
+import createHashtagPlugin from 'draft-js-hashtag-plugin';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 
+const hashtagPlugin = createHashtagPlugin();
 const emojiPlugin = createEmojiPlugin();
-const { EmojiSelect } = emojiPlugin;
+const { EmojiSuggestions, EmojiSelect} = emojiPlugin;
+const plugins = [hashtagPlugin, emojiPlugin];
 
 const Compose = ({ channels }) => (
     <div className="modal fade" id="compose">
@@ -28,16 +31,14 @@ const Compose = ({ channels }) => (
 
                 <div className="modal-body">
                     <form id="draft_form">
-                        <DraftEditor />
+                        <DraftEditor editorPlugins={plugins} emojiSuggestions={<EmojiSuggestions/>}/>
                        
                     </form>
                 </div>
                 <div className="editor-icons">
                     <i className="fa fa-image upload-images"></i>
                     <i className="fa fa-map-marker add-location"></i>
-                    <i id="emojiPlugin" className="fa">
-                        <EmojiSelect />
-                    </i>
+                    <EmojiSelect />
                     <i className="fa fa-hashtag add-hashtag"></i>
                 </div>
 

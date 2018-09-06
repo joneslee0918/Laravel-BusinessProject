@@ -93,8 +93,7 @@ class UserList extends React.Component{
             showSortOption = false,
             actionType = "follow",
             actions = 0,
-            fetchData = (order = 'desc') => {},
-            perform = (userId) => {}
+            fetchData = (order = 'desc') => {}           
         } = this.props;
 
         const targetSearchView = (

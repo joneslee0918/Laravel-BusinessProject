@@ -8,16 +8,12 @@
   .draftJsEmojiPlugin__emojiSelectButton__3sPol, .draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu {
     margin: 0;
     padding: 0;
-    width: 2.5em;
-    height: 1.5em;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    line-height: 1.2em;
     font-size: 1.5em;
-    color: #888;
+    color: #bbb;
     background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 1.5em;
+    border: none;
     cursor: pointer;
   }
   
@@ -27,11 +23,11 @@
   }
   
   .draftJsEmojiPlugin__emojiSelectButton__3sPol:hover, .draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu:hover {
-    background: #f3f3f3;
+    background: #ededed;
   }
   
   .draftJsEmojiPlugin__emojiSelectButton__3sPol:active, .draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu:active {
-    background: #e6e6e6;
+    background: #ededed;
   }
   
   .draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu {
