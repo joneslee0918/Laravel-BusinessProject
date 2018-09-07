@@ -132,3 +132,12 @@ export const unfollow = (userId) => {
         return response.data;
     });
 };
+
+export const tweet = (tweet) => {
+    return axios.post(`${apiUrl}/twitter/tweet`, {
+        tweet
+    })
+    .then((response) => {
+        return response.data;
+    });
+};

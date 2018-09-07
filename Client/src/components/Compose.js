@@ -1,35 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {convertToRaw, Modifier, EditorState} from 'draft-js';
+import {Modifier, EditorState} from 'draft-js';
 import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
 import channelSelector from '../selectors/channels';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import hashtagSuggestions from '../fixtures/hashtagSuggestions';
+import {tweet} from '../requests/twitter/channels';
 import 'draft-js-mention-plugin/lib/plugin.css';
 
-// const hashtagPlugin = createHashtagPlugin();
-const emojiPlugin = createEmojiPlugin();
-const hashtagMentionPlugin = createMentionPlugin({
-    mentionPrefix: "#",
-    mentionTrigger: "#"
-});
-
-const { EmojiSuggestions, EmojiSelect} = emojiPlugin;
-const { MentionSuggestions: HashtagSuggestions } = hashtagMentionPlugin;
-
-const plugins = [emojiPlugin, hashtagMentionPlugin];
 
 class Compose extends React.Component{
+
+    emojiPlugin = createEmojiPlugin();
+    hashtagMentionPlugin = createMentionPlugin({
+        mentionPrefix: "#",
+        mentionTrigger: "#"
+    });
 
     state = {
         editorState: createEditorStateWithText(''),
         hashagSuggestions: hashtagSuggestions
     };
 
+    componentDidUpdate(prevProps) {
+        if(prevProps.channels !== this.props.channels){
+            
+        }
+    }
+
     onChange = (editorState) => {
-        //const contentState = editorState.getCurrentContent();
-        //console.log('content state', convertToRaw(contentState));
         this.setState(() => ({
             editorState
         }));
@@ -61,8 +61,19 @@ class Compose extends React.Component{
 
     };
 
+    postTweet = () => {
+        const editorState = this.state.editorState;
+        const content = editorState.getCurrentContent().getPlainText();
+
+        tweet(content).then((response) => response);
+    }
+
     render(){
         const {channels} = this.props;
+        const { EmojiSuggestions, EmojiSelect} = this.emojiPlugin;
+        const { MentionSuggestions: HashtagSuggestions } = this.hashtagMentionPlugin;
+        const plugins = [this.emojiPlugin, this.hashtagMentionPlugin];
+
         return (
             <div className="modal fade" id="compose">
                 <div className="modal-dialog compose-dialog">
@@ -114,7 +125,7 @@ class Compose extends React.Component{
                         <div className="modal-footer">
                             <div className="publish-btn-group gradient-background-teal-blue">
                                 <button className="picker-btn fa fa-caret-up naked-button"></button>
-                                <button className="publish-btn naked-button">Post at best time</button>
+                                <button onClick={this.postTweet} className="publish-btn naked-button">Post at best time</button>
                             </div>
                         </div>
         

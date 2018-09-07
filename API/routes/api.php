@@ -48,5 +48,7 @@ Route::prefix("twitter")->group(function(){
 
         Route::patch('follow/{userId}', 'Twitter\Actions\FollowController@follow');
         Route::patch('unfollow/{userId}', 'Twitter\Actions\UnfollowController@unfollow');
+
+        Route::post('tweet', 'Twitter\Actions\StatusController@tweet');
     });
 });

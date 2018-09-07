@@ -49,6 +49,16 @@ trait Tweetable
         }
     }
 
+        /**
+     * @param $userId
+     * @return mixed
+     */
+    public function tweet($tweet)
+    {
+        $this->setAsCurrentUser();
+        return Twitter::postTweet(["status" => $tweet]);
+    }
+
     /**
      * @param $userId
      * @return mixed
