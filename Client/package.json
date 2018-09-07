@@ -26,6 +26,7 @@
     "draft-js": "^0.10.5",
     "draft-js-emoji-plugin": "^2.1.0",
     "draft-js-hashtag-plugin": "^2.0.3",
+    "draft-js-mention-plugin": "^3.1.1",
     "draft-js-plugins-editor": "^2.1.1",
     "express": "4.16.3",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
