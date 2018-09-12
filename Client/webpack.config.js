@@ -46,6 +46,18 @@ module.exports = (env) => {
                 }
               ]
           })
+        },
+        {
+          test: /\.svg$/,
+          loaders: [
+            'babel-loader',
+            {
+              loader: 'react-svg-loader',
+              query: {
+                jsx: true
+              }
+            }
+          ]
         }]
       },      
       plugins: [

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {Modifier, EditorState} from 'draft-js';
 import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
+import ImageUploader from 'react-images-upload';
 import channelSelector from '../selectors/channels';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
@@ -13,6 +14,7 @@ import 'draft-js-mention-plugin/lib/plugin.css';
 class Compose extends React.Component{
 
     emojiPlugin = createEmojiPlugin();
+    imageIcon = React.createRef();
     hashtagMentionPlugin = createMentionPlugin({
         mentionPrefix: "#",
         mentionTrigger: "#"
@@ -23,7 +25,8 @@ class Compose extends React.Component{
         editorState: createEditorStateWithText(''),
         hashtagSuggestions: hashtagSuggestionList,
         selectChannelsModal: false,
-        publishChannels: this.setPublishChannels()
+        publishChannels: this.setPublishChannels(),
+        pictures: []
     };
 
     componentDidUpdate(prevProps) {
@@ -50,6 +53,13 @@ class Compose extends React.Component{
         }));
     };
 
+    onImageIconClick = () => {
+        this.imageIcon.current.
+        inputElement.
+        previousSibling.
+        click();
+    }
+
     setPublishChannels(){
         let publishChannels = localStorage.getItem('publishChannels');
         
@@ -60,6 +70,12 @@ class Compose extends React.Component{
     onChange = (editorState) => {
         this.setState(() => ({
             editorState
+        }));
+    };
+
+    onDrop = (picture) => {
+        this.setState(() => ({
+            pictures: this.state.pictures.concat(picture),
         }));
     };
 
@@ -80,7 +96,6 @@ class Compose extends React.Component{
     toggleSelectChannelsModal = () => {
 
         if(this.state.selectChannelsModal){
-            console.log("here");
             localStorage.setItem('publishChannels', JSON.stringify(this.state.publishChannels));
         }
 
@@ -98,7 +113,6 @@ class Compose extends React.Component{
         this.setState(() => ({
             editorState: es
         }), () => this.focus());
-
     };
 
     postTweet = () => {
@@ -166,6 +180,17 @@ class Compose extends React.Component{
                                         placeholder="What's on your mind?"
                                         ref={(element) => { this.editor = element; }}
                                     />
+                                    <ImageUploader
+                                        withIcon={false}
+                                        buttonText=''
+                                        onChange={this.onDrop}
+                                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                                        maxFileSize={5242880}
+                                        withPreview={true}
+                                        withLabel={false}
+                                        buttonClassName='dnone'
+                                        ref={this.imageIcon}
+                                    />
                                     <EmojiSuggestions />
                                     <HashtagSuggestions
                                         onSearchChange={this.onHashtagSearchChange}
@@ -178,7 +203,7 @@ class Compose extends React.Component{
                             </form>
                         </div>
                         <div className="editor-icons">
-                            <i className="fa fa-image upload-images"></i>
+                            <i onClick={this.onImageIconClick} className="fa fa-image upload-images"></i>
                             <i className="fa fa-map-marker add-location"></i>
                             <EmojiSelect />
                             <i onClick={this.onHashIconClick} className="fa fa-hashtag add-hashtag"></i>
