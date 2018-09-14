@@ -34,10 +34,11 @@ class UserList extends React.Component{
     }
 
     createButtons = () => {
+        console.log(this.props.userItems);
         return this.props.userItems.map((userItem) => (
             {   
                 id: userItem.id,
-                name: userItem.username,
+                name: userItem.screen_name,
                 actionSymbol: this.defaultActionSymbol,
                 action: this.actionButton,
                 disabled: false
