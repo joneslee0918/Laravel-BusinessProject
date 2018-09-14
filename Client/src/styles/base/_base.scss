@@ -87,6 +87,34 @@ input {
     color: #ffffff;
 }
 
+.login-container{
+    overflow:hidden;
+}
+
+.box-container{
+    width: 300px;
+    padding: 25px 50px;
+    border: 1px solid #ccc;
+    margin: 100px auto;
+    text-align: center;
+}
+
+.box-container > button{
+    background: #00aced;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    font-family: open-sansSemiBold;
+}
+
+.divider{
+    border-top:1px solid #ccc;
+    width:100%;
+    margin:20px auto;
+}
+
 .search-bar{
     overflow:hidden;
 }
@@ -268,7 +296,7 @@ input {
     text-transform: uppercase;
 }
 
-.brand {
+.navbar-uniclix .brand {
     display: block;
     float: left;
     margin-left: 90px;

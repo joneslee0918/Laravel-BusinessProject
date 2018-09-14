@@ -25,13 +25,18 @@ export class LoginPage extends React.Component{
 
     render(){
         return (
-            <div>
-            <TwitterLogin loginUrl={twitterAccessTokenUrl}
-                        onFailure={this.onFailure} onSuccess={this.onSuccess}
-                        requestTokenUrl={twitterRequestTokenUrl}
-                        showIcon={true}
-                        >
-            </TwitterLogin>
+            <div className="login-container">
+
+                <div className="box-container">
+                    <a href="#" className="brand"><img src="/images/uniclix.png"/></a>
+                    <div className="divider"></div>
+                    <TwitterLogin loginUrl={twitterAccessTokenUrl}
+                                onFailure={this.onFailure} onSuccess={this.onSuccess}
+                                requestTokenUrl={twitterRequestTokenUrl}
+                                showIcon={false}
+                                >
+                    </TwitterLogin>
+                </div>
             </div>  
         );
     }
