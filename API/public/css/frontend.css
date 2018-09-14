@@ -1,0 +1,443 @@
+html, body {
+    background-color: #fff;
+    color: #636b6f;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-weight: 100;
+    height: 100vh;
+    margin: 0;
+}
+
+p, span { font-family: 'Open Sans', Arial, sans-serif; }
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+#logo-img {
+    margin-left: 13px;
+    margin-bottom: 5px;
+}
+
+#logo-img span {
+    text-align: center;
+}
+
+#top-image {
+    position: absolute;
+    max-width: 60%;
+    min-height: 400px;
+    top: 0;
+    right: 0;
+}
+
+#header-wrap,
+#header-wrap .navbar-default {
+    background: transparent;
+    border-color: transparent;
+}
+
+#header-wrap .navbar-nav {
+    padding: 20px 15px;
+}
+
+#header-wrap .navbar-nav li a {
+    color: #ffffff;
+    font-weight: bold;
+    font-family: 'Open Sans', Arial, sans-serif;
+    text-transform: capitalize;
+    border-bottom: 3px solid transparent;
+}
+
+#header-wrap .navbar-nav>.active>a {
+    background: none;
+    border-bottom: 3px solid #ffffff;
+}
+
+#header-wrap .navbar-nav li a:hover {
+    background: none;
+    border-bottom: 3px solid #ffffff;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.signin-btn {
+    margin-top: 30px;
+    margin-left: 15px;
+    padding: 5px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid #ffffff;
+    -webkit-border-radius: 22px;
+    -moz-border-radius: 22px;
+    border-radius: 22px;
+    color: #ffffff!important;
+    font-weight: 100;
+    font-family: 'Open Sans', Arial, sans-serif;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    outline: none;
+}
+
+.signin-btn:hover {
+    background: linear-gradient(to right, #48bbb8, #438AF1);
+    border: 1px solid #48BBB8;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.compose-btn,
+.compose-btn:link,
+.compose-btn:hover,
+.compose-btn:active,
+.compose-btn:visited {
+    background: linear-gradient(to right, #48BBB8, #438AF1);
+    color: white;
+    padding: 6px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    outline: none;
+    font-family: open-sansSemiBold, sans-serif;
+}
+
+.btn-start { padding: 10px 45px!important; font-weight: bold; }
+
+#get-started-wrapper {
+    margin-top: 200px;
+}
+
+.get-started h2 {
+    letter-space: 2px;
+    color: #495676;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 3.5em;
+    font-weight: 100;
+}
+
+.get-started p {
+    padding: 1.2em 0;
+    color: #4d4d4d;
+}
+
+.play-btn {
+    background-color: #ffffff;
+    color: #48BBB8;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    position: absolute;
+    top: 35%;
+    right: 30%;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    text-align: center;
+}
+
+.play-btn:hover {
+    color: #438AF1;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.play-btn i {
+    font-size: 22px;
+}
+
+/**
+* Features Wrapper
+*/
+#features-wrapper {
+    padding-top: 250px;
+}
+
+.card-box {
+    color: #b2b2b2;
+    font-size: 12px;
+    background: #ffffff;
+    padding: 3em 1.5em;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 3px 17px 52px -7px rgba(235,235,235,1);
+    -moz-box-shadow: 3px 17px 52px -7px rgba(235,235,235,1);
+    box-shadow: 3px 17px 52px -7px rgba(235,235,235,1);
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.card-box .line {
+    background-color: #e6e6e6;
+    width: 100%;
+    height: 1px;
+    margin: 25px 0;
+}
+
+.card-box-1 {
+
+}
+
+.card-box-2 {
+    margin-top: 2em;
+}
+
+.card-box-2 .card-bottom p {
+    font-size: 10px;
+    margin-bottom: 5px;
+}
+
+.card-box-4 {
+    margin-top: 2em;
+}
+
+.card-box-4 .card-body {
+    text-align: center;
+    padding: 45px;
+}
+
+.card-box-4 .card-body p {
+    text-transform: uppercase;
+}
+
+.card-box-4 .card-body i {
+    font-size: 7em;
+}
+
+.card-box:hover {
+    cursor: pointer;
+    background-color: #438af2;
+    color: #ffffff!important;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.card-box:hover .outline-btn,
+.card-box:hover .card-header .twitter-part i {
+    color: #ffffff;
+}
+
+.card-box-4 .count-part {
+    position: absolute;
+    top: 50px;
+    right: 10px;
+}
+
+.card-header {
+    font-size: 12px;
+    margin: 1em 0;
+}
+
+.card-header .twitter-part {
+    border-right: 1px solid #d9e8fc;
+    padding-right: 2em;
+}
+
+.card-header .twitter-part i {
+    color: #2aa3f0;
+}
+
+.card-header .count-part {
+    padding-right: 2em;
+    padding-left: 0.5em
+}
+
+.card-avatar {
+    position: relative;
+}
+
+.card-avatar-desc {
+    font-size: 12px;
+    text-align: left;
+    padding-left: 0.5em;
+}
+
+.card-avatar-desc small {
+    padding-left: 0.5em;
+}
+
+.card-avatar .avatar-status {
+    font-size: 12px;
+    position: absolute;
+    left: 60%;
+    top: 20%;
+}
+
+.card-avatar .avatar-status i {
+    color: #48BBB8;
+}
+
+#features-right-text {
+    padding: 150px 15px;
+}
+
+#features-right-text h3 {
+    padding-bottom: .75em;
+    color: #485576;
+    font-size: 32px;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+
+.feature-publish-text h3 {
+    color: #485576;
+    font-size: 32px;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+
+#features-publishing {
+    margin: 100px 0;
+}
+
+.feature-publish-text {
+    padding: 75px 0;
+}
+
+.feature-publish-img figure a img {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.outline-btn {
+    margin: 2em 0 1em 0;
+    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid #48b7bd;
+    -webkit-border-radius: 22px;
+    -moz-border-radius: 22px;
+    border-radius: 22px;
+    color: #b2b2b2;
+    font-weight: 100;
+    font-family: 'Open Sans', Arial, sans-serif;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    outline: none;
+}
+
+.more-features {
+    margin-top: 100px;
+    padding: 50px 0;
+    min-height: 600px;
+    background-color: #feac5a;
+}
+
+.more-features-text {
+    color: #303030;
+    padding: 50px 0;
+}
+
+.more-features-text h3 {
+    color: #303030;
+    font-size: 32px;
+    padding-bottom: 0.5em;
+}
+
+.slick-initialized .slick-slide {
+    outline: none!important;
+}
+
+.single-item-img {
+    margin: 0 auto;
+}
+
+.single-item h4 {
+    color: #303030;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-weight: 400;
+}
+
+.single-item-bottom {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background: #ffffff;
+    padding: 20px;
+    margin: 0 4em;
+}
+
+.single-item .slick-dots li button {
+
+}
+
+.single-item .slick-dots li.slick-active button:before {
+    color: #ffffff;
+}
+
+.single-item .slick-dots li button:before {
+    font-size: 10px;
+}
+
+.testimonials-wrapper {
+    margin-top: 100px;
+    padding: 50px 0;
+    min-height: 600px;
+    background: #ffffff url('../images/testimonial-bg.png') no-repeat 0 0;
+    background-size: contain;
+}
+
+.testimonials-pics .single-item p {
+    color: #808080;
+    margin-top: 1em;
+}
+
+.testimonials-pics .single-item .slick-dots li.slick-active button:before  {
+    color: #49c1b3;
+}
+
+.footer-wrapper {
+    margin-top: 50px;
+    padding: 50px 0;
+    min-height: 400px;
+    background-color: #f6f6f8;
+}
+
+.footer-get-started {
+    background: #ffffff;
+    padding: 20px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.footer-start-btn {
+    margin-top: 35px;
+}
+
+.footer-social li {
+    width: 40px;
+    height: 40px;
+    line-height:40px;
+    text-align: center;
+    background-color: #ddd;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.footer-info {
+    padding-top: 50px;
+}

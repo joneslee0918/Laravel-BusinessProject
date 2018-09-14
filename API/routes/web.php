@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', ['as' => 'welcome', 'uses' => 'WelcomeController@index']);
+Route::get('/', ['as' => 'homepage.index', 'uses' => 'HomepageController@index']);
 
 Route::get('/test', function(){
     return App\Models\Channel::find(6)->attributes;

@@ -789,7 +789,7 @@ aside .btn-group {
 
 #overlay {
     position: fixed; /* Sit on top of the page content */
-    display: none; /* Hidden by default */
+    display: block; /* Hidden by default */
     width: 100%; /* Full width (cover the whole page) */
     height: 100%; /* Full height (cover the whole page) */
     top: 0;
@@ -807,7 +807,10 @@ aside .btn-group {
     height: 64px;
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .lds-ripple div {
@@ -820,6 +823,10 @@ aside .btn-group {
 
 .lds-ripple div:nth-child(2) {
     animation-delay: -0.5s;
+}
+
+.lds-ripple-light div{
+    border: 4px solid #a2cfe8;
 }
 
 .emoji-options button, .emoji-options button:hover{

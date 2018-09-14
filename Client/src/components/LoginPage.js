@@ -3,9 +3,14 @@ import {connect} from "react-redux";
 import TwitterLogin  from "react-twitter-auth";
 import {startLogin} from "../actions/auth";
 import {startSetChannels} from "../actions/channels";
-import {twitterRequestTokenUrl, twitterAccessTokenUrl} from "../config/api";
+import {twitterRequestTokenUrl, twitterAccessTokenUrl, backendUrl} from "../config/api";
+import {LoaderWithOverlay} from "./Loader";
 
 export class LoginPage extends React.Component{
+
+    state = {
+        loading: false
+    }
 
     constructor(props) {
         super(props);
@@ -16,9 +21,11 @@ export class LoginPage extends React.Component{
     };
 
     onSuccess = (response) => {
+        this.setState(() => ({loading: true}));
         response.json().then(body => {
             this.props.startLogin(body).then(() => {
                 this.props.startSetChannels();
+                this.setState(() => ({loading: false}));
             });
         });
     };
@@ -26,9 +33,9 @@ export class LoginPage extends React.Component{
     render(){
         return (
             <div className="login-container">
-
+                {this.state.loading && <LoaderWithOverlay />}
                 <div className="box-container">
-                    <a href="#" className="brand"><img src="/images/uniclix.png"/></a>
+                    <a href={backendUrl} className="brand"><img src="/images/uniclix.png"/></a>
                     <div className="divider"></div>
                     <TwitterLogin loginUrl={twitterAccessTokenUrl}
                                 onFailure={this.onFailure} onSuccess={this.onSuccess}
