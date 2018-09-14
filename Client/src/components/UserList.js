@@ -35,8 +35,9 @@ class UserList extends React.Component{
 
     createButtons = () => {
         return this.props.userItems.map((userItem) => (
-            {
-                name: userItem.id,
+            {   
+                id: userItem.id,
+                name: userItem.username,
                 actionSymbol: this.defaultActionSymbol,
                 action: this.actionButton,
                 disabled: false

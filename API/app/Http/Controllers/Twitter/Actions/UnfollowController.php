@@ -34,7 +34,7 @@ class UnfollowController extends Controller
 
                 if($this->user->getLimit("twitter_daily_unfollows") > $this->selectedChannel->getDailyStatisticsFor("unfollows")){
 
-                    $twitterUser = $this->selectedChannel->unfollowById($userId);
+                    $twitterUser = $this->selectedChannel->unfollowByName($userId);
 
                     $this->selectedChannel->followingIds()
                         ->updateOrCreate(

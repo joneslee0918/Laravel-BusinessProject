@@ -38,7 +38,7 @@ class FollowController extends Controller
 
                 if($this->user->getLimit("twitter_daily_follows") > $this->selectedChannel->getDailyStatisticsFor("follows")){
 
-                    $twitterUser = $this->selectedChannel->followById($userId);
+                    $twitterUser = $this->selectedChannel->followByName($userId);
 
                     $this->selectedChannel->followingIds()
                         ->updateOrCreate(
