@@ -13,6 +13,7 @@
     <!-- Fonts -->
 
     <!-- Styles -->
+    <link href="/favicon.ico" rel="favicon" type="image/ico">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link href="{{asset('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
