@@ -34,7 +34,6 @@ class UserList extends React.Component{
     }
 
     createButtons = () => {
-        console.log(this.props.userItems);
         return this.props.userItems.map((userItem) => (
             {   
                 id: userItem.id,

@@ -73,10 +73,14 @@ class Compose extends React.Component{
         }));
     };
 
-    onDrop = (picture) => {
-        this.setState(() => ({
-            pictures: this.state.pictures.concat(picture),
-        }));
+    onDrop = (pictures, pictureDataUrls) => {
+        this.setState((prevState) => {
+            if(prevState.pictures !== pictures){
+                return {
+                    pictures: pictureDataUrls
+                }
+            }
+        });
     };
 
     focus = () => {
@@ -210,9 +214,9 @@ class Compose extends React.Component{
                         </div>
 
                         <div className="modal-footer">
-                            <div className="publish-btn-group gradient-background-teal-blue link-cursor">
-                                <button className="picker-btn fa fa-caret-up naked-button"></button>
-                                <button onClick={this.postTweet} className="publish-btn naked-button">Post at best time</button>
+                            <div className="publish-group gradient-background-teal-blue link-cursor">
+                                <button className="picker-btn fa fa-caret-up naked-button btn-side-arrow"></button>
+                                <button onClick={this.postTweet} className="publish-btn naked-button half-btn">Post at best time</button>
                             </div>
                         </div>
 

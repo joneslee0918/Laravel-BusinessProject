@@ -546,10 +546,28 @@ input {
 .publish-btn-group{
     text-align: center;
     border-radius: 20px;
-    padding: 7px;
     width: 180px;
     font-family: open-sansSemiBold, sans-serif;
     color:white;
+}
+
+.publish-group{
+    border-radius: 20px;
+    width: 180px;
+    height:35px;
+    font-family: open-sansSemiBold, sans-serif;
+    color: white;
+}
+
+.btn-side-arrow{
+    width: 19%;
+    height: 100%;
+    border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.half-btn{
+    width: 80%;
+    height: 100%;
 }
 
 .naked-button{
