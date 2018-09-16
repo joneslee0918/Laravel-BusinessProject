@@ -547,6 +547,7 @@ input {
     text-align: center;
     border-radius: 20px;
     width: 180px;
+    padding:7px;
     font-family: open-sansSemiBold, sans-serif;
     color:white;
 }
@@ -557,6 +558,37 @@ input {
     height:35px;
     font-family: open-sansSemiBold, sans-serif;
     color: white;
+}
+
+.tooltip-menu{
+    color:#666;
+    text-align:left;
+}
+
+.tooltip-menu .menu-item h4, .tooltip-menu .menu-item p{
+    padding:0;
+    margin:0;
+}
+
+.tooltip-menu .menu-item h4{
+    font-size:$m_size;
+}
+
+.tooltip-menu .menu-item p{
+    font-size: $s_size;
+    color: #999;
+    font-family: open-sans, arial, sans-serif;
+}
+.DraftEditor-root{
+    min-height: 200px;
+}
+
+.tooltip-menu .menu-item{
+    padding:10px 10px 20px 10px;
+}
+
+.tooltip-menu .menu-item:hover{
+    background:#ececec;
 }
 
 .btn-side-arrow{

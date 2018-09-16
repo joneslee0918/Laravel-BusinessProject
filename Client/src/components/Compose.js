@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {Modifier, EditorState} from 'draft-js';
 import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
-import ImageUploader from 'react-images-upload';
-import channelSelector from '../selectors/channels';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
+import Popup from "reactjs-popup";
+import ImageUploader from 'react-images-upload';
+import channelSelector from '../selectors/channels';
 import hashtagSuggestionList from '../fixtures/hashtagSuggestions';
 import {tweet} from '../requests/twitter/channels';
 import 'draft-js-mention-plugin/lib/plugin.css';
@@ -195,6 +196,7 @@ class Compose extends React.Component{
                                         buttonClassName='dnone'
                                         ref={this.imageIcon}
                                     />
+
                                     <EmojiSuggestions />
                                     <HashtagSuggestions
                                         onSearchChange={this.onHashtagSearchChange}
@@ -208,14 +210,37 @@ class Compose extends React.Component{
                         </div>
                         <div className="editor-icons">
                             <i onClick={this.onImageIconClick} className="fa fa-image upload-images"></i>
-                            <i className="fa fa-map-marker add-location"></i>
+                            {/* <i className="fa fa-map-marker add-location"></i> */}
                             <EmojiSelect />
                             <i onClick={this.onHashIconClick} className="fa fa-hashtag add-hashtag"></i>
                         </div>
 
-                        <div className="modal-footer">
+                        <div className="modal-footer" style={{position:"relative"}}>
                             <div className="publish-group gradient-background-teal-blue link-cursor">
-                                <button className="picker-btn fa fa-caret-up naked-button btn-side-arrow"></button>
+                                <Popup
+                                    trigger={
+                                        <button className="picker-btn fa fa-caret-up naked-button btn-side-arrow"></button>
+                                    }
+                                    position="top"
+                                    on="click"
+                                    closeOnDocumentClick
+                                >
+                                    <div className="tooltip-menu">
+                                        <div className="menu-item"> 
+                                            <h4>Post now</h4>
+                                            <p>Share right away</p>
+                                        </div>
+                                        <div className="menu-item"> 
+                                            <h4>Post at Custom Time</h4>
+                                            <p>Schedule at a specific time</p>
+                                        </div>
+                                        <div className="menu-item"> 
+                                            <h4>Post at Best Time</h4>
+                                            <p>Share when your audience is most active</p>
+                                        </div>
+                                    </div>
+                                </Popup>
+                            
                                 <button onClick={this.postTweet} className="publish-btn naked-button half-btn">Post at best time</button>
                             </div>
                         </div>

@@ -9,7 +9,7 @@ const TopMenu = () => (
         <ul className="top-menu">
             <li><NavLink to="/manage" activeClassName="active">MANAGE</NavLink></li> 
             <li><NavLink to="/scheduled" activeClassName="active">SCHEDULED</NavLink></li>  
-            <li><NavLink to="/accounts" activeClassName="active">ACCOUNTS</NavLink></li>  
+            <li><NavLink to="/accounts" activeClassName="active">ACCOUNTS</NavLink></li> 
         </ul>
 
         <ul className="nav-buttons">
