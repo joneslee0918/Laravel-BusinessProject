@@ -6,10 +6,14 @@ import createEmojiPlugin from 'draft-js-emoji-plugin';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import Popup from "reactjs-popup";
 import ImageUploader from 'react-images-upload';
+import 'react-dates/initialize';
+import {SingleDatePicker} from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
 import channelSelector from '../selectors/channels';
 import hashtagSuggestionList from '../fixtures/hashtagSuggestions';
 import {tweet} from '../requests/twitter/channels';
 import 'draft-js-mention-plugin/lib/plugin.css';
+import {hours, minutes, dayTime} from "../fixtures/time";
 
 
 class Compose extends React.Component{
@@ -31,6 +35,8 @@ class Compose extends React.Component{
             name: "Post at Best Time",
             value: "best"
         },
+        postTime: null,
+        calendarFocused: false,
         pictures: []
     };
 
@@ -73,6 +79,11 @@ class Compose extends React.Component{
     }
 
     setPublishState = (publishState, close = false) => {
+
+        if(publishState.value == "date"){
+            this.onFocusChange({focused:true});
+        }
+
         this.setState(() => ({
             publishState
         }), () => console.log(this.state.publishState));
@@ -110,6 +121,15 @@ class Compose extends React.Component{
 
     onAddMention = (mention) => {
         //console.log('mention', mention)
+    };
+
+    onDateChange = (postTime) => {
+        if(postTime)
+        this.setState(() => ({postTime}));
+    };
+
+    onFocusChange = ({focused}) => {
+        this.setState(() => ({calendarFocused: focused}));
     };
 
     toggleSelectChannelsModal = () => {
@@ -237,24 +257,72 @@ class Compose extends React.Component{
                                     }
                                     position="top"
                                     on="click"
-                                    closeOnDocumentClick
+                                    arrow={!this.state.calendarFocused}
                                 >
                                 {
                                  close => ( 
-                                     <div className="tooltip-menu">
-                                        <div onClick={() => this.setPublishState({name:"Post right now", value: "now"}, close)} className="menu-item"> 
-                                            <h4>Post now</h4>
-                                            <p>Share right away</p>
-                                        </div>
-                                        <div onClick={() => this.setPublishState({name: "Custom Time", value: "date"})} className="menu-item"> 
-                                            <h4>Post at Custom Time</h4>
-                                            <p>Schedule at a specific time</p>
-                                        </div>
-                                        <div onClick={() => this.setPublishState({name: "Post at Best Time", value: "best"}, close)} className="menu-item"> 
-                                            <h4>Post at Best Time</h4>
-                                            <p>Share when your audience is most active</p>
-                                        </div>
-                                    </div>)
+                                     <div className="popup-options">
+
+                                        {  !this.state.calendarFocused ?
+                                            <div className="tooltip-menu">
+                                                <div onClick={() => this.setPublishState({name:"Post right now", value: "now"}, close)} className="menu-item"> 
+                                                    <h4>Post now</h4>
+                                                    <p>Share right away</p>
+                                                </div>
+                                                <div onClick={() => this.setPublishState({name: "Custom Time", value: "date"})} className="menu-item"> 
+                                                    <h4>Post at Custom Time</h4>
+                                                    <p>Schedule at a specific time</p>    
+                                                </div>                                  
+                                                <div onClick={() => this.setPublishState({name: "Post at Best Time", value: "best"}, close)} className="menu-item"> 
+                                                    <h4>Post at Best Time</h4>
+                                                    <p>Share when your audience is most active</p>
+                                                </div>
+                                            </div>
+                                            :
+                                            <div className="uc-calendar">
+                                                <SingleDatePicker
+                                                    onDateChange={this.onDateChange}
+                                                    date={this.state.postTime}
+                                                    focused={this.state.calendarFocused}
+                                                    onFocusChange={this.onFocusChange}
+                                                    numberOfMonths={1}
+                                                    showDefaultInputIcon={false}
+                                                    keepOpenOnDateSelect={true}
+                                                    readOnly={false}
+                                                    small={true}
+                                                    customInputIcon={
+                                                    <div className="uc-calendar-time-picker">                                                  
+                                                        <select className="hours">
+                                                            {hours.map((hour) => (
+                                                                <option key={hour} value={hour}>{hour}</option>
+                                                            ))}
+                                                            
+                                                        </select>
+
+                                                        <select className="minutes">
+                                                            {minutes.map((minute) => (
+                                                                <option key={minute} value={minute}>{minute}</option>
+                                                            ))}
+                                                        </select>
+
+                                                        <select className="dayTime">
+                                                            {dayTime.map((time) => (
+                                                                <option key={time} value={time}>{time}</option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                    }
+                                                />
+
+                                                <div className="date-btn">
+                                                    <button className="btn naked-button" >Done</button>
+                                                </div>
+                                            </div>
+                                        }
+
+                                     </div>
+
+                                )
                                 }
 
                                 </Popup>

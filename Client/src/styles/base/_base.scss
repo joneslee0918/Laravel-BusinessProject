@@ -583,6 +583,64 @@ input {
     min-height: 200px;
 }
 
+.popup-content{
+    width:auto !important;
+}
+
+.popup-content .SingleDatePicker_picker{
+    position:static;
+}
+
+.popup-content .DateInput_fangStroke .DateInput_fangStroke_1{
+    display:none !important;
+}
+
+.DateInput_fangStroke {
+    stroke: #dbdbdb;
+    fill: transparent;
+    display: none;
+}
+
+.uc-calendar-time-picker{
+    color:#666;
+}
+
+.DayPicker__withBorder, .SingleDatePickerInput__withBorder{
+    box-shadow: none;
+    border:none;
+}
+
+.CalendarDay__selected, .CalendarDay__selected:active, .CalendarDay__selected:hover {
+    background: #46b9e6;
+    border: 1px solid #46b9e6;
+    color: #fff;
+}
+
+.DayPickerKeyboardShortcuts_show__bottomRight, .DayPickerKeyboardShortcuts_show__bottomRight:hover {
+    border-right: 33px solid #46b9e6;
+    display:none;
+}
+
+.date-btn .btn{
+    width:100%;
+    font-size:$m_size;
+    color:#46b9e6;
+}
+
+.uc-calendar{
+    text-align: center;
+}
+
+.DateInput_input__focused {
+    outline: 0;
+    background: #fff;
+    border: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 2px solid #46b9e6;
+    border-left: 0;
+}
+
 .tooltip-menu .menu-item{
     padding:10px 10px 20px 10px;
 }
