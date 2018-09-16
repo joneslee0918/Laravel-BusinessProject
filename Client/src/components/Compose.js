@@ -27,6 +27,10 @@ class Compose extends React.Component{
         hashtagSuggestions: hashtagSuggestionList,
         selectChannelsModal: false,
         publishChannels: this.setPublishChannels(),
+        publishState: {
+            name: "Post at Best Time",
+            value: "best"
+        },
         pictures: []
     };
 
@@ -66,6 +70,16 @@ class Compose extends React.Component{
         
         publishChannels = publishChannels ? JSON.parse(publishChannels) : this.props.channels;
         return publishChannels;
+    }
+
+    setPublishState = (publishState, close = false) => {
+        this.setState(() => ({
+            publishState
+        }), () => console.log(this.state.publishState));
+
+        if(close){
+            close();
+        }
     }
 
     onChange = (editorState) => {
@@ -225,23 +239,27 @@ class Compose extends React.Component{
                                     on="click"
                                     closeOnDocumentClick
                                 >
-                                    <div className="tooltip-menu">
-                                        <div className="menu-item"> 
+                                {
+                                 close => ( 
+                                     <div className="tooltip-menu">
+                                        <div onClick={() => this.setPublishState({name:"Post right now", value: "now"}, close)} className="menu-item"> 
                                             <h4>Post now</h4>
                                             <p>Share right away</p>
                                         </div>
-                                        <div className="menu-item"> 
+                                        <div onClick={() => this.setPublishState({name: "Custom Time", value: "date"})} className="menu-item"> 
                                             <h4>Post at Custom Time</h4>
                                             <p>Schedule at a specific time</p>
                                         </div>
-                                        <div className="menu-item"> 
+                                        <div onClick={() => this.setPublishState({name: "Post at Best Time", value: "best"}, close)} className="menu-item"> 
                                             <h4>Post at Best Time</h4>
                                             <p>Share when your audience is most active</p>
                                         </div>
-                                    </div>
+                                    </div>)
+                                }
+
                                 </Popup>
                             
-                                <button onClick={this.postTweet} className="publish-btn naked-button half-btn">Post at best time</button>
+                                <button onClick={this.postTweet} className="publish-btn naked-button half-btn">{this.state.publishState.name}</button>
                             </div>
                         </div>
 
