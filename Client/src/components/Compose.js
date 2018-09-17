@@ -36,14 +36,14 @@ class Compose extends React.Component{
             name: "Post at Best Time",
             value: "best"
         },
-        postDate: null,
+        postDate: moment(),
         publishTimestamp: null,
         publishDateTime: null,
         calendarData: {
             time: {
-                hour: "05",
-                minutes: "15",
-                time: "AM"
+                hour: moment(moment().add(1, "hours").hour(), "HH").format("hh"),
+                minutes: "25",
+                time: moment().format("A")
             }
         },
         calendarFocused: false,
