@@ -37,6 +37,8 @@ class Compose extends React.Component{
         },
         postTime: null,
         calendarFocused: false,
+        showCalendar: false,
+        optionsMenu: false,
         pictures: []
     };
 
@@ -80,17 +82,14 @@ class Compose extends React.Component{
 
     setPublishState = (publishState, close = false) => {
 
-        if(publishState.value == "date"){
-            this.onFocusChange({focused:true});
-        }
-
         this.setState(() => ({
-            publishState
-        }), () => console.log(this.state.publishState));
-
-        if(close){
-            close();
-        }
+            publishState,
+            showCalendar: false
+        }), () => {
+            if(close){
+                close(); 
+            }
+        });
     }
 
     onChange = (editorState) => {
@@ -129,7 +128,10 @@ class Compose extends React.Component{
     };
 
     onFocusChange = ({focused}) => {
-        this.setState(() => ({calendarFocused: focused}));
+        this.setState((prevState) => ({
+            calendarFocused: focused,
+            showCalendar: !focused ? focused : prevState.showCalendar
+        }));
     };
 
     toggleSelectChannelsModal = () => {
@@ -141,6 +143,10 @@ class Compose extends React.Component{
         this.setState(() => ({
             selectChannelsModal: !this.state.selectChannelsModal
         }));
+    }
+
+    toggleOptionsMenu = () => {
+        this.setState(() => ({optionsMenu: !this.state.optionsMenu}));
     }
 
     onHashIconClick = () => {
@@ -165,7 +171,6 @@ class Compose extends React.Component{
         const { EmojiSuggestions, EmojiSelect} = this.emojiPlugin;
         const { MentionSuggestions: HashtagSuggestions } = this.hashtagMentionPlugin;
         const plugins = [this.emojiPlugin, this.hashtagMentionPlugin];
-
         return (
             <div className="modal fade" id="compose">
                 <div className="modal-dialog compose-dialog">
@@ -251,25 +256,25 @@ class Compose extends React.Component{
 
                         <div className="modal-footer" style={{position:"relative"}}>
                             <div className="publish-group gradient-background-teal-blue link-cursor">
+
                                 <Popup
-                                    trigger={
-                                        <button className="picker-btn fa fa-caret-up naked-button btn-side-arrow"></button>
-                                    }
-                                    position="top"
+                                    trigger={<button onClick={this.toggleOptionsMenu} className="picker-btn fa fa-caret-up naked-button btn-side-arrow"></button>}
                                     on="click"
-                                    arrow={!this.state.calendarFocused}
+                                    position="top"
+                                    arrow={!this.state.showCalendar}
                                 >
                                 {
                                  close => ( 
                                      <div className="popup-options">
 
-                                        {  !this.state.calendarFocused ?
+                                            {!this.state.showCalendar ?
+
                                             <div className="tooltip-menu">
                                                 <div onClick={() => this.setPublishState({name:"Post right now", value: "now"}, close)} className="menu-item"> 
                                                     <h4>Post now</h4>
                                                     <p>Share right away</p>
                                                 </div>
-                                                <div onClick={() => this.setPublishState({name: "Custom Time", value: "date"})} className="menu-item"> 
+                                                <div onClick={() => {this.onFocusChange({focused: true}); this.setState(() => ({showCalendar: true}))}} className="menu-item"> 
                                                     <h4>Post at Custom Time</h4>
                                                     <p>Schedule at a specific time</p>    
                                                 </div>                                  
@@ -278,7 +283,9 @@ class Compose extends React.Component{
                                                     <p>Share when your audience is most active</p>
                                                 </div>
                                             </div>
+                                            
                                             :
+
                                             <div className="uc-calendar">
                                                 <SingleDatePicker
                                                     onDateChange={this.onDateChange}
@@ -288,45 +295,49 @@ class Compose extends React.Component{
                                                     numberOfMonths={1}
                                                     showDefaultInputIcon={false}
                                                     keepOpenOnDateSelect={true}
-                                                    readOnly={false}
+                                                    keepFocusOnInput={true}
+                                                    inputIconPosition="after"
+                                                    readOnly={true}
                                                     small={true}
                                                     customInputIcon={
-                                                    <div className="uc-calendar-time-picker">                                                  
-                                                        <select className="hours">
-                                                            {hours.map((hour) => (
-                                                                <option key={hour} value={hour}>{hour}</option>
-                                                            ))}
+                                                        <div>
+                                                            <div className="uc-calendar-time-picker">                                                  
+                                                                <select className="hours">
+                                                                    {hours.map((hour) => (
+                                                                        <option key={hour} value={hour}>{hour}</option>
+                                                                    ))}
+                                                                    
+                                                                </select>
+
+                                                                <select className="minutes">
+                                                                    {minutes.map((minute) => (
+                                                                        <option key={minute} value={minute}>{minute}</option>
+                                                                    ))}
+                                                                </select>
+
+                                                                <select className="dayTime">
+                                                                    {dayTime.map((time) => (
+                                                                        <option key={time} value={time}>{time}</option>
+                                                                    ))}
+                                                                </select>
+                                                            </div>
                                                             
-                                                        </select>
-
-                                                        <select className="minutes">
-                                                            {minutes.map((minute) => (
-                                                                <option key={minute} value={minute}>{minute}</option>
-                                                            ))}
-                                                        </select>
-
-                                                        <select className="dayTime">
-                                                            {dayTime.map((time) => (
-                                                                <option key={time} value={time}>{time}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                            <div 
+                                                                onClick={() => this.setPublishState({name: "Custom Time", value: "date"}, close)} 
+                                                                className="btn naked-button date-btn">
+                                                                Done
+                                                            </div>
+                                                        </div>
                                                     }
                                                 />
-
-                                                <div className="date-btn">
-                                                    <button className="btn naked-button" >Done</button>
-                                                </div>
                                             </div>
                                         }
-
+                                            
                                      </div>
-
-                                )
+                                    )
                                 }
-
                                 </Popup>
-                            
+                                
                                 <button onClick={this.postTweet} className="publish-btn naked-button half-btn">{this.state.publishState.name}</button>
                             </div>
                         </div>

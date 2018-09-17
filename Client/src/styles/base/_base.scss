@@ -589,6 +589,9 @@ input {
 
 .popup-content .SingleDatePicker_picker{
     position:static;
+    -webkit-box-ordinal-group: 1;
+    -moz-box-ordinal-group: 1;
+    box-ordinal-group: 1;
 }
 
 .popup-content .DateInput_fangStroke .DateInput_fangStroke_1{
@@ -603,6 +606,11 @@ input {
 
 .uc-calendar-time-picker{
     color:#666;
+}
+
+.uc-calendar-time-picker select{
+    padding:5px;
+    margin-right:5px;
 }
 
 .DayPicker__withBorder, .SingleDatePickerInput__withBorder{
@@ -653,6 +661,26 @@ input {
     width: 19%;
     height: 100%;
     border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.SingleDatePicker > div{
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.date-btn, .date-btn:hover{
+    color: #46b9e6;
+    margin-top:20px;
+    font-size: $m-size;
+    cursor:pointer;
+}
+
+.SingleDatePickerInput_calendarIcon{
+    outline: none !important;
+}
+
+.DateInput__small{
+    display:none;
 }
 
 .half-btn{
