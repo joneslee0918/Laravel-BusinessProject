@@ -6,6 +6,7 @@ import createEmojiPlugin from 'draft-js-emoji-plugin';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import Popup from "reactjs-popup";
 import ImageUploader from 'react-images-upload';
+import moment from "moment";
 import 'react-dates/initialize';
 import {SingleDatePicker} from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
@@ -35,14 +36,26 @@ class Compose extends React.Component{
             name: "Post at Best Time",
             value: "best"
         },
-        postTime: null,
+        postDate: null,
+        publishTimestamp: null,
+        publishDateTime: null,
+        calendarData: {
+            time: {
+                hour: "05",
+                minutes: "15",
+                time: "AM"
+            }
+        },
         calendarFocused: false,
+        canSchedule: false,
         showCalendar: false,
         optionsMenu: false,
+        letterCount: 0,
         pictures: []
     };
 
     componentDidUpdate(prevProps) {
+
         if(prevProps.channels !== this.props.channels){
             this.setState(() => ({
                 publishChannels: this.setPublishChannels()
@@ -92,9 +105,34 @@ class Compose extends React.Component{
         });
     }
 
+    setPublishTimestamp = () => {
+        const postDate = this.state.postDate;
+        const date = moment(postDate).format("YYYY-MM-DD");
+        const time = this.state.calendarData.time;
+        const formatted24HTime = moment(`${time.hour}:${time.minutes} ${time.time}`, "hh:mm a").format("HH:mm");
+        const dateTime = date.concat(`T${formatted24HTime}`);
+
+        this.setState(() => ({
+            publishTimestamp: moment(dateTime).unix(),
+            publishDateTime: dateTime
+        }),
+        () => {
+            if(this.state.publishTimestamp > moment().unix()){
+                this.setState(() => ({
+                    canSchedule: true
+                }));
+            }else{
+                this.setState(() => ({
+                    canSchedule: false
+                }));
+            }
+        });
+    };
+
     onChange = (editorState) => {
         this.setState(() => ({
-            editorState
+            editorState,
+            letterCount: editorState.getCurrentContent().getPlainText().length
         }));
     };
 
@@ -122,9 +160,8 @@ class Compose extends React.Component{
         //console.log('mention', mention)
     };
 
-    onDateChange = (postTime) => {
-        if(postTime)
-        this.setState(() => ({postTime}));
+    onDateChange = (postDate) => {
+        this.setState(() => ({postDate}), () => this.setPublishTimestamp());
     };
 
     onFocusChange = ({focused}) => {
@@ -160,6 +197,43 @@ class Compose extends React.Component{
         }), () => this.focus());
     };
 
+    onHourChange = (e) => {
+        const value = e.target.value;
+        this.setState((prevState) => {
+            
+            const calendarData = prevState.calendarData;
+            calendarData.time.hour = value;
+
+            return {
+                calendarData
+            }
+        }, () => this.setPublishTimestamp());
+    };
+
+    onMinutesChange = (e) => {
+        const value = e.target.value;
+        this.setState((prevState) => {
+            const calendarData = prevState.calendarData;
+            calendarData.time.minutes = value;
+
+            return {
+                calendarData
+            }
+        }, () => this.setPublishTimestamp());
+    };
+
+    onTimeChange = (e) => {
+        const value = e.target.value;
+        this.setState((prevState) => {
+            const calendarData = prevState.calendarData;
+            calendarData.time.time = value;
+
+            return {
+                calendarData
+            }
+        }, () => this.setPublishTimestamp());
+    };
+
     postTweet = () => {
         const editorState = this.state.editorState;
         const content = editorState.getCurrentContent().getPlainText();
@@ -171,6 +245,7 @@ class Compose extends React.Component{
         const { EmojiSuggestions, EmojiSelect} = this.emojiPlugin;
         const { MentionSuggestions: HashtagSuggestions } = this.hashtagMentionPlugin;
         const plugins = [this.emojiPlugin, this.hashtagMentionPlugin];
+
         return (
             <div className="modal fade" id="compose">
                 <div className="modal-dialog compose-dialog">
@@ -217,6 +292,8 @@ class Compose extends React.Component{
                             <form id="draft_form">
                             <div>
                                 <div className="editor" onClick={this.focus}>
+                                    {(this.state.canSchedule && this.state.publishState.value === "date") 
+                                    && <div className="schedule-info">{`Scheduled: ${moment(this.state.publishDateTime).format("DD MMMM YYYY hh:mmA")}`}</div>}
                                     <Editor
                                         editorState={this.state.editorState}
                                         onChange={this.onChange}
@@ -260,7 +337,7 @@ class Compose extends React.Component{
                                 <Popup
                                     trigger={<button onClick={this.toggleOptionsMenu} className="picker-btn fa fa-caret-up naked-button btn-side-arrow"></button>}
                                     on="click"
-                                    position="top"
+                                    position="top center"
                                     arrow={!this.state.showCalendar}
                                 >
                                 {
@@ -276,7 +353,11 @@ class Compose extends React.Component{
                                                 </div>
                                                 <div onClick={() => {this.onFocusChange({focused: true}); this.setState(() => ({showCalendar: true}))}} className="menu-item"> 
                                                     <h4>Post at Custom Time</h4>
-                                                    <p>Schedule at a specific time</p>    
+                                                    {!(this.state.canSchedule && this.state.publishState.value === "date") ?
+                                                        <p>Schedule at a specific time</p>
+                                                        :
+                                                        <p className="shedule-info">{moment(this.state.publishDateTime).format("DD MMMM YYYY hh:mmA")}</p>
+                                                    }    
                                                 </div>                                  
                                                 <div onClick={() => this.setPublishState({name: "Post at Best Time", value: "best"}, close)} className="menu-item"> 
                                                     <h4>Post at Best Time</h4>
@@ -289,7 +370,7 @@ class Compose extends React.Component{
                                             <div className="uc-calendar">
                                                 <SingleDatePicker
                                                     onDateChange={this.onDateChange}
-                                                    date={this.state.postTime}
+                                                    date={this.state.postDate}
                                                     focused={this.state.calendarFocused}
                                                     onFocusChange={this.onFocusChange}
                                                     numberOfMonths={1}
@@ -302,20 +383,20 @@ class Compose extends React.Component{
                                                     customInputIcon={
                                                         <div>
                                                             <div className="uc-calendar-time-picker">                                                  
-                                                                <select className="hours">
+                                                                <select onChange={this.onHourChange} value={this.state.calendarData.time.hour} className="hours">
                                                                     {hours.map((hour) => (
                                                                         <option key={hour} value={hour}>{hour}</option>
                                                                     ))}
                                                                     
                                                                 </select>
 
-                                                                <select className="minutes">
+                                                                <select onChange={this.onMinutesChange} value={this.state.calendarData.time.minutes} className="minutes">
                                                                     {minutes.map((minute) => (
                                                                         <option key={minute} value={minute}>{minute}</option>
                                                                     ))}
                                                                 </select>
 
-                                                                <select className="dayTime">
+                                                                <select onChange={this.onTimeChange} value={this.state.calendarData.time.time} className="dayTime">
                                                                     {dayTime.map((time) => (
                                                                         <option key={time} value={time}>{time}</option>
                                                                     ))}
@@ -323,8 +404,12 @@ class Compose extends React.Component{
                                                             </div>
                                                             
                                                             <div 
-                                                                onClick={() => this.setPublishState({name: "Custom Time", value: "date"}, close)} 
-                                                                className="btn naked-button date-btn">
+                                                                onClick={() => {
+                                                                    if(this.state.canSchedule){
+                                                                        this.setPublishState({name: "Custom Time", value: "date"}, close)}
+                                                                    }
+                                                                }   
+                                                                className={`btn naked-button date-btn ${!this.state.canSchedule ? 'disabled' : ''}`}>
                                                                 Done
                                                             </div>
                                                         </div>
@@ -340,6 +425,7 @@ class Compose extends React.Component{
                                 
                                 <button onClick={this.postTweet} className="publish-btn naked-button half-btn">{this.state.publishState.name}</button>
                             </div>
+                            <p className="letter-count">{this.state.letterCount}</p>
                         </div>
 
                     </div>

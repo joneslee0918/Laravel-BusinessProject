@@ -554,6 +554,7 @@ input {
 
 .publish-group{
     border-radius: 20px;
+    float:left;
     width: 180px;
     height:35px;
     font-family: open-sansSemiBold, sans-serif;
@@ -679,8 +680,24 @@ input {
     outline: none !important;
 }
 
+.letter-count{
+    float: right;
+    font-size: 16px;
+    font-family: open-sansBold;
+    color: #ccc;
+}
+
 .DateInput__small{
     display:none;
+}
+
+.fileContainer .uploadPictureContainer{
+    padding:0;
+}
+
+.schedule-info{
+    color: #47afc6;
+    font-family: open-sansSemiBold, sans-serif, arial;
 }
 
 .half-btn{
