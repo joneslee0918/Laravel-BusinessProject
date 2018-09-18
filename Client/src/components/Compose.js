@@ -54,9 +54,7 @@ class Compose extends React.Component{
         showCalendar: false,
         optionsMenu: false,
         letterCount: 0,
-        pictures: [
-            "https://imgix.ranker.com/video_img/1/1504/original/the-best-anime-available-on-crunchyroll--u1?w=400&h=225&fm=jpg&q=50"
-        ]
+        pictures: []
     };
 
     componentDidMount(){
