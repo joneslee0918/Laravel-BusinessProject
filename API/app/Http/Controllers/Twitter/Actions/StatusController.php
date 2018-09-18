@@ -31,7 +31,7 @@ class StatusController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function tweet(Request $request)
-    {
+    {   
         $tweet = $request->input('tweet');
 
         try{

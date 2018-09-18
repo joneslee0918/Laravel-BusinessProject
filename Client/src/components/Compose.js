@@ -7,12 +7,13 @@ import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-
 import Popup from "reactjs-popup";
 import ImageUploader from 'react-images-upload';
 import moment from "moment";
+import momentTz from "moment-timezone";
 import 'react-dates/initialize';
 import {SingleDatePicker} from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import channelSelector from '../selectors/channels';
 import hashtagSuggestionList from '../fixtures/hashtagSuggestions';
-import {tweet} from '../requests/twitter/channels';
+import {publish} from '../requests/channels';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import {hours, minutes, dayTime} from "../fixtures/time";
 
@@ -39,6 +40,8 @@ class Compose extends React.Component{
         postDate: moment(),
         publishTimestamp: null,
         publishDateTime: null,
+        publishUTCDateTime: null,
+        publishTimezone: momentTz.tz.guess(),
         calendarData: {
             time: {
                 hour: moment().add(1, "hours").format("hh"),
@@ -51,7 +54,9 @@ class Compose extends React.Component{
         showCalendar: false,
         optionsMenu: false,
         letterCount: 0,
-        pictures: []
+        pictures: [
+            "https://imgix.ranker.com/video_img/1/1504/original/the-best-anime-available-on-crunchyroll--u1?w=400&h=225&fm=jpg&q=50"
+        ]
     };
 
     componentDidMount(){
@@ -120,7 +125,8 @@ class Compose extends React.Component{
 
         this.setState(() => ({
             publishTimestamp: moment(dateTime).unix(),
-            publishDateTime: dateTime
+            publishDateTime: moment(dateTime).format("YYYY-MM-DDTHH:mmZ"),
+            publishUTCDateTime: moment(dateTime).utc().format("YYYY-MM-DDTHH:mm")
         }),
         () => {
             if(this.state.publishTimestamp > moment().unix()){
@@ -240,11 +246,30 @@ class Compose extends React.Component{
         }, () => this.setPublishTimestamp());
     };
 
-    postTweet = () => {
+    publish = () => {
         const editorState = this.state.editorState;
         const content = editorState.getCurrentContent().getPlainText();
+        const images = this.state.pictures;
+        const publishState = this.state.publishState;
+        const publishTimestamp = this.state.publishTimestamp;
+        const publishDateTime = this.state.publishDateTime;
+        const publishUTCDateTime = this.state.publishUTCDateTime;
+        const publishTimezone = this.state.publishTimezone;
+        const publishChannels = channelSelector(this.state.publishChannels, {selected: true, provider: undefined});
 
-        tweet(content).then((response) => response);
+        publish({
+            content, 
+            images,                
+            publishChannels, 
+            publishType: publishState.value, 
+            scheduled:{
+                publishTimestamp,
+                publishDateTime,
+                publishUTCDateTime,
+                publishTimezone
+            }
+        })
+        .then((response) => response);
     }
 
     render(){
@@ -432,7 +457,7 @@ class Compose extends React.Component{
                                 
                                 <button onClick={() => {
                                     if(this.state.letterCount > 0 || this.state.pictures.length > 0){
-                                       this.postTweet(); 
+                                       this.publish(); 
                                     }
                                 }} className={`publish-btn naked-button half-btn ${this.state.letterCount > 0 || this.state.pictures.length > 0 ? '' : 'disabled-btn'}`}>{this.state.publishState.name}</button>
                             </div>

@@ -14,3 +14,12 @@ export const selectChannel = (id) => {
             return response.data;
         });
 };
+
+export const publish = (post) => {
+    return axios.post(`${apiUrl}/publish`, {
+        post
+    })
+    .then((response) => {
+        return response.data;
+    });
+};
