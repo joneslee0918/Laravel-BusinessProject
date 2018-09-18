@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import VerticalMenu from "../Menus/VerticalMenu";
 import channelSelector from "../../selectors/channels";
 import { setGlobalChannel } from '../../actions/channels';
+import ScheduledRouter from '../../routes/ScheduledRouter';
 
 const menuItems = [
     {   
@@ -18,13 +19,18 @@ const menuItems = [
 ];
 
 const Scheduled = ({channels, selectedChannel, selectChannel}) => (
-    <div>This is the Scheduled page.
+    <div>
         <VerticalMenu 
             menuItems={menuItems} 
             channels={channels} 
             selectedChannel={selectedChannel}
             selectChannel={selectChannel}
             />
+            <div className="body-container">
+                <div className="main-section">
+                    <ScheduledRouter/>
+                </div>
+            </div>
     </div>
 );
 
