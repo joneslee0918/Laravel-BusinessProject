@@ -41,8 +41,8 @@ class Compose extends React.Component{
         publishDateTime: null,
         calendarData: {
             time: {
-                hour: moment(moment().add(1, "hours").hour(), "HH").format("hh"),
-                minutes: "25",
+                hour: moment().add(1, "hours").format("hh"),
+                minutes: minutes[Math.floor(Math.random() * minutes.length)],
                 time: moment().format("A")
             }
         },
@@ -54,8 +54,14 @@ class Compose extends React.Component{
         pictures: []
     };
 
-    componentDidUpdate(prevProps) {
+    componentDidMount(){
+        if(!this.state.publishTimestamp){
+            this.setPublishTimestamp();
+        }
+    }
 
+    componentDidUpdate(prevProps) {
+        
         if(prevProps.channels !== this.props.channels){
             this.setState(() => ({
                 publishChannels: this.setPublishChannels()
@@ -335,10 +341,11 @@ class Compose extends React.Component{
                             <div className="publish-group gradient-background-teal-blue link-cursor">
 
                                 <Popup
-                                    trigger={<button onClick={this.toggleOptionsMenu} className="picker-btn fa fa-caret-up naked-button btn-side-arrow"></button>}
+                                    trigger={<button className="picker-btn fa fa-caret-up naked-button btn-side-arrow"></button>}
                                     on="click"
                                     position="top center"
                                     arrow={!this.state.showCalendar}
+                                    closeOnDocumentClick={true}
                                 >
                                 {
                                  close => ( 
@@ -356,7 +363,7 @@ class Compose extends React.Component{
                                                     {!(this.state.canSchedule && this.state.publishState.value === "date") ?
                                                         <p>Schedule at a specific time</p>
                                                         :
-                                                        <p className="shedule-info">{moment(this.state.publishDateTime).format("DD MMMM YYYY hh:mmA")}</p>
+                                                        <p className="schedule-info">{moment(this.state.publishDateTime).format("DD MMMM YYYY hh:mmA")}</p>
                                                     }    
                                                 </div>                                  
                                                 <div onClick={() => this.setPublishState({name: "Post at Best Time", value: "best"}, close)} className="menu-item"> 
@@ -423,9 +430,13 @@ class Compose extends React.Component{
                                 }
                                 </Popup>
                                 
-                                <button onClick={this.postTweet} className="publish-btn naked-button half-btn">{this.state.publishState.name}</button>
+                                <button onClick={() => {
+                                    if(this.state.letterCount > 0 || this.state.pictures.length > 0){
+                                       this.postTweet(); 
+                                    }
+                                }} className={`publish-btn naked-button half-btn ${this.state.letterCount > 0 || this.state.pictures.length > 0 ? '' : 'disabled-btn'}`}>{this.state.publishState.name}</button>
                             </div>
-                            <p className="letter-count">{this.state.letterCount}</p>
+                            <p className={`letter-count ${this.state.letterCount > 280 ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
                         </div>
 
                     </div>
