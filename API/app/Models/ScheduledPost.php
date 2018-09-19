@@ -10,6 +10,7 @@ class ScheduledPost extends Model
         "channel_id",
         "content",
         "scheduled_at",
+        "scheduled_at_original",
         "payload",
         "status",
         "posted"

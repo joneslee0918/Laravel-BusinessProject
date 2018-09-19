@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from "moment";
 import channelSelector from '../../../selectors/channels';
 import {scheduledPosts} from '../../../requests/channels';
 import Loader from '../../Loader';
@@ -35,9 +36,8 @@ export class ScheduledPosts extends React.Component{
         this.setLoading(true);
         scheduledPosts()
             .then((response) => {
-                console.log(response.items);
                 this.setState(() => ({
-                    posts: [],
+                    posts: response.items,
                     loading: false,
                     page: 1
                 }));
@@ -59,17 +59,29 @@ export class ScheduledPosts extends React.Component{
 
                     {this.state.posts.map((postGroup, index) => (
                         
-                        <div className="item-list shadow-box">
+                        <div key={index} className="item-list shadow-box">
                             <div className="item-header schedule-header">
-                                <h4>{index}</h4>
+                                <h4>{   
+                                    moment(postGroup[0].scheduled_at_original).calendar(null, {
+                                        sameDay: '[Today]',
+                                        nextDay: '[Tomorrow]',
+                                        nextWeek: 'dddd',
+                                        lastDay: '[Yesterday]',
+                                        lastWeek: '[Last] dddd',
+                                        sameElse: 'DD/MM/YYYY'
+                                    })
+                                }</h4>
                             </div>
 
                             {postGroup.map((post) => (
-                                <div className="item-row schedule-row">
+                                <div key={post.id} className="item-row schedule-row">
                                     <div className="profile-info pull-left">
                                         {post.content}
-            
-                                        <img src="https://www.google.org/assets/static/images/grantees/storyweaver/pratham-books-hero-2x-cf1bc4ec02580dbb7ca256ae3347c63d.jpg" />
+
+                                        {post.payload.images.map((image, index) => (
+                                            <img key={index} src={image.absolutePath} />
+                                        ))}
+                                        
                                     </div>
                                     <div className="item-actions pull-right">
                                         <ul>
@@ -85,27 +97,6 @@ export class ScheduledPosts extends React.Component{
                         </div>
 
                     ))}
-
-        
-                        <div className="item-list shadow-box">
-                            <div className="item-header schedule-header">
-                                <h4>Yesterday</h4>
-                            </div>
-        
-                            <div className="item-row schedule-row">
-                                <div className="profile-info pull-left">
-                                    Another sample post
-                                </div>
-                                <div className="item-actions pull-right">
-                                    <ul>
-                                        <li className="text-links link-inactive"><a href="#">Edit</a></li>
-                                        <li className="text-links link-inactive"><a href="#">Delete</a></li>
-                                        <li className="text-links"><a href="#">Post Now</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-        
-                        </div>
         
                     </div>
                 </div>
@@ -115,6 +106,7 @@ export class ScheduledPosts extends React.Component{
     }
 }
 
+//TODO refresh schedule page when publishing, fetch past scheduled posts
 const mapStateToProps = (state) => {
     const selectedGlobalChannel = {selected: 1, provider: undefined};
     const selectedChannel = channelSelector(state.channels.list, selectedGlobalChannel);

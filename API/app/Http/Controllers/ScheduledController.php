@@ -24,18 +24,22 @@ class ScheduledController extends Controller
         });
     }
 
-
     public function scheduledPosts()
     {
         $posts = $this->selectedChannel->scheduledPosts()
         ->where("posted", 0)
         ->orderBy('scheduled_at', 'asc')
-        ->get()
-        ->groupBy(function($date) {
-            return Carbon::parse($date->scheduled_at)->format('Y-m-d');
-        })->toArray();
+        ->get();
+
+        foreach($posts as $post){
+            $post->payload = unserialize($post->payload);
+        }
         
-        return response()->json(["items" => $posts]);
+        $posts = $posts->groupBy(function($date) {
+            return Carbon::parse($date->scheduled_at_original)->format('Y-m-d');
+        });
+
+        return response()->json(["items" => $posts->values()]);
     }
 
     public function pastScheduled()

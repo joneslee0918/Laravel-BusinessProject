@@ -16,7 +16,7 @@ import hashtagSuggestionList from '../fixtures/hashtagSuggestions';
 import {publish} from '../requests/channels';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import {hours, minutes, dayTime} from "../fixtures/time";
-import Loader, {LoaderWithOverlay} from "./Loader";
+import {LoaderWithOverlay} from "./Loader";
 
 
 class Compose extends React.Component{
@@ -302,11 +302,11 @@ class Compose extends React.Component{
         const plugins = [this.emojiPlugin, this.hashtagMentionPlugin];
 
         return (
-            <div className="modal fade" id="compose">
+            <div className="modal fade" id="compose" tabIndex="-1" role="dialog">
 
                 {this.state.loading && <LoaderWithOverlay/>}
                 
-                <div className="modal-dialog compose-dialog">
+                <div className="modal-dialog modal-dialog-centered compose-dialog" role="document">
    
                     {this.state.selectChannelsModal ? 
                     

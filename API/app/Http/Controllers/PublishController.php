@@ -39,7 +39,7 @@ class PublishController extends Controller
             $channels = $post['publishChannels'];
             $images = $post['images'];
             $publishType = $post['publishType'];
-            $scheduledTime = Carbon::parse($scheduled['publishUTCDateTime'])->format("Y-m-d h:i:s");
+            $scheduledTime = Carbon::parse($scheduled['publishUTCDateTime'])->format("Y-m-d H:i:s");
 
             $uploadedImages = $this->uploadImages($images);
 
@@ -73,9 +73,12 @@ class PublishController extends Controller
                     }
                 }
 
+                $publishOriginalTime = Carbon::parse($publishTime)->setTimezone($scheduled['publishTimezone']);
+
                 $channel->scheduledPosts()->create([
                     'content' => $post['content'],
                     'scheduled_at' => $publishTime,
+                    'scheduled_at_original' => $publishOriginalTime,
                     'payload' => serialize($payload)
                 ]);
             }  

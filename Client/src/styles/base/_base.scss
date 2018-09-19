@@ -465,13 +465,26 @@ input {
     border-bottom: 1px solid #e2e2e2;
 }
 
+.schedule-header{
+    border-bottom:none;
+}
+
 .schedule-header h4{
     font-family: open-sansSemiBold;
     color: #777;
 }
 
 .schedule-row{
-    border-bottom:none !important;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:center;
+    border-bottom: none !important;
+    border-top: 1px solid #e2e2e2;
+}
+
+.schedule-row .item-actions li{
+    margin-top: 0 !important;
 }
 
 .item-row .profile-info {
