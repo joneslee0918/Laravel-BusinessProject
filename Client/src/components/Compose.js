@@ -16,6 +16,7 @@ import hashtagSuggestionList from '../fixtures/hashtagSuggestions';
 import {publish} from '../requests/channels';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import {hours, minutes, dayTime} from "../fixtures/time";
+import Loader, {LoaderWithOverlay} from "./Loader";
 
 
 class Compose extends React.Component{
@@ -27,8 +28,7 @@ class Compose extends React.Component{
         mentionTrigger: "#"
     });
 
-
-    state = {
+    defaultState = {
         editorState: createEditorStateWithText(''),
         hashtagSuggestions: hashtagSuggestionList,
         selectChannelsModal: false,
@@ -54,8 +54,13 @@ class Compose extends React.Component{
         showCalendar: false,
         optionsMenu: false,
         letterCount: 0,
-        pictures: []
+        pictures: [],
+        loading: false,
+        stored: false,
+        error: false
     };
+
+    state = this.defaultState;
 
     componentDidMount(){
         if(!this.state.publishTimestamp){
@@ -65,6 +70,11 @@ class Compose extends React.Component{
 
     componentDidUpdate(prevProps) {
         
+        if(this.state.stored){
+            document.getElementById("closeModal").click();
+            this.setState(() => (this.defaultState));
+        }
+
         if(prevProps.channels !== this.props.channels){
             this.setState(() => ({
                 publishChannels: this.setPublishChannels()
@@ -86,6 +96,8 @@ class Compose extends React.Component{
         this.setState(() => ({
             publishChannels
         }));
+
+        this.defaultState.publishChannels = publishChannels;
     };
 
     onImageIconClick = () => {
@@ -255,6 +267,10 @@ class Compose extends React.Component{
         const publishTimezone = this.state.publishTimezone;
         const publishChannels = channelSelector(this.state.publishChannels, {selected: true, provider: undefined});
 
+        this.setState(() => ({
+            loading: true
+        }));
+
         publish({
             content, 
             images,                
@@ -267,7 +283,17 @@ class Compose extends React.Component{
                 publishTimezone
             }
         })
-        .then((response) => response);
+        .then((response) => {
+            this.setState(() => ({
+                loading: false,
+                stored: true
+            }));
+        }).catch((error) => {
+            this.setState(() => ({
+                loading: false,
+                error: true
+            }));
+        });
     }
 
     render(){
@@ -277,8 +303,11 @@ class Compose extends React.Component{
 
         return (
             <div className="modal fade" id="compose">
-                <div className="modal-dialog compose-dialog">
 
+                {this.state.loading && <LoaderWithOverlay/>}
+                
+                <div className="modal-dialog compose-dialog">
+   
                     {this.state.selectChannelsModal ? 
                     
                     <div className="modal-content">
@@ -304,7 +333,7 @@ class Compose extends React.Component{
                     <div className="modal-content">
         
                         <div className="modal-header">
-                            <button type="button" className="close fa fa-times-circle" data-dismiss="modal"></button>
+                            <button type="button" id="closeModal" className="close fa fa-times-circle" data-dismiss="modal"></button>
                             <ul className="compose-header">
                                 <li onClick={this.toggleSelectChannelsModal} className="add-new-channel"><i className="fa fa-plus"></i></li>
 
@@ -340,6 +369,7 @@ class Compose extends React.Component{
                                         withLabel={false}
                                         buttonClassName='dnone'
                                         ref={this.imageIcon}
+                                        defaultImages={this.state.pictures}
                                     />
 
                                     <EmojiSuggestions />
@@ -461,7 +491,7 @@ class Compose extends React.Component{
                             </div>
                             <p className={`letter-count ${this.state.letterCount > 280 ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
                         </div>
-
+                        {this.state.error && <div class='alert alert-danger'>Something went wrong.</div>}
                     </div>
                     }
 
