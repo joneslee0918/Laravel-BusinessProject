@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Modifier, EditorState} from 'draft-js';
+import { Redirect } from 'react-router-dom';
 import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
@@ -16,7 +17,6 @@ import hashtagSuggestionList from '../fixtures/hashtagSuggestions';
 import {publish} from '../requests/channels';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import {hours, minutes, dayTime} from "../fixtures/time";
-import {setChannelsLoading} from "../actions/channels";
 import {LoaderWithOverlay} from "./Loader";
 
 
@@ -73,7 +73,6 @@ class Compose extends React.Component{
         if(this.state.stored){
             document.getElementById("closeModal").click();
             this.setState(() => (this.defaultState));
-            // this.props.dispatch(setChannelsLoading(false));
         }
 
         if(prevProps.channels !== this.props.channels){
@@ -306,10 +305,9 @@ class Compose extends React.Component{
         const { EmojiSuggestions, EmojiSelect} = this.emojiPlugin;
         const { MentionSuggestions: HashtagSuggestions } = this.hashtagMentionPlugin;
         const plugins = [this.emojiPlugin, this.hashtagMentionPlugin];
-
         return (
             <div className="modal fade" id="compose" tabIndex="-1" role="dialog">
-
+                {this.state.stored && <Redirect to={location.pathname} />}
                 {this.state.loading && <LoaderWithOverlay/>}
                 
                 <div className="modal-dialog modal-dialog-centered compose-dialog" role="document">

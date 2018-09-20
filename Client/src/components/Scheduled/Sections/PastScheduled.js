@@ -78,7 +78,8 @@ export class PastScheduled extends React.Component{
                             {postGroup.map((post) => (
                                 <div key={post.id} className="item-row schedule-row">
                                     <div className="profile-info pull-left">
-                                        {post.content}
+                                        <h4>{moment(post.scheduled_at_original).format("h:mm A")}</h4>
+                                        <span>{post.content}</span>
 
                                         {post.payload.images.map((image, index) => (
                                             <img key={index} src={image.absolutePath} />

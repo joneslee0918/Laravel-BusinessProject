@@ -118,4 +118,8 @@ class PublishController extends Controller
 
         return $uploadedImages;
     }
+
+    public function publishPost(Request $request){
+        //TODO: publish post logic
+    }
 }
