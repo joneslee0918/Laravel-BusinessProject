@@ -103,7 +103,7 @@ function multiRequest($url, $payload, $params = [])
         }
 
     }
-    dd($response);
+    // dd($response);
     return $response;
 }
 

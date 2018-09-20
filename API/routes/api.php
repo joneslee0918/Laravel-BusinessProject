@@ -24,7 +24,6 @@ Route::middleware('auth:api')->group(function(){
 
 Route::post('/post/publish', 'PublishController@publish')->name('publish');
 
-
 Route::prefix("twitter")->group(function(){
     
     //Twitter login

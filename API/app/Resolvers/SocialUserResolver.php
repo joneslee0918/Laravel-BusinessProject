@@ -115,6 +115,7 @@ class SocialUserResolver implements SocialUserResolverInterface
             /*
             * Sync following and followers in the background
             */
+
             multiRequest(route("sync.follower.ids"), [$twitterChannel], ["sleep" => 0]);
             multiRequest(route("sync.following.ids"), [$twitterChannel], ["sleep" => 0]);
 

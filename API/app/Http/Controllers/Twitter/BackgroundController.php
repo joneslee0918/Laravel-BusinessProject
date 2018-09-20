@@ -24,7 +24,7 @@ class BackgroundController extends Controller
         try{
             $channel->syncFollowerIds($sleep);
         }catch(\Exception $e){
-            //TODO, skip for now to stop the running process
+            return $e->getMessage();
         }
 
         $channel->stopProcess("syncTwitterFollowerIds");
@@ -46,7 +46,7 @@ class BackgroundController extends Controller
         try{
             $channel->syncFollowingIds($sleep);
         }catch(\Exception $e){
-            //TODO, skip for now to stop the running process
+            return $e->getMessage();
         }
 
         $channel->stopProcess("syncTwitterFollowingIds");
