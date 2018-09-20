@@ -16,6 +16,7 @@ import hashtagSuggestionList from '../fixtures/hashtagSuggestions';
 import {publish} from '../requests/channels';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import {hours, minutes, dayTime} from "../fixtures/time";
+import {setChannelsLoading} from "../actions/channels";
 import {LoaderWithOverlay} from "./Loader";
 
 
@@ -69,10 +70,10 @@ class Compose extends React.Component{
     }
 
     componentDidUpdate(prevProps) {
-        
         if(this.state.stored){
             document.getElementById("closeModal").click();
             this.setState(() => (this.defaultState));
+            // this.props.dispatch(setChannelsLoading(false));
         }
 
         if(prevProps.channels !== this.props.channels){
@@ -83,14 +84,19 @@ class Compose extends React.Component{
     }
 
     onChannelSelectionChange = (username) => {
+
         const publishChannels = this.props.channels.map((channel) => {
             if(channel.username === username){
-                channel.selected = 1;
+                return {
+                    ...channel,
+                    selected: 1
+                }
             }else{
-                channel.selected = 0;
+                return {
+                    ...channel,
+                    selected: 0
+                }
             }
-
-            return channel;
         });
 
         this.setState(() => ({

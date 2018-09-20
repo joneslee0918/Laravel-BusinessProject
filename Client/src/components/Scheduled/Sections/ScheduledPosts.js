@@ -51,6 +51,8 @@ export class ScheduledPosts extends React.Component{
             <div>
 
                 <h2>SCHEDULED POSTS</h2>
+                {(this.state.posts.length < 1 && !this.state.loading) && 
+                <div className="no-data">No posts have been scheduled yet.</div>}
 
                 {this.state.loading && <Loader />}
 
