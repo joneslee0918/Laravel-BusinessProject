@@ -46,7 +46,7 @@ class ScheduledController extends Controller
     {
         $posts = $this->selectedChannel->scheduledPosts()
         ->where("posted", 1)
-        ->orderBy('scheduled_at', 'asc')
+        ->orderBy('scheduled_at', 'desc')
         ->get();
 
         foreach($posts as $post){
