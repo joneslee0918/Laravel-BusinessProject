@@ -72,7 +72,7 @@ class Compose extends React.Component{
     componentDidUpdate(prevProps) {
         if(this.state.stored){
             document.getElementById("closeModal").click();
-            this.setState(() => (this.defaultState));
+            //this.setState(() => (this.defaultState));
         }
 
         if(prevProps.channels !== this.props.channels){
@@ -102,7 +102,7 @@ class Compose extends React.Component{
             publishChannels
         }));
 
-        this.defaultState.publishChannels = publishChannels;
+        //this.defaultState.publishChannels = publishChannels;
     };
 
     onImageIconClick = () => {

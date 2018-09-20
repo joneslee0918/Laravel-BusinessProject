@@ -16,11 +16,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->group(function(){
     Route::get('/channels', 'ChannelController@channels');
     Route::patch('/channels/select/{id}', 'ChannelController@select');
-    Route::post('/publish', 'PublishController@store');
+    Route::post('/post/store', 'PublishController@store');
 
     Route::get('/scheduled/posts', 'ScheduledController@scheduledPosts');
     Route::get('/scheduled/past', 'ScheduledController@pastScheduled');
 });
+
+Route::post('/post/publish', 'PublishController@publish')->name('publish');
 
 
 Route::prefix("twitter")->group(function(){

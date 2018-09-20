@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from "moment";
 import channelSelector from '../../../selectors/channels';
-import {scheduledPosts} from '../../../requests/channels';
+import {pastScheduled} from '../../../requests/channels';
 import Loader from '../../Loader';
 
 export class PastScheduled extends React.Component{
@@ -34,7 +34,7 @@ export class PastScheduled extends React.Component{
 
     fetchPosts = () => {
         this.setLoading(true);
-        scheduledPosts()
+        pastScheduled()
             .then((response) => {
                 this.setState(() => ({
                     posts: response.items,
@@ -52,7 +52,7 @@ export class PastScheduled extends React.Component{
 
                 <h2>PAST SCHEDULED</h2>
                 {(this.state.posts.length < 1 && !this.state.loading) && 
-                <div className="no-data">No posts have been scheduled yet.</div>}
+                <div className="no-data">No posts have been published yet.</div>}
 
                 {this.state.loading && <Loader />}
 
@@ -61,7 +61,7 @@ export class PastScheduled extends React.Component{
 
                     {this.state.posts.map((postGroup, index) => (
                         
-                        <div key={index} className="item-list shadow-box">
+                        <div key={index} className="item-list shadow-box past-scheduled">
                             <div className="item-header schedule-header">
                                 <h4>{   
                                     moment(postGroup[0].scheduled_at_original).calendar(null, {
@@ -88,7 +88,7 @@ export class PastScheduled extends React.Component{
                                     </div>
                                     <div className="item-actions pull-right">
                                         <ul>
-                                            <li className="text-links link-inactive"><a href="#">Edit</a></li>
+                                            <li className="text-links link-inactive"><a href="#">Reschedule</a></li>
                                             <li className="text-links link-inactive"><a href="#">Delete</a></li>
                                             <li className="text-links"><a href="#">Post Now</a></li>
                                         </ul>

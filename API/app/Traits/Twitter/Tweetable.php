@@ -49,14 +49,26 @@ trait Tweetable
         }
     }
 
-        /**
-     * @param $userId
+
+    /**
+     * @param array $media
      * @return mixed
      */
-    public function tweet($tweet)
+    public function uploadMedia($media)
     {
         $this->setAsCurrentUser();
-        return Twitter::postTweet(["status" => $tweet]);
+        return Twitter::uploadMedia($media);
+    }
+
+
+    /**
+     * @param array $tweet
+     * @return mixed
+     */
+    public function publish($tweet)
+    {
+        $this->setAsCurrentUser();
+        return Twitter::postTweet($tweet);
     }
 
     /**

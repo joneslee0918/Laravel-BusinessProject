@@ -16,7 +16,7 @@ export const selectChannel = (id) => {
 };
 
 export const publish = (post) => {
-    return axios.post(`${apiUrl}/publish`, {
+    return axios.post(`${apiUrl}/post/store`, {
         post
     })
     .then((response) => {

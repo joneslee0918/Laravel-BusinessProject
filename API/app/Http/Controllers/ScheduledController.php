@@ -45,8 +45,18 @@ class ScheduledController extends Controller
     public function pastScheduled()
     {
         $posts = $this->selectedChannel->scheduledPosts()
-        ->where("posted", 1)->get();
+        ->where("posted", 1)
+        ->orderBy('scheduled_at', 'asc')
+        ->get();
+
+        foreach($posts as $post){
+            $post->payload = unserialize($post->payload);
+        }
         
-        return response()->json($posts);
+        $posts = $posts->groupBy(function($date) {
+            return Carbon::parse($date->scheduled_at_original)->format('Y-m-d');
+        });
+
+        return response()->json(["items" => $posts->values()]);
     }
 }
