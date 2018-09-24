@@ -94,7 +94,7 @@ class PublishController extends Controller
                 }
             }  
         }catch(\Exception $e){
-            return response()->json(['message' => $e->getMessage()]);
+            return response()->json(['message' => $e->getMessage()], 400);
         }
 
 
@@ -144,7 +144,7 @@ class PublishController extends Controller
             try{
                $channel->details->publishScheduledPost($scheduledPost); 
             }catch(\Exception $e){
-                return response()->json(['message' => $e->getMessage()]);
+                return response()->json(['message' => $e->getMessage()], 400);
             }
         }
     }
@@ -157,7 +157,7 @@ class PublishController extends Controller
                 $scheduledPost = $this->selectedChannel->scheduledPosts()->find($postId);
                 $this->selectedChannel->details->publishScheduledPost($scheduledPost);
             }catch(\Exception $e){
-                return response()->json(['message' => $e->getMessage()]);
+                return response()->json(['message' => $e->getMessage()], 400);
             }
         }
     }
@@ -179,7 +179,7 @@ class PublishController extends Controller
 
                 $scheduledPost->delete();  
             }catch(\Exception $e){
-                throw $e;
+                return response()->json(['message' => $e->getMessage()], 400);
             }
         }
     }

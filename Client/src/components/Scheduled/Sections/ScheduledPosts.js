@@ -17,7 +17,8 @@ export class ScheduledPosts extends React.Component{
         posts: [],
         page: 1,
         loading: this.props.channelsLoading,
-        action: this.defaultAction
+        action: this.defaultAction,
+        error: false
     }
 
     componentDidMount() {
@@ -28,7 +29,7 @@ export class ScheduledPosts extends React.Component{
     }
 
     componentDidUpdate(prevProps) {
-        if((this.props.selectedChannel !== prevProps.selectedChannel) || this.state.refresh){
+        if((this.props.selectedChannel !== prevProps.selectedChannel)){
             this.fetchPosts();
         }
     }
@@ -52,6 +53,13 @@ export class ScheduledPosts extends React.Component{
             this.fetchPosts();
             this.setLoading(false);
         }).catch((error) => {
+            
+            if(typeof error.response.data.message != 'undefined'){
+                this.setState(() => ({
+                    error: error.response.data.message
+                }));
+            }
+
             this.setLoading(false);
         });
     };
@@ -63,6 +71,13 @@ export class ScheduledPosts extends React.Component{
             this.fetchPosts();
             this.setLoading(false);
         }).catch((error) => {
+
+            if(typeof error.response.data.message != 'undefined'){
+                this.setState(() => ({
+                    error: error.response.data.message
+                }));
+            }
+
             this.setLoading(false);
         });
     };
@@ -77,6 +92,13 @@ export class ScheduledPosts extends React.Component{
                     page: 1
                 }));
             }).catch((error) => {
+
+                if(typeof error.response.data.message != 'undefined'){
+                    this.setState(() => ({
+                        error: error.response.data.message
+                    }));
+                }
+
                 this.setLoading(false);
             });
     };
@@ -108,6 +130,18 @@ export class ScheduledPosts extends React.Component{
                         this.setAction();
                     }}
                     onClose={() => this.setAction()}
+                />
+
+                <SweetAlert
+                    show={!!this.state.error}
+                    title={`Error`}
+                    text={`${this.state.error}`}
+                    type="error"
+                    confirmButtonText="Ok"
+                    cancelButtonText="No"
+                    onConfirm={() => {
+                        this.setState(() => ({ error: false}));
+                    }}
                 />
 
                 <h2>SCHEDULED POSTS</h2>
@@ -149,7 +183,7 @@ export class ScheduledPosts extends React.Component{
                                     </div>
                                     <div className="item-actions pull-right">
                                         <ul>
-                                            <li className="text-links link-inactive"><a href="#">Edit</a></li>
+                                            <li className="text-links link-inactive"><a className="link-cursor">Edit</a></li>
                                             <li className="text-links link-inactive"><a className="link-cursor danger-btn" onClick={() => this.setAction({type: 'delete', id: post.id})}>Delete</a></li>
                                             <li className="text-links"><a className="link-cursor" onClick={() => this.setAction({type: 'post', id: post.id})}>Post Now</a></li>
                                         </ul>

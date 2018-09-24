@@ -152,7 +152,12 @@ input {
     color:red;
 }
 
-.danger-btn:hover{
+.text-links a:hover{
+    color: #48b6be !important;
+    font-weight:bold;
+}
+
+.text-links .danger-btn:hover{
     color: red !important;
 }
 

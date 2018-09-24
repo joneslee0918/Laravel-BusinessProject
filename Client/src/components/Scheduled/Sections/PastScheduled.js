@@ -17,7 +17,8 @@ export class PastScheduled extends React.Component{
         posts: [],
         page: 1,
         loading: this.props.channelsLoading,
-        action: this.defaultAction
+        action: this.defaultAction,
+        error: false
     }
 
     componentDidMount() {
@@ -52,6 +53,13 @@ export class PastScheduled extends React.Component{
             this.fetchPosts();
             this.setLoading(false);
         }).catch((error) => {
+
+            if(typeof error.response.data.message != 'undefined'){
+                this.setState(() => ({
+                    error: error.response.data.message
+                }));
+            }
+            
             this.setLoading(false);
         });
     };
@@ -63,6 +71,13 @@ export class PastScheduled extends React.Component{
             this.fetchPosts();
             this.setLoading(false);
         }).catch((error) => {
+
+            if(typeof error.response.data.message != 'undefined'){
+                this.setState(() => ({
+                    error: error.response.data.message
+                }));
+            }
+
             this.setLoading(false);
         })
     }
@@ -77,6 +92,13 @@ export class PastScheduled extends React.Component{
                     page: 1
                 }));
             }).catch((error) => {
+
+                if(typeof error.response.data.message != 'undefined'){
+                    this.setState(() => ({
+                        error: error.response.data.message
+                    }));
+                }
+
                 this.setLoading(false);
             });
     };
@@ -107,6 +129,18 @@ export class PastScheduled extends React.Component{
                         this.setAction();
                     }}
                     onClose={() => this.setAction()}
+                />
+
+                <SweetAlert
+                    show={!!this.state.error}
+                    title={`Error`}
+                    text={`${this.state.error}`}
+                    type="error"
+                    confirmButtonText="Ok"
+                    cancelButtonText="No"
+                    onConfirm={() => {
+                        this.setState(() => ({ error: false}));
+                    }}
                 />
 
                 <h2>PAST SCHEDULED</h2>
