@@ -59,7 +59,7 @@ export class PastScheduled extends React.Component{
                     error: error.response.data.message
                 }));
             }
-            
+
             this.setLoading(false);
         });
     };
@@ -171,7 +171,7 @@ export class PastScheduled extends React.Component{
                             {postGroup.map((post) => (
                                 <div key={post.id} className="item-row schedule-row">
                                     <div className="profile-info pull-left">
-                                        <h4>{moment(post.scheduled_at_original).format("h:mm A")}</h4>
+                                        <h4>{moment(post.scheduled_at_original).format("h:mm A")}<small className="red-txt">{post.status < 0 ? ' (failed)': ''}</small></h4>
                                         <span>{post.content}</span>
 
                                         {post.payload.images.map((image, index) => (
