@@ -152,6 +152,10 @@ input {
     color:red;
 }
 
+.danger-btn:hover{
+    color: red !important;
+}
+
 .trash-btn:hover .delete-text{
     display:inline-block;
 }

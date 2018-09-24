@@ -24,6 +24,20 @@ export const publish = (post) => {
     });
 };
 
+export const postNow = (postId) => {
+    return axios.post(`${apiUrl}/post/${postId}`)
+    .then((response) => {
+        return response.data;
+    });
+};
+
+export const destroy = (postId) => {
+    return axios.delete(`${apiUrl}/post/${postId}`)
+    .then((response) => {
+        return response.data;
+    });
+};
+
 export const scheduledPosts = () => {
     return axios.get(`${apiUrl}/scheduled/posts`)
     .then((response) => {

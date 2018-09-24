@@ -20,6 +20,9 @@ Route::middleware('auth:api')->group(function(){
 
     Route::get('/scheduled/posts', 'ScheduledController@scheduledPosts');
     Route::get('/scheduled/past', 'ScheduledController@pastScheduled');
+
+    Route::delete('/post/{postId}', 'PublishController@destroy');
+    Route::post('/post/{postId}', 'PublishController@postNow');
 });
 
 Route::post('/post/publish', 'PublishController@publish')->name('publish');

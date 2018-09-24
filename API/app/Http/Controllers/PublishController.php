@@ -21,6 +21,11 @@ class PublishController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $this->user = auth()->user();
+            
+            if($this->user){
+                $this->selectedChannel = $this->user->selectedChannel();
+            }
+
             return $next($request);
         });
     }
@@ -74,12 +79,19 @@ class PublishController extends Controller
 
                 $publishOriginalTime = Carbon::parse($publishTime)->setTimezone($scheduled['publishTimezone']);
 
-                $channel->scheduledPosts()->create([
+                $post = [
                     'content' => $post['content'],
                     'scheduled_at' => $publishTime,
                     'scheduled_at_original' => $publishOriginalTime,
-                    'payload' => serialize($payload)
-                ]);
+                    'payload' => serialize($payload),
+                    'posted' => $publishType == 'now' ? 1 : 0
+                ];
+
+                $scheduledPost = $channel->scheduledPosts()->create($post);
+
+                if($publishType == 'now'){
+                    $channel->details->publishScheduledPost($scheduledPost);
+                }
             }  
         }catch(\Exception $e){
             return response()->json(['message' => $e->getMessage()]);
@@ -118,40 +130,57 @@ class PublishController extends Controller
         return $uploadedImages;
     }
 
-    public function publish(Request $request){
+    public function publish(Request $request)
+    {
 
         $scheduledPost = unserialize($request->input('item'));
+        //$scheduledPost = \App\Models\ScheduledPost::first();
 
         if(!$scheduledPost) return;
+        
+        $channel = Channel::find($scheduledPost->channel_id);
 
-        try{
-            
-            $channel = Channel::find($scheduledPost->channel_id);
-            $images = unserialize($scheduledPost->payload)['images'];
-
-            $mediaIds = [];
-
-            foreach($images as $image){
-                $relativePath = str_replace('storage', 'public', $image['relativePath']);
-
-                $media = ["media" => \Storage::get($relativePath)];
-                $uploadResponse = $channel->details->uploadMedia($media);
-                $mediaIds[] = $uploadResponse->media_id;
+        if($channel){
+            try{
+               $channel->details->publishScheduledPost($scheduledPost); 
+            }catch(\Exception $e){
+                return response()->json(['message' => $e->getMessage()]);
             }
-            
-            $post = [
-                'status' => $scheduledPost->content,
-                'media_ids' => $mediaIds
-            ]; 
-            
-            $channel->details->publish($post);
-        }catch(\Exception $e){
-            
-            $scheduledPost->posted = 0;
-            $scheduledPost->status = -1;
-            $scheduledPost->save();
+        }
+    }
 
-            return $e->getMessage();
+    public function postNow($postId)
+    {
+        if($this->selectedChannel){
+
+            try{
+                $scheduledPost = $this->selectedChannel->scheduledPosts()->find($postId);
+                $this->selectedChannel->details->publishScheduledPost($scheduledPost);
+            }catch(\Exception $e){
+                return response()->json(['message' => $e->getMessage()]);
+            }
+        }
+    }
+
+    public function destroy($postId)
+    {
+        if($this->selectedChannel){
+
+            try{
+                $scheduledPost = $this->selectedChannel->scheduledPosts()->find($postId);
+
+                $payload = unserialize($scheduledPost->payload);
+                $images = $payload['images'];
+
+                foreach($images as $image){
+                    $filePath = str_replace("storage", "public", $image['relativePath']);
+                    \Storage::delete($filePath);
+                }
+
+                $scheduledPost->delete();  
+            }catch(\Exception $e){
+                throw $e;
+            }
         }
     }
 }
