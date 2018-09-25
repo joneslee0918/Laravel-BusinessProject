@@ -101,6 +101,7 @@ trait Tweetable
 
             $now = Carbon::now();
             $scheduledPost->posted = 1;
+            $scheduledPost->status = null;
             $scheduledPost->scheduled_at = $now;
             $scheduledPost->scheduled_at_original = Carbon::parse($now)->setTimezone($timezone);
             $scheduledPost->save();
