@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import moment from "moment";
-import SweetAlert from "sweetalert2-react";
 import channelSelector from '../../../selectors/channels';
 import {pastScheduled, destroy, postNow} from '../../../requests/channels';
-import Loader from '../../Loader';
+import PostList from '../../PostList';
 
 export class PastScheduled extends React.Component{
 
@@ -106,96 +104,18 @@ export class PastScheduled extends React.Component{
     render(){
         return(
             <div>
-
-                <SweetAlert
-                    show={!!this.state.action.id}
-                    title={`Do you wish to ${this.state.action.type} this item?`}
-                    text="To confirm your decision, please click one of the buttons below."
-                    showCancelButton
-                    type="warning"
-                    confirmButtonText="Yes"
-                    cancelButtonText="No"
-                    onConfirm={() => {
-                        if(this.state.action.type === 'delete'){
-                            this.destroyPost(this.state.action.id);
-                        }else if(this.state.action.type === 'post'){
-                            this.publishPost(this.state.action.id);
-                        }else{
-                            console.log('something went wrong');
-                        }
-                        this.setAction();
-                    }}
-                    onCancel={() => {
-                        this.setAction();
-                    }}
-                    onClose={() => this.setAction()}
+                <PostList 
+                    action={this.state.action}
+                    setAction={this.setAction}
+                    destroyPost={this.destroyPost}
+                    publishPost={this.publishPost}
+                    error={this.state.error}
+                    setError={this.setError}
+                    posts={this.state.posts}
+                    loading={this.state.loading}
+                    title="PAST SCHEDULED"
+                    type="past-scheduled"
                 />
-
-                <SweetAlert
-                    show={!!this.state.error}
-                    title={`Error`}
-                    text={`${this.state.error}`}
-                    type="error"
-                    confirmButtonText="Ok"
-                    cancelButtonText="No"
-                    onConfirm={() => {
-                        this.setState(() => ({ error: false}));
-                    }}
-                />
-
-                <h2>PAST SCHEDULED</h2>
-                {(this.state.posts.length < 1 && !this.state.loading) && 
-                <div className="no-data">No posts have been published yet.</div>}
-
-                {this.state.loading && <Loader />}
-
-                <div className="row">
-                    <div className="col-xs-12">
-
-                    {this.state.posts.map((postGroup, index) => (
-                        
-                        <div key={index} className="item-list shadow-box past-scheduled">
-                            <div className="item-header schedule-header">
-                                <h4>{   
-                                    moment(postGroup[0].scheduled_at_original).calendar(null, {
-                                        sameDay: '[Today]',
-                                        nextDay: '[Tomorrow]',
-                                        nextWeek: 'dddd',
-                                        lastDay: '[Yesterday]',
-                                        lastWeek: '[Last] dddd',
-                                        sameElse: 'DD/MM/YYYY'
-                                    })
-                                }</h4>
-                            </div>
-
-                            {postGroup.map((post) => (
-                                <div key={post.id} className="item-row schedule-row">
-                                    <div className="profile-info pull-left">
-                                        <h4>{moment(post.scheduled_at_original).format("h:mm A")}<small className="red-txt">{post.status < 0 ? ' (failed)': ''}</small></h4>
-                                        <span>{post.content}</span>
-
-                                        {post.payload.images.map((image, index) => (
-                                            <img key={index} src={image.absolutePath} />
-                                        ))}
-                                        
-                                    </div>
-                                    <div className="item-actions pull-right">
-                                        <ul>
-                                            <li className="text-links link-inactive"><a href="#">Reschedule</a></li>
-                                            <li className="text-links link-inactive"><a className="link-cursor danger-btn" onClick={() => this.setAction({type: 'delete', id: post.id})}>Delete</a></li>
-                                            <li className="text-links"><a className="link-cursor" onClick={() => this.setAction({type: 'post', id: post.id})}>Post Now</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            ))}
-
-        
-                        </div>
-
-                    ))}
-        
-                    </div>
-                </div>
             </div>
             
         );
