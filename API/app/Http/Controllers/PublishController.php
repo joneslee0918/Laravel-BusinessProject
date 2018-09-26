@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Channel;
+use App\Models\ScheduledPost;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -79,7 +80,7 @@ class PublishController extends Controller
 
                 $publishOriginalTime = Carbon::parse($publishTime)->setTimezone($scheduled['publishTimezone']);
 
-                $post = [
+                $postData = [
                     'content' => $post['content'],
                     'scheduled_at' => $publishTime,
                     'scheduled_at_original' => $publishOriginalTime,
@@ -87,7 +88,11 @@ class PublishController extends Controller
                     'posted' => $publishType == 'now' ? 1 : 0
                 ];
 
-                $scheduledPost = $channel->scheduledPosts()->create($post);
+                if($post['type'] == 'edit'){                   
+                    $channel->scheduledPosts()->where("id", $post['id'])->update($postData);
+                }else{
+                    $scheduledPost = $channel->scheduledPosts()->create($postData);
+                }
 
                 if($publishType == 'now'){
                     $channel->details->publishScheduledPost($scheduledPost);
@@ -108,26 +113,31 @@ class PublishController extends Controller
 
         foreach($images as $image){
 
-            if(str_contains($image, "http")) continue;
-            
-            $imageData = explode(',', $image);
-            $imageBase64 = $imageData[1];
-            $imageInfo = explode(';', $imageData[0]);
-            $imageOriginalName = explode('.',$imageInfo[1]);
-            $imageExtension = $imageOriginalName[1];
+            if(str_contains($image, "http")){
+                $uploadedImages[] = [
+                    'relativePath' => 'storage'.explode('storage', $image)[1],
+                    'absolutePath' => $image
+                ];
+            }else{
+                $imageData = explode(',', $image);
+                $imageBase64 = $imageData[1];
+                $imageInfo = explode(';', $imageData[0]);
+                $imageOriginalName = explode('.',$imageInfo[1]);
+                $imageExtension = $imageOriginalName[1];
+    
+                $imageName = str_random(35).'.'.$imageExtension;
+                $today = Carbon::today();
+                $uploadPath = "public/$today->year/$today->month/$today->day/$imageName";
+    
+                \Storage::put($uploadPath, base64_decode($imageBase64));
+    
+                $relativePublicPath = str_replace("public", "storage", $uploadPath);
 
-            $imageName = str_random(35).'.'.$imageExtension;
-            $today = Carbon::today();
-            $uploadPath = "public/$today->year/$today->month/$today->day/$imageName";
-
-            \Storage::put($uploadPath, base64_decode($imageBase64));
-
-            $relativePublicPath = str_replace("public", "storage", $uploadPath);
-
-            $uploadedImages[] = [
-                'relativePath' => $relativePublicPath,
-                'absolutePath' => \URL::to('/').'/'.$relativePublicPath
-            ];
+                $uploadedImages[] = [
+                    'relativePath' => $relativePublicPath,
+                    'absolutePath' => \URL::to('/').'/'.$relativePublicPath
+                ];
+            }
         }
 
         return $uploadedImages;
@@ -176,8 +186,12 @@ class PublishController extends Controller
                 $images = $payload['images'];
 
                 foreach($images as $image){
-                    $filePath = str_replace("storage", "public", $image['relativePath']);
-                    \Storage::delete($filePath);
+                    $exists = ScheduledPost::where("payload", "like", "%".$image['absolutePath']."%")->exists();
+
+                    if(!$exists){
+                        $filePath = str_replace("storage", "public", $image['relativePath']);
+                        \Storage::delete($filePath);
+                    }
                 }
 
                 $scheduledPost->delete();  

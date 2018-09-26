@@ -1,6 +1,8 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import moment from "moment";
 import SweetAlert from 'sweetalert2-react';
+import {setPost} from '../actions/posts';
 import Loader from './Loader';
 
 export const PostList = ({
@@ -13,7 +15,8 @@ export const PostList = ({
     posts,
     loading,
     title,
-    type
+    type,
+    setPost
 }) => (
             <div>
 
@@ -93,7 +96,15 @@ export const PostList = ({
                                     </div>
                                     <div className="item-actions pull-right">
                                         <ul>
-                                            <li className="text-links link-inactive"><a className="link-cursor">{`${type === 'past-scheduled' ? 'Reschedule' : 'Edit'}`}</a></li>
+                                            <li className="text-links link-inactive"><a onClick={() => setPost(
+                                                {
+                                                 id: post.id,
+                                                 content: post.content, 
+                                                 images: post.payload.images.map((image) => image.absolutePath),
+                                                 scheduled_at: post.scheduled_at,
+                                                 scheduled_at_original: post.scheduled_at_original,
+                                                 type: type !== 'past-scheduled' ? 'edit' : 'store'
+                                                }) } data-toggle="modal" data-target="#compose" className="link-cursor">{`${type === 'past-scheduled' ? 'Reschedule' : 'Edit'}`}</a></li>
                                             <li className="text-links link-inactive"><a className="link-cursor danger-btn" onClick={() => setAction({type: 'delete', id: post.id})}>Delete</a></li>
                                             <li className="text-links"><a className="link-cursor" onClick={() => setAction({type: 'post', id: post.id})}>Post Now</a></li>
                                         </ul>
@@ -112,4 +123,8 @@ export const PostList = ({
             
 );
 
-export default PostList;
+const mapDispatchToProps = (dispatch) => ({
+    setPost: (post) => dispatch(setPost(post))
+});
+
+export default connect(undefined, mapDispatchToProps)(PostList);

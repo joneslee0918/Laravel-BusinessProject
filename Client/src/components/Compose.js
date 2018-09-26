@@ -17,6 +17,7 @@ import hashtagSuggestionList from '../fixtures/hashtagSuggestions';
 import {publish} from '../requests/channels';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import {hours, minutes, dayTime} from "../fixtures/time";
+import {setPost} from "../actions/posts";
 import {LoaderWithOverlay} from "./Loader";
 
 
@@ -29,11 +30,17 @@ class Compose extends React.Component{
         mentionTrigger: "#"
     });
 
-    defaultPics = ["https://opensource.google.com/assets/static/images/home/blog/blog_image_1.jpg", 
-    "https://usercontent1.hubstatic.com/7948958.jpg"];
+    defaultPost = {
+        id: "",
+        content: "", 
+        images: [],
+        scheduled_at: moment(),
+        scheduled_at_original: moment()
+    };
 
     defaultState = {
         editorState: createEditorStateWithText(''),
+        type: 'store',
         hashtagSuggestions: hashtagSuggestionList,
         selectChannelsModal: false,
         publishChannels: this.setPublishChannels(),
@@ -58,7 +65,7 @@ class Compose extends React.Component{
         showCalendar: false,
         optionsMenu: false,
         letterCount: 0,
-        pictures: [...this.defaultPics],
+        pictures: [],
         loading: false,
         stored: false,
         error: false
@@ -73,6 +80,27 @@ class Compose extends React.Component{
     }
 
     componentDidUpdate(prevProps) {
+
+        if(prevProps.post !== this.props.post && this.props.post){
+            this.setState(() => ({
+                editorState: createEditorStateWithText(this.props.post.content),
+                pictures: this.props.post.images,
+                postDate: moment(this.props.post.scheduled_at_original),
+                type: this.props.post.type,
+                calendarData: {
+                    time: {
+                        hour: moment(this.props.post.scheduled_at_original).format("hh"),
+                        minutes: moment(this.props.post.scheduled_at_original).format("mm"),
+                        time: moment(this.props.post.scheduled_at_original).format("A"),
+                    }
+                },
+                publishState: {
+                    name: "Custom Time",
+                    value: "date"
+                }
+            }), () => this.setPublishTimestamp());
+        }
+
         if(this.state.stored){
             document.getElementById("closeModal").click();
         }
@@ -165,12 +193,11 @@ class Compose extends React.Component{
 
     onDrop = (pictures, pictureDataUrls) => {
         this.setState((prevState) => {
-            console.log(pictureDataUrls);
-            //if(prevState.pictures !== pictures){
+            if(prevState.pictures !== pictures){
                 return {
                     pictures: pictureDataUrls
                 }
-           // }
+            }
         });
     };
 
@@ -265,6 +292,8 @@ class Compose extends React.Component{
     publish = () => {
         const editorState = this.state.editorState;
         const content = editorState.getCurrentContent().getPlainText();
+        const type = this.state.type;
+        const id = this.props.post ? this.props.post.id : "";
         const images = this.state.pictures;
         const publishState = this.state.publishState;
         const publishTimestamp = this.state.publishTimestamp;
@@ -287,7 +316,9 @@ class Compose extends React.Component{
                 publishDateTime,
                 publishUTCDateTime,
                 publishTimezone
-            }
+            },
+            type,
+            id
         })
         .then((response) => {
             this.setState(() => ({
@@ -306,8 +337,9 @@ class Compose extends React.Component{
         const { EmojiSuggestions, EmojiSelect} = this.emojiPlugin;
         const { MentionSuggestions: HashtagSuggestions } = this.hashtagMentionPlugin;
         const plugins = [this.emojiPlugin, this.hashtagMentionPlugin];
+
         return (
-            <div className="modal fade" id="compose" tabIndex="-1" role="dialog">
+            <div className="modal fade" id="compose" tabIndex="-1" data-backdrop="static" data-keyboard="false" role="dialog">
                 {this.state.stored && <Redirect to={location.pathname} />}
                 {this.state.loading && <LoaderWithOverlay/>}
                 
@@ -338,7 +370,7 @@ class Compose extends React.Component{
                     <div className="modal-content">
         
                         <div className="modal-header">
-                            <button type="button" id="closeModal" className="close fa fa-times-circle" data-dismiss="modal"></button>
+                            <button type="button" id="closeModal" onClick={() => {this.props.setPost(this.defaultPost); this.setState(() => (this.defaultState))}} className="close fa fa-times-circle" data-dismiss="modal"></button>
                             <ul className="compose-header">
                                 <li onClick={this.toggleSelectChannelsModal} className="add-new-channel"><i className="fa fa-plus"></i></li>
 
@@ -374,7 +406,7 @@ class Compose extends React.Component{
                                         withLabel={false}
                                         buttonClassName='dnone'
                                         ref={this.imageIcon}
-                                        defaultImages={this.defaultPics}
+                                        defaultImages={this.state.pictures}
                                     />
 
                                     <EmojiSuggestions />
@@ -510,8 +542,13 @@ const mapStateToProps = (state) => {
     const channels = channelSelector(state.channels.list, {selected: undefined, provider:undefined});
 
     return {
-        channels
+        channels,
+        post: state.posts.post
     }
 }
 
-export default connect(mapStateToProps)(Compose);
+const mapDispatchToProps = (dispatch) => ({
+    setPost: (post) => dispatch(setPost(post))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Compose);
