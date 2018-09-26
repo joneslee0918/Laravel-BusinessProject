@@ -86,7 +86,7 @@ class Compose extends React.Component{
                 editorState: createEditorStateWithText(this.props.post.content),
                 pictures: this.props.post.images,
                 postDate: moment(this.props.post.scheduled_at_original),
-                type: this.props.post.type,
+                type: this.props.post ? this.props.post.type : "store",
                 calendarData: {
                     time: {
                         hour: moment(this.props.post.scheduled_at_original).format("hh"),
