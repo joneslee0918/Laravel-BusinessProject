@@ -148,7 +148,6 @@ class PublishController extends Controller
 
         $scheduledPost = unserialize($request->input('item'));
         //$scheduledPost = \App\Models\ScheduledPost::first();
-
         if(!$scheduledPost) return;
         
         $channel = Channel::find($scheduledPost->channel_id);
@@ -157,7 +156,7 @@ class PublishController extends Controller
             try{
                $channel->details->publishScheduledPost($scheduledPost); 
             }catch(\Exception $e){
-                return response()->json(['message' => $e->getMessage()], 400);
+                throw $e;
             }
         }
     }
