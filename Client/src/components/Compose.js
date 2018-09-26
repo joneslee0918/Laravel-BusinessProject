@@ -6,7 +6,7 @@ import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import Popup from "reactjs-popup";
-import ImageUploader from 'react-images-upload';
+import ImageUploader from 'react-images-upload-demo/src/component/compiled';
 import moment from "moment";
 import momentTz from "moment-timezone";
 import 'react-dates/initialize';
@@ -55,7 +55,7 @@ class Compose extends React.Component{
         showCalendar: false,
         optionsMenu: false,
         letterCount: 0,
-        pictures: [],
+        pictures: ["https://opensource.google.com/assets/static/images/home/blog/blog_image_1.jpg", "https://opensource.google.com/assets/static/images/home/blog/blog_image_1.jpg"],
         loading: false,
         stored: false,
         error: false
@@ -72,7 +72,6 @@ class Compose extends React.Component{
     componentDidUpdate(prevProps) {
         if(this.state.stored){
             document.getElementById("closeModal").click();
-            //this.setState(() => (this.defaultState));
         }
 
         if(prevProps.channels !== this.props.channels){
@@ -101,8 +100,6 @@ class Compose extends React.Component{
         this.setState(() => ({
             publishChannels
         }));
-
-        //this.defaultState.publishChannels = publishChannels;
     };
 
     onImageIconClick = () => {
@@ -165,11 +162,12 @@ class Compose extends React.Component{
 
     onDrop = (pictures, pictureDataUrls) => {
         this.setState((prevState) => {
-            if(prevState.pictures !== pictures){
+            console.log(pictureDataUrls);
+            //if(prevState.pictures !== pictures){
                 return {
-                    pictures: pictureDataUrls
+                    pictures: pictures
                 }
-            }
+           // }
         });
     };
 
