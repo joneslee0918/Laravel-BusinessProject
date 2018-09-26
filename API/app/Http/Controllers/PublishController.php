@@ -107,6 +107,9 @@ class PublishController extends Controller
         $uploadedImages = [];
 
         foreach($images as $image){
+
+            if(str_contains($image, "http")) continue;
+            
             $imageData = explode(',', $image);
             $imageBase64 = $imageData[1];
             $imageInfo = explode(';', $imageData[0]);

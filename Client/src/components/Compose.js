@@ -29,6 +29,9 @@ class Compose extends React.Component{
         mentionTrigger: "#"
     });
 
+    defaultPics = ["https://opensource.google.com/assets/static/images/home/blog/blog_image_1.jpg", 
+    "https://usercontent1.hubstatic.com/7948958.jpg"];
+
     defaultState = {
         editorState: createEditorStateWithText(''),
         hashtagSuggestions: hashtagSuggestionList,
@@ -55,7 +58,7 @@ class Compose extends React.Component{
         showCalendar: false,
         optionsMenu: false,
         letterCount: 0,
-        pictures: ["https://opensource.google.com/assets/static/images/home/blog/blog_image_1.jpg", "https://opensource.google.com/assets/static/images/home/blog/blog_image_1.jpg"],
+        pictures: [...this.defaultPics],
         loading: false,
         stored: false,
         error: false
@@ -165,7 +168,7 @@ class Compose extends React.Component{
             console.log(pictureDataUrls);
             //if(prevState.pictures !== pictures){
                 return {
-                    pictures: pictures
+                    pictures: pictureDataUrls
                 }
            // }
         });
@@ -371,7 +374,7 @@ class Compose extends React.Component{
                                         withLabel={false}
                                         buttonClassName='dnone'
                                         ref={this.imageIcon}
-                                        defaultImages={this.state.pictures}
+                                        defaultImages={this.defaultPics}
                                     />
 
                                     <EmojiSuggestions />
@@ -493,7 +496,7 @@ class Compose extends React.Component{
                             </div>
                             <p className={`letter-count ${this.state.letterCount > 280 ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
                         </div>
-                        {this.state.error && <div class='alert alert-danger'>Something went wrong.</div>}
+                        {this.state.error && <div className='alert alert-danger'>Something went wrong.</div>}
                     </div>
                     }
 
