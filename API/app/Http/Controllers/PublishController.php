@@ -66,15 +66,17 @@ class PublishController extends Controller
                 }else if($publishType == "best"){
 
                     //TODO: improve best time accuracy
-                    $latestScheduledPost = $channel->scheduledPosts()->latest()->first();
+                    $latestScheduledPost = $channel->scheduledPosts()
+                    ->where("scheduled_at", ">", Carbon::now())
+                    ->orderBy("scheduled_at", "desc")->first();
 
                     if($latestScheduledPost){
 
-                        $publishTime = Carbon::parse($latestScheduledPost->scheduled_at)->addHours(2);
+                        $publishTime = Carbon::parse($latestScheduledPost->scheduled_at)->addHours(mt_rand(1,12))->addMinutes(mt_rand(0, 59));
 
                     }else{
 
-                        $publishTime = Carbon::now()->addHours(3);
+                        $publishTime = Carbon::now()->addHours(mt_rand(1,12))->addMinutes(mt_rand(0, 59));
                     }
                 }
 
