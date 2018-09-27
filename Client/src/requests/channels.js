@@ -31,7 +31,7 @@ export const postNow = (postId) => {
     });
 };
 
-export const destroy = (postId) => {
+export const destroyPost = (postId) => {
     return axios.delete(`${apiUrl}/post/${postId}`)
     .then((response) => {
         return response.data;
@@ -51,3 +51,10 @@ export const pastScheduled = () => {
         return response.data;
     });
 };
+
+export const destroyChannel = (channelId) => {
+    return axios.delete(`${apiUrl}/channels/delete/${channelId}`)
+    .then((response) => {
+        return response.data;
+    });
+}

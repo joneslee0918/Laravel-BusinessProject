@@ -16,11 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->group(function(){
     Route::get('/channels', 'ChannelController@channels');
     Route::patch('/channels/select/{id}', 'ChannelController@select');
-    Route::post('/post/store', 'PublishController@store');
+    Route::delete('channels/delete/{id}', 'ChannelController@destroy');
 
     Route::get('/scheduled/posts', 'ScheduledController@scheduledPosts');
     Route::get('/scheduled/past', 'ScheduledController@pastScheduled');
 
+    Route::post('/post/store', 'PublishController@store');
     Route::delete('/post/{postId}', 'PublishController@destroy');
     Route::post('/post/{postId}', 'PublishController@postNow');
 });

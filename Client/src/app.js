@@ -5,7 +5,7 @@ import configStore from "./store/configStore";
 import AppRouter from "./routes/AppRouter";
 import "normalize.css/normalize.css";
 import "./styles/styles.scss";
-import { login } from "./actions/auth";
+import { login, logout } from "./actions/auth";
 import setAuthorizationHeader from "./utils/setAuthorizationHeader";
 import { setChannels } from "./actions/channels";
 
@@ -38,6 +38,13 @@ const setAuthentication = () => {
     if(token){
         let channels = localStorage.getItem("channels");
         channels = channels ? JSON.parse(channels) : [];
+
+        if(!channels.length){
+            localStorage.setItem("token", undefined);
+            store.dispatch(logout());
+            setAuthorizationHeader(undefined);
+        }
+
         store.dispatch(setChannels(channels));
     }
 

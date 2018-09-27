@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 class AccountsController extends Controller
 {
+    private $user;
+    private $selectedChannel;
+
     /**
      * Create a new controller instance.
      *
@@ -13,7 +16,11 @@ class AccountsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            $this->user = auth()->user();
+            $this->selectedChannel = $this->user->selectedChannel();
+            return $next($request);
+        });
     }
 
     /**

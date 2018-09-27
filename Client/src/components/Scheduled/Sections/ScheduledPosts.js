@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import channelSelector from '../../../selectors/channels';
-import {scheduledPosts, destroy, postNow} from '../../../requests/channels';
+import {scheduledPosts, destroyPost, postNow} from '../../../requests/channels';
 import PostList from '../../PostList';
 
 export class ScheduledPosts extends React.Component{
@@ -68,9 +68,9 @@ export class ScheduledPosts extends React.Component{
         });
     };
 
-    destroyPost = (postId) => {
+    destroy = (postId) => {
         this.setLoading(true);
-        return destroy(postId)
+        return destroyPost(postId)
         .then((response) => {
             this.fetchPosts();
             this.setLoading(false);
@@ -114,7 +114,7 @@ export class ScheduledPosts extends React.Component{
                 <PostList 
                     action={this.state.action}
                     setAction={this.setAction}
-                    destroyPost={this.destroyPost}
+                    destroyPost={this.destroy}
                     publishPost={this.publishPost}
                     error={this.state.error}
                     setError={this.setError}

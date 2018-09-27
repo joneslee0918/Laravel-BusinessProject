@@ -182,20 +182,7 @@ class PublishController extends Controller
 
             try{
                 $scheduledPost = $this->selectedChannel->scheduledPosts()->find($postId);
-
-                $payload = unserialize($scheduledPost->payload);
-                $images = $payload['images'];
-
-                foreach($images as $image){
-                    $exists = ScheduledPost::where("payload", "like", "%".$image['absolutePath']."%")->exists();
-
-                    if(!$exists){
-                        $filePath = str_replace("storage", "public", $image['relativePath']);
-                        \Storage::delete($filePath);
-                    }
-                }
-
-                $scheduledPost->delete();  
+                $scheduledPost->destroyCompletely();
             }catch(\Exception $e){
                 return response()->json(['message' => $e->getMessage()], 400);
             }

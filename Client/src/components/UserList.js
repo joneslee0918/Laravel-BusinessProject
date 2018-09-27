@@ -1,8 +1,9 @@
 import React from 'react';
+import SweetAlert from 'sweetalert2-react';
 import Loader from '../components/Loader';
 import AccountTargetSearchList from './Manage/AccountTargetSearchList';
 import KeywordTargetSearchList from './Manage/KeywordTargetSearchList';
-import SweetAlert from 'sweetalert2-react';
+import {abbrNum} from "../utils/numberFormatter";
 
 
 class UserList extends React.Component{
@@ -209,9 +210,9 @@ const UserItem = ({ userItem, actionButton, perform, indexValue }) => (
                 <p className="profile-name">{ userItem.name } <span className="profile-username">{ userItem.screen_name }</span></p>
                 <p className="profile-title">{ userItem.description }</p>
                 <ul className="bottom-info">
-                    <li><p>{ userItem.statuses_count }</p></li>
-                    <li><p>{ userItem.followers_count }</p></li>
-                    <li><p>{ userItem.friends_count }</p></li>
+                    <li><p>{ abbrNum(userItem.statuses_count, 1) } tweets</p></li>
+                    <li><p>{ abbrNum(userItem.followers_count, 1) } followers</p></li>
+                    <li><p>{ abbrNum(userItem.friends_count, 1) } following</p></li>
                 </ul>
             </div>
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import channelSelector from "../../../selectors/channels";
 import { getDashboard } from "../../../requests/twitter/channels";
+import {abbrNum} from "../../../utils/numberFormatter";
 import Loader from "../../Loader";
 
 class Dashboard extends React.Component {
@@ -51,17 +52,17 @@ class Dashboard extends React.Component {
                             <ul className="dashboard-info shadow-box">
                                 <li>
                                     <p className="title">Followers</p>
-                                    <p className="count">{data.followers_count}</p>
+                                    <p className="count">{abbrNum(data.followers_count, 1)}</p>
                                     <p className="description">People who follow you</p>
                                 </li>
                                 <li>
                                     <p className="title">You follow</p>
-                                    <p className="count">{data.friends_count}</p>
+                                    <p className="count">{abbrNum(data.friends_count, 1)}</p>
                                     <p className="description">People you follow</p>
                                 </li>
                                 <li>
                                     <p className="title">Tweets</p>
-                                    <p className="count">{data.statuses_count}</p>
+                                    <p className="count">{abbrNum(data.statuses_count, 1)}</p>
                                     <p className="description">The tweets you posted</p>
                                 </li>
                                 <li>

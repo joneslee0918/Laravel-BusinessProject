@@ -33,6 +33,7 @@ class Compose extends React.Component{
     defaultPost = {
         id: "",
         content: "", 
+        type: "store",
         images: [],
         scheduled_at: moment(),
         scheduled_at_original: moment()
@@ -146,9 +147,8 @@ class Compose extends React.Component{
     }
 
     setPublishChannels(){
-        let publishChannels = localStorage.getItem('publishChannels');
-        
-        publishChannels = publishChannels ? JSON.parse(publishChannels) : this.props.channels;
+       // const publishChannelStorage = localStorage.getItem('publishChannels');
+        const publishChannels = this.props.channels;
         return publishChannels;
     }
 

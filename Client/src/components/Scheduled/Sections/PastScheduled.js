@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import channelSelector from '../../../selectors/channels';
-import {pastScheduled, destroy, postNow} from '../../../requests/channels';
+import {pastScheduled, destroyPost, postNow} from '../../../requests/channels';
 import PostList from '../../PostList';
 
 export class PastScheduled extends React.Component{
@@ -32,6 +32,12 @@ export class PastScheduled extends React.Component{
         }
     }
 
+    setError = (error = true) => {
+        this.setState(() => ({
+            error
+        }));
+    };
+    
     setLoading = (loading = false) => {
         this.setState(() => ({
             loading
@@ -62,9 +68,9 @@ export class PastScheduled extends React.Component{
         });
     };
 
-    destroyPost = (postId) => {
+    destroy = (postId) => {
         this.setLoading(true);
-        return destroy(postId)
+        return destroyPost(postId)
         .then((response) => {
             this.fetchPosts();
             this.setLoading(false);
@@ -107,7 +113,7 @@ export class PastScheduled extends React.Component{
                 <PostList 
                     action={this.state.action}
                     setAction={this.setAction}
-                    destroyPost={this.destroyPost}
+                    destroyPost={this.destroy}
                     publishPost={this.publishPost}
                     error={this.state.error}
                     setError={this.setError}

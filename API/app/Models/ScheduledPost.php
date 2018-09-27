@@ -20,4 +20,20 @@ class ScheduledPost extends Model
 
         return $this->belongsTo(Channel::class);
     }
+
+    public function destroyCompletely(){
+        $payload = unserialize($this->payload);
+        $images = $payload['images'];
+
+        foreach($images as $image){
+            $exists = self::where("payload", "like", "%".$image['absolutePath']."%")->exists();
+
+            if(!$exists){
+                $filePath = str_replace("storage", "public", $image['relativePath']);
+                \Storage::delete($filePath);
+            }
+        }
+
+        $this->delete();  
+    }
 }

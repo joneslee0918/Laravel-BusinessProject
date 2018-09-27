@@ -53,7 +53,7 @@ export const PostList = ({
                     confirmButtonText="Ok"
                     cancelButtonText="No"
                     onConfirm={() => {
-                        setError(() => ({ error: false}));
+                        setError(false);
                     }}
                 />
 
