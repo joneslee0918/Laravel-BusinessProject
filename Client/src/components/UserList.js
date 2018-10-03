@@ -38,8 +38,16 @@ class UserList extends React.Component{
 
     reply = (content) => {
         return tweet(content)
-        .then((response) => Promise.resolve(response))
+        .then((response) => {
+           return Promise.resolve(response)
+        })
         .catch((error) => {
+
+            if(typeof error.response.statusText == "undefined"){
+                console.log(error);
+                return;
+            }
+            
             this.setState(() => ({
                 error: {
                     statusText:error.response.statusText,
@@ -86,7 +94,7 @@ class UserList extends React.Component{
         return (
             
             <div> 
-            
+
             <SweetAlert
                 show={!!this.state.error.message}
                 title={this.state.error.statusText}
