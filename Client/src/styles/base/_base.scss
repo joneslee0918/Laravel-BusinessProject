@@ -131,6 +131,11 @@ input {
     border-bottom: 1px solid #e2e2e2;
 }
 
+.v-center-align{
+    display: flex;
+    align-items: center;
+}
+
 .delete-text{
     display:none;
 }
@@ -172,6 +177,10 @@ input {
 .disabled-btn{
     opacity:0.2 !important;
     cursor:default;
+}
+
+.mg10{
+    margin:10px;
 }
 
 .vertical-menu {
@@ -343,6 +352,58 @@ input {
     text-decoration: none;
 }
 
+.reply-box{
+    clear:both;
+    position:relative;
+}
+
+.reply-box textarea{
+    width:100%;
+    height:70px;
+    resize:none;
+    border:1px solid #cdd8e4;
+    overflow-y:auto;
+    outline:none;
+}
+
+.reply__arrow {
+    position: absolute;
+    top: -7px;
+    right: 65px;
+}
+
+.reply__arrow:before {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #cdd8e4;
+    top: -1px;
+    right: 0;
+}
+
+.reply-box:focus-within textarea{
+    border: 1px solid #46a5d1;
+}
+
+.reply-box:focus-within .reply__arrow:before{
+    border-bottom: 8px solid #46a5d1;
+}
+
+.reply__arrow:after {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #fff;
+    top: 0;
+    right: 0;
+}
+
 .top-menu li a::after {
     content: '';
     display: block;
@@ -391,7 +452,7 @@ input {
     padding: 6px 20px;
     border-radius: 20px;
     text-decoration: none;
-    outline: none;
+    outline: none !important;
     cursor:pointer;
     font-family: open-sansSemiBold, sans-serif;
 }
