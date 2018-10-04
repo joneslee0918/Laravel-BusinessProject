@@ -4,7 +4,7 @@ import Loader from '../components/Loader';
 import AccountTargetSearchList from './Manage/AccountTargetSearchList';
 import KeywordTargetSearchList from './Manage/KeywordTargetSearchList';
 import {abbrNum} from "../utils/numberFormatter";
-import {tweet} from "../requests/twitter/channels";
+
 
 class UserList extends React.Component{
 
@@ -12,6 +12,7 @@ class UserList extends React.Component{
         super(props);    
         
         this.state = {
+            buttons: this.createButtons(),
             error: {
                 statusText: "",
                 message: ""
@@ -19,45 +20,67 @@ class UserList extends React.Component{
         };
     }
 
-    perform = (username) => { 
-        return this.props.perform(username)
+    actionButton = this.props.actionType === "follow" ? "add" : "sub";
+    defaultActionSymbol = this.actionButton === "add" ? "fa-plus-circle" : "fa-minus-circle";
+    successActionSymbol = "fa-check";
+    loadingActionSymbol = "fa-circle-o-notch fa-spin";
+
+    componentDidUpdate(prevProps){
+
+        if(this.props.userItems !== prevProps.userItems){
+            this.setState(() => ({
+                buttons: this.createButtons()
+            })); 
+        }
+    }
+
+    createButtons = () => {
+        return this.props.userItems.map((userItem) => (
+            {   
+                id: userItem.id,
+                name: userItem.screen_name,
+                actionSymbol: this.defaultActionSymbol,
+                action: this.actionButton,
+                disabled: false
+            }
+        ));
+    };
+
+    perform = (index) => {
+        
+        if(!this.state.buttons[index].disabled){
+
+            let buttons = this.state.buttons;
+            buttons[index].disabled = true;
+            buttons[index].actionSymbol = this.loadingActionSymbol;
+
+            this.setState(() => ({
+                buttons
+            }));
+
+            this.props.perform(this.state.buttons[index].name)
             .then((response) => {
-                return Promise.resolve(response);
+                buttons[index].disabled = true;
+                buttons[index].actionSymbol = this.successActionSymbol;
+
+                this.setState(() => ({
+                    buttons
+                }));
             })
             .catch((error) => {
+                buttons[index].disabled = false;
+                buttons[index].actionSymbol = this.defaultActionSymbol;
+
                 this.setState(() => ({
+                    buttons,
                     error: {
                         statusText:error.response.statusText,
                         message: error.response.data.message
                     }
                 }));
-
-                return Promise.reject(error);
             });  
+        }
     };
-
-    reply = (content) => {
-        return tweet(content)
-        .then((response) => {
-           return Promise.resolve(response)
-        })
-        .catch((error) => {
-
-            if(typeof error.response.statusText == "undefined"){
-                console.log(error);
-                return;
-            }
-            
-            this.setState(() => ({
-                error: {
-                    statusText:error.response.statusText,
-                    message: error.response.data.message
-                }
-            }));
-            Promise.reject(error);
-        });
-    };
-
 
     render(){
         const {   
@@ -94,7 +117,7 @@ class UserList extends React.Component{
         return (
             
             <div> 
-
+            
             <SweetAlert
                 show={!!this.state.error.message}
                 title={this.state.error.statusText}
@@ -133,10 +156,10 @@ class UserList extends React.Component{
     
                                         {userItems.map((item, index) => (
                                             <UserItem key={index} 
+                                            indexValue={index}
                                             userItem={ item } 
+                                            actionButton={ this.state.buttons[index] }
                                             perform={this.perform}
-                                            reply={this.reply}
-                                            actionType={this.props.actionType}
                                          />
                                         ))}
                                         
@@ -179,145 +202,33 @@ const SortOption = ({ sortBy }) => (
     </div>
 );
 
-class UserItem extends React.Component{
-
-    actionButton = this.props.actionType === "follow" ? "add" : "sub";
-    defaultActionSymbol = this.actionButton === "add" ? "fa-plus-circle" : "fa-minus-circle";
-    successActionSymbol = "fa-check";
-    loadingActionSymbol = "fa-circle-o-notch fa-spin";
-
-    state = { 
-        buttonState: {
-            actionSymbol: this.defaultActionSymbol,
-            action: this.actionButton,
-            disabled: false
-        },
-        replyState: {
-            content: '',
-            disabled: true,
-            letterCount: 280 - (this.props.userItem.screen_name.length + 2),
-            loading: false
-        }
-    }
-
-    perform = () => {
-        
-        if(!this.state.buttonState.disabled){
-
-            let buttonState = Object.assign({}, this.state.buttonState);
-            buttonState.disabled = true;
-            buttonState.actionSymbol = this.loadingActionSymbol;
-
-            this.setState(() => ({
-                ...this.state,
-                buttonState
-            }));
-
-            this.props.perform(this.props.userItem.screen_name)
-            .then((response) => {
-                buttonState.disabled = true;
-                buttonState.actionSymbol = this.successActionSymbol;
-
-                this.setState(() => ({
-                    buttonState
-                }));
-
-                return Promise.resolve(response);
-            })
-            .catch((error) => {
-                buttonState.disabled = false;
-                buttonState.actionSymbol = this.defaultActionSymbol;
-
-                this.setState(() => ({
-                    buttonState,
-                }));
-
-                return Promise.reject(error);
-            });  
-        }
-    };
-
-    reply = () => {
-        this.setReplyState({loading: true});
-        this.props.reply(this.state.replyState.content)
-        .then((response) => {
-            this.setReplyState({disabled: true, loading:false});
-            return Promise.resolve(response);
-        })
-        .catch((error) => {
-            this.setReplyState({loading: false});
-            return Promise.reject(error);
-        });
-    };
-
-    setReplyState = (replyState) => {
-        this.setState((prevState) => ({
-            ...this.state,
-            replyState: {
-                ...this.state.replyState,
-                letterCount: prevState.replyState.disabled ? 280 - (this.props.userItem.screen_name.length + 2) : replyState.letterCount,
-                ...replyState
-            }
-        }));
-    };
-
-    render(){
-        const { userItem } = this.props;
-        return (
-            
-            <div>    
-                <div className="item-row">
-        
-                    <div>
-                        <div className="profile-info pull-left">
-                            <img className="pull-left" src={userItem.profile_image_url} />
-                            <div className="pull-left">
-                                <p className="profile-name">{ userItem.name } <span className="profile-username">{ userItem.screen_name }</span></p>
-                                <p className="profile-title">{ userItem.description }</p>
-                                <ul className="bottom-info">
-                                    <li><p>{ abbrNum(userItem.statuses_count, 1) } tweets</p></li>
-                                    <li><p>{ abbrNum(userItem.followers_count, 1) } followers</p></li>
-                                    <li><p>{ abbrNum(userItem.friends_count, 1) } following</p></li>
-                                </ul>
-                            </div>
-                        </div>
-        
-                        <UserActionButtons actionButton={ this.state.buttonState } perform={this.perform} userItem={userItem} replyState={this.state.replyState} setReplyState={this.setReplyState}/>
-                    </div>
-                    
-                    { !this.state.replyState.disabled && 
-                        <div className="reply-box">
-                            <span className="reply__arrow"></span>
-                            <textarea spellCheck="false" value={this.state.replyState.content} onChange={(e) => this.setReplyState({letterCount: 280 - e.target.value.length, content: e.target.value})}></textarea>
-                            <span className="grey-txt">{this.state.replyState.letterCount}</span>
-                            {   
-                                this.state.replyState.letterCount >= 0 ?
-                                <button onClick={this.reply} className="btn compose-btn pull-right mg10"> 
-                                { this.state.replyState.loading && <i className="fa fa-circle-o-notch fa-spin"></i> }   
-                                Tweet</button>
-                                :
-                                <button className="btn compose-btn pull-right mg10 disabled" disabled>
-                                { this.state.replyState.loading && <i className="fa fa-circle-o-notch fa-spin"></i> }
-                                Tweet</button>
-                            }
-                        </div>
-                    }
-                </div>
+const UserItem = ({ userItem, actionButton, perform, indexValue }) => (
+    <div className="item-row">
+        <div className="profile-info pull-left">
+            <img className="pull-left" src={userItem.profile_image_url} />
+            <div className="pull-left">
+                <p className="profile-name">{ userItem.name } <span className="profile-username">{ userItem.screen_name }</span></p>
+                <p className="profile-title">{ userItem.description }</p>
+                <ul className="bottom-info">
+                    <li><p>{ abbrNum(userItem.statuses_count, 1) } tweets</p></li>
+                    <li><p>{ abbrNum(userItem.followers_count, 1) } followers</p></li>
+                    <li><p>{ abbrNum(userItem.friends_count, 1) } following</p></li>
+                </ul>
             </div>
-        
-        );
-    }
-}
+        </div>
 
-const UserActionButtons = ({actionButton, perform, replyState, setReplyState, userItem }) => (
+        <UserActionButtons indexValue={indexValue} actionButton={ actionButton } perform={perform} userItem={userItem} />
+    </div>
+);
+
+const UserActionButtons = ({indexValue, actionButton, perform }) => (
         <div className="item-actions pull-right">
-            <ul className="v-center-align">
-                <li className="text-links">
-                    <a onClick={() => setReplyState({disabled: !replyState.disabled, content: `@${userItem.screen_name} `})} className="link-cursor">Reply</a>
-                </li>
+            <ul>
+                <li className="text-links"><a href="#">Reply</a></li>
+                <li className="text-links"><a href="#">Whitelist</a></li>
                 <li className="btn-links">
                     {!!actionButton && 
-                    <div onClick={perform} className={`${actionButton.action}-btn action-btn`}>
+                    <div onClick={() => perform(indexValue)} className={`${actionButton.action}-btn action-btn`}>
                         <i className={`fa ${actionButton.actionSymbol} ${actionButton.disabled ? 'grey-txt' : ''}`}></i>
                     </div>}
                 </li>

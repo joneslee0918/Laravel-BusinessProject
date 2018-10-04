@@ -3,8 +3,9 @@
 @push('styles')
     <link href="{{ asset('css/slick.css') }}" rel="stylesheet">
     <link href="{{ asset('css/slick-theme.css') }}" rel="stylesheet">
-    @endpush
+@endpush
 
+<div id="top-image"><img  class="img-responsive" src="{{ asset('images/top-office.png') }}" /></div>
 @section('content')
     <div class="container">
         <div class="row justify-content-center" id="get-started-wrapper">
