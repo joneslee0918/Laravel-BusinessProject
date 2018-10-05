@@ -44,6 +44,7 @@
     "react-bottom-scroll-listener": "1.3.0",
     "react-dates": "17.1.1",
     "react-dom": "16.4.1",
+    "react-geosuggest": "^2.8.0",
     "react-images-upload-demo": "github:galanx/react-images-upload#patch-1",
     "react-redux": "5.0.7",
     "react-router-dom": "4.3.1",

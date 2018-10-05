@@ -131,6 +131,11 @@ input {
     border-bottom: 1px solid #e2e2e2;
 }
 
+.v-center-align{
+    display: flex;
+    align-items: center;
+}
+
 .delete-text{
     display:none;
 }
@@ -172,6 +177,10 @@ input {
 .disabled-btn{
     opacity:0.2 !important;
     cursor:default;
+}
+
+.mg10{
+    margin:10px;
 }
 
 .vertical-menu {
@@ -343,6 +352,58 @@ input {
     text-decoration: none;
 }
 
+.reply-box{
+    clear:both;
+    position:relative;
+}
+
+.reply-box textarea{
+    width:100%;
+    height:70px;
+    resize:none;
+    border:1px solid #cdd8e4;
+    overflow-y:auto;
+    outline:none;
+}
+
+.reply__arrow {
+    position: absolute;
+    top: -7px;
+    right: 65px;
+}
+
+.reply__arrow:before {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #cdd8e4;
+    top: -1px;
+    right: 0;
+}
+
+.reply-box:focus-within textarea{
+    border: 1px solid #46a5d1;
+}
+
+.reply-box:focus-within .reply__arrow:before{
+    border-bottom: 8px solid #46a5d1;
+}
+
+.reply__arrow:after {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #fff;
+    top: 0;
+    right: 0;
+}
+
 .top-menu li a::after {
     content: '';
     display: block;
@@ -391,7 +452,7 @@ input {
     padding: 6px 20px;
     border-radius: 20px;
     text-decoration: none;
-    outline: none;
+    outline: none !important;
     cursor:pointer;
     font-family: open-sansSemiBold, sans-serif;
 }
@@ -873,10 +934,66 @@ input {
     border-bottom-left-radius: 20px;
 }
 
-.right-radius {
+.right-radius{
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
+
+.geosuggest {
+}
+  .geosuggest__input {
+    width: 100%;
+    padding: .5em 1em;
+    -webkit-transition: border 0.2s, box-shadow 0.2s;
+            transition: border 0.2s, box-shadow 0.2s;
+  }
+  .geosuggest__input:focus {
+    border-color: #267dc0;
+    box-shadow: 0 0 0 transparent;
+  }
+  .geosuggest__suggests {
+    position: absolute;
+    max-height: 25em;
+    padding: 0;
+    background: #fff;
+    border: 2px solid #46b9e6;
+    border-top-width: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    list-style: none;
+    z-index: 5;
+    -webkit-transition: max-height 0.2s, border 0.2s;
+            transition: max-height 0.2s, border 0.2s;
+  }
+  .geosuggest__suggests--hidden {
+    max-height: 0;
+    overflow: hidden;
+    border-width: 0;
+  }
+  
+  /**
+   * A geosuggest item
+   */
+  .geosuggest__item {
+    font-size:$m-size;
+    padding: .5em .65em;
+    cursor: pointer;
+  }
+  .geosuggest__item:hover,
+  .geosuggest__item:focus {
+    background: #f5f5f5;
+  }
+  .geosuggest__item--active {
+    background: #46b9e6;
+    color: #fff;
+  }
+  .geosuggest__item--active:hover,
+  .geosuggest__item--active:focus {
+    background: #ccc;
+  }
+  .geosuggest__item__matched-text {
+    font-weight: bold;
+  }
 
 .full-radius{
     border-radius:20px;
@@ -892,6 +1009,10 @@ input {
 
 .sub-btn {
     color: #C85E5C !important;
+}
+
+.pstatic{
+    position: static !important;
 }
 
 .dropdown-menu .profile-info{

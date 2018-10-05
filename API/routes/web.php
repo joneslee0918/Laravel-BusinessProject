@@ -11,11 +11,7 @@
 |
 */
 
-Route::get('/', ['as' => 'homepage.index', 'uses' => 'PagesController@index']);
-Route::get('/upgrade', ['as' => 'upgrade', 'uses' => 'PagesController@upgrade']);
-Route::get('/learning', ['as' => 'learning', 'uses' => 'PagesController@learning']);
-Route::get('/pricing', ['as' => 'pricing', 'uses' => 'PagesController@pricing']);
-Route::get('/blog', ['as' => 'blog', 'uses' => 'PagesController@blog']);
+Route::get('/', ['as' => 'homepage.index', 'uses' => 'HomepageController@index']);
 
 Route::get('/test', function(){
     return App\Models\Channel::find(6)->attributes;

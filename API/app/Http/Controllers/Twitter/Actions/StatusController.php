@@ -32,11 +32,11 @@ class StatusController extends Controller
      */
     public function tweet(Request $request)
     {   
-        $tweet = $request->input('tweet');
+        $tweet = ["status" => $request->input('tweet')];
 
         try{
             if($tweet){
-                $this->selectedChannel->tweet($tweet);
+                $this->selectedChannel->publish($tweet);
                 return response()->json(["success" => true, "message" => "Tweet posted successfully"]);
             }
         }catch(\Exception $e){
