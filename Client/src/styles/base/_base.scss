@@ -818,7 +818,7 @@ input {
 }
 
 .compose-dialog{
-    width:520px;
+    max-width:520px;
 }
 
 .compose-header li {
@@ -1320,6 +1320,25 @@ aside .btn-group {
 	height: 8px;
 	border-radius: 50%;
 	background: white;
+}
+
+.modal {
+    text-align: center;
+  }
+  
+@media screen and (min-width: 768px) { 
+.modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+}
+}
+
+.modal-dialog {
+display: inline-block;
+text-align: left;
+vertical-align: middle;
 }
 
 @keyframes lds-ripple {
