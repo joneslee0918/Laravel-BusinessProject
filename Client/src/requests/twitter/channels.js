@@ -59,9 +59,10 @@ export const getKeywordTargets = (page = 1) => {
 };
 
 
-export const addKeywordTarget = (target) => {
+export const addKeywordTarget = (target, location = "") => {
     return axios.post(`${apiUrl}/twitter/keyword-targets/store`,{
-        keyword: target
+        keyword: target,
+        location
     })
     .then((response) => {
         return response.data;

@@ -10,6 +10,7 @@ export default class KeywordTargetSearchList extends React.Component{
 
     state = {
         target: "",
+        location: "",
         loading: false
     };
 
@@ -20,12 +21,25 @@ export default class KeywordTargetSearchList extends React.Component{
         }));
     };
 
+    onLocationSelect = (suggestedLocation) => {
+
+        if(typeof suggestedLocation.location != "undefined"){
+            this.setState(() => ({
+                location: JSON.stringify({
+                    ...suggestedLocation.location,
+                    label: suggestedLocation.label
+                })
+            }));
+        }
+    };
+
     onSubmit = (e) => {
         this.setLoading(true);
         e.preventDefault();
         const target = this.state.target;
+        const location = this.state.location;
         if(target.length){
-          addKeywordTarget(target)
+          addKeywordTarget(target, location)
           .then((response) => {
               this.props.reloadTargets(response);
               this.setLoading(false);
@@ -68,7 +82,13 @@ export default class KeywordTargetSearchList extends React.Component{
                                     </div>
                                     <div className="col-md-2 mb-3 p10-5 pstatic">
                                         <div className="">
-                                            <Geosuggest inputClassName="form-control p20 right-radius location-search" autoComplete="off" id="location" placeholder="&#xf041; Worldwide"/>
+                                            <Geosuggest 
+                                                inputClassName="form-control p20 right-radius location-search" 
+                                                autoComplete="off" 
+                                                id="location" 
+                                                placeholder="&#xf041; Worldwide"
+                                                onSuggestSelect={this.onLocationSelect}
+                                            />
                                         </div>
                                     </div>
                                     <div className="col-md-1 mb-3 p10-5">
@@ -111,7 +131,7 @@ export default class KeywordTargetSearchList extends React.Component{
 const KeywordItem = ({target, removeTarget}) => (
     <div className="item-row ptb20 keyword-item">
         <div className="col-sm-4 col-md-5 col-5"> #{target.keyword} </div>
-        <div className="col-sm-4 col-md-5 col-5"> Worldwide </div>
+        <div className="col-sm-4 col-md-5 col-5"> {target.location ? JSON.parse(target.location).label : "Worldwide"} </div>
 
         <div className="col-sm-1 col-md-1 col-1 pull-right txt-center">
             <div onClick={() => removeTarget(target.id)} className="trash-btn"><i className="fa fa-trash"></i> <span className="delete-text"> Delete</span></div>
