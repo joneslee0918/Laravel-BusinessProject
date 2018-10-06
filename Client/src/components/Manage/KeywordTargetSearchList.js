@@ -76,7 +76,6 @@ export default class KeywordTargetSearchList extends React.Component{
                                     </div>
                                 </div> 
                             </form>
-
                     </div>
 
                         <div className="added">

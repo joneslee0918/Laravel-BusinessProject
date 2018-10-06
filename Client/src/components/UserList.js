@@ -291,7 +291,7 @@ class UserItem extends React.Component{
                             <textarea spellCheck="false" value={this.state.replyState.content} onChange={(e) => this.setReplyState({letterCount: 280 - e.target.value.length, content: e.target.value})}></textarea>
                             <span className="grey-txt">{this.state.replyState.letterCount}</span>
                             {   
-                                this.state.replyState.letterCount >= 0 ?
+                                this.state.replyState.letterCount >= 0 && this.state.replyState.letterCount < 280 ?
                                 <button onClick={this.reply} className="btn compose-btn pull-right mg10"> 
                                 { this.state.replyState.loading && <i className="fa fa-circle-o-notch fa-spin"></i> }   
                                 Tweet</button>
