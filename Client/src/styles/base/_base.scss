@@ -404,7 +404,7 @@ input {
     right: 0;
 }
 
-.top-menu li a::after {
+.top-menu li a::after, .nav-buttons li .top-icons::after {
     content: '';
     display: block;
     width: 0;
@@ -414,12 +414,26 @@ input {
     margin-top: 22px;
 }
 
+.nav-buttons li .top-icons::after{
+    margin-top:10px;
+}
+
 .profile-info .down-arrow {
     padding: 0;
     margin-top: 10px;
 }
 
-.top-menu li a:hover::after, .top-menu .active::after {
+.profile-form label{
+    color: #ccc;
+    font-weight: 500;
+    font-family: open-sansSemiBold, sans-serif, arial;
+}
+
+.profile-form .form-field{
+    margin-bottom:20px;
+}
+
+.top-menu li a:hover::after, .top-menu .active::after, .nav-buttons li .top-icons:hover::after ,.nav-buttons li .top-icons.active::after {
     width: 100%;
     transition: width .3s;
 }
