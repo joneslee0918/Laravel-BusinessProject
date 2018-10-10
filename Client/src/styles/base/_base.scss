@@ -131,6 +131,15 @@ input {
     border-bottom: 1px solid #e2e2e2;
 }
 
+.addedItemLabels{
+    display: inline-block;
+    background: #48b6be;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+    margin: 5px;
+}
+
 .v-center-align{
     display: flex;
     align-items: center;
@@ -280,6 +289,37 @@ input {
     font-family: open-sansBold, sans-serif;
     border-radius: 20px;
     padding: 5px 20px;
+    outline: none;
+    background: none;
+}
+
+.whiteBg{
+    background:white !important;
+}
+
+.ReactModalPortal .ReactModal__Overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.ReactModalPortal .ReactModal__Content{
+    position: static !important;
+    width: 300px;
+}
+
+
+.top-border{
+    border-top: 1px solid #ccc;
+}
+
+.p10{
+    padding:10px;
+}
+
+.m10-top{
+    margin-top: 10px;
 }
 
 .upgrade-btn:hover {
@@ -469,6 +509,7 @@ input {
     outline: none !important;
     cursor:pointer;
     font-family: open-sansSemiBold, sans-serif;
+    border:none;
 }
 
 .top-icons {
@@ -946,6 +987,10 @@ input {
 .left-radius {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
+}
+
+.center-inline{
+    text-align:center;
 }
 
 .right-radius{
