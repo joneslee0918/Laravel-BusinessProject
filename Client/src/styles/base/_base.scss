@@ -131,20 +131,6 @@ input {
     border-bottom: 1px solid #e2e2e2;
 }
 
-.addedItemLabels{
-    display: inline-block;
-    background: #48b6be;
-    color: white;
-    padding: 5px;
-    font-weight: bold;
-    margin: 5px;
-}
-
-.v-center-align{
-    display: flex;
-    align-items: center;
-}
-
 .delete-text{
     display:none;
 }
@@ -186,10 +172,6 @@ input {
 .disabled-btn{
     opacity:0.2 !important;
     cursor:default;
-}
-
-.mg10{
-    margin:10px;
 }
 
 .vertical-menu {
@@ -289,37 +271,6 @@ input {
     font-family: open-sansBold, sans-serif;
     border-radius: 20px;
     padding: 5px 20px;
-    outline: none;
-    background: none;
-}
-
-.whiteBg{
-    background:white !important;
-}
-
-.ReactModalPortal .ReactModal__Overlay {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.ReactModalPortal .ReactModal__Content{
-    position: static !important;
-    width: 300px;
-}
-
-
-.top-border{
-    border-top: 1px solid #ccc;
-}
-
-.p10{
-    padding:10px;
-}
-
-.m10-top{
-    margin-top: 10px;
 }
 
 .upgrade-btn:hover {
@@ -392,59 +343,7 @@ input {
     text-decoration: none;
 }
 
-.reply-box{
-    clear:both;
-    position:relative;
-}
-
-.reply-box textarea{
-    width:100%;
-    height:70px;
-    resize:none;
-    border:1px solid #cdd8e4;
-    overflow-y:auto;
-    outline:none;
-}
-
-.reply__arrow {
-    position: absolute;
-    top: -7px;
-    right: 65px;
-}
-
-.reply__arrow:before {
-    position: absolute;
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid #cdd8e4;
-    top: -1px;
-    right: 0;
-}
-
-.reply-box:focus-within textarea{
-    border: 1px solid #46a5d1;
-}
-
-.reply-box:focus-within .reply__arrow:before{
-    border-bottom: 8px solid #46a5d1;
-}
-
-.reply__arrow:after {
-    position: absolute;
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid #fff;
-    top: 0;
-    right: 0;
-}
-
-.top-menu li a::after, .nav-buttons li .top-icons::after {
+.top-menu li a::after {
     content: '';
     display: block;
     width: 0;
@@ -454,26 +353,12 @@ input {
     margin-top: 22px;
 }
 
-.nav-buttons li .top-icons::after{
-    margin-top:10px;
-}
-
 .profile-info .down-arrow {
     padding: 0;
     margin-top: 10px;
 }
 
-.profile-form label{
-    color: #ccc;
-    font-weight: 500;
-    font-family: open-sansSemiBold, sans-serif, arial;
-}
-
-.profile-form .form-field{
-    margin-bottom:20px;
-}
-
-.top-menu li a:hover::after, .top-menu .active::after, .nav-buttons li .top-icons:hover::after ,.nav-buttons li .top-icons.active::after {
+.top-menu li a:hover::after, .top-menu .active::after {
     width: 100%;
     transition: width .3s;
 }
@@ -506,10 +391,9 @@ input {
     padding: 6px 20px;
     border-radius: 20px;
     text-decoration: none;
-    outline: none !important;
+    outline: none;
     cursor:pointer;
     font-family: open-sansSemiBold, sans-serif;
-    border:none;
 }
 
 .top-icons {
@@ -873,7 +757,7 @@ input {
 }
 
 .compose-dialog{
-    max-width:520px;
+    width:520px;
 }
 
 .compose-header li {
@@ -989,70 +873,10 @@ input {
     border-bottom-left-radius: 20px;
 }
 
-.center-inline{
-    text-align:center;
-}
-
-.right-radius{
+.right-radius {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
-
-.geosuggest {
-}
-  .geosuggest__input {
-    width: 100%;
-    padding: .5em 1em;
-    -webkit-transition: border 0.2s, box-shadow 0.2s;
-            transition: border 0.2s, box-shadow 0.2s;
-  }
-  .geosuggest__input:focus {
-    border-color: #267dc0;
-    box-shadow: 0 0 0 transparent;
-  }
-  .geosuggest__suggests {
-    position: absolute;
-    max-height: 25em;
-    padding: 0;
-    background: #fff;
-    border: 2px solid #46b9e6;
-    border-top-width: 1px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    list-style: none;
-    z-index: 5;
-    -webkit-transition: max-height 0.2s, border 0.2s;
-            transition: max-height 0.2s, border 0.2s;
-  }
-  .geosuggest__suggests--hidden {
-    max-height: 0;
-    overflow: hidden;
-    border-width: 0;
-  }
-  
-  /**
-   * A geosuggest item
-   */
-  .geosuggest__item {
-    font-size:$m-size;
-    padding: .5em .65em;
-    cursor: pointer;
-  }
-  .geosuggest__item:hover,
-  .geosuggest__item:focus {
-    background: #f5f5f5;
-  }
-  .geosuggest__item--active {
-    background: #46b9e6;
-    color: #fff;
-  }
-  .geosuggest__item--active:hover,
-  .geosuggest__item--active:focus {
-    background: #ccc;
-  }
-  .geosuggest__item__matched-text {
-    font-weight: bold;
-  }
 
 .full-radius{
     border-radius:20px;
@@ -1068,10 +892,6 @@ input {
 
 .sub-btn {
     color: #C85E5C !important;
-}
-
-.pstatic{
-    position: static !important;
 }
 
 .dropdown-menu .profile-info{
@@ -1379,25 +1199,6 @@ aside .btn-group {
 	height: 8px;
 	border-radius: 50%;
 	background: white;
-}
-
-.modal {
-    text-align: center;
-  }
-  
-@media screen and (min-width: 768px) { 
-.modal:before {
-    display: inline-block;
-    vertical-align: middle;
-    content: " ";
-    height: 100%;
-}
-}
-
-.modal-dialog {
-display: inline-block;
-text-align: left;
-vertical-align: middle;
 }
 
 @keyframes lds-ripple {

@@ -4,7 +4,6 @@ import createHistory from "history/createBrowserHistory";
 import Manage from "../components/Manage/Manage";
 import Scheduled from "../components/Scheduled/Scheduled";
 import Accounts from "../components/Accounts/Accounts";
-import Settings from "../components/Settings/Settings";
 import LoginPage from "../components/LoginPage";
 import NotFoundPage from "../components/NotFoundPage";
 import PrivateRoute from "./PrivateRoute";
@@ -20,7 +19,6 @@ const AppRouter = () => (
                 <PrivateRoute path="/manage" component={Manage} />
                 <PrivateRoute path="/scheduled" component={Scheduled} />
                 <PrivateRoute path="/accounts" component={Accounts} />
-                <PrivateRoute path="/settings" component={Settings} />
                 <Route component={NotFoundPage}/>
             </Switch>
         </div>

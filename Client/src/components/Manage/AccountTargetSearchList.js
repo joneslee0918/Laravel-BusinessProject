@@ -70,12 +70,7 @@ export default class AccountTargetSearchList extends React.Component{
                                             placeholder="@ Enter Channel" />
                                     </div>
                                     <div className="col-md-1 mb-3 p10-5">
-                                        {
-                                            this.state.target ?
-                                            <button className="gradient-background-teal-blue white-button add-target">ADD</button>
-                                            :
-                                            <button className="gradient-background-teal-blue white-button add-target disabled" disabled>ADD</button>
-                                        }
+                                        <button className="gradient-background-teal-blue white-button add-target">ADD</button>
                                     </div>
                                 </div>
                             </form>

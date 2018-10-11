@@ -59,10 +59,7 @@ export const PostList = ({
 
                 <h2>{title}</h2>
                 {(posts.length < 1 && !loading) && 
-                <div className="no-data">
-                    No posts have been scheduled or published yet.
-                    <div><a data-target="#compose" data-toggle="modal" className="btn compose-btn">Schedule a post</a></div>
-                </div>}
+                <div className="no-data">No posts have been scheduled or published yet.</div>}
 
                 {loading && <Loader />}
 
