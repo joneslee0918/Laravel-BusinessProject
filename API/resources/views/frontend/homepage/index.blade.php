@@ -3,14 +3,15 @@
 @push('styles')
     <link href="{{ asset('css/slick.css') }}" rel="stylesheet">
     <link href="{{ asset('css/slick-theme.css') }}" rel="stylesheet">
-    @endpush
+@endpush
 
+<div id="top-image"><img  class="img-responsive" src="{{ asset('images/top-office.png') }}" /></div>
 @section('content')
     <div class="container">
         <div class="row justify-content-center" id="get-started-wrapper">
             <div class="col-md-5 get-started">
-                <h2>Social Media, <br /> Simplified</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, amet architecto autem blanditiis doloremque.</p>
+                <h2>Social Media <br /> Simplified</h2>
+                <p>Hack your Twitter! Build a community of followers & automate your posts with a couple of clix.</p>
                 <a href="#" class="compose-btn btn-start">Get Started</a>
             </div>
 
@@ -135,8 +136,8 @@
                         </div>
                     </div>
                     <div class="col-md-5" id="features-right-text">
-                        <h3>Optimize your Twitter account</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aperiam illo incidunt itaque iure, laudantium magni molestias nostrum nulla optio perspiciatis quaerat quia recusandae repellat sed sequi sit totam voluptatibus.</p>
+                        <h3>Grow your followers</h3>
+                        <p>Uniclix connects you with real people that care about your product. Learn more.</p>
                     </div>
                 </div>
             </div>
@@ -144,8 +145,8 @@
             <div class="col-md-12" id="features-publishing">
                 <div class="row">
                     <div class="col-md-6 feature-publish-text">
-                        <h3>Publish content from your own blogs and sites</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi aspernatur aut, distinctio dolore eos error eum facere facilis fugiat necessitatibus non perferendis reiciendis rerum sequi similique velit vero vitae voluptas!</p>
+                        <h3>Manage your posts</h3>
+                        <p>Publish content from your sites and schedule your posts in advance with Uniclix. Learn more.</p>
                         <br />
                         <a href="#" class="compose-btn btn-start">How it works?</a>
                     </div>
@@ -170,8 +171,8 @@
                     </div>
 
                     <div class="col-md-6 feature-publish-text">
-                        <h3>Pre-schedule all of your content</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi aspernatur aut, distinctio dolore eos error eum facere facilis fugiat necessitatibus non perferendis reiciendis rerum sequi similique velit vero vitae voluptas!</p>
+                        <h3>Save money & time</h3>
+                        <p>Uniclix offers the most affordable packages in the industry suitable for small businesses and individuals.Take advantage of the introductory offer click here to learn more.</p>
                         <br />
                         <a href="#" class="compose-btn btn-start">How it works?</a>
                     </div>
@@ -249,7 +250,24 @@
         </div>
     </div>
 
-    <div class="footer-wrapper">
+    <div class="bg-grey-content">
+        <div class="container">
+            <div class="row">
+                <div class="bg-white-radius">
+                    <div class="col-md-6 col-xs-12">
+                        <h2>Ready to get started?</h2>
+                        <p>Let's start by creating a new account.</p>
+                    </div>
+                    <div class="col-md-6 col-xs-12 text-right lh7">
+                        <a href="#" class="compose-btn btn-start">Create new account</a>
+                    </div>
+                </div>
+            </div>
+            @include('frontend.includes.footer')
+        </div>
+    </div>
+
+<!--     <div class="footer-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -301,7 +319,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 @endsection
 
 @push('scripts')

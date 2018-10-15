@@ -33,13 +33,7 @@ class KeywordTargetsController extends Controller
 
             if ($target = $targets->whereNotIn("id", $currentTargetIds)->latest()->first()) {
 
-                if(!$target->location){
-                    $tweets = $this->selectedChannel->getSearch(["q" => $target->keyword, "count" => 100]);
-                }else{
-                    $location = json_decode($target->location);
-                    $tweets = $this->selectedChannel->getSearch(["q" => $target->keyword, "geocode" => "$location->lat,$location->lng,50mi", "count" => 100]);
-                }
-
+                $tweets = $this->selectedChannel->getSearch(["q" => $target->keyword, "count" => 100]);
                 $feedIds = $this->getUsersFromTweetList($tweets);
                 $data = [];
 

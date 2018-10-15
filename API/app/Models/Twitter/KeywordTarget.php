@@ -8,7 +8,7 @@ class KeywordTarget extends Model
 {
     public $table = "twitter_keyword_targets";
 
-    protected $fillable = ["channel_id", "keyword", "location", "created_at", "updated_at"];
+    protected $fillable = ["channel_id", "keyword", "created_at", "updated_at"];
 
     public function feed()
     {

@@ -14,7 +14,8 @@ const TopMenu = () => (
 
         <ul className="nav-buttons">
             <li><a href="#" className="upgrade-btn">Upgrade for more features</a></li> 
-            <li><NavLink to="/settings" activeClassName="active" className="top-icons"><i className="fa fa-gear"></i></NavLink></li>
+            <li><a href="#" className="top-icons"><i className="fa fa-bell"></i></a></li>  
+            <li><a href="#" className="top-icons"><i className="fa fa-gear"></i></a></li>
             <li>
                 <a data-toggle="modal" data-target="#compose" className="compose-btn">Compose</a>
             </li>  
