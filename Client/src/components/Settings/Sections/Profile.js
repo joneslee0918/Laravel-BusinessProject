@@ -55,7 +55,8 @@ class Profile extends React.Component{
             website: this.state.website,
             topics: this.state.topics,
             locations: this.state.locations,
-            timezone: this.state.timezone
+            timezone: this.state.timezone,
+            reason: this.state.reason
         }).then((response) => {
 
         }).catch((error) => {
