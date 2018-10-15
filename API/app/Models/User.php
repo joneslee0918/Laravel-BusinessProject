@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'role_id', 'username', 'password',
+        'name', 'email', 'role_id', 'username', 'password', 'website', 'timezone', 'usage_reason',
     ];
 
     /**
@@ -67,5 +67,14 @@ class User extends Authenticatable
         return $this->twitterChannels()->where("selected", 1)->first();
     }
 
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
+    }
+
+    public function locations()
+    {
+        return $this->hasMany(Location::class);
+    }
 
 }

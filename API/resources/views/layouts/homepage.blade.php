@@ -19,10 +19,9 @@
     <link href="{{ asset('css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
     @stack('styles')
     <link href="{{ asset('css/frontend.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/helper.css') }}" rel="stylesheet">
 </head>
 <body>
-<!-- <div id="top-image"><img  class="img-responsive" src="{{ asset('images/top-office.png') }}" /></div> -->
+<div id="top-image"><img  class="img-responsive" src="{{ asset('images/top-office.png') }}" /></div>
 <div class="full-height">
     <header id="header-wrap">
         <div class="navbar navbar-default {{--navbar-fixed-top --}} menu-top">
@@ -44,10 +43,10 @@
                     <nav>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="active"><a href="#">Home</a></li>
-                            <li><a class="page-scroll" href="{{ route('upgrade') }}">Upgrade</a></li>
-                            <li><a class="page-scroll" href="{{ route('learning') }}">Learning</a></li>
-                            <li><a class="page-scroll" href="{{ route('pricing') }}">Pricing</a></li>
-                            <li><a class="page-scroll" href="{{ route('blog') }}">Blog</a></li>
+                            <li><a class="page-scroll" href="#">Upgrade</a></li>
+                            <li><a class="page-scroll" href="#">Learning</a></li>
+                            <li><a class="page-scroll" href="#">Pricing</a></li>
+                            <li><a class="page-scroll" href="#">Blog</a></li>
                         </ul>
                     </nav>
                 </div>
