@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import TwitterLogin  from "react-twitter-auth";
 import {startLogin} from "../actions/auth";
 import {startSetChannels} from "../actions/channels";
-import {startSetProfile} from "../actions/profile";
 import {twitterRequestTokenUrl, twitterAccessTokenUrl, backendUrl} from "../config/api";
 import {LoaderWithOverlay} from "./Loader";
 
@@ -25,9 +24,8 @@ export class LoginPage extends React.Component{
         this.setState(() => ({loading: true}));
         response.json().then(body => {
             this.props.startLogin(body).then(() => {
-                this.props.startSetProfile();
                 this.props.startSetChannels();
-                //this.setState(() => ({loading: false}));
+                this.setState(() => ({loading: false}));
             });
         });
     };
@@ -53,7 +51,6 @@ export class LoginPage extends React.Component{
 
 const mapDispatchToProps = (dispatch) => ({
     startLogin: (body) => dispatch(startLogin(body)),
-    startSetProfile: () => dispatch(startSetProfile()),
     startSetChannels: () => dispatch(startSetChannels())
 });
 

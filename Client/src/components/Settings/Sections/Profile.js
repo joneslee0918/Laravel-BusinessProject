@@ -1,12 +1,8 @@
 import React from 'react';
-import { connect } from "react-redux";
 import Modal from "react-modal";
 import GeoSuggest from "react-geosuggest";
 import {updateProfile} from "../../../requests/profile";
-import momentTz from "moment-timezone";
 import TimezoneSelectOptions from '../Fixtures/TimezoneOptions';
-import {validateEmail, validateUrl} from "../../../utils/validator";
-import {startSetProfile} from "../../../actions/profile";
 
 class Profile extends React.Component{
 
@@ -22,37 +18,6 @@ class Profile extends React.Component{
         timezone: "",
         isTopicsModalOpen: false,
         isLocationsModalOpen: false,
-        error: false,
-        success: false
-    };
-
-    componentDidMount(){
-        this.initializeProfileData();
-    }
-
-    initializeProfileData = () => {
-        if(this.props.profile){
-            const user = this.props.profile.user;
-            const topics = this.props.profile.topics;
-            const locations = this.props.profile.locations;
-
-            let stateCopy = Object.assign({}, this.state);
-            stateCopy["name"] = user.name ? user.name : "";
-            stateCopy["email"] = user.email ? user.email : "";
-            stateCopy["website"] = user.website ? user.website : "";
-            stateCopy["reason"] = user.usage_reason ? user.usage_reason : "Myself";
-            stateCopy["topics"] = topics.map((topic) => topic.topic);
-            stateCopy["locations"] = locations.map((location) => {
-                if(location){
-                    location = JSON.parse(location.location);
-                    return location;
-                }
-            });
-
-            stateCopy["timezone"] = user.timezone ? user.timezone : momentTz.tz.guess();
-
-            this.setState(() => (stateCopy));
-        }
     };
 
     toggleTopicsModal = () => {
@@ -84,52 +49,17 @@ class Profile extends React.Component{
     onSubmit = (e) => {
         e.preventDefault();
 
-        this.setState(() => ({
-            error: false
-        }));
-
-        if(!validateEmail(this.state.email) || this.state.email === ""){
-            this.setState(() => ({
-                error: "Please fix the email!"
-            }));
-
-            return;
-        }
-
-        if(this.state.website !== "" && !validateUrl(this.state.website)){
-            this.setState(() => ({
-                error: "Please fix the website url!"
-            }));
-
-            return;
-        }
-
-        if(this.state.name === ""){
-            this.setState(() => ({
-                error: "Name can't be empty!"
-            }));
-
-            return;
-        }
-
         updateProfile({
             name: this.state.name,
             email: this.state.email,
             website: this.state.website,
             topics: this.state.topics,
             locations: this.state.locations,
-            timezone: this.state.timezone,
-            reason: this.state.reason
+            timezone: this.state.timezone
         }).then((response) => {
-            this.props.startSetProfile();
-            this.setState(() => ({
-                success: "Your profile information has been updated."
-            }));
+
         }).catch((error) => {
-            console.log(error);
-            this.setState(() => ({
-                error: "Something went wrong."
-            }));
+
         });
     };
 
@@ -250,13 +180,7 @@ class Profile extends React.Component{
                 </Modal>
 
                 <h2>PROFILE</h2>
-                {this.state.error && 
-                    <div className="alert alert-danger">{this.state.error}</div>
-                }
-
-                {this.state.success && 
-                    <div className="alert alert-success">{this.state.success}</div>
-                }
+        
                 <form onSubmit={(e) => this.onSubmit(e)} className="profile-form">
                     <div className="form-group shadow-box">
     
@@ -320,14 +244,4 @@ class Profile extends React.Component{
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        profile: state.profile
-    };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-    startSetProfile: () => dispatch(startSetProfile())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default Profile;

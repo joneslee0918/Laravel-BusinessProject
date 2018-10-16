@@ -33,7 +33,6 @@ const TimezoneSelectOptions = [
     {value: "Europe/Belgrade", name: "(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague"},
     {value: "Europe/Brussels", name: "(GMT+01:00) Brussels, Copenhagen, Madrid, Paris"},
     {value: "Europe/Sarajevo", name: "(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb"},
-    {value: "Europe/Warsaw", name: "(GMT+01:00) Warsaw, Zagreb"},
     {value: "Africa/Lagos", name: "(GMT+01:00) West Central Africa"},
     {value: "Asia/Amman", name: "(GMT+02:00) Amman"},
     {value: "Europe/Athens", name: "(GMT+02:00) Athens, Bucharest, Istanbul"},
