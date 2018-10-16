@@ -23,6 +23,20 @@ class ProfileController extends Controller
         });
     }
 
+
+    public function profile()
+    {
+        $topics = $this->user->topics;
+        $locations = $this->user->locations;
+
+        return response()->json([
+            "user" => $this->user,
+            "topics" => $topics,
+            "locations" => $locations
+        ]);
+    }
+
+
     /**
      * Show the application dashboard.
      *
@@ -48,35 +62,36 @@ class ProfileController extends Controller
             $user->usage_reason = $reason ? $reason : $user->usage_reason;
             $user->save();
 
-            if($topics){
-                $user->topics()->delete();
-                collect($topics)->map(function($topic) use ($user){
-                    $user->topics()->create([
-                        'topic' => $topic
-                    ]);
-                });
-            }
+            $user->topics()->delete();
+            collect($topics)->map(function($topic) use ($user){
+                $user->topics()->create([
+                    'topic' => $topic
+                ]);
+            });
 
-            if($locations){
-                $user->locations()->delete();
-                collect($locations)->map(function($location) use ($user){
-                    
-                    $location = [
-                        'label' => $location['label'],
-                        'location' => $location['location']
-                    ];
+            $user->locations()->delete();
+            collect($locations)->map(function($location) use ($user){
+                
+                $location = [
+                    'label' => $location['label'],
+                    'location' => $location['location']
+                ];
 
-                    $user->locations()->create([
-                        'location' => json_encode($location)
-                    ]);
-                });
-            }
+                $user->locations()->create([
+                    'location' => json_encode($location)
+                ]);
+            });
+            
         }catch(\Exception $e){
             
             return response()->json(['message' => $e->getMessage()], 402);
         }
 
 
-        return response()->json(['message' => 'Profile updated successfuly']);
+        return response()->json([
+            "user" => $user,
+            "topics" => $user->topics,
+            "locations" => $user->locations
+        ]);
     }
 }

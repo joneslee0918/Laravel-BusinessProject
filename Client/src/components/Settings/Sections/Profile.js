@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from "react-redux";
 import Modal from "react-modal";
 import GeoSuggest from "react-geosuggest";
 import {updateProfile} from "../../../requests/profile";
+import momentTz from "moment-timezone";
 import TimezoneSelectOptions from '../Fixtures/TimezoneOptions';
 import {validateEmail, validateUrl} from "../../../utils/validator";
+import {startSetProfile} from "../../../actions/profile";
 
 class Profile extends React.Component{
 
@@ -21,6 +24,35 @@ class Profile extends React.Component{
         isLocationsModalOpen: false,
         error: false,
         success: false
+    };
+
+    componentDidMount(){
+        this.initializeProfileData();
+    }
+
+    initializeProfileData = () => {
+        if(this.props.profile){
+            const user = this.props.profile.user;
+            const topics = this.props.profile.topics;
+            const locations = this.props.profile.locations;
+
+            let stateCopy = Object.assign({}, this.state);
+            stateCopy["name"] = user.name ? user.name : "";
+            stateCopy["email"] = user.email ? user.email : "";
+            stateCopy["website"] = user.website ? user.website : "";
+            stateCopy["reason"] = user.usage_reason ? user.usage_reason : "Myself";
+            stateCopy["topics"] = topics.map((topic) => topic.topic);
+            stateCopy["locations"] = locations.map((location) => {
+                if(location){
+                    location = JSON.parse(location.location);
+                    return location;
+                }
+            });
+
+            stateCopy["timezone"] = user.timezone ? user.timezone : momentTz.tz.guess();
+
+            this.setState(() => (stateCopy));
+        }
     };
 
     toggleTopicsModal = () => {
@@ -66,7 +98,7 @@ class Profile extends React.Component{
 
         if(this.state.website !== "" && !validateUrl(this.state.website)){
             this.setState(() => ({
-                error: "Please fix the website!"
+                error: "Please fix the website url!"
             }));
 
             return;
@@ -89,10 +121,12 @@ class Profile extends React.Component{
             timezone: this.state.timezone,
             reason: this.state.reason
         }).then((response) => {
+            this.props.startSetProfile();
             this.setState(() => ({
                 success: "Your profile information has been updated."
             }));
         }).catch((error) => {
+            console.log(error);
             this.setState(() => ({
                 error: "Something went wrong."
             }));
@@ -286,4 +320,14 @@ class Profile extends React.Component{
     }
 }
 
-export default Profile;
+const mapStateToProps = (state) => {
+    return {
+        profile: state.profile
+    };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    startSetProfile: () => dispatch(startSetProfile())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
