@@ -27,7 +27,7 @@ export class LoginPage extends React.Component{
             this.props.startLogin(body).then(() => {
                 this.props.startSetProfile();
                 this.props.startSetChannels();
-                this.setState(() => ({loading: false}));
+                //this.setState(() => ({loading: false}));
             });
         });
     };

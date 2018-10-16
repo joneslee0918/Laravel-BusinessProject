@@ -32,11 +32,14 @@ const renderApp = () => {
 
 
 const setAuthentication = () => {
-    const token = localStorage.getItem("token") || undefined;
+    let token = localStorage.getItem("token") || undefined;
+
+    token = token == "undefined" ? undefined : token;
+
     store.dispatch(login(token));
     setAuthorizationHeader(token);
 
-    if(token){
+    if(token && token !== "undefined"){
         let channels = localStorage.getItem("channels");
         channels = channels ? JSON.parse(channels) : [];
 
