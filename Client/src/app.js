@@ -7,6 +7,7 @@ import "normalize.css/normalize.css";
 import "./styles/styles.scss";
 import { login, logout } from "./actions/auth";
 import setAuthorizationHeader from "./utils/setAuthorizationHeader";
+import { setProfile } from "./actions/profile";
 import { setChannels } from "./actions/channels";
 
 const store = configStore();
@@ -31,20 +32,27 @@ const renderApp = () => {
 
 
 const setAuthentication = () => {
-    const token = localStorage.getItem("token") || undefined;
+    let token = localStorage.getItem("token") || undefined;
+
+    token = token == "undefined" ? undefined : token;
+
     store.dispatch(login(token));
     setAuthorizationHeader(token);
 
-    if(token){
+    if(token && token !== "undefined"){
         let channels = localStorage.getItem("channels");
         channels = channels ? JSON.parse(channels) : [];
 
-        if(!channels.length){
+        let profile = localStorage.getItem("profile");
+        profile = profile ? JSON.parse(profile) : "";
+
+        if(!channels.length || !profile){
             localStorage.setItem("token", undefined);
             store.dispatch(logout());
             setAuthorizationHeader(undefined);
         }
 
+        store.dispatch(setProfile(profile));
         store.dispatch(setChannels(channels));
     }
 

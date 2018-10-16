@@ -36,6 +36,8 @@ export const logout = () => ({
 export const startLogout = () => {
     return (dispatch) => {
         localStorage.setItem("token", undefined);
+        localStorage.setItem("channels", undefined);
+        localStorage.setItem("profile", undefined);
         dispatch(logout());
     };
 };

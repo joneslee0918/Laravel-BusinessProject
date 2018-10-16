@@ -3,12 +3,14 @@ import thunk from "redux-thunk";
 import authReducer from "../reducers/auth";
 import channelReducer from "../reducers/channels";
 import postReducer from "../reducers/posts";
+import profileReducer from "../reducers/profile";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export default () => {
     const store = createStore(
         combineReducers({
             auth: authReducer,
+            profile: profileReducer,
             channels: channelReducer,
             posts: postReducer
         }),

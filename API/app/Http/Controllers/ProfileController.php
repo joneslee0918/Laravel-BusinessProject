@@ -23,6 +23,20 @@ class ProfileController extends Controller
         });
     }
 
+
+    public function profile()
+    {
+        $topics = $this->user->topics;
+        $locations = $this->user->locations;
+
+        return response()->json([
+            "user" => $this->user,
+            "topics" => $topics,
+            "locations" => $locations
+        ]);
+    }
+
+
     /**
      * Show the application dashboard.
      *
@@ -32,49 +46,52 @@ class ProfileController extends Controller
     {   
         try{
             $user = $this->user;
-            $name = $request->input('name');
-            $email = $request->input('email');
-            $website = $request->input('website');
-            $topics = $request->input('topics');
-            $locations = $request->input('locations');
-            $timezone = $request->input('timezone');
-            $reason = $request->input('reason');
+            $data = $request->input('data');
+            $name = $data['name'];
+            $email = $data['email'];
+            $website = $data['website'];
+            $topics = $data['topics'];
+            $locations = $data['locations'];
+            $timezone = $data['timezone'];
+            $reason = $data['reason'];
 
-            $user->name = $name;
-            $user->email = $email;
-            $user->website = $website;
-            $user->timezone = $timezone;
-            $user->usage_reason = $reason;
+            $user->name = $name ? $name : $user->name;
+            $user->email = $email ? $email : $user->email;
+            $user->website = $website ? $website : $user->website;
+            $user->timezone = $timezone ? $timezone : $user->timezone;
+            $user->usage_reason = $reason ? $reason : $user->usage_reason;
             $user->save();
 
-            if($topics){
-                $topicsArray = [];
-                collect($topics)->map(function($topic){
-                    $topicsArray[] = [
-                        "topic" => json_encode($topic)
-                    ];
-                });
-                
-                $user->topics()->delete();
-                $user->topics()->insert($topicsArray);
-            }
+            $user->topics()->delete();
+            collect($topics)->map(function($topic) use ($user){
+                $user->topics()->create([
+                    'topic' => $topic
+                ]);
+            });
 
-            if($locations){
-                $locationsArray = [];
-                collect($locations)->map(function($topic){
-                    $locationsArray[] = [
-                        "location" => json_encode($location)
-                    ];
-                });
+            $user->locations()->delete();
+            collect($locations)->map(function($location) use ($user){
                 
-                $user->locations()->delete();
-                $user->locations()->insert($locationsArray);
-            }
+                $location = [
+                    'label' => $location['label'],
+                    'location' => $location['location']
+                ];
+
+                $user->locations()->create([
+                    'location' => json_encode($location)
+                ]);
+            });
+            
         }catch(\Exception $e){
-            return response()->json(['message' => $e->getMessage()], 401);
+            
+            return response()->json(['message' => $e->getMessage()], 402);
         }
 
 
-        return response()->json(['message' => 'Profile updated successfuly']);
+        return response()->json([
+            "user" => $user,
+            "topics" => $user->topics,
+            "locations" => $user->locations
+        ]);
     }
 }
