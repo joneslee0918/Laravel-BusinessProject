@@ -6,7 +6,7 @@ import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import Popup from "reactjs-popup";
-import ImageUploader from 'react-images-upload-demo/src/component/compiled';
+import ImageUploader from 'react-images-browse/src/component/compiled';
 import moment from "moment";
 import momentTz from "moment-timezone";
 import 'react-dates/initialize';

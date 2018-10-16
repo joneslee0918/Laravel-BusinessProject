@@ -43,7 +43,7 @@
                     <a href="{{config('frontendclient.client_url')}}" class="btn pull-right visible-lg signin-btn">Sign in</a>
                     <nav>
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="/">Home</a></li>
+                            <li class="active"><a href="#">Home</a></li>
                             <li><a class="page-scroll" href="{{ route('upgrade') }}">Upgrade</a></li>
                             <li><a class="page-scroll" href="{{ route('learning') }}">Learning</a></li>
                             <li><a class="page-scroll" href="{{ route('pricing') }}">Pricing</a></li>
