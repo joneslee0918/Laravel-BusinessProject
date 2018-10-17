@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate",
+  "name": "Uniclix",
   "version": "1.0.0",
-  "description": "This is just a react boilerplate",
+  "description": "Uniclix is a social media management platform that serves as a companion that helps you target and grow your social audience as well as publish posts automatically by scheduling them.",
   "main": "app.js",
   "scripts": {
     "build:dev": "webpack --mode=development",
