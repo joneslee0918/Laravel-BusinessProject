@@ -47,51 +47,53 @@ class ProfileController extends Controller
         try{
             $user = $this->user;
             $data = $request->input('data');
-            $name = $data['name'];
-            $email = $data['email'];
-            $website = $data['website'];
-            $topics = $data['topics'];
-            $locations = $data['locations'];
-            $timezone = $data['timezone'];
-            $reason = $data['reason'];
+            
+            foreach($data as $key => $value){
 
-            $user->name = $name ? $name : $user->name;
-            $user->email = $email ? $email : $user->email;
-            $user->website = $website ? $website : $user->website;
-            $user->timezone = $timezone ? $timezone : $user->timezone;
-            $user->usage_reason = $reason ? $reason : $user->usage_reason;
+                if($key == "topics" || $key == "locations"){
+                    continue;
+                }
+
+                if($key == "reason"){
+                    $key = "usage_reason";
+                }
+
+                $user->{$key} = $value ? $value : $user->{$key};
+            }
+
             $user->save();
 
-            $user->topics()->delete();
-            collect($topics)->map(function($topic) use ($user){
-                $user->topics()->create([
-                    'topic' => $topic
-                ]);
-            });
+            if(array_key_exists("topics", $data)){
+                $user->topics()->delete();
+                collect($data["topics"])->map(function($topic) use ($user){
+                    $user->topics()->create([
+                        'topic' => $topic
+                    ]);
+                });
+            }
 
-            $user->locations()->delete();
-            collect($locations)->map(function($location) use ($user){
-                
-                $location = [
-                    'label' => $location['label'],
-                    'location' => $location['location']
-                ];
 
-                $user->locations()->create([
-                    'location' => json_encode($location)
-                ]);
-            });
+            if(array_key_exists("locations", $data)){
+                $user->locations()->delete();
+                collect($data["locations"])->map(function($location) use ($user){
+                    
+                    $location = [
+                        'label' => $location['label'],
+                        'location' => $location['location']
+                    ];
+
+                    $user->locations()->create([
+                        'location' => json_encode($location)
+                    ]);
+                });
+            }
+
             
         }catch(\Exception $e){
             
-            return response()->json(['message' => $e->getMessage()], 402);
+            return response()->json(['message' => $e->getMessage()], 400);
         }
 
-
-        return response()->json([
-            "user" => $user,
-            "topics" => $user->topics,
-            "locations" => $user->locations
-        ]);
+        return response()->json(['message' => 'Profile updated successfully.']);
     }
 }

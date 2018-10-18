@@ -544,7 +544,7 @@ class Compose extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-    const channels = channelSelector(state.channels.list, {selected: undefined, provider:undefined});
+    const channels = channelSelector(state.channels.list, {selected: undefined, provider: undefined});
 
     return {
         channels,

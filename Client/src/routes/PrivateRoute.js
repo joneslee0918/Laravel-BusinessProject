@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Route, Redirect} from 'react-router-dom';
 import TopMenu from "../components/Menus/TopMenu";
 import Composer from "../components/Compose";
+import EmailChecker from "../components/EmailChecker";
 
 export const PrivateRoute = ({
     isAuthenticated, 
@@ -14,6 +15,7 @@ export const PrivateRoute = ({
                 <TopMenu />
                 <Component {...props} />
                 <Composer />
+                <EmailChecker />
             </div>
         ) : (
             <Redirect to="/" />
