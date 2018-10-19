@@ -27,9 +27,9 @@ class PagesController extends Controller
      *
      * Show learning page
      */
-    public function education()
+    public function learning()
     {
-    	return view('frontend.education');
+    	return view('frontend.learning');
     }
 
     /**

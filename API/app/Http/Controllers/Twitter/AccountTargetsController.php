@@ -73,29 +73,44 @@ class AccountTargetsController extends Controller
             ]);
 
         } catch (\Exception $e) {
+
+            $error = $e->getMessage();
+            if(str_contains($error, "log in")){
+                return response()->json(['error' => $e->getMessage()], 401);
+            }
+
             return response()->json(["error" => $e->getMessage()], 500);
         }
     }
 
 
     public function store(Request $request)
-    {
-        $username = str_replace("@", "", $request->input("username"));
-        $target = $this->selectedChannel->accountTargets()->where("account", $username);
+    {	
+    	try{
 
-        if (!$target->exists()) {
-            $info = $this->selectedChannel->getUsersInfo(["screen_name" => $username]);
+    		$username = str_replace("@", "", $request->input("username"));
+	        $target = $this->selectedChannel->accountTargets()->where("account", $username);
 
-            if (!empty($info)) {
+	        if (!$target->exists()) {
+	            $info = $this->selectedChannel->getUsersInfo(["screen_name" => $username]);
+	            if (!empty($info)) {
 
-                $target->create(["account" => $username]);
-                $accounts = $this->getAccounts();
- 
-                return response()->json($accounts);
+	                $target->create(["account" => $username]);
+	                $accounts = $this->getAccounts();
+	 
+	                return response()->json($accounts);
+	            }
+	        }
+
+    	}catch(\Exception $e){
+            $error = $e->getMessage();
+            if(str_contains($error, "log in")){
+                return response()->json(['error' => $e->getMessage()], 401);
             }
-        }
+    		return response()->json(['error' => $e->getMessage()], 400);
+    	}
 
-        return response()->json(['error' => 'Target not found.'], 404);
+        return response()->json(['error' => "Target not found"], 404);
     }
 
     public function destroy($username)

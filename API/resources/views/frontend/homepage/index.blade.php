@@ -7,13 +7,16 @@
 
 <div id="top-image"><img  class="img-responsive" src="{{ asset('images/top-office.png') }}" /></div>
 @section('content')
-<div class="home_content">
     <div class="container">
         <div class="row justify-content-center" id="get-started-wrapper">
             <div class="col-md-5 get-started">
                 <h2>Social Media <br /> Simplified</h2>
                 <p>Hack your Twitter! Build a community of followers & automate your posts with a couple of clix.</p>
                 <a href="#" class="compose-btn btn-start">Get Started</a>
+            </div>
+
+            <div class="col-md-7">
+                <a href="#" class="play-btn"><i class="fa fa-play"></i></a>
             </div>
         </div>
 
@@ -175,18 +178,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-xs-12 feature-publish-text">
-                <div class="row pt100">                    
-                    <div class="col-md-6 col-xs-12 pt100">
-                        <h3>Get Social analytics for your accounts</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mauris ante, vulputate et justo in, condimentum ornare metus.</p>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                        <img class="img-responsive" src="{{asset('/images/laptop-img.png')}}">
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -230,7 +221,7 @@
         </div>
     </div>
 
-<!--     <div class="testimonials-wrapper">
+    <div class="testimonials-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 text-center">
@@ -257,14 +248,14 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
-    <div class="bg-grey-content homepage-footer">
+    <div class="bg-grey-content">
         <div class="container">
             <div class="row">
                 <div class="bg-white-radius">
                     <div class="col-md-6 col-xs-12">
-                        <h1 class="fw700">Ready to get started?</h1>
+                        <h2>Ready to get started?</h2>
                         <p>Let's start by creating a new account.</p>
                     </div>
                     <div class="col-md-6 col-xs-12 text-right lh7">
@@ -329,7 +320,6 @@
             </div>
         </div>
     </div> -->
-</div>
 @endsection
 
 @push('scripts')

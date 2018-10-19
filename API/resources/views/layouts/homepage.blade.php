@@ -43,11 +43,11 @@
                     <a href="{{config('frontendclient.client_url')}}" class="btn pull-right visible-lg signin-btn">Sign in</a>
                     <nav>
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="{{ Request::is('/') ? 'active' : ''}}"><a href="/">Home</a></li>
-                            <!-- <li class="{{ Request::is('upgrade') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('upgrade') }}">Upgrade</a></li> -->
-                            <li class="{{ Request::is('education') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('education') }}">Education</a></li>
-                            <li class="{{ Request::is('pricing') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('pricing') }}">Pricing</a></li>
-                            <li class="{{ Request::is('blog') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('blog') }}">Blog</a></li>
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a class="page-scroll" href="{{ route('upgrade') }}">Upgrade</a></li>
+                            <li><a class="page-scroll" href="{{ route('learning') }}">Learning</a></li>
+                            <li><a class="page-scroll" href="{{ route('pricing') }}">Pricing</a></li>
+                            <li><a class="page-scroll" href="{{ route('blog') }}">Blog</a></li>
                         </ul>
                     </nav>
                 </div>

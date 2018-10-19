@@ -1390,6 +1390,15 @@ aside .btn-group {
     text-align: center;
   }
   
+@media screen and (min-width: 768px) { 
+.modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+}
+}
+
 .modal-dialog {
 display: inline-block;
 text-align: left;
@@ -1410,27 +1419,5 @@ vertical-align: middle;
         width: 58px;
         height: 58px;
         opacity: 0;
-    }
-}
-
-@media screen and (min-width: 768px) { 
-    .modal:before {
-        display: inline-block;
-        vertical-align: middle;
-        content: " ";
-        height: 100%;
-    }
-}
-
-@media only screen and (max-width: 425px) {
-    .vertical-menu {
-        margin-left: -212px;
-    }
-    .body-container {
-        margin-left: 0px;
-    }
-    .dashboard-info li {
-        width: 100%;
-        display: block;
     }
 }

@@ -238,7 +238,7 @@ trait Tweetable
             $this->setAsCurrentUser();
             return Twitter::getUsers($params);
         } catch (\Exception $e) {
-            return [];
+            throw $e;
         }
     }
 
