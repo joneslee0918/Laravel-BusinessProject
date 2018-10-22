@@ -74,12 +74,7 @@ class AccountTargetsController extends Controller
 
         } catch (\Exception $e) {
 
-            $error = $e->getMessage();
-            if(str_contains($error, "log in")){
-                return response()->json(['error' => $e->getMessage()], 401);
-            }
-
-            return response()->json(["error" => $e->getMessage()], 500);
+            return getErrorResponse($e, $this->selectedChannel->global);
         }
     }
 
@@ -92,7 +87,7 @@ class AccountTargetsController extends Controller
 	        $target = $this->selectedChannel->accountTargets()->where("account", $username);
 
 	        if (!$target->exists()) {
-	            $info = $this->selectedChannel->getUsersInfo(["screen_name" => $username]);
+                $info = $this->selectedChannel->getUsersInfo(["screen_name" => $username]);
 	            if (!empty($info)) {
 
 	                $target->create(["account" => $username]);
@@ -103,11 +98,7 @@ class AccountTargetsController extends Controller
 	        }
 
     	}catch(\Exception $e){
-            $error = $e->getMessage();
-            if(str_contains($error, "log in")){
-                return response()->json(['error' => $e->getMessage()], 401);
-            }
-    		return response()->json(['error' => $e->getMessage()], 400);
+            return getErrorResponse($e, $this->selectedChannel->global);
     	}
 
         return response()->json(['error' => "Target not found"], 404);
@@ -130,7 +121,13 @@ class AccountTargetsController extends Controller
             ->toArray();
 
         if (!empty($accounts)) {
-            return $accounts = $this->selectedChannel->getUsersLookupByName($accounts);
+            try{
+                $accounts = $this->selectedChannel->getUsersLookupByName($accounts);
+            }catch(\Exception $e){
+                return getErrorResponse($e);
+            }
+            
+            return $accounts;
         }
 
         return [];

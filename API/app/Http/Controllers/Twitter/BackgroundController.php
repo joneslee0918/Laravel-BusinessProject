@@ -24,7 +24,7 @@ class BackgroundController extends Controller
         try{
             $channel->syncFollowerIds($sleep);
         }catch(\Exception $e){
-            return $e->getMessage();
+            return getErrorResponse($e, $channel->global);
         }
 
         $channel->stopProcess("syncTwitterFollowerIds");
@@ -46,7 +46,7 @@ class BackgroundController extends Controller
         try{
             $channel->syncFollowingIds($sleep);
         }catch(\Exception $e){
-            return $e->getMessage();
+            return getErrorResponse($e, $channel->global);
         }
 
         $channel->stopProcess("syncTwitterFollowingIds");

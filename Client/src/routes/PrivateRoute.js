@@ -4,6 +4,7 @@ import {Route, Redirect} from 'react-router-dom';
 import TopMenu from "../components/Menus/TopMenu";
 import Composer from "../components/Compose";
 import EmailChecker from "../components/EmailChecker";
+import ActiveChecker from "../components/ActiveChecker";
 
 export const PrivateRoute = ({
     isAuthenticated, 
@@ -16,6 +17,7 @@ export const PrivateRoute = ({
                 <Component {...props} />
                 <Composer />
                 <EmailChecker />
+                <ActiveChecker />
             </div>
         ) : (
             <Redirect to="/" />

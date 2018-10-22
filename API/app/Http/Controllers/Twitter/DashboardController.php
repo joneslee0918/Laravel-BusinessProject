@@ -16,7 +16,9 @@ class DashboardController extends Controller
             if($channel){
                 return response()->json($channel->getData());
             }
-        }catch(\Exception $e){}
+        }catch(\Exception $e){
+            return getErrorResponse($e, $channel->global);
+        }
 
         return response()->json(['error' => 'No channel found'], 404);
     }

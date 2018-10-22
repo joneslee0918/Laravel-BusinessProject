@@ -13,7 +13,7 @@
 
 Route::get('/', ['as' => 'homepage.index', 'uses' => 'PagesController@index']);
 Route::get('/upgrade', ['as' => 'upgrade', 'uses' => 'PagesController@upgrade']);
-Route::get('/learning', ['as' => 'learning', 'uses' => 'PagesController@learning']);
+Route::get('/education', ['as' => 'education', 'uses' => 'PagesController@education']);
 Route::get('/pricing', ['as' => 'pricing', 'uses' => 'PagesController@pricing']);
 Route::get('/blog', ['as' => 'blog', 'uses' => 'PagesController@blog']);
 Route::get('/article', ['as' => 'article', 'uses' => 'PagesController@article']);

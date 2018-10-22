@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
+import {startSetChannels} from "../../../actions/channels";
 import { getRecentUnfollowers, unfollow } from '../../../requests/twitter/channels';
 import channelSelector from '../../../selectors/channels';
 import Loader from '../../Loader';
@@ -46,6 +47,13 @@ class RecentUnfollowers extends React.Component{
                     actions: prevState.actions - 1
                 }));
 
+                if(error.response.status === 401){
+                    
+                    if(this.props.selectedChannel.active){
+                       this.props.startSetChannels();
+                    }
+                }
+
                 return Promise.reject(error);
             });
     };
@@ -63,6 +71,15 @@ class RecentUnfollowers extends React.Component{
                 }));
             }).catch((error) => {
                 this.setLoading(false);
+
+                if(error.response.status === 401){
+                    
+                    if(this.props.selectedChannel.active){
+                       this.props.startSetChannels();
+                    }
+                }
+
+                return Promise.reject(error);
             });
     };
 
@@ -80,6 +97,15 @@ class RecentUnfollowers extends React.Component{
                 }));
             }).catch((error) => {
                 this.setLoading(false);
+
+                if(error.response.status === 401){
+                    
+                    if(this.props.selectedChannel.active){
+                       this.props.startSetChannels();
+                    }
+                }
+
+                return Promise.reject(error);
             });
     };
 
@@ -113,4 +139,8 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(RecentUnfollowers);
+const mapDispatchToProps = (dispatch) => ({
+    startSetChannels: () => dispatch(startSetChannels())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecentUnfollowers);

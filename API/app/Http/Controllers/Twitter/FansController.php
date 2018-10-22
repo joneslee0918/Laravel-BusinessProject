@@ -36,7 +36,12 @@ class FansController extends Controller
         $actionsToday = $this->selectedChannel->getDailyStatisticsFor("follows");
 
         if(count($followerIds)){
-            $items = $this->selectedChannel->getUsersLookup($followerIds);
+
+            try{
+                 $items = $this->selectedChannel->getUsersLookup($followerIds);
+            }catch(\Exception $e){
+                return getErrorResponse($e, $this->selectedChannel->global);
+            }
         }
 
         return response()->json([

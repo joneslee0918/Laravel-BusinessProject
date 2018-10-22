@@ -209,7 +209,7 @@ trait Tweetable
             $this->setAsCurrentUser();
             return Twitter::getUsersLookup(["user_id" => $ids]);
         } catch (\Exception $e) {
-            return [];
+            throw $e;
         }
     }
 
@@ -223,7 +223,7 @@ trait Tweetable
             $this->setAsCurrentUser();
             return Twitter::getUsersLookup(["screen_name" => $names]);
         } catch (\Exception $e) {
-            return [];
+            throw $e;
         }
     }
 
@@ -253,7 +253,7 @@ trait Tweetable
             $this->setAsCurrentUser();
             return Twitter::getSearch($params);
         } catch (\Exception $e) {
-            return [];
+            throw $e;
         }
     }
 
@@ -267,7 +267,7 @@ trait Tweetable
             $this->setAsCurrentUser();
             return Twitter::getGeoSearch($params);
         } catch (\Exception $e) {
-            return [];
+            throw $e;
         }
     }
 
@@ -281,7 +281,7 @@ trait Tweetable
             $this->setAsCurrentUser();
             return Twitter::getGeo($id);
         } catch (\Exception $e) {
-            return [];
+            throw $e;
         }
     }
 

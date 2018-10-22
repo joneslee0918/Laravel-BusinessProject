@@ -4,6 +4,7 @@ namespace App\Models\Twitter;
 
 use App\Traits\Selectable;
 use App\Traits\Twitter\Tweetable;
+use App\Models\Channel as GlobalChannel;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,11 @@ class Channel extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function global()
+    {
+        return $this->belongsTo(GlobalChannel::class, "channel_id");
     }
 
     public function getTokens()

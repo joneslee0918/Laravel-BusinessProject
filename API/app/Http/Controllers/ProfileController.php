@@ -91,7 +91,7 @@ class ProfileController extends Controller
             
         }catch(\Exception $e){
             
-            return response()->json(['message' => $e->getMessage()], 400);
+            return getErrorResponse($e, $this->selectedChannel);
         }
 
         return response()->json(['message' => 'Profile updated successfully.']);

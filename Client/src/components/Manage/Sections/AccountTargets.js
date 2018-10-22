@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
 import { getAccountTargets, follow } from '../../../requests/twitter/channels';
+import {startSetChannels} from "../../../actions/channels";
 import channelSelector from '../../../selectors/channels';
 import Loader from '../../Loader';
 
@@ -51,6 +52,13 @@ class AccountTargets extends React.Component{
                     actions: prevState.actions - 1
                 }));
 
+                if(error.response.status === 401){
+                    
+                    if(this.props.selectedChannel.active){
+                       this.props.startSetChannels();
+                    }
+                }
+
                 return Promise.reject(error);
             });
     };
@@ -74,6 +82,15 @@ class AccountTargets extends React.Component{
                 }));
             }).catch((error) => {
                 this.setLoading(false);
+                
+                if(error.response.status === 401){
+                    
+                    if(this.props.selectedChannel.active){
+                       this.props.startSetChannels();
+                    }
+                }
+
+                return Promise.reject(error);
             });
     };
 
@@ -90,6 +107,15 @@ class AccountTargets extends React.Component{
                 }));
             }).catch((error) => {
                 this.setLoading(false);
+
+                if(error.response.status === 401){
+                    
+                    if(this.props.selectedChannel.active){
+                       this.props.startSetChannels();
+                    }
+                }
+
+                return Promise.reject(error);
             });
     };
 
@@ -133,4 +159,8 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(AccountTargets);
+const mapDispatchToProps = (dispatch) => ({
+    startSetChannels: () => dispatch(startSetChannels())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountTargets);

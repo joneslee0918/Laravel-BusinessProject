@@ -81,8 +81,8 @@ class KeywordTargetsController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            throw $e;
-            return response()->json(["error" => $e->getMessage()], 500);
+
+            return getErrorResponse($e, $this->selectedChannel->global);
         }
     }
 
@@ -144,8 +144,11 @@ class KeywordTargetsController extends Controller
     private function getUsersFromTweetList($tweets)
     {
         $users = [];
-        foreach($tweets->statuses as $tweet){
-            $users[] = $tweet->user->id ;
+
+        if($tweets){
+            foreach($tweets->statuses as $tweet){
+                $users[] = $tweet->user->id;
+            }
         }
 
         return $users;

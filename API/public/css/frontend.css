@@ -19,6 +19,12 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     display: flex;
     justify-content: center;
 }
+.flex-container {
+    display: flex;
+}
+.flex-space-between {
+    justify-content: space-between;
+}
 
 #logo-img {
     margin-left: 13px;
@@ -31,7 +37,7 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 
 #top-image {
     position: absolute;
-    max-width: 60%;
+    max-width: 50%;
     min-height: 400px;
     top: 0;
     right: 0;
@@ -124,8 +130,8 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     letter-space: 2px;
     color: #495676;
     font-family: 'Open Sans', Arial, sans-serif;
-    font-size: 3.5em;
-    font-weight: 100;
+    font-size: 4.5em;
+    font-weight: 700;
 }
 
 .get-started p {
@@ -166,7 +172,7 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 * Features Wrapper
 */
 #features-wrapper {
-    padding-top: 250px;
+    padding-top: 200px;
 }
 
 .card-box {
@@ -297,14 +303,16 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 #features-right-text h3 {
     padding-bottom: .75em;
     color: #485576;
-    font-size: 32px;
+    font-size: 40px;
     font-family: 'Open Sans', Arial, sans-serif;
+    font-weight: 700;
 }
 
 .feature-publish-text h3 {
     color: #485576;
-    font-size: 32px;
+    font-size: 40px;
     font-family: 'Open Sans', Arial, sans-serif;
+    font-weight: 700;
 }
 
 #features-publishing {
@@ -360,6 +368,9 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 
 .slick-initialized .slick-slide {
     outline: none!important;
+}
+.slick-slide {
+    height: auto;
 }
 
 .single-item-img {
@@ -447,7 +458,13 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 .content {
     margin-top: -115px;
 }
-
+.home_content {
+    background-image: url(../images/home-bg.png);
+    background-position: 50px -45%;
+}
+.homepage-footer .social-icons {
+    padding-top: 10px!important;
+}
 #banner {
     height: 510px;
     text-align: center;
@@ -620,15 +637,18 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     min-height: 680px;
     border-radius: 10px;
 }
+.pricing-column {
+    width: 100%;
+    margin: 0 10px;
+}
 .plan-ul {
     list-style: none;
     margin:0;
     padding: 0;
 }
 .plan-ul li {
-    padding:32px 0;
+    padding:15px 0;
     text-align: center;
-    font-weight: 700;
 }
 .plan-features-ul {
     list-style: none;
@@ -771,6 +791,15 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     .play-btn {
         display: none;
     }
+    #top-image {
+        max-width: 60%;
+    }
+    .pricing-column h4 {
+        font-size: 15px;
+    }
+    .pricing-column h2 {
+        font-size: 26px;
+    }
 }
 
 @media only screen and (max-width: 425px) {
@@ -797,6 +826,10 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     }
     .navbar-default .navbar-collapse {
         border-color: #ffffff;
+    }
+    .flex-space-between {
+        display: flex;
+        flex-direction: column;
     }
 }
 

@@ -42,6 +42,13 @@ class ChannelController extends Controller
                  */
                 multiRequest(route("sync.follower.ids"), [$twitterChannel], ["sleep" => 0]);
                 multiRequest(route("sync.following.ids"), [$twitterChannel], ["sleep" => 0]);
+            }else{
+                $global = $existingChannel->global;
+                $global->active = 1;
+                $global->save();
+                $twitterChannel = $existingChannel;
+                $twitterChannel->access_token = json_encode($token);
+                $twitterChannel->save();
             }
 
             return $user->formattedChannels();
@@ -56,6 +63,7 @@ class ChannelController extends Controller
         $channel = $user->channels()->find($id);
 
         if($channel){
+            $channel->select();
             $channel->details->select();
         }
 

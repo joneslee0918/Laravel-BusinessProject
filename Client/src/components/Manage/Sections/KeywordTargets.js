@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
 import { getKeywordTargets, follow } from '../../../requests/twitter/channels';
+import {startSetChannels} from "../../../actions/channels";
 import channelSelector from '../../../selectors/channels';
 import Loader from '../../Loader';
 
@@ -56,6 +57,13 @@ class KeywordTargets extends React.Component{
                 this.setState((prevState) => ({
                     actions: prevState.actions - 1
                 }));
+                
+                if(error.response.status === 401){
+                    
+                    if(this.props.selectedChannel.active){
+                       this.props.startSetChannels();
+                    }
+                }
 
                 return Promise.reject(error);
             });
@@ -72,6 +80,17 @@ class KeywordTargets extends React.Component{
                     loading: false,
                     page: 1
                 }));
+            }).catch(error => {
+                this.setLoading(false);
+
+                if(error.response.status === 401){
+                    
+                    if(this.props.selectedChannel.active){
+                       this.props.startSetChannels();
+                    }
+                }
+
+                return Promise.reject(error);
             });
     };
 
@@ -88,6 +107,15 @@ class KeywordTargets extends React.Component{
                 }));
             }).catch((error) => {
                 this.setLoading(false);
+
+                if(error.response.status === 401){
+                    
+                    if(this.props.selectedChannel.active){
+                       this.props.startSetChannels();
+                    }
+                }
+
+                return Promise.reject(error);
             });
     };
 
@@ -131,4 +159,8 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(KeywordTargets);
+const mapDispatchToProps = (dispatch) => ({
+    startSetChannels: () => dispatch(startSetChannels())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(KeywordTargets);

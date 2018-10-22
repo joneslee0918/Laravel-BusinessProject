@@ -101,11 +101,11 @@ class PublishController extends Controller
                 }
             }  
         }catch(\Exception $e){
-            return response()->json(['message' => $e->getMessage()], 400);
+            return getErrorResponse($e, $this->selectedChannel);
         }
 
 
-        return response()->json(['message' => 'Yor post was successfuly stored!']);
+        return response()->json(['message' => 'Your post was successfuly stored!']);
     }
 
 
@@ -171,7 +171,7 @@ class PublishController extends Controller
                 $scheduledPost = $this->selectedChannel->scheduledPosts()->find($postId);
                 $this->selectedChannel->details->publishScheduledPost($scheduledPost);
             }catch(\Exception $e){
-                return response()->json(['message' => $e->getMessage()], 400);
+                return getErrorResponse($e, $this->selectedChannel);
             }
         }
     }
@@ -184,7 +184,7 @@ class PublishController extends Controller
                 $scheduledPost = $this->selectedChannel->scheduledPosts()->find($postId);
                 $scheduledPost->destroyCompletely();
             }catch(\Exception $e){
-                return response()->json(['message' => $e->getMessage()], 400);
+                return getErrorResponse($e, $this->selectedChannel);
             }
         }
     }

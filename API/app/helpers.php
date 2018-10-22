@@ -33,6 +33,20 @@ function formatBigNums($input){
     }
 }
 
+function getErrorResponse($e, $channel = false){
+    $error = $e->getMessage();
+    if(str_contains($error, "log in") || str_contains($error, "expired token")){
+
+        if($channel){
+            $channel->active = 0;
+            $channel->save();
+        }
+        
+        return response()->json(['error' => $error], 401);
+    }
+    return response()->json(['error' => $error], 400);
+}
+
 /**
  * @param $url
  * @param $payload

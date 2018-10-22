@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import channelSelector from "../../../selectors/channels";
+import {startSetChannels} from "../../../actions/channels";
 import { getDashboard } from "../../../requests/twitter/channels";
 import {abbrNum} from "../../../utils/numberFormatter";
 import Loader from "../../Loader";
@@ -35,6 +36,14 @@ class Dashboard extends React.Component {
             this.setState(() => ({
                 data: response
             }));
+        }).catch(error => {
+            if(error.response.status === 401){
+                    
+                if(this.props.selectedChannel.active){
+                   this.props.startSetChannels();
+                }
+            }
+            return Promise.reject(error);
         });
     };
 
@@ -102,4 +111,8 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(Dashboard);
+const mapDispatchToProps = (dispatch) => ({
+    startSetChannels: () => dispatch(startSetChannels())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

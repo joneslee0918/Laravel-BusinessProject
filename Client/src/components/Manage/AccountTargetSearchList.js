@@ -1,8 +1,11 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {addAccountTarget, destroyAccountTarget} from '../../requests/twitter/channels';
+import {startSetChannels} from '../../actions/channels';
+import channelSelector from "../../selectors/channels";
 import Loader from '../../components/Loader';
 
-export default class AccountTargetSearchList extends React.Component{
+class AccountTargetSearchList extends React.Component{
     constructor(props){
         super(props);
     }
@@ -30,6 +33,15 @@ export default class AccountTargetSearchList extends React.Component{
               this.setLoading(false);
             }).catch((error) => {
                 this.setLoading(false);
+
+                if(error.response.status === 401){
+                    
+                    if(this.props.selectedChannel.active){
+                       this.props.startSetChannels();
+                    }
+                }
+
+                return Promise.reject(error);
             });  
         }
     };
@@ -48,6 +60,15 @@ export default class AccountTargetSearchList extends React.Component{
             this.setLoading(false);
         }).catch((error) => {
             this.setLoading(false);
+
+            if(error.response.status === 401){
+                    
+                if(this.props.selectedChannel.active){
+                   this.props.startSetChannels();
+                }
+            }
+
+            return Promise.reject(error);
         });
     }
 
@@ -118,3 +139,19 @@ const TargetItem = ({target, removeTarget}) => (
         </div>
     </div>
 );
+
+const mapStateToProps = (state) => {
+    const selectedTwitterChannel = {selected: 1, provider: "twitter"};
+    const selectedChannel = channelSelector(state.channels.list, selectedTwitterChannel);
+
+    return {
+        channelsLoading: state.channels.loading,
+        selectedChannel: selectedChannel.length ? selectedChannel[0] : {}
+    };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    startSetChannels: () => dispatch(startSetChannels())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountTargetSearchList);

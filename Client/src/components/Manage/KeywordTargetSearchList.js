@@ -1,9 +1,12 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Geosuggest from 'react-geosuggest';
+import {startSetChannels} from '../../actions/channels';
+import channelSelector from "../../selectors/channels";
 import {addKeywordTarget, destroyKeywordTarget} from '../../requests/twitter/channels';
 import Loader from '../../components/Loader';
 
-export default class KeywordTargetSearchList extends React.Component{
+class KeywordTargetSearchList extends React.Component{
     constructor(props){
         super(props);
     }
@@ -45,6 +48,15 @@ export default class KeywordTargetSearchList extends React.Component{
               this.setLoading(false);
             }).catch((error) => {
                 this.setLoading(false);
+
+                if(error.response.status === 401){
+                    
+                    if(this.props.selectedChannel.active){
+                       this.props.startSetChannels();
+                    }
+                }
+
+                return Promise.reject(error);
             });  
         }
     };
@@ -63,6 +75,15 @@ export default class KeywordTargetSearchList extends React.Component{
             this.setLoading(false);
         }).catch((error) => {
             this.setLoading(false);
+
+            if(error.response.status === 401){
+                    
+                if(this.props.selectedChannel.active){
+                   this.props.startSetChannels();
+                }
+            }
+
+            return Promise.reject(error);
         });
     }
 
@@ -138,3 +159,19 @@ const KeywordItem = ({target, removeTarget}) => (
         </div>
     </div>
 );
+
+const mapStateToProps = (state) => {
+    const selectedTwitterChannel = {selected: 1, provider: "twitter"};
+    const selectedChannel = channelSelector(state.channels.list, selectedTwitterChannel);
+
+    return {
+        channelsLoading: state.channels.loading,
+        selectedChannel: selectedChannel.length ? selectedChannel[0] : {}
+    };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    startSetChannels: () => dispatch(startSetChannels())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(KeywordTargetSearchList);

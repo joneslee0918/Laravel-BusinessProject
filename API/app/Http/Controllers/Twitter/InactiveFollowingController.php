@@ -37,7 +37,13 @@ class InactiveFollowingController extends Controller
         $actionsToday = $this->selectedChannel->getDailyStatisticsFor("unfollows");
 
         if(count($followingIds)){
-            $items = $this->selectedChannel->getUsersLookup($followingIds);
+
+            try{
+               $items = $this->selectedChannel->getUsersLookup($followingIds); 
+            }catch(\Exception $e){
+                return getErrorResponse($e, $this->selectedChannel->global);
+            }
+            
             $items = $this->filterInactive($items, $months);
         }
 

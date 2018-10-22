@@ -36,7 +36,13 @@ class RecentUnfollowersController extends Controller
 
         $actionsToday = $this->selectedChannel->getDailyStatisticsFor("unfollows");
         if(count($followerIds)){
-            $items = $this->selectedChannel->getUsersLookup($followerIds);
+
+            try{
+                $items = $this->selectedChannel->getUsersLookup($followerIds);
+            }catch(\Exception $e){
+                return getErrorResponse($e, $this->selectedChannel->global);
+            }
+            
         }
 
         return response()->json([

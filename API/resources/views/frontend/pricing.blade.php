@@ -9,97 +9,189 @@
 </div>
 
 <div class="container mt100 mb100">
-	<div class="row">
-		<div class="col-md-2">
-			<div class="plans-features">
-				<ul class="plan-features-ul">
-					<li>Social Profiles</li>
-					<li>Scheduling</li>
-					<li>Posts</li>
-					<li>RSS Integration</li>
-					<li>Twitter Growth</li>
-					<li>Analytics</li>
-					<li><p>Access to recommended</p></li>
-				</ul>
-			</div>
-		</div>
-		<div class="col-md-2">
+	<div class="flex-container flex-space-between">
+		<div class="pricing-column">
 			<h4 class="text-center trial-color">TRIAL</h4>
 			<h2 class="text-center trial-color">FREE</h2>
 			<div class="plan-content panel-shadow">
 				<ul class="plan-ul">
-					<li>1</li>
-					<li>Normal</li>
-					<li>10 per Account</li>
-					<li>Basic</li>
-					<li>Limited</li>
-					<li>-</li>
-					<li>-</li>
-					<li><a href="#" class="gradient-border-btn">Buy</a></li>
+					<li>
+						<p class="fw700">Social Profiles</p>
+						<p>1</p>
+					</li>
+					<li>
+						<p class="fw700">Scheduling</p>
+						<p>Normal</p>
+					</li>
+					<li>
+					    <p class="fw700">Posts</p>
+						<p>10 per Account</p>
+					</li>
+					<li>
+					    <p class="fw700">RSS Integration</p>
+						<p>Basic</p>
+					</li>
+					<li>
+					    <p class="fw700">Twitter Growth</p>
+						<p>Limited</p>
+					</li>
+					<li>
+					    <p class="fw700">Analytics</p>
+						<p>-</p>
+					</li>
+					<li>
+					    <p class="fw700">Access to recommended</p>
+						<p>-</p>
+					</li>
+					<li class="mb30"><a href="#" class="gradient-border-btn">Buy</a></li>
 				</ul>
 			</div>
 		</div>
-		<div class="col-md-2">
+		<div class="pricing-column">
 			<h4 class="text-center basic-color">BASIC</h4>
 			<h2 class="text-center basic-color">7.99$/mo</h2>
 			<div class="plan-content panel-shadow">
-				<ul class="plan-ul">
-					<li>1</li>
-					<li>Normal</li>
-					<li>10 per Account</li>
-					<li>Basic</li>
-					<li>Limited</li>
-					<li>-</li>
-					<li>-</li>
-					<li><a href="#" class="gradient-border-btn">Buy</a></li>
+			    <ul class="plan-ul">
+					<li>
+						<p class="fw700">Social Profiles</p>
+						<p>1</p>
+					</li>
+					<li>
+						<p class="fw700">Scheduling</p>
+						<p>Normal</p>
+					</li>
+					<li>
+					    <p class="fw700">Posts</p>
+						<p>10 per Account</p>
+					</li>
+					<li>
+					    <p class="fw700">RSS Integration</p>
+						<p>Basic</p>
+					</li>
+					<li>
+					    <p class="fw700">Twitter Growth</p>
+						<p>Limited</p>
+					</li>
+					<li>
+					    <p class="fw700">Analytics</p>
+						<p>-</p>
+					</li>
+					<li>
+					    <p class="fw700">Access to recommended</p>
+						<p>-</p>
+					</li>
+					<li class="mb30"><a href="#" class="gradient-border-btn">Buy</a></li>
 				</ul>
 			</div>
 		</div>
-		<div class="col-md-2">
+		<div class="pricing-column">
 			<h4 class="text-center plus-color">PLUS</h4>
 			<h2 class="text-center plus-color">13.99$/mo</h2>
 			<div class="plan-content panel-shadow">
-				<ul class="plan-ul">
-					<li>1</li>
-					<li>Normal</li>
-					<li>10 per Account</li>
-					<li>Basic</li>
-					<li>Limited</li>
-					<li>-</li>
-					<li>-</li>
-					<li><a href="#" class="gradient-border-btn">Buy</a></li>
+			    <ul class="plan-ul">
+					<li>
+						<p class="fw700">Social Profiles</p>
+						<p>1</p>
+					</li>
+					<li>
+						<p class="fw700">Scheduling</p>
+						<p>Normal</p>
+					</li>
+					<li>
+					    <p class="fw700">Posts</p>
+						<p>10 per Account</p>
+					</li>
+					<li>
+					    <p class="fw700">RSS Integration</p>
+						<p>Basic</p>
+					</li>
+					<li>
+					    <p class="fw700">Twitter Growth</p>
+						<p>Limited</p>
+					</li>
+					<li>
+					    <p class="fw700">Analytics</p>
+						<p>-</p>
+					</li>
+					<li>
+					    <p class="fw700">Access to recommended</p>
+						<p>-</p>
+					</li>
+					<li class="mb30"><a href="#" class="gradient-border-btn">Buy</a></li>
 				</ul>
 			</div>
 		</div>
-		<div class="col-md-2">
+		<div class="pricing-column">
 			<h4 class="text-center premium-color">PREMIUM</h4>
 			<h2 class="text-center premium-color">25.99$/mo</h2>
 			<div class="plan-content panel-shadow">
-				<ul class="plan-ul">
-					<li>1</li>
-					<li>Normal</li>
-					<li>10 per Account</li>
-					<li>Basic</li>
-					<li>Limited</li>
-					<li>-</li>
-					<li>-</li>
-					<li><a href="#" class="gradient-border-btn">Buy</a></li>
+			   <ul class="plan-ul">
+					<li>
+						<p class="fw700">Social Profiles</p>
+						<p>1</p>
+					</li>
+					<li>
+						<p class="fw700">Scheduling</p>
+						<p>Normal</p>
+					</li>
+					<li>
+					    <p class="fw700">Posts</p>
+						<p>10 per Account</p>
+					</li>
+					<li>
+					    <p class="fw700">RSS Integration</p>
+						<p>Basic</p>
+					</li>
+					<li>
+					    <p class="fw700">Twitter Growth</p>
+						<p>Limited</p>
+					</li>
+					<li>
+					    <p class="fw700">Analytics</p>
+						<p>-</p>
+					</li>
+					<li>
+					    <p class="fw700">Access to recommended</p>
+						<p>-</p>
+					</li>
+					<li class="mb30"><a href="#" class="gradient-border-btn">Buy</a></li>
 				</ul>
 			</div>
 		</div>
-		<div class="col-md-2">
+		<div class="pricing-column">
 			<h4 class="text-center pro-color">PRO</h4>
 			<h2 class="text-center pro-color ">39.99$/mo</h2>
 			<div class="plan-content panel-shadow">
-				<ul class="plan-ul">
-					<li>1</li>
-					<li>Normal</li>
-					<li>10 per Account</li>
-					<li>Basic</li>
-					<li>Limited</li>
-					<li>-</li>
-					<li>-</li>
-					<li><a href="#" class="gradient-border-btn">Buy</a></li>
+			    <ul class="plan-ul">
+					<li>
+						<p class="fw700">Social Profiles</p>
+						<p>1</p>
+					</li>
+					<li>
+						<p class="fw700">Scheduling</p>
+						<p>Normal</p>
+					</li>
+					<li>
+					    <p class="fw700">Posts</p>
+						<p>10 per Account</p>
+					</li>
+					<li>
+					    <p class="fw700">RSS Integration</p>
+						<p>Basic</p>
+					</li>
+					<li>
+					    <p class="fw700">Twitter Growth</p>
+						<p>Limited</p>
+					</li>
+					<li>
+					    <p class="fw700">Analytics</p>
+						<p>-</p>
+					</li>
+					<li>
+					    <p class="fw700">Access to recommended</p>
+						<p>-</p>
+					</li>
+					<li class="mb30"><a href="#" class="gradient-border-btn">Buy</a></li>
 				</ul>
 			</div>
 		</div>
