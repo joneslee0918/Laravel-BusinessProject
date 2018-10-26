@@ -22,6 +22,8 @@ Route::get('/test', function(){
     return App\Models\Channel::find(6)->attributes;
 })->name("test");
 
+Route::get('/articles/sync', 'ArticlesController@sync');
+
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
 Route::post('twitter/callback', ['as' => 'twitter.callback', 'uses' => 'Twitter\ChannelController@callback']);
 Route::get('twitter/error', ['as' => 'twitter.error', 'Twitter\ChannelController@error']);
