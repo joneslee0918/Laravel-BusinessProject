@@ -1003,6 +1003,33 @@ input {
     border-bottom-right-radius: 20px;
 }
 
+.card-display{
+    display:flex;
+    justify-content: center;
+    margin-bottom:50px;
+}
+
+.card-title{
+    font-weight:bold;
+    font-size:$m-size;
+}
+
+.card-content{
+    width:1000px;
+}
+
+.card-img-top{
+    width:100%;
+    height:300px;
+    object-fit: cover;
+}
+
+.card-body{
+    border: 1px solid #dfdfdf;
+    border-top: none;
+    padding: 20px;
+}
+
 .geosuggest {
 }
   .geosuggest__input {

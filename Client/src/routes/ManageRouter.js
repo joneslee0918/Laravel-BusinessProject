@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import Dashboard from '../components/Manage/Sections/Dashboard';
 import AccountTargets from '../components/Manage/Sections/AccountTargets';
 import KeywordTargets from '../components/Manage/Sections/KeywordTargets';
@@ -14,18 +14,20 @@ import BlackList from '../components/Manage/Sections/BlackList';
 
 const ManageRouter = () => (
     <div>
-        <Route exact path={`/manage`} render={() => <Redirect to="/manage/dashboard"/>} />
-        <Route path={`/manage/dashboard`} component={Dashboard} />
-        <Route path={`/manage/account-targets`} component={AccountTargets} />
-        <Route path={`/manage/keyword-targets`} component={KeywordTargets} />
-        <Route path={`/manage/fans`} component={Fans} />
-        <Route path={`/manage/non-followers`} component={NonFollowers} />
-        <Route path={`/manage/recent-unfollowers`} component={RecentUnfollowers} />
-        <Route path={`/manage/recent-followers`} component={RecentFollowers} />
-        <Route path={`/manage/inactive-following`} component={InactiveFollowing} />
-        <Route path={`/manage/following`} component={Following} />
-        <Route path={`/manage/WhiteList`} component={WhiteList} />
-        <Route path={`/manage/BlackList`} component={BlackList} />
+        <Switch>
+            <Route exact path={`/manage`} render={() => <Redirect to="/manage/dashboard"/>} />
+            <Route path={`/manage/dashboard`} component={Dashboard} />
+            <Route path={`/manage/account-targets`} component={AccountTargets} />
+            <Route path={`/manage/keyword-targets`} component={KeywordTargets} />
+            <Route path={`/manage/fans`} component={Fans} />
+            <Route path={`/manage/non-followers`} component={NonFollowers} />
+            <Route path={`/manage/recent-unfollowers`} component={RecentUnfollowers} />
+            <Route path={`/manage/recent-followers`} component={RecentFollowers} />
+            <Route path={`/manage/inactive-following`} component={InactiveFollowing} />
+            <Route path={`/manage/following`} component={Following} />
+            <Route path={`/manage/WhiteList`} component={WhiteList} />
+            <Route path={`/manage/BlackList`} component={BlackList} />
+        </Switch>
     </div>
 );
 

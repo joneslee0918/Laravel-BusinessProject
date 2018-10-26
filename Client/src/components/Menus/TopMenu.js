@@ -7,6 +7,7 @@ const TopMenu = () => (
         <a href={backendUrl} className="brand"><img src="/images/uniclix.png"/></a>
 
         <ul className="top-menu">
+            <li><NavLink to="/home" activeClassName="active">HOME</NavLink></li> 
             <li><NavLink to="/manage" activeClassName="active">MANAGE</NavLink></li> 
             <li><NavLink to="/scheduled" activeClassName="active">SCHEDULED</NavLink></li>  
             <li><NavLink to="/accounts" activeClassName="active">ACCOUNTS</NavLink></li> 
