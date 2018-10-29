@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Article;
 
 class ArticlesController extends Controller
 {
@@ -32,14 +33,19 @@ class ArticlesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function sync()
-    {
-        $client = new \GuzzleHttp\Client();
+    public function sync(Request $request)
+    {   
+        
+        try{
+            $topic = $request->input("item");   
+            
+            if(!$topic) return;
 
-        $response = $client->request("GET", "https://newsapi.org/v2/everything?q=bitcoin&from=2018-09-26&sortBy=publishedAt&apiKey=83f2b261732e43f787e6ff78e5a6d75a", ['headers' => ['Accept' => 'application/json']]); 
-    
-        $response_data = json_decode((string) $response->getBody(), true);
-    
-        return collect($response_data);
+            $topic = unserialize($topic);
+            Article::storeByTopic($topic);
+
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
     }
 }

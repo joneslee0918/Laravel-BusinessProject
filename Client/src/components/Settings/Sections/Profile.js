@@ -7,6 +7,7 @@ import momentTz from "moment-timezone";
 import TimezoneSelectOptions from '../Fixtures/TimezoneOptions';
 import {validateEmail, validateUrl} from "../../../utils/validator";
 import {startSetProfile} from "../../../actions/profile";
+import {LoaderWithOverlay} from "../../Loader";
 
 class Profile extends React.Component{
 
@@ -23,7 +24,8 @@ class Profile extends React.Component{
         isTopicsModalOpen: false,
         isLocationsModalOpen: false,
         error: false,
-        success: false
+        success: false,
+        loading: false
     };
 
     componentDidMount(){
@@ -90,7 +92,8 @@ class Profile extends React.Component{
 
         if(!validateEmail(this.state.email) || this.state.email === ""){
             this.setState(() => ({
-                error: "Please fix the email!"
+                error: "Please fix the email!",
+                loading: false
             }));
 
             return;
@@ -98,7 +101,8 @@ class Profile extends React.Component{
 
         if(this.state.website !== "" && !validateUrl(this.state.website)){
             this.setState(() => ({
-                error: "Please fix the website url!"
+                error: "Please fix the website url!",
+                loading: false
             }));
 
             return;
@@ -106,11 +110,16 @@ class Profile extends React.Component{
 
         if(this.state.name === ""){
             this.setState(() => ({
-                error: "Name can't be empty!"
+                error: "Name can't be empty!",
+                loading: false
             }));
 
             return;
         }
+
+        this.setState(() => ({
+            loading: true
+        }));
 
         updateProfile({
             name: this.state.name,
@@ -123,12 +132,14 @@ class Profile extends React.Component{
         }).then((response) => {
             this.props.startSetProfile();
             this.setState(() => ({
-                success: "Your profile information has been updated."
+                success: "Your profile information has been updated.",
+                loading: false
             }));
         }).catch((error) => {
             console.log(error);
             this.setState(() => ({
-                error: "Something went wrong."
+                error: "Something went wrong.",
+                loading: false
             }));
         });
     };
@@ -188,7 +199,7 @@ class Profile extends React.Component{
     render(){
         return (
             <div>
-
+                {this.state.loading && <LoaderWithOverlay/>}
                 <Modal
                     isOpen={this.state.isTopicsModalOpen}
                     ariaHideApp={false}

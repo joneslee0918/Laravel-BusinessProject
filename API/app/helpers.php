@@ -115,9 +115,8 @@ function multiRequest($url, $payload, $params = [])
             curl_multi_remove_handle($mh, $request);
             curl_close($request);
         }
-
     }
-    //   dd($response);
+    
     return $response;
 }
 

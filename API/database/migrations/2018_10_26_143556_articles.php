@@ -18,8 +18,8 @@ class Articles extends Migration
             $table->string("source_url", 500)->nullable();
             $table->string("author", 500)->nullable();
             $table->string("title", 500);
-            $table->string("description", 900);
-            $table->string("content", 900);
+            $table->string("description", 900)->nullable();
+            $table->string("content", 900)->nullable();
             $table->string("url", 500);
             $table->string("image_url", 500)->nullable();
             $table->string("topic");

@@ -29,6 +29,7 @@ Route::middleware('auth:api')->group(function(){
 });
 
 Route::post('/publish', 'PublishController@publish')->name('publish');
+Route::post('/articles/sync', 'ArticlesController@sync')->name('articles.sync');
 
 Route::prefix("twitter")->group(function(){
     

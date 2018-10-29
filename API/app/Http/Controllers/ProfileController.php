@@ -70,6 +70,9 @@ class ProfileController extends Controller
                         'topic' => $topic
                     ]);
                 });
+
+                $topics = $user->topics()->pluck("topic");
+                multiRequest(route('articles.sync'), $topics);
             }
 
 

@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\Twitter\SyncFollowerIds::class,
         Commands\Twitter\SyncFollowingIds::class,
         Commands\RunScheduledPosts::class,
+        Commands\SyncArticles::class
     ];
 
     /**
@@ -34,6 +35,9 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('run:scheduled')
             ->everyMinute();
+
+        $schedule->command('sync:articles')
+            ->twiceDaily(1, 13);
     }
 
     /**
