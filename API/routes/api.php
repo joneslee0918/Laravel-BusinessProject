@@ -26,6 +26,8 @@ Route::middleware('auth:api')->group(function(){
     Route::post('/post/store', 'PublishController@store');
     Route::delete('/post/{postId}', 'PublishController@destroy');
     Route::post('/post/{postId}', 'PublishController@postNow');
+
+    Route::get('/articles', 'ArticlesController@articles');
 });
 
 Route::post('/publish', 'PublishController@publish')->name('publish');

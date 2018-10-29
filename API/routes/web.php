@@ -19,7 +19,7 @@ Route::get('/blog', ['as' => 'blog', 'uses' => 'PagesController@blog']);
 Route::get('/article', ['as' => 'article', 'uses' => 'PagesController@article']);
 
 Route::get('/test', function(){
-    return App\Models\Channel::find(6)->attributes;
+
 })->name("test");
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);

@@ -35,7 +35,7 @@ class ArticlesController extends Controller
      */
     public function sync(Request $request)
     {   
-        
+
         try{
             $topic = $request->input("item");   
             
@@ -47,5 +47,19 @@ class ArticlesController extends Controller
         }catch(\Exception $e){
             return $e->getMessage();
         }
+    }
+
+    public function articles(Request $request){
+
+        $perPage = $request->input("count") ? $request->input("count") : 20;
+        $topics = $this->user->topics()->pluck("topic");
+
+        $articles = Article::whereIn("topic", $topics)->whereNotNull("image_url")->inRandomOrder("123");
+
+        if(!$articles->exists() && $topics){
+            multiRequest(route('articles.sync'), $topics);
+        }
+
+        return $articles->paginate($perPage);
     }
 }
