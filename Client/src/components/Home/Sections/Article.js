@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Article = ({article}) => (
+const Article = ({article, setPost}) => (
 
     <div className="card-display">
         <div className="card-content">
@@ -14,7 +14,12 @@ const Article = ({article}) => (
                     <p className="card-text"><small className="text-muted">{article.source_url}</small></p>
                 </a>
                 <div className="center-inline">
-                    <button className="upgrade-btn">Share</button>
+                    <button onClick={() => setPost(
+                        {
+                         content: `${article.description} ${article.url}`,
+                         images: [],
+                         type: 'store'
+                        }) } className="upgrade-btn" data-toggle="modal" data-target="#compose">Share</button>
                 </div>
             </div>
         </div>

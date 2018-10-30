@@ -6,6 +6,7 @@ import Article from './Article';
 import {updateProfile} from "../../../requests/profile";
 import {getArticles} from '../../../requests/articles';
 import {startSetProfile} from '../../../actions/profile';
+import {setPost} from '../../../actions/posts';
 import Loader from '../../Loader';
 
 class Articles extends React.Component {
@@ -163,7 +164,7 @@ class Articles extends React.Component {
                             this.state.articles.map( (article, index) => {
 
                                 return (
-                                    <Article key={index} article={article} />
+                                    <Article key={index} article={article} setPost={this.props.setPost}/>
                                 );
                             })
                         }
@@ -197,7 +198,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    startSetProfile: () => dispatch(startSetProfile())
+    startSetProfile: () => dispatch(startSetProfile()),
+    setPost: (post) => dispatch(setPost(post))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Articles);

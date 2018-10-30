@@ -88,6 +88,18 @@ class Compose extends React.Component{
             this.props.post.scheduled_at_original : 
             moment().add(1, "hours");
 
+            let publishState = {
+                name: "Custom Time",
+                value: "date"
+            };
+
+            if(this.props.post.type == 'store'){
+                publishState = {
+                    name: "Post at Best Time",
+                    value: "best"
+                }
+            }
+
             this.setState(() => ({
                 editorState: createEditorStateWithText(this.props.post.content),
                 pictures: this.props.post.images,
@@ -100,10 +112,8 @@ class Compose extends React.Component{
                         time: moment(postDate).format("A"),
                     }
                 },
-                publishState: {
-                    name: "Custom Time",
-                    value: "date"
-                }
+                publishState,
+                letterCount: this.props.post.content.length
             }), () => this.setPublishTimestamp());
         }
 
@@ -526,10 +536,10 @@ class Compose extends React.Component{
                                 </Popup>
                                 
                                 <button onClick={() => {
-                                    if((this.state.letterCount > 0 || this.state.pictures.length > 0) && (this.state.canSchedule || this.state.publishState.value !== 'date')){
+                                    if((this.state.letterCount > 0 && this.state.letterCount <= 280 || (this.state.pictures.length > 0 && this.state.pictures.length < 5)) && (this.state.canSchedule || this.state.publishState.value !== 'date')){
                                        this.publish(); 
                                     }
-                                }} className={`publish-btn naked-button half-btn ${(this.state.letterCount > 0 || this.state.pictures.length > 0) && (this.state.canSchedule || this.state.publishState.value !== 'date') ? '' : 'disabled-btn'}`}>{this.state.publishState.name}</button>
+                                }} className={`publish-btn naked-button half-btn ${(this.state.letterCount > 0 && this.state.letterCount <= 280 || this.state.pictures.length > 0) && (this.state.canSchedule || this.state.publishState.value !== 'date') ? '' : 'disabled-btn'}`}>{this.state.publishState.name}</button>
                             </div>
                             <p className={`letter-count ${this.state.letterCount > 280 ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
                         </div>
