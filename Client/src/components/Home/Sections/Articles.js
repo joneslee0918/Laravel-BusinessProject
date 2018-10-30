@@ -1,28 +1,46 @@
 import React from 'react';
+import BottomScrollListener from 'react-bottom-scroll-listener';
 import Article from './Article';
 import {getArticles} from '../../../requests/articles';
+import Loader from '../../Loader';
 
 export default class Articles extends React.Component {
 
     state = {
-        articles: []
+        articles: [],
+        loading: false,
+        page: 0
     }
 
     componentDidMount(){
-        getArticles()
+        this.loadArticles();
+    }
+
+    loadArticles = () => {
+        let page = this.state.page + 1;
+        this.setState(() => ({
+            loading: true
+        }));
+        getArticles(page)
         .then((response) => {
-            this.setState(() => ({
-                articles: response.data
+            this.setState((prevState) => ({
+                articles: [...prevState.articles, ...response.data],
+                loading: false,
+                page
             }));
         }).catch((error) => {
-            console.log(error);
+            this.setState(() => ({
+                loading: false
+            }));
         });
     }
 
-    render(){
+    render(){   
         return(
             <div>
-
+                {this.state.loading && <Loader />}
+                <h4 className="center-inline">Articles based on your choice of <a className="link-cursor">topics</a></h4>
+                <br/>
                 {!!this.state.articles.length &&
                     this.state.articles.map( article => {
 
@@ -32,6 +50,7 @@ export default class Articles extends React.Component {
                     })
                 }
 
+                <BottomScrollListener onBottom={this.loadArticles} />
             </div>
         );
     }

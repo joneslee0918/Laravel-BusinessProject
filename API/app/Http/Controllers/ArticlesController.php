@@ -54,7 +54,7 @@ class ArticlesController extends Controller
         $perPage = $request->input("count") ? $request->input("count") : 20;
         $topics = $this->user->topics()->pluck("topic");
 
-        $articles = Article::whereIn("topic", $topics)->whereNotNull("image_url")->inRandomOrder("123");
+        $articles = Article::whereIn("topic", $topics)->inRandomOrder("123");
 
         if(!$articles->exists() && $topics){
             multiRequest(route('articles.sync'), $topics);
