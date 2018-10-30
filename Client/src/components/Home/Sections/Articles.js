@@ -152,7 +152,7 @@ class Articles extends React.Component {
                             <button className="upgrade-btn" onClick={this.onTopicsSave}>Save</button>
                         </div>
                 </Modal>
-                
+
                 { !!this.state.articles.length ?                 
                     <div>
 
@@ -170,12 +170,17 @@ class Articles extends React.Component {
 
                         <BottomScrollListener onBottom={this.loadArticles} /> 
                     </div>
-                :
+                :   
+                    
                     <div className="initial-topics">
-                        <div>
-                            <p>Please set your topics to view articles of your interest.</p>
-                            <button className="upgrade-btn" onClick={this.toggleTopicsModal}>Set Topics</button>
-                        </div>
+
+                        {!this.state.loading &&
+                            <div>
+                                <p>Please set your topics to view articles of your interest.</p>
+                                <button className="upgrade-btn" onClick={this.toggleTopicsModal}>Set Topics</button>
+                            </div> 
+                        }
+
                     </div>
                 }
 
