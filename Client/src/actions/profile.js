@@ -10,10 +10,10 @@ export const startSetProfile = () => {
         return getProfile().then((response) => {
                 localStorage.setItem("profile", JSON.stringify(response));
                 dispatch(setProfile(response));
-                return response;
+                return Promise.resolve(response);
             }).catch((error) => {
                 console.log(error);
-                return error;
+                return Promise.reject(error);
             });
     };
 };

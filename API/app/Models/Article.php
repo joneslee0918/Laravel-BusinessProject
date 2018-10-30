@@ -33,7 +33,9 @@ class Article extends Model
 
         $sortBy = "publishedAt";
 
-        $apiUrl = "https://newsapi.org/v2/everything?q={$topic}&sortBy={$sortBy}&pageSize={$pageSize}&apiKey={$apiKey}";
+        $language="en";
+
+        $apiUrl = "https://newsapi.org/v2/everything?q={$topic}&language={$language}&sortBy={$sortBy}&pageSize={$pageSize}&apiKey={$apiKey}";
 
         $response = $client->request("GET", $apiUrl, ['headers' => ['Accept' => 'application/json']]); 
     

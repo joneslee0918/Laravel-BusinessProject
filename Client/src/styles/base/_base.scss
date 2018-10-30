@@ -1022,6 +1022,20 @@ input {
     color: #666;
 }
 
+.initial-topics{
+    display: flex;
+    text-align:center;
+    justify-content: center;
+    align-items:center;
+    margin-top:20%;
+}
+
+.initial-topics p{
+    color: #666;
+    width:100%;
+    font-size: $l-size;
+}
+
 .card-img-top{
     width:100%;
     height:300px;
