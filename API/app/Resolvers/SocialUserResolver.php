@@ -110,6 +110,8 @@ class SocialUserResolver implements SocialUserResolverInterface
             }
 
             $channel->select();
+            $channel->active=1;
+            $channel->save();
             $twitterChannel->select();
 
             /*
