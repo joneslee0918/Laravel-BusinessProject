@@ -54,7 +54,13 @@ class ArticlesController extends Controller
         $perPage = $request->input("count") ? $request->input("count") : 20;
         $topics = $this->user->topics()->pluck("topic");
 
-        $articles = Article::whereIn("topic", $topics)->inRandomOrder("123");
+        $articles = \DB::table("articles")
+        ->select("articles.id as id", "articles.source_url", 
+        "articles.title", "articles.description", "articles.content", "articles.url", 
+        "articles.image_url", "articles.topic", "articles.published_at", "articles.author", "scheduled_posts.posted")
+        ->leftJoin("scheduled_posts", "articles.id", "like", "scheduled_posts.article_id")
+        ->whereIn("topic", $topics)
+        ->orderBy("id", "desc");
 
         if(!$articles->exists() && $topics){
             multiRequest(route('articles.sync'), $topics);

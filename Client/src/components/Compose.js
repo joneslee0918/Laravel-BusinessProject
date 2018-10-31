@@ -17,7 +17,7 @@ import hashtagSuggestionList from '../fixtures/hashtagSuggestions';
 import {publish} from '../requests/channels';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import {hours, minutes, dayTime} from "../fixtures/time";
-import {setPost} from "../actions/posts";
+import {setPost, setPostedArticle} from "../actions/posts";
 import {LoaderWithOverlay} from "./Loader";
 
 
@@ -69,6 +69,7 @@ class Compose extends React.Component{
         pictures: [],
         loading: false,
         stored: false,
+        refresh: true,
         error: false
     };
 
@@ -87,6 +88,12 @@ class Compose extends React.Component{
             const postDate = (this.props.post ? this.props.post.type : 'store') === 'edit' ? 
             this.props.post.scheduled_at_original : 
             moment().add(1, "hours");
+
+            let refresh = this.state.refresh;
+
+            if(typeof(this.props.post.refresh) !== "undefined"){
+                refresh = this.props.post.refresh;
+            }
 
             let publishState = {
                 name: "Custom Time",
@@ -113,7 +120,8 @@ class Compose extends React.Component{
                     }
                 },
                 publishState,
-                letterCount: this.props.post.content.length
+                letterCount: this.props.post.content.length,
+                refresh
             }), () => this.setPublishTimestamp());
         }
 
@@ -309,6 +317,7 @@ class Compose extends React.Component{
         const content = editorState.getCurrentContent().getPlainText();
         const type = this.state.type;
         const id = this.props.post ? this.props.post.id : "";
+        const articleId = this.props.post && typeof(this.props.post.articleId) !== "undefined" ? this.props.post.articleId : "";
         const images = this.state.pictures;
         const publishState = this.state.publishState;
         const publishTimestamp = this.state.publishTimestamp;
@@ -333,13 +342,21 @@ class Compose extends React.Component{
                 publishTimezone
             },
             type,
-            id
+            id,
+            articleId
         })
         .then((response) => {
             this.setState(() => ({
                 loading: false,
                 stored: true
-            }));
+            }), () => {
+                if(articleId){
+                    this.props.setPostedArticle({
+                        articleId,
+                        posted: publishState.value == "now" ? 1 : 0
+                    });
+                }
+            });
         }).catch((error) => {
             this.setState(() => ({
                 loading: false,
@@ -355,7 +372,7 @@ class Compose extends React.Component{
 
         return (
             <div className="modal fade" id="compose" tabIndex="-1" data-backdrop="static" data-keyboard="false" role="dialog">
-                {this.state.stored && <Redirect to={location.pathname} />}
+                {(this.state.stored && this.state.refresh) && <Redirect to={location.pathname} />}
                 {this.state.loading && <LoaderWithOverlay/>}
                 
                 <div className="modal-dialog modal-dialog-centered compose-dialog" role="document">
@@ -563,7 +580,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    setPost: (post) => dispatch(setPost(post))
+    setPost: (post) => dispatch(setPost(post)),
+    setPostedArticle: (article) => dispatch(setPostedArticle(article))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Compose);

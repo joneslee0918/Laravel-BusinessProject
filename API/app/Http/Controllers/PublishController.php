@@ -87,7 +87,8 @@ class PublishController extends Controller
                     'scheduled_at' => $publishTime,
                     'scheduled_at_original' => $publishOriginalTime,
                     'payload' => serialize($payload),
-                    'posted' => $publishType == 'now' ? 1 : 0
+                    'posted' => $publishType == 'now' ? 1 : 0,
+                    'article_id' => $post['articleId'] ? $post['articleId'] : null
                 ];
 
                 if($post['type'] == 'edit'){                   

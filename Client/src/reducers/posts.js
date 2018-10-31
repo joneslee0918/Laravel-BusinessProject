@@ -4,6 +4,11 @@ export default (state = {}, action) => {
             return {
                 post: action.post
             };
+        case "SET_POSTED_ARTICLE":
+            console.log(action);
+            return {
+                article: action.article
+            };
         default:
             return state;    
     }

@@ -13,7 +13,8 @@ class ScheduledPost extends Model
         "scheduled_at_original",
         "payload",
         "status",
-        "posted"
+        "posted",
+        "article_id"
     ];
     
     public function channel(){
