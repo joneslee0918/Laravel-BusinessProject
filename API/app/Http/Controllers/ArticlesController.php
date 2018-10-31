@@ -60,7 +60,7 @@ class ArticlesController extends Controller
         "articles.image_url", "articles.topic", "articles.published_at", "articles.author", "scheduled_posts.posted")
         ->leftJoin("scheduled_posts", "articles.id", "like", "scheduled_posts.article_id")
         ->whereIn("topic", $topics)
-        ->orderBy("id", "desc");
+        ->inRandomOrder("123");
 
         if(!$articles->exists() && $topics){
             multiRequest(route('articles.sync'), $topics);

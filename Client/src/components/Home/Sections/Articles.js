@@ -7,7 +7,7 @@ import {updateProfile} from "../../../requests/profile";
 import {getArticles} from '../../../requests/articles';
 import {startSetProfile} from '../../../actions/profile';
 import {setPost} from '../../../actions/posts';
-import Loader from '../../Loader';
+import {ArticleLoader} from '../../Loader';
 
 class Articles extends React.Component {
 
@@ -153,28 +153,33 @@ class Articles extends React.Component {
                             <button className="upgrade-btn" onClick={this.onTopicsSave}>Save</button>
                         </div>
                 </Modal>
-
+                
+                {!(!!this.state.articles.length) && this.state.loading && 
+                    <div><ArticleLoader /><ArticleLoader /></div>}
                 { !!this.state.articles.length ?                 
                     <div>
 
                         <h4 className="center-inline">Articles based on your choice of <a onClick={this.toggleTopicsModal} className="link-cursor">topics</a></h4>
+                        {this.state.loading && <ArticleLoader />}
                         <br/>
 
                         {!!this.state.articles.length &&
                             this.state.articles.map( (article, index) => {
 
                                 return (
+                                    <div key={index}>
                                     <Article key={index} article={article} setPost={this.props.setPost}/>
+                                    </div>
                                 );
                             })
                         }
-
+                        {this.state.loading && <ArticleLoader />}
                         <BottomScrollListener onBottom={this.loadArticles} /> 
                     </div>
                 :   
                     
                     <div className="initial-topics">
-
+                    {this.state.loading && <ArticleLoader />}
                         {!this.state.loading &&
                             <div>
                                 <p>Please set your topics to view articles of your interest.</p>
@@ -184,8 +189,6 @@ class Articles extends React.Component {
 
                     </div>
                 }
-
-                {this.state.loading && <Loader />}
             </div>
         );
     }
