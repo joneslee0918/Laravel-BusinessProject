@@ -27,6 +27,10 @@ Route::post('twitter/callback', ['as' => 'twitter.callback', 'uses' => 'Twitter\
 Route::get('twitter/error', ['as' => 'twitter.error', 'Twitter\ChannelController@error']);
 Route::get('twitter/logout', ['as' => 'twitter.logout', 'uses' => 'Twitter\ChannelController@error']);
 
+Route::get('facebook/callback', function(Request $request){
+    return $request->all();
+});
+
 Route::prefix("manage")->middleware(["auth"])->group(function(){
     Route::get('dashboard', ['as' => 'manage.dashboard', 'uses' => 'Twitter\DashboardController@index']);
     Route::get('fans', ['as' => 'manage.fans', 'uses' => 'Twitter\FansController@index']);

@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import TwitterLogin  from "react-twitter-auth";
+import FacebookLogin from 'react-facebook-login';
 import {startLogin} from "../actions/auth";
 import {startSetChannels} from "../actions/channels";
 import {startSetProfile} from "../actions/profile";
@@ -22,6 +23,8 @@ export class LoginPage extends React.Component{
     };
 
     onSuccess = (response) => {
+        console.log(response);
+        return;
         this.setState(() => ({loading: true}));
         response.json().then(body => {
             this.props.startLogin(body).then(() => {
@@ -45,6 +48,12 @@ export class LoginPage extends React.Component{
                                 showIcon={false}
                                 >
                     </TwitterLogin>
+
+                    <FacebookLogin
+                        appId="621885488213788"
+                        autoLoad={true}
+                        fields="name,email,picture"
+                        callback={this.onSuccess} />
                 </div>
             </div>  
         );
