@@ -28,7 +28,6 @@ export class LoginPage extends React.Component{
             this.props.startLogin(body, "twitter").then(() => {
                 this.props.startSetProfile();
                 this.props.startSetChannels();
-                //this.setState(() => ({loading: false}));
             }).catch(error => {
                 this.setState(() => ({loading: false}));
             });
@@ -36,13 +35,10 @@ export class LoginPage extends React.Component{
     };
 
     onFacebookSuccess = (response) => {
-        console.log(response.accessToken);
         this.setState(() => ({loading: true}));
-
         this.props.startLogin(response, "facebook").then(() => {
             this.props.startSetProfile();
             this.props.startSetChannels();
-            //this.setState(() => ({loading: false}));
         }).catch(error => {
             this.setState(() => ({loading: false}));
         });;
