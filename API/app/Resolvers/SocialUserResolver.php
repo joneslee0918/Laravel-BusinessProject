@@ -85,7 +85,6 @@ class SocialUserResolver implements SocialUserResolverInterface
         if(is_object($credentials) && !isset($credentials->error)){
 
             $facebookChannel = FacebookChannel::where("email", $credentials->email)->first();
-            
             if(!$facebookChannel){
 
                 $user = User::updateOrCreate(
@@ -116,6 +115,8 @@ class SocialUserResolver implements SocialUserResolverInterface
             $channel->select();
             $channel->active=1;
             $channel->save();
+            $facebookChannel->access_token = $credentials->token;
+            $facebookChannel->save();
             $facebookChannel->select();
 
             return $user;
@@ -168,6 +169,8 @@ class SocialUserResolver implements SocialUserResolverInterface
             $channel->select();
             $channel->active=1;
             $channel->save();
+            $twitterChannel->access_token = json_encode($token);
+            $twitterChannel->save();
             $twitterChannel->select();
 
             /*

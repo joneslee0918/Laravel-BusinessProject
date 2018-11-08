@@ -62,7 +62,7 @@ export class LoginPage extends React.Component{
                         appId="256286968360427"
                         autoLoad={false}
                         fields="name,email,picture"
-                        scope="manage_pages,publish_pages,pages_show_list,publish_to_groups"
+                        scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,groups_access_member_info,public_profile,email"
                         callback={this.onFacebookSuccess} />
                 </div>
             </div>  
