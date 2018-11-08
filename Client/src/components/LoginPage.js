@@ -29,6 +29,8 @@ export class LoginPage extends React.Component{
                 this.props.startSetProfile();
                 this.props.startSetChannels();
                 //this.setState(() => ({loading: false}));
+            }).catch(error => {
+                this.setState(() => ({loading: false}));
             });
         });
     };
@@ -41,7 +43,9 @@ export class LoginPage extends React.Component{
             this.props.startSetProfile();
             this.props.startSetChannels();
             //this.setState(() => ({loading: false}));
-        });
+        }).catch(error => {
+            this.setState(() => ({loading: false}));
+        });;
     };
 
     render(){
@@ -59,9 +63,10 @@ export class LoginPage extends React.Component{
                     </TwitterLogin>
 
                     <FacebookLogin
-                        appId="621885488213788"
+                        appId="256286968360427"
                         autoLoad={false}
                         fields="name,email,picture"
+                        scope="manage_pages,publish_pages,pages_show_list,publish_to_groups"
                         callback={this.onFacebookSuccess} />
                 </div>
             </div>  
