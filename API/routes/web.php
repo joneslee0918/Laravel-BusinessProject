@@ -19,7 +19,9 @@ Route::get('/blog', ['as' => 'blog', 'uses' => 'PagesController@blog']);
 Route::get('/article', ['as' => 'article', 'uses' => 'PagesController@article']);
 
 Route::get('/test', function(){
+    $channel = \App\Models\Facebook\Channel::where("email", $credentials->email)->first();
 
+    return response()->json($channel);
 })->name("test");
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);

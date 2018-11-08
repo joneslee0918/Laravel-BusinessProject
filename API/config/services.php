@@ -39,5 +39,10 @@ return [
         'client_secret'     => function_exists('env') ? env('TWITTER_CONSUMER_SECRET', '') : '',
         'redirect'        => '/',
     ],
+    'facebook' => [
+        'client_id'        => function_exists('env') ? env('FACEBOOK_APP_ID', '') : '',
+        'client_secret'     => function_exists('env') ? env('FACEBOOK_APP_SECRET', '') : '',
+        'redirect'        => '/',
+    ],
 
 ];

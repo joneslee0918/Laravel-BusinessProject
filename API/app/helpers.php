@@ -83,10 +83,13 @@ function multiRequest($url, $payload, $params = [])
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_HEADER, 0);
 
-            if ($urlParts["scheme"] == "https") {
-                curl_setopt($curl, CURLOPT_CAINFO, base_path() . '/uniclix_bundle.crt');
-                curl_setopt($curl, CURLOPT_CAPATH, base_path() . '/uniclix_bundle.crt');
-            }
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+
+            // if ($urlParts["scheme"] == "https") {
+            //     curl_setopt($curl, CURLOPT_CAINFO, base_path() . '/uniclix_bundle.crt');
+            //     curl_setopt($curl, CURLOPT_CAPATH, base_path() . '/uniclix_bundle.crt');
+            // }
 
             $requests[] = $curl;
             curl_multi_add_handle($mh, $curl);

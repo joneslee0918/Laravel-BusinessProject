@@ -22,16 +22,25 @@ export class LoginPage extends React.Component{
         console.log(response);
     };
 
-    onSuccess = (response) => {
-        console.log(response);
-        return;
+    onTwitterSuccess = (response) => {
         this.setState(() => ({loading: true}));
         response.json().then(body => {
-            this.props.startLogin(body).then(() => {
+            this.props.startLogin(body, "twitter").then(() => {
                 this.props.startSetProfile();
                 this.props.startSetChannels();
                 //this.setState(() => ({loading: false}));
             });
+        });
+    };
+
+    onFacebookSuccess = (response) => {
+        console.log(response.accessToken);
+        this.setState(() => ({loading: true}));
+
+        this.props.startLogin(response, "facebook").then(() => {
+            this.props.startSetProfile();
+            this.props.startSetChannels();
+            //this.setState(() => ({loading: false}));
         });
     };
 
@@ -43,7 +52,7 @@ export class LoginPage extends React.Component{
                     <a href={backendUrl} className="brand"><img src="/images/uniclix.png"/></a>
                     <div className="divider"></div>
                     <TwitterLogin loginUrl={twitterAccessTokenUrl}
-                                onFailure={this.onFailure} onSuccess={this.onSuccess}
+                                onFailure={this.onFailure} onSuccess={this.onTwitterSuccess}
                                 requestTokenUrl={twitterRequestTokenUrl}
                                 showIcon={false}
                                 >
@@ -51,9 +60,9 @@ export class LoginPage extends React.Component{
 
                     <FacebookLogin
                         appId="621885488213788"
-                        autoLoad={true}
+                        autoLoad={false}
                         fields="name,email,picture"
-                        callback={this.onSuccess} />
+                        callback={this.onFacebookSuccess} />
                 </div>
             </div>  
         );
@@ -61,7 +70,7 @@ export class LoginPage extends React.Component{
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    startLogin: (body) => dispatch(startLogin(body)),
+    startLogin: (body, network) => dispatch(startLogin(body, network)),
     startSetProfile: () => dispatch(startSetProfile()),
     startSetChannels: () => dispatch(startSetChannels())
 });
