@@ -26,10 +26,18 @@ trait FacebookTrait
         }
     }
 
-    public function getProfile(){
+    public function getPages(){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get('/me/accounts');
+        $response = $fb->get('/me/accounts?fields=access_token,picture,name');
 
         return $response->getDecodedBody();
     }
+
+    public function getGroups(){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get('/me/groups?fields=access_token,picture,name');
+
+        return $response->getDecodedBody();
+    }
+
 }

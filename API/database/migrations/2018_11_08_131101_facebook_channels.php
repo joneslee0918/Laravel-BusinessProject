@@ -17,12 +17,14 @@ class FacebookChannels extends Migration
             $table->increments("id");
             $table->integer("user_id")->unsigned();
             $table->integer("channel_id")->unsigned();
+            $table->integer("parent_id")->nullable()->unsigned();
             $table->string("name")->nullable();
             $table->string("username")->nullable();
             $table->string("email")->nullable();
             $table->text("payload")->nullable();
             $table->boolean("selected")->default(0);
             $table->string("access_token", 500);
+            $table->string("account_type")->nullable();
             $table->timestamps();
 
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");

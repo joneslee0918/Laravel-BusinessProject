@@ -103,7 +103,8 @@ class SocialUserResolver implements SocialUserResolverInterface
                     "email" => $credentials->email,
                     "name" => $credentials->name, 
                     "payload" => serialize($credentials), 
-                    "access_token" => $credentials->token
+                    "access_token" => $credentials->token,
+                    "account_type" => "profile"
                     ]
                 );
 

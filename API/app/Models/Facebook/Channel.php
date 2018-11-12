@@ -23,6 +23,7 @@ class Channel extends Model
         "email",
         "payload",
         "access_token",
+        "account_type",
         "selected"
     ];
 
