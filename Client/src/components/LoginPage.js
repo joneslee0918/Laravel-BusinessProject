@@ -5,7 +5,7 @@ import FacebookLogin from 'react-facebook-login';
 import {startLogin} from "../actions/auth";
 import {startSetChannels} from "../actions/channels";
 import {startSetProfile} from "../actions/profile";
-import {twitterRequestTokenUrl, twitterAccessTokenUrl, backendUrl} from "../config/api";
+import {twitterRequestTokenUrl, twitterAccessTokenUrl, backendUrl, facebookAppId} from "../config/api";
 import {LoaderWithOverlay} from "./Loader";
 
 export class LoginPage extends React.Component{
@@ -59,7 +59,7 @@ export class LoginPage extends React.Component{
                     </TwitterLogin>
 
                     <FacebookLogin
-                        appId="256286968360427"
+                        appId={facebookAppId}
                         autoLoad={false}
                         fields="name,email,picture"
                         scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,groups_access_member_info,public_profile,email"

@@ -62,6 +62,11 @@ class User extends Authenticatable
         return $this->hasMany(Twitter\Channel::class);
     }
 
+    public function facebookChannels()
+    {
+        return $this->hasMany(Facebook\Channel::class);
+    }
+
     public function selectedTwitterChannel()
     {
         return $this->twitterChannels()->where("selected", 1)->first();

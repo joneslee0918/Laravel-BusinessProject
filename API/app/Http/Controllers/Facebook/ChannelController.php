@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Facebook;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Laravel\Socialite\Facades\Socialite;
 
 class ChannelController extends Controller
 {
@@ -12,7 +13,7 @@ class ChannelController extends Controller
         
         $accessToken = $request->input("access_token");
 
-        $credentials = Socialite::driver("twitter")->userFromToken($accessToken);
+        $credentials = Socialite::driver("facebook")->userFromToken($accessToken);
 
         if(is_object($credentials) && !isset($credentials->error)){
 
