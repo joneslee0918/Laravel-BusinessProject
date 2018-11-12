@@ -1355,6 +1355,24 @@ aside .btn-group {
     overflow:hidden;
 }
 
+.facebook_color{
+    color: #4267B2 !important;
+}
+
+.twitter_color{
+    color:#25A2F0 !important;
+}
+
+.facebook_bg{
+    background: #4267B2 !important;
+    color:#fff;
+}
+
+.twitter_bg{
+    background:#25A2F0 !important;
+    color:#fff;
+}
+
 .accounts-container__content__wrapper,
 .accounts-container__content__wrapper__footer{
     border: 1px solid #eee;
@@ -1384,6 +1402,20 @@ aside .btn-group {
 .accounts-container__content__wrapper__footer{
     margin-top:20px;
     padding:10px 20px;
+}
+
+.account_box{
+    width:300px;
+    height:250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    margin: 10px;
+}
+
+.xl_font{
+    font-size: 70px !important;
 }
 
 .selection-container {

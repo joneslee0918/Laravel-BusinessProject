@@ -79,7 +79,7 @@ class Facebook extends React.Component {
                 <p>Connect them all, and we'll help you get the right audience.</p>
                 
                 <div className="flex_container-center">
-                    <div className="accounts-container__logo col-md-1">
+                    <div className="accounts-container__logo facebook_color col-md-1">
                         <div>
                             <i className="fa fa-facebook"></i>
                         </div>
