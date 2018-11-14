@@ -45,6 +45,7 @@ class SocialUserResolver implements SocialUserResolverInterface
     protected function authWithFacebook($accessToken)
     {
         try{
+            $accessToken = exchangeFBToken($accessToken)->getValue();
             $credentials = Socialite::driver("facebook")->userFromToken($accessToken);
             return $this->resolveFacebookUser($credentials);
 

@@ -12,7 +12,7 @@ class ChannelController extends Controller
     public function add(Request $request){
         
         $accessToken = $request->input("access_token");
-
+        $accessToken = exchangeFBToken($accessToken)->getValue();
         $credentials = Socialite::driver("facebook")->userFromToken($accessToken);
 
         if(is_object($credentials) && !isset($credentials->error)){

@@ -47,6 +47,22 @@ function getErrorResponse($e, $channel = false){
     return response()->json(['error' => $error], 400);
 }
 
+function exchangeFBToken($accessToken)
+{   
+    try {
+
+        $fb = app(\SammyK\LaravelFacebookSdk\LaravelFacebookSdk::class);
+        $fb->setDefaultAccessToken($accessToken);
+        
+        $oauthClient = $fb->getOAuth2Client();
+        $token = $oauthClient->getLongLivedAccessToken($accessToken);
+
+        return $token;
+    } catch (\Exception $e) {
+        throw $e;
+    }
+}
+
 /**
  * @param $url
  * @param $payload

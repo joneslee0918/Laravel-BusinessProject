@@ -5,6 +5,7 @@ namespace App\Traits\Facebook;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk as Facebook;
+use Laravel\Socialite\Facades\Socialite;
 
 trait FacebookTrait
 {
@@ -24,6 +25,11 @@ trait FacebookTrait
         } catch (\Exception $e) {
             throw $e;
         }
+    }
+
+    public function getProfile(){
+        $user = Socialite::driver("facebook")->userFromToken($this->access_token);
+        return $user;
     }
 
     public function getPages(){

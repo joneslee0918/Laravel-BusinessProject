@@ -2,12 +2,14 @@ import React from 'react';
 import {connect} from 'react-redux';
 import SweetAlert from "sweetalert2-react";
 import FacebookLogin from 'react-facebook-login';
+import SelectAccountsModal from './SelectAccountsModal';
 import {facebookAppId} from "../../config/api";
 import {startAddFacebookChannel, startSetChannels} from "../../actions/channels";
 import channelSelector from "../../selectors/channels";
 import {destroyChannel} from "../../requests/channels";
 import {logout} from "../../actions/auth";
 import Loader from "../../components/Loader";
+import ChannelItems from "./ChannelItems";
 
 class Facebook extends React.Component {
     constructor(props) {
@@ -20,7 +22,8 @@ class Facebook extends React.Component {
     };
 
     state = {
-        action: this.defaultAction
+        action: this.defaultAction,
+        accountsModal: false
     }
 
     setAction = (action = this.defaultAction) => {
@@ -56,7 +59,7 @@ class Facebook extends React.Component {
     render(){
         return (
             <div className="accounts-container">
-
+                <SelectAccountsModal isOpen={true} />
                 <SweetAlert
                     show={!!this.state.action.id}
                     title={`Do you wish to ${this.state.action.type} this item?`}
@@ -114,31 +117,6 @@ class Facebook extends React.Component {
         );
     };
 } 
-
-const ChannelItems = ({ channels, setAction }) => (
-    channels.map((channel) => (
-        <ChannelItem key={channel.id} channel={channel} setAction={setAction} />
-    ))
-);
-
-const ChannelItem = ({ channel, setAction }) => (
-    <div className="accounts-container__content__wrapper__body">
-        <div className="channel-container">
-            <a href="#" className="block-urls">
-                <div className="profile-info pull-right">
-                    <img className="pull-left" src={channel.avatar} />
-                    <div className="pull-left">
-                        <p className="profile-name">{channel.name}</p>
-                        <p className="profile-username">{!!channel.username && `@${channel.username}`}</p>
-                    </div>
-                    <div className="item-actions pull-right">
-                        <div className="trash-btn" onClick={() => setAction({id: channel.id, type: "delete"})}><i className="fa fa-trash"></i> <span className="delete-text"> Delete</span></div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-);
 
 const mapStateToProps = (state) => {
 
