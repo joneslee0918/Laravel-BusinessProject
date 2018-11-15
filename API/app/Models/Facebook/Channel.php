@@ -24,7 +24,8 @@ class Channel extends Model
         "payload",
         "access_token",
         "account_type",
-        "selected"
+        "selected",
+        "original_id",
     ];
 
     public function user()

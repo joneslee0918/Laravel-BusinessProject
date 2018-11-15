@@ -293,6 +293,15 @@ input {
     background: none;
 }
 
+.fat-btn-filled{
+    background:linear-gradient(to right, #48BBB8, #438AF1);
+    color: white;
+    width: 100%;
+    padding: 10px;
+    margin: 0 !important;
+    border-radius: 5px;
+}
+
 .whiteBg{
     background:white !important;
 }
@@ -313,6 +322,10 @@ input {
 
 .top-border{
     border-top: 1px solid #ccc;
+}
+
+.bottom-border{
+    border-bottom: 1px solid #ccc;
 }
 
 .p10{
@@ -955,6 +968,14 @@ input {
     outline: none;
 }
 
+.account-img{
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border: 1px solid #ccc;
+    border-radius: 100px;
+}
+
 .mt20{
     margin-top:20px !important;
 }
@@ -1027,8 +1048,6 @@ input {
     align-items:center;
     justify-content: space-between;
     padding:10px 30px;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
     width:100%;
     max-height:400px;
 }

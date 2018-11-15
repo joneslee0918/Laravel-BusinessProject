@@ -71,5 +71,7 @@ Route::prefix("facebook")->group(function(){
 
     Route::middleware('auth:api')->group(function(){
         Route::post('channels/add', 'Facebook\ChannelController@add');
+        Route::get('channels/accounts', 'Facebook\ChannelController@getAccounts');
+        Route::post('channels/accounts/save', 'Facebook\ChannelController@saveAccounts');
     });
 });

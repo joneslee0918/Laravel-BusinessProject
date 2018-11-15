@@ -7,6 +7,7 @@ import {facebookAppId} from "../../config/api";
 import {startAddFacebookChannel, startSetChannels} from "../../actions/channels";
 import channelSelector from "../../selectors/channels";
 import {destroyChannel} from "../../requests/channels";
+import {getAccounts, saveAccounts} from "../../requests/facebook/channels";
 import {logout} from "../../actions/auth";
 import Loader from "../../components/Loader";
 import ChannelItems from "./ChannelItems";
@@ -23,7 +24,9 @@ class Facebook extends React.Component {
 
     state = {
         action: this.defaultAction,
-        accountsModal: false
+        accountsModal: false,
+        accounts: [],
+        error: ""
     }
 
     setAction = (action = this.defaultAction) => {
@@ -38,9 +41,42 @@ class Facebook extends React.Component {
 
     onSuccess = (response) => {
         if(response){
-            this.props.startAddFacebookChannel(response.accessToken);
+            this.props.startAddFacebookChannel(response.accessToken)
+            .then(() => {
+                getAccounts().then((response) => {
+
+                    if(response.length){
+                        this.setState(() => ({
+                            accounts: response,
+                            accountsModal: true
+                        }));
+                    }
+                });
+            });
         }
     };
+
+    onSave = (accounts) => {
+        this.setState(() => ({
+            error: ""
+        }));
+        saveAccounts(accounts)
+        .then(() => {
+            this.props.startSetChannels();
+            this.toggleAccountsModal();
+        }).catch( error => {
+            console.log(error);
+            this.setState(() => ({
+                error: "Something went wrong!"
+            }));
+        });
+    };
+
+    toggleAccountsModal = () => {
+        this.setState(() => ({
+            accountsModal: !this.state.accountsModal
+        }));
+    }
 
     remove = (id) => {
         return destroyChannel(id)
@@ -59,7 +95,13 @@ class Facebook extends React.Component {
     render(){
         return (
             <div className="accounts-container">
-                <SelectAccountsModal isOpen={true} />
+                <SelectAccountsModal 
+                    isOpen={this.state.accountsModal} 
+                    accounts={this.state.accounts}
+                    onSave={this.onSave}
+                    error={this.state.error}
+                />
+
                 <SweetAlert
                     show={!!this.state.action.id}
                     title={`Do you wish to ${this.state.action.type} this item?`}

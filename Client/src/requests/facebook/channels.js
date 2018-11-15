@@ -8,3 +8,18 @@ export const addChannel = (accessToken) => {
                 return response.data;
             });
 };
+
+export const getAccounts = () => {
+    return axios.get(`${apiUrl}/facebook/channels/accounts`)
+    .then((response) => {
+                return response.data;
+            });
+};
+
+export const saveAccounts = (accounts) => {
+    return axios.post(`${apiUrl}/facebook/channels/accounts/save`, {
+                accounts
+            }).then((response) => {
+                return response.data;
+            });
+};
