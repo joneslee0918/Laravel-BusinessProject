@@ -41,7 +41,7 @@ trait FacebookTrait
 
     public function getGroups(){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get('/me/groups?fields=access_token,picture,name');
+        $response = $fb->get('/me/groups?fields=owner,picture,name');
 
         return $response->getDecodedBody();
     }

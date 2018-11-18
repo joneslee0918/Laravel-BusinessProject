@@ -18,6 +18,7 @@ class Channel extends Model
     protected $fillable = [
         "user_id",
         "channel_id",
+        "parent_id",
         "username",
         "name",
         "email",

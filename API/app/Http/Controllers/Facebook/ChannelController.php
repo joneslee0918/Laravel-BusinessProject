@@ -81,7 +81,7 @@ class ChannelController extends Controller
             $accountData = [];
             foreach($accounts as $account){
 
-                $existingChannel = $user->facebookChannels()->where("original_id", $account["id"])->where("parent_id", "channel_id")->first();
+                $existingChannel = $user->facebookChannels()->where("original_id", $account["id"])->where("parent_id", $channel->id)->first();
 
                 if(!$existingChannel){
 

@@ -21,7 +21,7 @@ Route::get('/article', ['as' => 'article', 'uses' => 'PagesController@article'])
 Route::get('/test', function(){
     $channel = \App\Models\Facebook\Channel::first();
 
-    return response()->json($channel->getPages());
+    return response()->json($channel->getGroups());
 })->name("test");
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
