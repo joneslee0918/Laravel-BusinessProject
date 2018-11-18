@@ -136,18 +136,18 @@ class Compose extends React.Component{
         }
     }
 
-    onChannelSelectionChange = (username) => {
+    onChannelSelectionChange = (id) => {
 
         const publishChannels = this.props.channels.map((channel) => {
-            if(channel.username === username){
+            if(channel.id === id){
                 return {
                     ...channel,
                     selected: 1
                 }
-            }else{
+            }
+            else{
                 return {
-                    ...channel,
-                    selected: 0
+                    ...channel
                 }
             }
         });
@@ -370,6 +370,9 @@ class Compose extends React.Component{
         const { MentionSuggestions: HashtagSuggestions } = this.hashtagMentionPlugin;
         const plugins = [this.emojiPlugin, this.hashtagMentionPlugin];
 
+        const twitterChannels = channelSelector(this.state.publishChannels, {selected: undefined, provider: "twitter"});
+        const facebookChannels = channelSelector(this.state.publishChannels, {selected: undefined, provider: "facebook"});
+
         return (
             <div className="modal fade" id="compose" tabIndex="-1" data-backdrop="static" data-keyboard="false" role="dialog">
                 {(this.state.stored && this.state.refresh) && <Redirect to={location.pathname} />}
@@ -381,18 +384,38 @@ class Compose extends React.Component{
                     
                     <div className="modal-content">
                         <div className="modal-body">
-                            {!!this.state.publishChannels.length && this.state.publishChannels.map((channel) => (
-                                <label key={channel.id} className="channel-item selection-container">
-                                    <input type="radio" onChange={() => this.onChannelSelectionChange(channel.username)} defaultChecked={channel.selected ? "checked" : ""} name="publish_channel" />
-                                    <span className="checkmark"></span>
-                                    <img src={channel.avatar} /> @{channel.username}
-                                </label>
-                            ))}
+                            {!!twitterChannels.length &&
+                                <h3>Twitter</h3>
+                            }
+                            {!!twitterChannels.length && 
+                                
+                                twitterChannels.map((channel) => (
+                                        <label key={channel.id} className="channel-item selection-container">
+                                            <input type="radio" onChange={() => this.onChannelSelectionChange(channel.id)} defaultChecked={channel.selected ? "checked" : ""} name="twitter_channel" />
+                                            <span className="checkmark"></span>
+                                            <img className="avatar-box" src={channel.avatar} /> {channel.name}
+                                        </label>
+                                )
+                            )}
+
+                            {!!facebookChannels.length &&
+                                <h3>Facebook</h3>
+                            }
+                            {!!facebookChannels.length && 
+                                
+                                facebookChannels.map((channel) => (
+                                        <label key={channel.id} className="channel-item selection-container">
+                                            <input type="checkbox" onChange={() => this.onChannelSelectionChange(channel.id)} defaultChecked={channel.selected ? "checked" : ""} name="facebook_channel" />
+                                            <span className="checkmark"></span>
+                                            <img className="avatar-box" src={channel.avatar} /> {channel.name}
+                                        </label>
+                                )
+                            )}
                         </div>
 
                         <div className="modal-footer">
                             <div onClick={this.toggleSelectChannelsModal} className="publish-btn-group gradient-background-teal-blue link-cursor pull-right">
-                                <button className="publish-btn naked-button">Save</button>
+                                <button className="publish-btn naked-button">Done</button>
                             </div>
                         </div>
                     </div>
@@ -571,7 +594,7 @@ class Compose extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-    const channels = channelSelector(state.channels.list, {selected: undefined, provider: undefined});
+    const channels = channelSelector(state.channels.list, {selected: undefined, provider: undefined, publishable: true});
 
     return {
         channels,
