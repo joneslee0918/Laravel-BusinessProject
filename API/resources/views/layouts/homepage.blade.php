@@ -36,7 +36,7 @@
                     </button>
                     <a href="{{ route('homepage.index') }}" class="navbar-brand text-center">
                         <img class="img-responsive" id="logo-img" src="{{ asset('images/uniclix.png') }}" alt="uniclix">
-                        <span class="logo-text">uniclix</span>
+                        <!-- <span class="logo-text">uniclix</span> -->
                     </a>
                 </div>
                 <div class="navbar-collapse collapse">

@@ -29,6 +29,7 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 #logo-img {
     margin-left: 13px;
     margin-bottom: 5px;
+    width:100px;
 }
 
 #logo-img span {
