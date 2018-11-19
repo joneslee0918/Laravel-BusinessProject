@@ -246,6 +246,10 @@ class Compose extends React.Component{
         });
     };
 
+    onAddAccountsClick = () => {
+        window.location.href = "/accounts";
+    };
+
     focus = () => {
         this.editor.focus();
     };
@@ -406,6 +410,7 @@ class Compose extends React.Component{
                     
                     <div className="modal-content">
                         <div className="modal-body">
+                            <button className="upgrade-btn" onClick={this.onAddAccountsClick}><i className="fa fa-plus"></i> Add accounts</button>
                             {!!twitterChannels.length &&
                                 <h3 className="bg-heading" onClick={this.toggleTwitterSelect}>
                                 <i className="fa fa-twitter"> </i> Twitter
