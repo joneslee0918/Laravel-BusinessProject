@@ -19,9 +19,9 @@ Route::get('/blog', ['as' => 'blog', 'uses' => 'PagesController@blog']);
 Route::get('/article', ['as' => 'article', 'uses' => 'PagesController@article']);
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::first();
+    $channel = \App\Models\Facebook\Channel::find(27);
 
-    return response()->json($channel->getGroups());
+    return response()->json($channel->publish("Hello there"));
 })->name("test");
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
