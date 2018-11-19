@@ -459,6 +459,7 @@ class Compose extends React.Component{
 
                                     {!!this.state.publishChannels.length && channelSelector(this.state.publishChannels, {selected: true, provider: undefined}).map((channel) => (
                                         <li key={channel.id} className="channel-item">
+                                            <div className="remove-overlay fa fa-close" onClick={() => this.onChannelSelectionChange(channel)}></div>
                                             <img src={channel.avatar}/>
                                         </li>
                                     ))}

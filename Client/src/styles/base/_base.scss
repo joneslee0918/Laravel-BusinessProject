@@ -1062,6 +1062,21 @@ input {
     text-align:center;
 }
 
+.remove-overlay{
+    background: red;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    display: none;
+    color: white;
+    text-align: center;
+    padding: 8px;
+}
+
+.compose-header li:hover > .remove-overlay{
+    display:block;
+}
+
 .right-radius{
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
