@@ -17,6 +17,9 @@ Route::get('/education', ['as' => 'education', 'uses' => 'PagesController@educat
 Route::get('/pricing', ['as' => 'pricing', 'uses' => 'PagesController@pricing']);
 Route::get('/blog', ['as' => 'blog', 'uses' => 'PagesController@blog']);
 Route::get('/article', ['as' => 'article', 'uses' => 'PagesController@article']);
+Route::get('/privacy-policy', function(){
+    return view("privacy-policy");
+});
 
 Route::get('/test', function(){
     $channel = \App\Models\Facebook\Channel::find(27);
