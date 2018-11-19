@@ -1501,7 +1501,16 @@ aside .btn-group {
     height: 25px;
     width: 25px;
     background-color: #eee;
+}
+
+.round{
     border-radius: 50%;
+}
+
+.bg-heading{
+    background: #ececec;
+    padding: 10px;
+    cursor:pointer;
 }
 
 /* On mouse-over, add a grey background color */
