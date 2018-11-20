@@ -342,6 +342,10 @@ input {
     margin-top: 10px;
 }
 
+.m10{
+    margin:10px;
+}
+
 .upgrade-btn:hover {
     background: linear-gradient(to right, #48BBB8, #438AF1);
     border-color: #48BBB8;
@@ -382,6 +386,11 @@ input {
     vertical-align: middle;
     line-height: 30px;
     text-transform: uppercase;
+}
+
+.scrollable-400{
+    max-height:400px;
+    overflow:auto;
 }
 
 .navbar-uniclix .brand {

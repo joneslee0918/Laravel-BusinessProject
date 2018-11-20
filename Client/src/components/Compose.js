@@ -409,8 +409,9 @@ class Compose extends React.Component{
                     {this.state.selectChannelsModal ? 
                     
                     <div className="modal-content">
-                        <div className="modal-body">
-                            <button className="upgrade-btn" onClick={this.onAddAccountsClick}><i className="fa fa-plus"></i> Add accounts</button>
+                    <button className="upgrade-btn m10" onClick={this.onAddAccountsClick}><i className="fa fa-plus"></i> Add accounts</button>
+                        <div className="modal-body scrollable-400">
+                            
                             {!!twitterChannels.length &&
                                 <h3 className="bg-heading" onClick={this.toggleTwitterSelect}>
                                 <i className="fa fa-twitter"> </i> Twitter
