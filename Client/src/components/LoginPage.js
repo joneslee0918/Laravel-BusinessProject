@@ -49,7 +49,7 @@ export class LoginPage extends React.Component{
             <div className="login-container">
                 {this.state.loading && <LoaderWithOverlay />}
                 <div className="box-container">
-                    <a href={backendUrl} className="brand"><img src="/images/uniclix.png"/></a>
+                    <a href={backendUrl} className="brand"><img className="brand-img" src="/images/uniclix.png"/></a>
                     <div className="divider"></div>
                     <TwitterLogin loginUrl={twitterAccessTokenUrl}
                                 onFailure={this.onFailure} onSuccess={this.onTwitterSuccess}
