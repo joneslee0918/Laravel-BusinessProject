@@ -56,9 +56,10 @@ class ChannelController extends Controller
         $user = auth()->user();
         $channel = $user->selectedFacebookChannel();
         $response = collect($channel->getPages());
-        $accounts = [];
+
+        $pages = [];
         if(isset($response["data"])){
-            $accounts = collect($response["data"])->map(function($page){
+            $pages = collect($response["data"])->map(function($page){
                 $page["token"] = @$page["access_token"];
                 $page["avatar"] = @$page["picture"]["data"]["url"];
 
@@ -66,7 +67,20 @@ class ChannelController extends Controller
             });
         }
 
-        return $accounts;
+        $response = collect($channel->getGroups());
+        $groups = [];
+        if(isset($response["data"])){
+            $groups = collect($response["data"])->map(function($group){
+                $group["token"] = "group";
+                $group["avatar"] = @$group["picture"]["data"]["url"];
+
+                return $group;
+            });
+        }
+
+        $results = $pages->merge($groups);
+
+        return $results;
     }
 
     public function saveAccounts(Request $request){
@@ -94,7 +108,7 @@ class ChannelController extends Controller
                         "access_token" => $account["token"],
                         "parent_id" => $channel->id,
                         "payload" => serialize((object) $account),
-                        "account_type" => "page"
+                        "account_type" => $account["token"] == "group" ? "group" : "page"
                     ]);
 
                     $newChannel->select();

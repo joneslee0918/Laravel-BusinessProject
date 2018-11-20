@@ -22,9 +22,10 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::find(27);
+    $channel = \App\Models\Facebook\Channel::find(29);
+    $admin = \App\Models\Facebook\Channel::find($channel->parent_id);
 
-    return response()->json($channel->publish("Hello there"));
+    return response()->json($channel->publish("hello there"));
 })->name("test");
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
