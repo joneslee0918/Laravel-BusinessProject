@@ -475,6 +475,7 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     overflow: hidden;
     background-image: url(../images/banner-bg.png);
     background-repeat: no-repeat;
+    background-color: #458eeb;
 }
 #home-banner h1 {
     font-size: 48px;
