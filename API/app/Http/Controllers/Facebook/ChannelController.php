@@ -78,7 +78,7 @@ class ChannelController extends Controller
             });
         }
 
-        $results = $pages->merge($groups);
+        $results = collect($pages)->merge(collect($groups));
 
         return $results;
     }
