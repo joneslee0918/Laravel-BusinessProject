@@ -24,7 +24,7 @@ const ProfileInfo = ({ selectedChannel }) => (
             <img className="pull-left" src={selectedChannel.avatar} />
             <div className="pull-left">
                 <p className="profile-name">{selectedChannel.name}</p>
-                <p className="profile-username">{!!selectedChannel.username && `@${selectedChannel.username}`}</p>
+                <p className="profile-username">@{selectedChannel.username}</p>
             </div>
             <div className="pull-right down-arrow">
                 <i className="fa fa-angle-down"></i>
@@ -51,7 +51,7 @@ const ProfileSelectionItem = ({ channel, selectChannel }) => (
                 <img className="pull-left" src={channel.avatar} />
                 <div className="pull-left">
                     <p className="profile-name">{channel.name}</p>
-                    <p className="profile-username">{!!channel.username && `@${channel.username}`}</p>
+                    <p className="profile-username">@{channel.username}</p>
                 </div>
             </div>
         </a>

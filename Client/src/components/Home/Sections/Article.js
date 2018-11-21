@@ -31,7 +31,7 @@ const Article = ({article, setPost, postedArticle}) => {
                     <div className="center-inline">
                         <button onClick={() => setPost(
                             {
-                            content: `${article.url}`,
+                            content: `${article.description} ${article.url}`,
                             images: [],
                             type: 'store',
                             refresh: false,

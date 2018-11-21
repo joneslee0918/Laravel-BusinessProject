@@ -41,14 +41,10 @@ class User extends Authenticatable
             
             return collect($channels)->map(function($channel){
                     $channel->details = @$channel->details;
-
-                    if($channel->details){
-                        $channel->details->payload = @unserialize($channel->details->payload);
-                        $channel->avatar = @$channel->details->payload->avatar;
-                        $channel->name = @$channel->details->payload->name;
-                        $channel->username = @$channel->details->payload->nickname;
-                    }
-
+                    $channel->details->payload = @unserialize($channel->details->payload);
+                    $channel->avatar = @$channel->details->payload->avatar;
+                    $channel->name = @$channel->details->payload->name;
+                    $channel->username = @$channel->details->payload->nickname;
                     return $channel;
                 });
         }
@@ -66,19 +62,9 @@ class User extends Authenticatable
         return $this->hasMany(Twitter\Channel::class);
     }
 
-    public function facebookChannels()
-    {
-        return $this->hasMany(Facebook\Channel::class);
-    }
-
     public function selectedTwitterChannel()
     {
         return $this->twitterChannels()->where("selected", 1)->first();
-    }
-
-    public function selectedFacebookChannel()
-    {
-        return $this->facebookChannels()->where("selected", 1)->first();
     }
 
     public function topics()

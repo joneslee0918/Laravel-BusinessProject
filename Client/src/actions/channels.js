@@ -1,6 +1,5 @@
 import { getChannels, selectChannel as selectGlobalChannel } from "../requests/channels";
 import { selectChannel as selectTwitterChannel, addChannel as addTwitterChannel } from "../requests/twitter/channels";
-import { addChannel as addFacebookChannel } from "../requests/facebook/channels";
 
 export const setChannels = (list) => ({
     type: "SET_CHANNELS",
@@ -29,19 +28,6 @@ export const startAddTwitterChannel = (accessToken, accessTokenSecret) => {
     return dispatch => {
         dispatch(setChannelsLoading(true));
         return addTwitterChannel(accessToken, accessTokenSecret)
-                .then((response) => {
-                    dispatch(setChannels(response));
-                    localStorage.setItem("channels", JSON.stringify(response));
-                    dispatch(setChannelsLoading(false));
-                    return response;
-                });
-    };
-}
-
-export const startAddFacebookChannel = (accessToken) => {
-    return dispatch => {
-        dispatch(setChannelsLoading(true));
-        return addFacebookChannel(accessToken)
                 .then((response) => {
                     dispatch(setChannels(response));
                     localStorage.setItem("channels", JSON.stringify(response));

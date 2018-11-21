@@ -13,7 +13,6 @@
         "laravel/passport": "^7.0",
         "laravel/socialite": "^3.1",
         "laravel/tinker": "^1.0",
-        "sammyk/laravel-facebook-sdk": "^3.5",
         "thujohn/twitter": "^2.2"
     },
     "require-dev": {

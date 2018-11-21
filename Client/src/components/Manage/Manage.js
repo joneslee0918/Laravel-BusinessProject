@@ -5,31 +5,21 @@ import MenuItems from "./Fixtures/MenuItems";
 import ManageRouter from "../../routes/ManageRouter";
 import channelSelector from "../../selectors/channels";
 import { setTwitterChannel } from '../../actions/channels';
-import { NavLink } from 'react-router-dom';
 
 const Manage = ({channels, selectedChannel, selectChannel}) => { 
-    const hasChannel = typeof(selectedChannel.username) !== "undefined"; 
     return (
         <div>
-            {!!hasChannel ? <div>
-                <VerticalMenu 
-                    menuItems={MenuItems} 
-                    channels={channels} 
-                    selectedChannel={selectedChannel}
-                    selectChannel={selectChannel}
-                    />
-                <div className="body-container">
-                    <div className="main-section">
-                        <ManageRouter/>
-                    </div>
+            <VerticalMenu 
+                menuItems={MenuItems} 
+                channels={channels} 
+                selectedChannel={selectedChannel}
+                selectChannel={selectChannel}
+                />
+            <div className="body-container">
+                <div className="main-section">
+                    <ManageRouter/>
                 </div>
-            </div>:
-            <div className="no-data">
-                This feature requires a twitter account.
-                <div><NavLink to="/accounts">Connect to Twitter</NavLink></div>
             </div>
-            }
-
         </div>  
     );
 };

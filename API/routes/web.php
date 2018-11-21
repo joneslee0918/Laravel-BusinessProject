@@ -17,25 +17,15 @@ Route::get('/education', ['as' => 'education', 'uses' => 'PagesController@educat
 Route::get('/pricing', ['as' => 'pricing', 'uses' => 'PagesController@pricing']);
 Route::get('/blog', ['as' => 'blog', 'uses' => 'PagesController@blog']);
 Route::get('/article', ['as' => 'article', 'uses' => 'PagesController@article']);
-Route::get('/privacy-policy', function(){
-    return view("privacy-policy");
-});
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::find(29);
-    $admin = \App\Models\Facebook\Channel::find($channel->parent_id);
 
-    return response()->json($channel->publish("hello there"));
 })->name("test");
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
 Route::post('twitter/callback', ['as' => 'twitter.callback', 'uses' => 'Twitter\ChannelController@callback']);
 Route::get('twitter/error', ['as' => 'twitter.error', 'Twitter\ChannelController@error']);
 Route::get('twitter/logout', ['as' => 'twitter.logout', 'uses' => 'Twitter\ChannelController@error']);
-
-Route::get('facebook/callback', function(Request $request){
-    return $request->all();
-});
 
 Route::prefix("manage")->middleware(["auth"])->group(function(){
     Route::get('dashboard', ['as' => 'manage.dashboard', 'uses' => 'Twitter\DashboardController@index']);

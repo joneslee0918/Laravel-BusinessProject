@@ -32,7 +32,7 @@
 				<h5>RESOURCES</h5>
 				<p><a href="#">Support</a></p>
 				<p><a href="#">Contact</a></p>
-				<p><a href="/privacy-policy">Privacy Policy</a></p>
+				<p><a href="#">Terms of Service</a></p>
 			</div>
 		</div>
 	</div>

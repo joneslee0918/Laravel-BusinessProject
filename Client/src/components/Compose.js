@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Modifier, EditorState} from 'draft-js';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
@@ -65,8 +65,6 @@ class Compose extends React.Component{
         canSchedule: false,
         showCalendar: false,
         optionsMenu: false,
-        twitterSelect: false,
-        facebookSelect: false,
         letterCount: 0,
         pictures: [],
         loading: false,
@@ -138,26 +136,18 @@ class Compose extends React.Component{
         }
     }
 
-    onChannelSelectionChange = (obj) => {
+    onChannelSelectionChange = (username) => {
 
-        const publishChannels = this.state.publishChannels.map((channel) => {
-            if(channel.id === obj.id){
+        const publishChannels = this.props.channels.map((channel) => {
+            if(channel.username === username){
                 return {
                     ...channel,
-                    selected: channel.selected ? 0 : 1
+                    selected: 1
                 }
-            }
-            else{
-        
-                if(obj.type == "twitter" && channel.type == "twitter"){
-                    return {
-                        ...channel,
-                        selected:0
-                    }
-                }else{
-                    return {
-                        ...channel
-                    };
+            }else{
+                return {
+                    ...channel,
+                    selected: 0
                 }
             }
         });
@@ -174,20 +164,8 @@ class Compose extends React.Component{
         click();
     }
 
-    toggleTwitterSelect = () => {
-        this.setState(() => ({
-            twitterSelect: !this.state.twitterSelect
-        }));
-    };
-
-    toggleFacebookSelect = () => {
-        this.setState(() => ({
-            facebookSelect: !this.state.facebookSelect
-        }));
-    };
-
     setPublishChannels(){
-        // const publishChannelStorage = JSON.parse(localStorage.getItem('publishChannels'));
+       // const publishChannelStorage = localStorage.getItem('publishChannels');
         const publishChannels = this.props.channels;
         return publishChannels;
     }
@@ -244,10 +222,6 @@ class Compose extends React.Component{
                 }
             }
         });
-    };
-
-    onAddAccountsClick = () => {
-        window.location.href = "/accounts";
     };
 
     focus = () => {
@@ -396,9 +370,6 @@ class Compose extends React.Component{
         const { MentionSuggestions: HashtagSuggestions } = this.hashtagMentionPlugin;
         const plugins = [this.emojiPlugin, this.hashtagMentionPlugin];
 
-        const twitterChannels = channelSelector(this.state.publishChannels, {selected: undefined, provider: "twitter"});
-        const facebookChannels = channelSelector(this.state.publishChannels, {selected: undefined, provider: "facebook"});
-
         return (
             <div className="modal fade" id="compose" tabIndex="-1" data-backdrop="static" data-keyboard="false" role="dialog">
                 {(this.state.stored && this.state.refresh) && <Redirect to={location.pathname} />}
@@ -409,47 +380,19 @@ class Compose extends React.Component{
                     {this.state.selectChannelsModal ? 
                     
                     <div className="modal-content">
-                    <button className="upgrade-btn m10" onClick={this.onAddAccountsClick}><i className="fa fa-plus"></i> Add accounts</button>
-                        <div className="modal-body scrollable-400">
-                            
-                            {!!twitterChannels.length &&
-                                <h3 className="bg-heading" onClick={this.toggleTwitterSelect}>
-                                <i className="fa fa-twitter"> </i> Twitter
-                                {this.state.twitterSelect ? <i className="fa fa-minus pull-right"> </i> : <i className="fa fa-plus pull-right"> </i> }
-                                </h3>
-                            }
-                            {!!twitterChannels.length && this.state.twitterSelect &&
-                                
-                                twitterChannels.map((channel) => (
-                                        <label key={channel.id} className="channel-item selection-container">
-                                            <input type="radio" onChange={() => this.onChannelSelectionChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="twitter_channel" />
-                                            <span className="checkmark round"></span>
-                                            <img className="avatar-box" src={channel.avatar} /> {channel.name}
-                                        </label>
-                                )
-                            )}
-
-                            {!!facebookChannels.length &&
-                                <h3 className="bg-heading" onClick={this.toggleFacebookSelect}>
-                                <i className="fa fa-facebook"> </i> Facebook
-                                {this.state.facebookSelect ? <i className="fa fa-minus pull-right"> </i> : <i className="fa fa-plus pull-right"> </i> }
-                                </h3>
-                            }
-                            {!!facebookChannels.length && this.state.facebookSelect &&
-                                
-                                facebookChannels.map((channel) => (
-                                        <label key={channel.id} className="channel-item selection-container">
-                                            <input type="checkbox" onChange={() => this.onChannelSelectionChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="facebook_channel" />
-                                            <span className="checkmark"></span>
-                                            <img className="avatar-box" src={channel.avatar} /> {channel.name}
-                                        </label>
-                                )
-                            )}
+                        <div className="modal-body">
+                            {!!this.state.publishChannels.length && this.state.publishChannels.map((channel) => (
+                                <label key={channel.id} className="channel-item selection-container">
+                                    <input type="radio" onChange={() => this.onChannelSelectionChange(channel.username)} defaultChecked={channel.selected ? "checked" : ""} name="publish_channel" />
+                                    <span className="checkmark"></span>
+                                    <img src={channel.avatar} /> @{channel.username}
+                                </label>
+                            ))}
                         </div>
 
                         <div className="modal-footer">
                             <div onClick={this.toggleSelectChannelsModal} className="publish-btn-group gradient-background-teal-blue link-cursor pull-right">
-                                <button className="publish-btn naked-button">Done</button>
+                                <button className="publish-btn naked-button">Save</button>
                             </div>
                         </div>
                     </div>
@@ -465,7 +408,6 @@ class Compose extends React.Component{
 
                                     {!!this.state.publishChannels.length && channelSelector(this.state.publishChannels, {selected: true, provider: undefined}).map((channel) => (
                                         <li key={channel.id} className="channel-item">
-                                            <div className="remove-overlay fa fa-close" onClick={() => this.onChannelSelectionChange(channel)}></div>
                                             <img src={channel.avatar}/>
                                         </li>
                                     ))}
@@ -611,20 +553,10 @@ class Compose extends React.Component{
                                 </Popup>
                                 
                                 <button onClick={() => {
-                                    if((this.state.letterCount > 0 
-                                        && this.state.letterCount <= 280 || (this.state.pictures.length > 0 
-                                            && this.state.pictures.length < 5)) 
-                                            && (this.state.canSchedule || this.state.publishState.value !== 'date') 
-                                            && channelSelector(this.state.publishChannels, {selected: true, provider: undefined}).length){
+                                    if((this.state.letterCount > 0 && this.state.letterCount <= 280 || (this.state.pictures.length > 0 && this.state.pictures.length < 5)) && (this.state.canSchedule || this.state.publishState.value !== 'date')){
                                        this.publish(); 
                                     }
-                                }} className={`publish-btn naked-button half-btn ${(
-                                    this.state.letterCount > 0 && 
-                                    this.state.letterCount <= 280 || this.state.pictures.length > 0)
-                                     && (this.state.canSchedule || this.state.publishState.value !== 'date') 
-                                     && channelSelector(this.state.publishChannels, {selected: true, provider: undefined}).length ? 
-                                     '' : 'disabled-btn'}`}>
-                                     {this.state.publishState.name}</button>
+                                }} className={`publish-btn naked-button half-btn ${(this.state.letterCount > 0 && this.state.letterCount <= 280 || this.state.pictures.length > 0) && (this.state.canSchedule || this.state.publishState.value !== 'date') ? '' : 'disabled-btn'}`}>{this.state.publishState.name}</button>
                             </div>
                             <p className={`letter-count ${this.state.letterCount > 280 ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
                         </div>
@@ -639,7 +571,7 @@ class Compose extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-    const channels = channelSelector(state.channels.list, {selected: undefined, provider: undefined, publishable: true});
+    const channels = channelSelector(state.channels.list, {selected: undefined, provider: undefined});
 
     return {
         channels,
