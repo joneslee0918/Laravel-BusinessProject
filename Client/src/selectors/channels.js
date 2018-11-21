@@ -1,4 +1,4 @@
-export default (channels = [], {selected, provider}) => {
+export default (channels = [], {selected, provider, publishable}) => {
 
     if(!channels.length) return channels;
 
@@ -7,6 +7,13 @@ export default (channels = [], {selected, provider}) => {
 
         if(provider){
             filter = channel.type == provider;
+        }
+
+        if(publishable){
+
+            if(typeof channel.details.account_type !== "undefined"){
+                filter = filter && channel.details.account_type !== "profile";
+            }
         }
 
         if(!isNaN(selected)){

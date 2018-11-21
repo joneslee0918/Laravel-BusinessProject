@@ -161,6 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Thujohn\Twitter\TwitterServiceProvider::class,
         Adaojunior\Passport\SocialGrantServiceProvider::class,
+        SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
     ],
 
     /*
@@ -210,6 +211,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Twitter' => Thujohn\Twitter\Facades\Twitter::class,
+        'Facebook' => SammyK\LaravelFacebookSdk\FacebookFacade::class,
     ],
 
 ];

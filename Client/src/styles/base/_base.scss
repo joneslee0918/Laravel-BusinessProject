@@ -91,6 +91,12 @@ input {
     overflow:hidden;
 }
 
+.avatar-box{
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
 .box-container{
     width: 300px;
     padding: 25px 50px;
@@ -263,6 +269,10 @@ input {
     font-size: 12px;
 }
 
+.brand-img{
+    width:100px !important;
+}
+
 .navbar-uniclix {
     position: fixed;
     z-index: 999;
@@ -293,6 +303,15 @@ input {
     background: none;
 }
 
+.fat-btn-filled{
+    background:linear-gradient(to right, #48BBB8, #438AF1);
+    color: white;
+    width: 100%;
+    padding: 10px;
+    margin: 0 !important;
+    border-radius: 5px;
+}
+
 .whiteBg{
     background:white !important;
 }
@@ -302,6 +321,7 @@ input {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    background: rgba(0,0,0,0.5) !important;
 }
 
 .ReactModalPortal .ReactModal__Content{
@@ -314,12 +334,20 @@ input {
     border-top: 1px solid #ccc;
 }
 
+.bottom-border{
+    border-bottom: 1px solid #ccc;
+}
+
 .p10{
     padding:10px;
 }
 
 .m10-top{
     margin-top: 10px;
+}
+
+.m10{
+    margin:10px;
 }
 
 .upgrade-btn:hover {
@@ -364,6 +392,11 @@ input {
     text-transform: uppercase;
 }
 
+.scrollable-400{
+    max-height:400px;
+    overflow:auto;
+}
+
 .navbar-uniclix .brand {
     display: block;
     float: left;
@@ -376,6 +409,11 @@ input {
     padding: 7px 10px;
     text-align: center;
     text-decoration: none;
+}
+
+.navbar-uniclix .brand img{
+    width: 70px;
+    object-fit: contain;
 }
 
 .top-menu {
@@ -954,6 +992,14 @@ input {
     outline: none;
 }
 
+.account-img{
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border: 1px solid #ccc;
+    border-radius: 100px;
+}
+
 .mt20{
     margin-top:20px !important;
 }
@@ -993,6 +1039,10 @@ input {
     padding: 5px !important;
 }
 
+.ps10{
+    padding:0 10px !important;
+}
+
 .left-radius {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
@@ -1004,8 +1054,45 @@ input {
     margin: 0 auto;
 }
 
+.account-select-modal{
+    width:500px !important;
+    max-width:500px !important;
+    border:1px solid #ccc;
+    background:white;
+    margin:10px;
+}
+
+.account-items-wrapper{
+    max-height: 400px;
+    overflow: auto;
+}
+
+.account-item-container{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding:10px 30px;
+    width:100%;
+    max-height:400px;
+}
+
 .center-inline{
     text-align:center;
+}
+
+.remove-overlay{
+    background: red;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    display: none;
+    color: white;
+    text-align: center;
+    padding: 8px;
+}
+
+.compose-header li:hover > .remove-overlay{
+    display:block;
 }
 
 .right-radius{
@@ -1224,6 +1311,14 @@ aside .btn-group {
     font-family: open-sansSemiBold;
 }
 
+.kep-login-facebook {
+    font-size: 14px !important;
+    text-transform: capitalize !important;
+    padding: 12px !important;
+    margin: 10px !important;
+    border-radius: 5px !important;
+}
+
 /*Loader*/
 
 #overlay {
@@ -1347,6 +1442,24 @@ aside .btn-group {
     overflow:hidden;
 }
 
+.facebook_color{
+    color: #4267B2 !important;
+}
+
+.twitter_color{
+    color:#25A2F0 !important;
+}
+
+.facebook_bg{
+    background: #4267B2 !important;
+    color:#fff;
+}
+
+.twitter_bg{
+    background:#25A2F0 !important;
+    color:#fff;
+}
+
 .accounts-container__content__wrapper,
 .accounts-container__content__wrapper__footer{
     border: 1px solid #eee;
@@ -1378,6 +1491,20 @@ aside .btn-group {
     padding:10px 20px;
 }
 
+.account_box{
+    width:300px;
+    height:250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    margin: 10px;
+}
+
+.xl_font{
+    font-size: 70px !important;
+}
+
 .selection-container {
     display: block;
     position: relative;
@@ -1407,7 +1534,17 @@ aside .btn-group {
     height: 25px;
     width: 25px;
     background-color: #eee;
+}
+
+.round{
     border-radius: 50%;
+}
+
+.bg-heading{
+    padding: 10px;
+    cursor:pointer;
+    border: 1px solid #46b9e6;
+    color: #46b9e6;
 }
 
 /* On mouse-over, add a grey background color */

@@ -7,24 +7,38 @@ export const login = (token) => ({
     token
 });
 
-export const startLogin = (body) => {
+export const startLogin = (body, network = "twitter") => {
     return (dispatch) => {
+
+        let accessToken = null;
+        let accessTokenSecret = null;
+
+        if(network == "twitter"){
+
+            accessToken = body.oauth_token;
+            accessTokenSecret = body.oauth_token_secret;
+
+        }else if(network == "facebook"){
+
+            accessToken = body.accessToken;
+        }
+
         return axios.post(oathTokenUrl, {
                 grant_type: "social",
                 client_id: clientId,
                 client_secret: clientSecret,
-                network: "twitter",
-                access_token: body.oauth_token,
-                access_token_secret: body.oauth_token_secret
+                network,
+                access_token: accessToken,
+                access_token_secret: accessTokenSecret
             }).then((response) => {
                 const token = response.data.access_token;
                 localStorage.setItem("token", token);
                 setAuthorizationHeader(token);
                 dispatch(login(token));
-                return token;
+                return Promise.resolve(token);
             }).catch((error) => {
                 console.log(error);
-                return error;
+                return Promise.reject(error);
             });
     };
 };
