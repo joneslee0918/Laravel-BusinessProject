@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-const Article = ({article, setPost, postedArticle}) => {
+const Article = ({article, setPost, postedArticle, toggleTailoredPostModal}) => {
     if(article.posted == null){
 
         if(typeof(postedArticle) !== "undefined" && typeof(postedArticle.articleId) !== "undefined"){
@@ -29,14 +29,12 @@ const Article = ({article, setPost, postedArticle}) => {
                         <p className="card-text"><small className="text-muted">{article.source_url}</small></p>
                     </a>
                     <div className="center-inline">
-                        <button onClick={() => setPost(
-                            {
-                            content: `${article.url}`,
-                            images: [],
-                            type: 'store',
-                            refresh: false,
-                            articleId: article.id
-                            }) } className="upgrade-btn" data-toggle="modal" data-target="#compose">
+                        <button onClick={() => toggleTailoredPostModal({
+                            title: article.title, 
+                            image: article.image_url, 
+                            source: article.url,
+                            description: article.description
+                        }) } className="upgrade-btn">
                             
                             Share
                             

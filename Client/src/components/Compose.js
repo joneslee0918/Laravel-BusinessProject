@@ -19,6 +19,7 @@ import 'draft-js-mention-plugin/lib/plugin.css';
 import {hours, minutes, dayTime} from "../fixtures/time";
 import {setPost, setPostedArticle} from "../actions/posts";
 import {LoaderWithOverlay} from "./Loader";
+import SelectChannelsModal from "./SelectChannelsModal";
 
 
 class Compose extends React.Component{
@@ -65,8 +66,6 @@ class Compose extends React.Component{
         canSchedule: false,
         showCalendar: false,
         optionsMenu: false,
-        twitterSelect: false,
-        facebookSelect: false,
         letterCount: 0,
         pictures: [],
         loading: false,
@@ -174,18 +173,6 @@ class Compose extends React.Component{
         click();
     }
 
-    toggleTwitterSelect = () => {
-        this.setState(() => ({
-            twitterSelect: !this.state.twitterSelect
-        }));
-    };
-
-    toggleFacebookSelect = () => {
-        this.setState(() => ({
-            facebookSelect: !this.state.facebookSelect
-        }));
-    };
-
     setPublishChannels(){
         // const publishChannelStorage = JSON.parse(localStorage.getItem('publishChannels'));
         const publishChannels = this.props.channels;
@@ -244,10 +231,6 @@ class Compose extends React.Component{
                 }
             }
         });
-    };
-
-    onAddAccountsClick = () => {
-        window.location.href = "/accounts";
     };
 
     focus = () => {
@@ -396,9 +379,6 @@ class Compose extends React.Component{
         const { MentionSuggestions: HashtagSuggestions } = this.hashtagMentionPlugin;
         const plugins = [this.emojiPlugin, this.hashtagMentionPlugin];
 
-        const twitterChannels = channelSelector(this.state.publishChannels, {selected: undefined, provider: "twitter"});
-        const facebookChannels = channelSelector(this.state.publishChannels, {selected: undefined, provider: "facebook"});
-
         return (
             <div className="modal fade" id="compose" tabIndex="-1" data-backdrop="static" data-keyboard="false" role="dialog">
                 {(this.state.stored && this.state.refresh) && <Redirect to={location.pathname} />}
@@ -408,51 +388,9 @@ class Compose extends React.Component{
    
                     {this.state.selectChannelsModal ? 
                     
-                    <div className="modal-content">
-                    <button className="upgrade-btn m10" onClick={this.onAddAccountsClick}><i className="fa fa-plus"></i> Add accounts</button>
-                        <div className="modal-body scrollable-400">
-                            
-                            {!!twitterChannels.length &&
-                                <h3 className="bg-heading" onClick={this.toggleTwitterSelect}>
-                                <i className="fa fa-twitter"> </i> Twitter
-                                {this.state.twitterSelect ? <i className="fa fa-minus pull-right"> </i> : <i className="fa fa-plus pull-right"> </i> }
-                                </h3>
-                            }
-                            {!!twitterChannels.length && this.state.twitterSelect &&
-                                
-                                twitterChannels.map((channel) => (
-                                        <label key={channel.id} className="channel-item selection-container">
-                                            <input type="radio" onChange={() => this.onChannelSelectionChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="twitter_channel" />
-                                            <span className="checkmark round"></span>
-                                            <img className="avatar-box" src={channel.avatar} /> {channel.name}
-                                        </label>
-                                )
-                            )}
-
-                            {!!facebookChannels.length &&
-                                <h3 className="bg-heading" onClick={this.toggleFacebookSelect}>
-                                <i className="fa fa-facebook"> </i> Facebook
-                                {this.state.facebookSelect ? <i className="fa fa-minus pull-right"> </i> : <i className="fa fa-plus pull-right"> </i> }
-                                </h3>
-                            }
-                            {!!facebookChannels.length && this.state.facebookSelect &&
-                                
-                                facebookChannels.map((channel) => (
-                                        <label key={channel.id} className="channel-item selection-container">
-                                            <input type="checkbox" onChange={() => this.onChannelSelectionChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="facebook_channel" />
-                                            <span className="checkmark"></span>
-                                            <img className="avatar-box" src={channel.avatar} /> {channel.name}
-                                        </label>
-                                )
-                            )}
-                        </div>
-
-                        <div className="modal-footer">
-                            <div onClick={this.toggleSelectChannelsModal} className="publish-btn-group gradient-background-teal-blue link-cursor pull-right">
-                                <button className="publish-btn naked-button">Done</button>
-                            </div>
-                        </div>
-                    </div>
+                    <SelectChannelsModal channels={this.state.publishChannels} 
+                    onChannelSelectionChange={this.onChannelSelectionChange}
+                    toggleSelectChannelsModal={this.toggleSelectChannelsModal}/>
 
                     :
                         
