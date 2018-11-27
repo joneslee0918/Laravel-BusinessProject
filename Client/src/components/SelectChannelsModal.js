@@ -1,7 +1,8 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import channelSelector from '../selectors/channels';
 
-export default class SelectChannelsModal extends React.Component{
+class SelectChannelsModal extends React.Component{
 
     state = {
         twitterSelect: false,
@@ -26,7 +27,7 @@ export default class SelectChannelsModal extends React.Component{
 
     render(){
 
-        const {channels, onChannelSelectionChange, toggleSelectChannelsModal} = this.props;
+        const {channels, onChange, toggle} = this.props;
 
         const twitterChannels = channelSelector(channels, {selected: undefined, provider: "twitter"});
         const facebookChannels = channelSelector(channels, {selected: undefined, provider: "facebook"});
@@ -46,7 +47,7 @@ export default class SelectChannelsModal extends React.Component{
                         
                         twitterChannels.map((channel) => (
                                 <label key={channel.id} className="channel-item selection-container">
-                                    <input type="radio" onChange={() => onChannelSelectionChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="twitter_channel" />
+                                    <input type="radio" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="twitter_channel" />
                                     <span className="checkmark round"></span>
                                     <img className="avatar-box" src={channel.avatar} /> {channel.name}
                                 </label>
@@ -63,7 +64,7 @@ export default class SelectChannelsModal extends React.Component{
                         
                         facebookChannels.map((channel) => (
                                 <label key={channel.id} className="channel-item selection-container">
-                                    <input type="checkbox" onChange={() => onChannelSelectionChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="facebook_channel" />
+                                    <input type="checkbox" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="facebook_channel" />
                                     <span className="checkmark"></span>
                                     <img className="avatar-box" src={channel.avatar} /> {channel.name}
                                 </label>
@@ -72,7 +73,7 @@ export default class SelectChannelsModal extends React.Component{
                 </div>
         
                 <div className="modal-footer">
-                    <div onClick={toggleSelectChannelsModal} className="publish-btn-group gradient-background-teal-blue link-cursor pull-right">
+                    <div onClick={toggle} className="publish-btn-group gradient-background-teal-blue link-cursor pull-right">
                         <button className="publish-btn naked-button">Done</button>
                     </div>
                 </div>
@@ -80,3 +81,5 @@ export default class SelectChannelsModal extends React.Component{
         );
     }
 }
+
+export default SelectChannelsModal;

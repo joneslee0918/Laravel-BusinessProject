@@ -7,24 +7,9 @@ import SelectChannelsModal from './SelectChannelsModal';
 class TailoredPostModal extends React.Component{
 
     state = {
-        publishChannels: this.setPublishChannels(),
+        publishChannels: this.props.channels,
         selectChannelsModal: false
     };
-
-    componentDidUpdate(prevProps) {
-
-        if(prevProps.channels !== this.props.channels){
-            this.setState(() => ({
-                publishChannels: this.setPublishChannels()
-            }));
-        }
-    }
-    
-    setPublishChannels(){
-        // const publishChannelStorage = JSON.parse(localStorage.getItem('publishChannels'));
-        const publishChannels = this.props.channels;
-        return publishChannels;
-    }
 
     toggleSelectChannelsModal = () => {
 
@@ -75,9 +60,10 @@ class TailoredPostModal extends React.Component{
                     className="tailored-post-wrapper"
                     >   
                         <Modal isOpen={this.state.selectChannelsModal} ariaHideApp={false} className="modal-no-bg">
-                            <SelectChannelsModal channels={this.state.publishChannels} 
-                            onChannelSelectionChange={this.onChannelSelectionChange}
-                            toggleSelectChannelsModal={this.toggleSelectChannelsModal}/>
+                            <SelectChannelsModal 
+                            channels={this.state.publishChannels} 
+                            onChange={this.onChannelSelectionChange}
+                            toggle={this.toggleSelectChannelsModal}/>
                         </Modal>
                         <div className="tailored-post-container">
                             <div className="tailored-post-content">
@@ -134,8 +120,7 @@ const mapStateToProps = (state) => {
     const channels = channelSelector(state.channels.list, {selected: undefined, provider: undefined, publishable: true});
 
     return {
-        channels,
-        post: state.posts.post
+        channels
     }
 }
 

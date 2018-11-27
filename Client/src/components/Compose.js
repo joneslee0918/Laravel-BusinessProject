@@ -388,9 +388,10 @@ class Compose extends React.Component{
    
                     {this.state.selectChannelsModal ? 
                     
-                    <SelectChannelsModal channels={this.state.publishChannels} 
-                    onChannelSelectionChange={this.onChannelSelectionChange}
-                    toggleSelectChannelsModal={this.toggleSelectChannelsModal}/>
+                    <SelectChannelsModal 
+                    channels={this.state.publishChannels} 
+                    onChange={this.onChannelSelectionChange}
+                    toggle={this.toggleSelectChannelsModal}/>
 
                     :
                         
