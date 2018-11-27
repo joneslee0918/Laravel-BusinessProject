@@ -45,7 +45,7 @@ class Compose extends React.Component{
         type: 'store',
         hashtagSuggestions: hashtagSuggestionList,
         selectChannelsModal: false,
-        publishChannels: this.setPublishChannels(),
+        publishChannels: this.props.channels,
         publishState: {
             name: "Post at Best Time",
             value: "best"
@@ -132,7 +132,7 @@ class Compose extends React.Component{
 
         if(prevProps.channels !== this.props.channels){
             this.setState(() => ({
-                publishChannels: this.setPublishChannels()
+                publishChannels: this.props.channels
             }));
         }
     }
@@ -171,12 +171,6 @@ class Compose extends React.Component{
         inputElement.
         previousSibling.
         click();
-    }
-
-    setPublishChannels(){
-        // const publishChannelStorage = JSON.parse(localStorage.getItem('publishChannels'));
-        const publishChannels = this.props.channels;
-        return publishChannels;
     }
 
     setPublishState = (publishState, close = false) => {

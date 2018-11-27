@@ -11,6 +11,15 @@ class TailoredPostModal extends React.Component{
         selectChannelsModal: false
     };
 
+    componentDidUpdate(prevProps) {
+
+        if(prevProps.channels !== this.props.channels){
+            this.setState(() => ({
+                publishChannels: this.props.channels
+            }));
+        }
+    }
+
     toggleSelectChannelsModal = () => {
 
         if(this.state.selectChannelsModal){
