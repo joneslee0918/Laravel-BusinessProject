@@ -1,23 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import {Modifier, EditorState} from 'draft-js';
+import { Redirect, Link } from 'react-router-dom';
+import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
+import createEmojiPlugin from 'draft-js-emoji-plugin';
+import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import Popup from "reactjs-popup";
+import ImageUploader from 'react-images-browse/src/component/compiled';
 import moment from "moment";
 import momentTz from "moment-timezone";
 import 'react-dates/initialize';
 import {SingleDatePicker} from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import DraftEditor from './DraftEditor';
 import channelSelector from '../selectors/channels';
+import hashtagSuggestionList from '../fixtures/hashtagSuggestions';
 import {publish} from '../requests/channels';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import {hours, minutes, dayTime} from "../fixtures/time";
 import {setPost, setPostedArticle} from "../actions/posts";
 import {LoaderWithOverlay} from "./Loader";
-import SelectChannelsModal from "./SelectChannelsModal";
 
 
 class Compose extends React.Component{
+
+    emojiPlugin = createEmojiPlugin();
+    imageIcon = React.createRef();
+    hashtagMentionPlugin = createMentionPlugin({
+        mentionPrefix: "#",
+        mentionTrigger: "#"
+    });
 
     defaultPost = {
         id: "",
@@ -29,10 +40,11 @@ class Compose extends React.Component{
     };
 
     defaultState = {
-        content: "",
+        editorState: createEditorStateWithText(''),
         type: 'store',
+        hashtagSuggestions: hashtagSuggestionList,
         selectChannelsModal: false,
-        publishChannels: this.props.channels,
+        publishChannels: this.setPublishChannels(),
         publishState: {
             name: "Post at Best Time",
             value: "best"
@@ -53,6 +65,8 @@ class Compose extends React.Component{
         canSchedule: false,
         showCalendar: false,
         optionsMenu: false,
+        twitterSelect: false,
+        facebookSelect: false,
         letterCount: 0,
         pictures: [],
         loading: false,
@@ -96,6 +110,8 @@ class Compose extends React.Component{
             }
 
             this.setState(() => ({
+                editorState: createEditorStateWithText(this.props.post.content),
+                pictures: this.props.post.images,
                 postDate: moment(postDate),
                 type: this.props.post ? this.props.post.type : "store",
                 calendarData: {
@@ -117,23 +133,10 @@ class Compose extends React.Component{
 
         if(prevProps.channels !== this.props.channels){
             this.setState(() => ({
-                publishChannels: this.props.channels
+                publishChannels: this.setPublishChannels()
             }));
         }
     }
-
-    updateContent = (content = "") => {
-        this.setState(() => ({
-            content: content,
-            letterCount: content.length
-        }));
-    };
-
-    updatePictures = (pictures = []) => {
-        this.setState(() => ({
-            pictures: pictures
-        }));
-    };
 
     onChannelSelectionChange = (obj) => {
 
@@ -164,6 +167,31 @@ class Compose extends React.Component{
         }));
     };
 
+    onImageIconClick = () => {
+        this.imageIcon.current.
+        inputElement.
+        previousSibling.
+        click();
+    }
+
+    toggleTwitterSelect = () => {
+        this.setState(() => ({
+            twitterSelect: !this.state.twitterSelect
+        }));
+    };
+
+    toggleFacebookSelect = () => {
+        this.setState(() => ({
+            facebookSelect: !this.state.facebookSelect
+        }));
+    };
+
+    setPublishChannels(){
+        // const publishChannelStorage = JSON.parse(localStorage.getItem('publishChannels'));
+        const publishChannels = this.props.channels;
+        return publishChannels;
+    }
+
     setPublishState = (publishState, close = false) => {
 
         this.setState(() => ({
@@ -174,7 +202,7 @@ class Compose extends React.Component{
                 close(); 
             }
         });
-    };
+    }
 
     setPublishTimestamp = () => {
         const postDate = this.state.postDate;
@@ -201,6 +229,41 @@ class Compose extends React.Component{
         });
     };
 
+    onChange = (editorState) => {
+        this.setState(() => ({
+            editorState,
+            letterCount: editorState.getCurrentContent().getPlainText().length
+        }));
+    };
+
+    onDrop = (pictures, pictureDataUrls) => {
+        this.setState((prevState) => {
+            if(prevState.pictures !== pictures){
+                return {
+                    pictures: pictureDataUrls
+                }
+            }
+        });
+    };
+
+    onAddAccountsClick = () => {
+        window.location.href = "/accounts";
+    };
+
+    focus = () => {
+        this.editor.focus();
+    };
+
+    onHashtagSearchChange = ({ value }) => {
+        this.setState(() => ({
+            hashtagSuggestions: defaultSuggestionsFilter(value, hashtagSuggestionList)
+        }));
+    };
+
+    onAddMention = (mention) => {
+        //console.log('mention', mention)
+    };
+
     onDateChange = (postDate) => {
         this.setState(() => ({postDate}), () => this.setPublishTimestamp());
     };
@@ -221,10 +284,21 @@ class Compose extends React.Component{
         this.setState(() => ({
             selectChannelsModal: !this.state.selectChannelsModal
         }));
-    };
+    }
 
     toggleOptionsMenu = () => {
         this.setState(() => ({optionsMenu: !this.state.optionsMenu}));
+    }
+
+    onHashIconClick = () => {
+        const editorState = this.state.editorState;
+        const selection = editorState.getSelection();
+        const contentState = editorState.getCurrentContent();
+        const ncs = Modifier.insertText(contentState, selection, "#");
+        const es = EditorState.push(editorState, ncs, 'insert-fragment');
+        this.setState(() => ({
+            editorState: es
+        }), () => this.focus());
     };
 
     onHourChange = (e) => {
@@ -265,7 +339,8 @@ class Compose extends React.Component{
     };
 
     publish = () => {
-        const content = this.state.content;
+        const editorState = this.state.editorState;
+        const content = editorState.getCurrentContent().getPlainText();
         const type = this.state.type;
         const id = this.props.post ? this.props.post.id : "";
         const articleId = this.props.post && typeof(this.props.post.articleId) !== "undefined" ? this.props.post.articleId : "";
@@ -317,9 +392,12 @@ class Compose extends React.Component{
     }
 
     render(){
+        const { EmojiSuggestions, EmojiSelect} = this.emojiPlugin;
+        const { MentionSuggestions: HashtagSuggestions } = this.hashtagMentionPlugin;
+        const plugins = [this.emojiPlugin, this.hashtagMentionPlugin];
 
-        const scheduledLabel = (this.state.canSchedule && this.state.publishState.value === "date") 
-        && <div className="schedule-info">{`Scheduled: ${moment(this.state.publishDateTime).format("DD MMMM YYYY hh:mmA")}`}</div>;
+        const twitterChannels = channelSelector(this.state.publishChannels, {selected: undefined, provider: "twitter"});
+        const facebookChannels = channelSelector(this.state.publishChannels, {selected: undefined, provider: "facebook"});
 
         return (
             <div className="modal fade" id="compose" tabIndex="-1" data-backdrop="static" data-keyboard="false" role="dialog">
@@ -330,10 +408,51 @@ class Compose extends React.Component{
    
                     {this.state.selectChannelsModal ? 
                     
-                    <SelectChannelsModal 
-                    channels={this.state.publishChannels} 
-                    onChange={this.onChannelSelectionChange}
-                    toggle={this.toggleSelectChannelsModal}/>
+                    <div className="modal-content">
+                    <button className="upgrade-btn m10" onClick={this.onAddAccountsClick}><i className="fa fa-plus"></i> Add accounts</button>
+                        <div className="modal-body scrollable-400">
+                            
+                            {!!twitterChannels.length &&
+                                <h3 className="bg-heading" onClick={this.toggleTwitterSelect}>
+                                <i className="fa fa-twitter"> </i> Twitter
+                                {this.state.twitterSelect ? <i className="fa fa-minus pull-right"> </i> : <i className="fa fa-plus pull-right"> </i> }
+                                </h3>
+                            }
+                            {!!twitterChannels.length && this.state.twitterSelect &&
+                                
+                                twitterChannels.map((channel) => (
+                                        <label key={channel.id} className="channel-item selection-container">
+                                            <input type="radio" onChange={() => this.onChannelSelectionChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="twitter_channel" />
+                                            <span className="checkmark round"></span>
+                                            <img className="avatar-box" src={channel.avatar} /> {channel.name}
+                                        </label>
+                                )
+                            )}
+
+                            {!!facebookChannels.length &&
+                                <h3 className="bg-heading" onClick={this.toggleFacebookSelect}>
+                                <i className="fa fa-facebook"> </i> Facebook
+                                {this.state.facebookSelect ? <i className="fa fa-minus pull-right"> </i> : <i className="fa fa-plus pull-right"> </i> }
+                                </h3>
+                            }
+                            {!!facebookChannels.length && this.state.facebookSelect &&
+                                
+                                facebookChannels.map((channel) => (
+                                        <label key={channel.id} className="channel-item selection-container">
+                                            <input type="checkbox" onChange={() => this.onChannelSelectionChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="facebook_channel" />
+                                            <span className="checkmark"></span>
+                                            <img className="avatar-box" src={channel.avatar} /> {channel.name}
+                                        </label>
+                                )
+                            )}
+                        </div>
+
+                        <div className="modal-footer">
+                            <div onClick={this.toggleSelectChannelsModal} className="publish-btn-group gradient-background-teal-blue link-cursor pull-right">
+                                <button className="publish-btn naked-button">Done</button>
+                            </div>
+                        </div>
+                    </div>
 
                     :
                         
@@ -354,13 +473,49 @@ class Compose extends React.Component{
                             </ul>
                         </div>
 
-                        <DraftEditor 
-                            scheduledLabel={scheduledLabel}
-                            onChange={this.updateContent}
-                            onImagesChange={this.updatePictures}
-                            content={this.state.content}
-                            pictures={this.state.pictures}
-                        />
+                        <div className="modal-body">
+                            <form id="draft_form">
+                            <div>
+                                <div className="editor" onClick={this.focus}>
+                                    {(this.state.canSchedule && this.state.publishState.value === "date") 
+                                    && <div className="schedule-info">{`Scheduled: ${moment(this.state.publishDateTime).format("DD MMMM YYYY hh:mmA")}`}</div>}
+                                    <Editor
+                                        editorState={this.state.editorState}
+                                        onChange={this.onChange}
+                                        plugins={plugins}
+                                        placeholder="What's on your mind?"
+                                        ref={(element) => { this.editor = element; }}
+                                    />
+                                    <ImageUploader
+                                        withIcon={false}
+                                        buttonText=''
+                                        onChange={this.onDrop}
+                                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                                        maxFileSize={5242880}
+                                        withPreview={true}
+                                        withLabel={false}
+                                        buttonClassName='dnone'
+                                        ref={this.imageIcon}
+                                        defaultImages={this.state.pictures}
+                                    />
+
+                                    <EmojiSuggestions />
+                                    <HashtagSuggestions
+                                        onSearchChange={this.onHashtagSearchChange}
+                                        suggestions={this.state.hashtagSuggestions}
+                                        onAddMention={this.onAddMention}
+                                        onClose={() => this.setState({ ...this, suggestions: hashtagSuggestionList })}
+                                    />
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                        <div className="editor-icons">
+                            <i onClick={this.onImageIconClick} className="fa fa-image upload-images"></i>
+                            {/* <i className="fa fa-map-marker add-location"></i> */}
+                            <EmojiSelect />
+                            <i onClick={this.onHashIconClick} className="fa fa-hashtag add-hashtag"></i>
+                        </div>
 
                         <div className="modal-footer" style={{position:"relative"}}>
                             <div className="publish-group gradient-background-teal-blue link-cursor">
