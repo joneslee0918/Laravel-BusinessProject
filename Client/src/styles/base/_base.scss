@@ -369,6 +369,15 @@ input {
     margin: 10px;
 }
 
+.modal-bg-radius{
+    width: 530px !important;
+    max-width: 530px !important;
+    background: white !important;
+    border: none !important;
+    border-radius:5px !important;
+    margin: 10px;
+}
+
 .tailored-post-card{
     width: 250px;
     height: 90%;
@@ -934,7 +943,7 @@ input {
 .publish-group{
     border-radius: 20px;
     float:left;
-    width: 180px;
+    width: 185px;
     height:35px;
     font-family: open-sansSemiBold, sans-serif;
     color: white;

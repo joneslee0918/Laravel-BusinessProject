@@ -3,12 +3,18 @@ import {connect} from 'react-redux';
 import Modal from 'react-modal';
 import channelSelector from '../selectors/channels';
 import SelectChannelsModal from './SelectChannelsModal';
+import DraftEditor from './DraftEditor';
+import PublishButton from './PublishButton';
 
 class TailoredPostModal extends React.Component{
 
     state = {
         publishChannels: this.props.channels,
-        selectChannelsModal: false
+        selectChannelsModal: false,
+        draftEditorModal: false,
+        content: "",
+        pictures: [],
+        restricted: false
     };
 
     componentDidUpdate(prevProps) {
@@ -29,7 +35,26 @@ class TailoredPostModal extends React.Component{
         this.setState(() => ({
             selectChannelsModal: !this.state.selectChannelsModal
         }));
-    }
+    };
+
+    toggleDraftEditorModal = () => {
+        this.setState(() => ({
+            draftEditorModal: !this.state.draftEditorModal
+        }));
+    };
+
+    updateContent = (content = "") => {
+        this.setState(() => ({
+            content: content,
+            letterCount: content.length
+        }));
+    };
+
+    updatePictures = (pictures = []) => {
+        this.setState(() => ({
+            pictures: pictures
+        }));
+    };
 
     onChannelSelectionChange = (obj) => {
 
@@ -60,8 +85,13 @@ class TailoredPostModal extends React.Component{
         }));
     };
 
+    publish = (scheduled, publishType) => {
+
+    };
+
     render(){
         const {title, image, source, description, isOpen, toggleTailoredPostModal} = this.props;
+        const selectedChannels = channelSelector(this.state.publishChannels, {selected: true, provider: undefined});
         return  (
                     <Modal 
                     isOpen={isOpen}
@@ -74,6 +104,19 @@ class TailoredPostModal extends React.Component{
                             onChange={this.onChannelSelectionChange}
                             toggle={this.toggleSelectChannelsModal}/>
                         </Modal>
+
+                        <Modal isOpen={this.state.draftEditorModal} ariaHideApp={false} className="modal-bg-radius">
+                            <DraftEditor 
+                                onChange={this.updateContent}
+                                onImagesChange={this.updatePictures}
+                                content={this.state.content}
+                                pictures={this.state.pictures}
+                                toggle={this.toggleDraftEditorModal}
+                                onDone={this.toggleDraftEditorModal}
+                                inclusive={true}
+                            />
+                        </Modal>
+
                         <div className="tailored-post-container">
                             <div className="tailored-post-content">
                                 <TailoredPostCard 
@@ -81,6 +124,9 @@ class TailoredPostModal extends React.Component{
                                     title={title}
                                     image={image}
                                     source={source}
+                                    selectedChannels={selectedChannels}
+                                    onOverlayClick={this.toggleSelectChannelsModal}
+                                    onEditClick={this.toggleDraftEditorModal}
                                 />
 
                                 <TailoredPostCard 
@@ -88,6 +134,9 @@ class TailoredPostModal extends React.Component{
                                     title={title}
                                     image={image}
                                     source={source}
+                                    selectedChannels={selectedChannels}
+                                    onOverlayClick={this.toggleSelectChannelsModal}
+                                    onEditClick={this.toggleDraftEditorModal}
                                 />
 
                             </div>
@@ -105,11 +154,11 @@ class TailoredPostModal extends React.Component{
                                         ))}
 
                                     </ul>
-                                    <div className="publish-group gradient-background-teal-blue link-cursor">
-                                        <button className={`publish-btn naked-button half-btn`}>
-                                            Publish now
-                                        </button>
-                                    </div>
+                                    <PublishButton 
+                                        action={this.publish} 
+                                        onChange={this.updateScheduledLabel}
+                                        restricted={this.state.restricted}
+                                    />
 
                                 </div>
 
@@ -135,11 +184,11 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps)(TailoredPostModal);
 
-const TailoredPostCard = ({network, title, image, source}) => (
+const TailoredPostCard = ({network, title, image, source, selectedChannels, onOverlayClick, onEditClick}) => (
     <div className="tailored-post-card">
 
     <div className="tailored-post-card-content">
-            <div className="tailored-post-preview">
+            <div onClick={onEditClick} className="tailored-post-preview">
 
                 <div className="tailored-post-preview__header">
                     <i className={ `socialIcon fa fa-${network} ${network}_bg`}></i>
@@ -166,21 +215,24 @@ const TailoredPostCard = ({network, title, image, source}) => (
                     </div>
                 </div>
             </div>
-            <div className="tailored-post-overlay flex-center-v">
-                
-                <div>
-                    <div className="flex-center-h">
-                        <i className={`overlaySocialIcon fa fa-${network} ${network}_color`}></i>
-                    </div>
-                    <div className="flex-center-h center-inline p10">
-                        Let's reach more people by posting on {network}
-                    </div>
-                    <div className="flex-center-h">
-                        <button className={`connectButton btn ${network}_bg normalizeText`}>Add {network}</button>
-                    </div>
-                </div>
 
-            </div>
+            {!(!!channelSelector(selectedChannels, {selected: undefined, provider: network}).length) &&
+                <div onClick={onOverlayClick} className="tailored-post-overlay flex-center-v">
+                
+                    <div>
+                        <div className="flex-center-h">
+                            <i className={`overlaySocialIcon fa fa-${network} ${network}_color`}></i>
+                        </div>
+                        <div className="flex-center-h center-inline p10">
+                            Let's reach more people by posting on {network}
+                        </div>
+                        <div className="flex-center-h">
+                            <button className={`connectButton btn ${network}_bg normalizeText`}>Add {network}</button>
+                        </div>
+                    </div>
+
+                </div>
+            }
         </div>
     </div>
 );

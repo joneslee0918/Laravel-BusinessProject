@@ -83,9 +83,11 @@ class PublishButton extends React.Component{
             if(this.state.canSchedule && this.state.publishState.value === "date"){
                 scheduledLabel = `Scheduled: ${moment(this.state.publishDateTime).format("DD MMMM YYYY hh:mmA")}`;
             }
-
-            this.props.onChange(scheduledLabel);
-
+            
+            if(typeof this.props.onChange !== "undefined"){
+                this.props.onChange(scheduledLabel);
+            }
+            
             if(close){
                 close(); 
             }

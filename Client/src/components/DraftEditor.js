@@ -6,7 +6,9 @@ import createEmojiPlugin from 'draft-js-emoji-plugin';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import ImageUploader from 'react-images-browse/src/component/compiled';
+import moment from "moment";
 import hashtagSuggestionList from '../fixtures/hashtagSuggestions';
+import {setPost} from "../actions/posts";
 
 
 class DraftEditor extends React.Component{
@@ -18,6 +20,15 @@ class DraftEditor extends React.Component{
         mentionTrigger: "#"
     });
 
+    defaultPost = {
+        id: "",
+        content: "", 
+        type: "store",
+        images: [],
+        scheduled_at: moment(),
+        scheduled_at_original: moment()
+    };
+    
     state = {
         editorState: createEditorStateWithText(this.props.content),
         hashtagSuggestions: hashtagSuggestionList,
@@ -94,10 +105,18 @@ class DraftEditor extends React.Component{
         const { EmojiSuggestions, EmojiSelect} = this.emojiPlugin;
         const { MentionSuggestions: HashtagSuggestions } = this.hashtagMentionPlugin;
         const plugins = [this.emojiPlugin, this.hashtagMentionPlugin];
-        const {scheduledLabel} = this.props;
+        const {scheduledLabel, inclusive, toggle, onDone} = this.props;
 
         return(
             <div>
+
+                {inclusive &&
+                    <div className="modal-header">
+                            <button type="button" id="closeModal" onClick={toggle} className="close fa fa-times-circle" data-dismiss="modal"></button>
+                            <h4>Editing</h4>
+                    </div>
+                }
+
                 <div className="modal-body">
                     <form id="draft_form">
                         <div>
@@ -142,6 +161,15 @@ class DraftEditor extends React.Component{
                     <EmojiSelect />
                     <i onClick={this.onHashIconClick} className="fa fa-hashtag add-hashtag"></i>
                 </div>
+
+                {inclusive && 
+                    <div className="modal-footer" style={{position:"relative"}}>
+                    
+                        <p className={`letter-count pull-left ${this.state.letterCount > 280 ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
+
+                        <button onClick={toggle} className="upgrade-btn pull-right">Done</button>
+                    </div>
+                }
             </div>
         );
     }
@@ -153,4 +181,8 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps)(DraftEditor);
+const mapDispatchToProps = (dispatch) => ({
+    setPost: (post) => dispatch(setPost(post))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DraftEditor);

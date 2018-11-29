@@ -81,11 +81,14 @@ class Compose extends React.Component{
     }
 
     setRestrictions = () => {
+
+        const selectedChannels = channelSelector(this.state.publishChannels, {selected: true, provider: undefined});
+
         const restricted = !((this.state.letterCount > 0 || this.state.pictures.length > 0)
-                && channelSelector(this.state.publishChannels, {selected: true, provider: undefined}).length);
+                && selectedChannels.length);
 
         const twitterRestricted = (this.state.letterCount > 280 || this.state.pictures.length > 4) 
-        && channelSelector(this.state.publishChannels, {selected: true, provider: "twitter"}).length;
+        && channelSelector(selectedChannels, {selected: undefined, provider: "twitter"}).length;
 
 
         this.setState(() => ({
