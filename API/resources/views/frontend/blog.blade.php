@@ -3,153 +3,202 @@
 @section('content')
 <div id="banner">
 	<div class="container">
-		<h1>Blog</h1>
-		<p>Manuals take time. These videos will get you started instantly.</p>
+		<h1>Watch these videos to lern all what you need about how uniclix works.</h1>
+		<a href="">BLOG</a>
 	</div>
 </div>
 
-<div class="container mt100">
-	<div class="row mb30">
-		<div class="col-xs-12">
-			<div class="blog-post panel-shadow">
-				<div class="blog-post-image fleft">
-					<img src="{{asset('images/blog-img-7.png')}}" class="img-responsive w100">
-				</div>
-				<div class="blog-post-content fright">
-					<h4>Take care of yourself</h4>
-					<div class="blog-post-date"><span class="blog-post-author">Uniclix</span><span>30.01.2019</span></div>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean feugiat dictum lacus, ut hendrerit mi pulvinar vel. Fusce id nibh at neque eleifend tristique at sit amet libero. In aliquam in nisl nec sollicitudin. Sed consectetur volutpat sem vitae facilisis...</p>
-					<div class="blog-post-footer">
-						<div class="blog-post-share">
-							<span class="blog-post-span-1">Share:</span> 
-							<span class="blog-post-span-2">
-								<ul class="list-inline blog-post-social">
-		                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-		                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-		                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-		                        </ul>
-                    		</span>
+<div class="container">
+	<div class="row mt100 mb100">
+		<div class="col-md-8 col-xs-12">
+			<div class="row">
+				<div class="col-md-6 col-xs-12">
+					<div class="blog-panel panel-shadow">
+						<div class="blog-panel-image">
+							<img class="img-responsive" src="{{asset('images/blog-img-1.png')}}">
+							<span class="blog-category"><a href="#" class="compose-btn category-span">Category Name</a></span>
 						</div>
-						<div class="blog-post-show-more">
-							<a href="{{route('article')}}" class="theme-btn-transparent">Read more</a>
+						<div class="blog-panel-content">
+							<a href="{{route('article')}}"><h4>Fusce porttitor velit sapien, eget hendrerit libero sodales</h4></a>
+							<p class="pt20">Quisque sed fermentum felis, congue dictum ligula. Vivamus lobortis iaculis accumsan. Nulla ut risus molestie, pulvinar justo in..</p>
+							<p class="pt20 blog-date"> - June 21,2018</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-xs-12">
+					<div class="blog-panel panel-shadow">
+						<div class="blog-panel-image">
+							<img class="img-responsive" src="{{asset('images/blog-img-2.png')}}">
+							<span class="blog-category"><a href="#" class="compose-btn category-span">Category Name</a></span>
+						</div>
+						<div class="blog-panel-content">
+							<a href="{{route('article')}}"><h4>Fusce porttitor velit sapien, eget hendrerit libero sodales</h4></a>
+							<p class="pt20">Quisque sed fermentum felis, congue dictum ligula. Vivamus lobortis iaculis accumsan. Nulla ut risus molestie, pulvinar justo in..</p>
+							<p class="pt20 blog-date"> - June 21,2018</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mt30">
+				<div class="col-md-6 col-xs-12">
+					<div class="blog-panel panel-shadow">
+						<div class="blog-panel-image">
+							<img class="img-responsive" src="{{asset('images/blog-img-3.png')}}">
+							<span class="blog-category"><a href="#" class="compose-btn category-span">Category Name</a></span>
+						</div>
+						<div class="blog-panel-content">
+							<a href="{{route('article')}}"><h4>Fusce porttitor velit sapien, eget hendrerit libero sodales</h4></a>
+							<p class="pt20">Quisque sed fermentum felis, congue dictum ligula. Vivamus lobortis iaculis accumsan. Nulla ut risus molestie, pulvinar justo in..</p>
+							<p class="pt20 blog-date"> - June 21,2018</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-xs-12">
+					<div class="blog-panel panel-shadow">
+						<div class="blog-panel-image">
+							<img class="img-responsive" src="{{asset('images/blog-img-4.png')}}">
+							<span class="blog-category"><a href="#" class="compose-btn category-span">Category Name</a></span>
+						</div>
+						<div class="blog-panel-content">
+							<a href="{{route('article')}}"><h4>Fusce porttitor velit sapien, eget hendrerit libero sodales</h4></a>
+							<p class="pt20">Quisque sed fermentum felis, congue dictum ligula. Vivamus lobortis iaculis accumsan. Nulla ut risus molestie, pulvinar justo in..</p>
+							<p class="pt20 blog-date"> - June 21,2018</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mt30">
+				<div class="col-md-6 col-xs-12">
+					<div class="blog-panel panel-shadow">
+						<div class="blog-panel-image">
+							<img class="img-responsive" src="{{asset('images/blog-img-5.png')}}">
+							<span class="blog-category"><a href="#" class="compose-btn category-span">Category Name</a></span>
+						</div>
+						<div class="blog-panel-content">
+							<a href="{{route('article')}}"><h4>Fusce porttitor velit sapien, eget hendrerit libero sodales</h4></a>
+							<p class="pt20">Quisque sed fermentum felis, congue dictum ligula. Vivamus lobortis iaculis accumsan. Nulla ut risus molestie, pulvinar justo in..</p>
+							<p class="pt20 blog-date"> - June 21,2018</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-xs-12">
+					<div class="blog-panel panel-shadow">
+						<div class="blog-panel-image">
+							<img class="img-responsive" src="{{asset('images/blog-img-6.png')}}">
+							<span class="blog-category"><a href="#" class="compose-btn category-span">Category Name</a></span>
+						</div>
+						<div class="blog-panel-content">
+							<a href="{{route('article')}}"><h4>Fusce porttitor velit sapien, eget hendrerit libero sodales</h4></a>
+							<p class="pt20">Quisque sed fermentum felis, congue dictum ligula. Vivamus lobortis iaculis accumsan. Nulla ut risus molestie, pulvinar justo in..</p>
+							<p class="pt20 blog-date"> - June 21,2018</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row mb30">
-		<div class="col-xs-12">
-			<div class="blog-post panel-shadow">	
-				<div class="blog-post-image fright">
-					<img src="{{asset('images/blog-img-8.png')}}" class="img-responsive w100">
-				</div>			
-				<div class="blog-post-content fleft">
-					<h4>Take care of yourself</h4>
-					<div class="blog-post-date"><span class="blog-post-author">Uniclix</span><span>30.01.2019</span></div>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean feugiat dictum lacus, ut hendrerit mi pulvinar vel. Fusce id nibh at neque eleifend tristique at sit amet libero. In aliquam in nisl nec sollicitudin. Sed consectetur volutpat sem vitae facilisis...</p>
-					<div class="blog-post-footer">
-						<div class="blog-post-share">
-							<span class="blog-post-span-1">Share:</span> 
-							<span class="blog-post-span-2">
-								<ul class="list-inline blog-post-social">
-		                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-		                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-		                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-		                        </ul>
-                    		</span>
-						</div>
-						<div class="blog-post-show-more">
-							<a href="#" class="theme-btn-transparent">Read more</a>
-						</div>
-					</div>
-				</div>				
-			</div>
-		</div>
-	</div>
-	<div class="row mb30">
-		<div class="col-xs-12">
-			<div class="blog-post panel-shadow">
-				<div class="blog-post-image fleft">
-					<img src="{{asset('images/blog-img-9.png')}}" class="img-responsive w100">
-				</div>
-				<div class="blog-post-content fright">
-					<h4>Take care of yourself</h4>
-					<div class="blog-post-date"><span class="blog-post-author">Uniclix</span><span>30.01.2019</span></div>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean feugiat dictum lacus, ut hendrerit mi pulvinar vel. Fusce id nibh at neque eleifend tristique at sit amet libero. In aliquam in nisl nec sollicitudin. Sed consectetur volutpat sem vitae facilisis...</p>
-					<div class="blog-post-footer">
-						<div class="blog-post-share">
-							<span class="blog-post-span-1">Share:</span> 
-							<span class="blog-post-span-2">
-								<ul class="list-inline blog-post-social">
-		                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-		                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-		                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-		                        </ul>
-                    		</span>
-						</div>
-						<div class="blog-post-show-more">
-							<a href="#" class="theme-btn-transparent">Read more</a>
-						</div>
-					</div>
+		<div class="col-md-4 col-xs-12">
+			<div class="row">
+				<div class="col-xs-12">
+					<input type="text" name="search" class="search-input" placeholder="Search...">
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="row mb30">
-		<div class="col-xs-12">
-			<div class="blog-post panel-shadow">	
-				<div class="blog-post-image fright">
-					<img src="{{asset('images/blog-img-10.png')}}" class="img-responsive w100">
-				</div>			
-				<div class="blog-post-content fleft">
-					<h4>Take care of yourself</h4>
-					<div class="blog-post-date"><span class="blog-post-author">Uniclix</span><span>30.01.2019</span></div>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean feugiat dictum lacus, ut hendrerit mi pulvinar vel. Fusce id nibh at neque eleifend tristique at sit amet libero. In aliquam in nisl nec sollicitudin. Sed consectetur volutpat sem vitae facilisis...</p>
-					<div class="blog-post-footer">
-						<div class="blog-post-share">
-							<span class="blog-post-span-1">Share:</span> 
-							<span class="blog-post-span-2">
-								<ul class="list-inline blog-post-social">
-		                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-		                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-		                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-		                        </ul>
-                    		</span>
+			<div class="row mt30">
+				<div class="col-xs-12">
+					<div class="recent-posts">
+						<h5 class="fw700">RECENT POSTS</h5>
+						<div class="row mb20">
+							<div class="col-xs-3">
+								<div class="rp-image"><img class="img-responsive" src="{{asset('images/rp-image-1.png')}}"></div>
+							</div>
+							<div class="col-xs-9">
+								<p class="fw700">Curabitur diam libero, iaculis ac dictum non, faucibus at sapien</p>
+								<p class="fs12"> - June 21,2018</p>
+							</div>
 						</div>
-						<div class="blog-post-show-more">
-							<a href="#" class="theme-btn-transparent">Read more</a>
+						<div class="row mb20">
+							<div class="col-xs-3">
+								<div class="rp-image"><img class="img-responsive" src="{{asset('images/rp-image-1.png')}}"></div>
+							</div>
+							<div class="col-xs-9">
+								<p class="fw700">Aenean quis enim eget tellus pretium laoreet</p>
+								<p class="fs12"> - June 21,2018</p>
+							</div>
+						</div>
+						<div class="row mb20">
+							<div class="col-xs-3">
+								<div class="rp-image"><img class="img-responsive" src="{{asset('images/rp-image-1.png')}}"></div>
+							</div>
+							<div class="col-xs-9">
+								<p class="fw700">Curabitur diam libero, iaculis ac dictum non, faucibus at sapien</p>
+								<p class="fs12"> - June 21,2018</p>
+							</div>
+						</div>
+						<div class="row mb20">
+							<div class="col-xs-3">
+								<div class="rp-image"><img class="img-responsive" src="{{asset('images/rp-image-1.png')}}"></div>
+							</div>
+							<div class="col-xs-9">
+								<p class="fw700">Curabitur diam libero, iaculis ac dictum non, faucibus at sapien</p>
+								<p class="fs12"> - June 21,2018</p>
+							</div>
+						</div>
+						<div class="row mb20">
+							<div class="col-xs-3">
+								<div class="rp-image"><img class="img-responsive" src="{{asset('images/rp-image-1.png')}}"></div>
+							</div>
+							<div class="col-xs-9">
+								<p class="fw700">Curabitur diam libero, iaculis ac dictum non, faucibus at sapien</p>
+								<p class="fs12"> - June 21,2018</p>
+							</div>
 						</div>
 					</div>
-				</div>				
+				</div>
 			</div>
-		</div>
-	</div>
-	<div class="row mb70 text-right">
-		<div class="col-xs-12 blog-pagination">
-			<nav aria-label="Page navigation example">
-			  <ul class="pagination">
-			    <li class="page-item">
-			      <a class="page-link" href="#" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			        <span class="sr-only">Previous</span>
-			      </a>
-			    </li>
-			    <li class="page-item"><a class="page-link" href="#">1</a></li>
-			    <li class="page-item"><a class="page-link" href="#">2</a></li>
-			    <li class="page-item"><a class="page-link" href="#">3</a></li>
-			    <li class="page-item">
-			      <a class="page-link" href="#" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			        <span class="sr-only">Next</span>
-			      </a>
-			    </li>
-			  </ul>
-			</nav>
+			<div class="row mt30">
+				<div class="col-xs-12">
+					<h5 class="fw700">CATEGORIES</h5>
+					<p>> First Category(5)</p>
+					<p>> Second Category(11)</p>
+					<p>> Third Category(3)</p>
+				</div>
+			</div>
+			<div class="row mt30">
+				<div class="col-xs-12">
+					<h5 class="fw700">ARCHIVES</h5>
+					<p>> June 2018(3)</p>
+					<p>> May 2018(3)</p>
+					<p>> April 2018(3)</p>
+					<p>> March 2018(3)</p>
+					<p>> February 2018(3)</p>
+					<p>> January 2018(3)</p>
+				</div>
+			</div>
+			<div class="row mt30">
+				<div class="col-xs-12">
+					<h5 class="fw700">TAGS</h5>
+					<span class="tag">Business</span>
+					<span class="tag">Following</span>
+					<span class="tag">Twitter</span>
+					<span class="tag">Marketing</span>
+					<span class="tag">Share</span>
+					<span class="tag">Manage</span>
+					<span class="tag">Popular</span>
+					<span class="tag">Business</span>
+					<span class="tag">Following</span>
+					<span class="tag">Twitter</span>
+					<span class="tag">Marketing</span>
+					<span class="tag">Share</span>
+					<span class="tag">Manage</span>
+					<span class="tag">Popular</span>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 
-@include('frontend.includes.footer')
-
+<div class="bg-grey-content">
+	<div class="container">
+		@include('frontend.includes.footer')
+	</div>
+</div>
 @endsection
