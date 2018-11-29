@@ -91,8 +91,8 @@ export const PostList = ({
                                         
                                         <h4>{moment(post.scheduled_at_original).format("h:mm A")}<small className="red-txt">{post.status < 0 ? ' (failed)': ''}</small></h4>
                                         <span>{post.content}</span>
-
-                                        {post.payload.images.map((image, index) => (
+                                        
+                                        {!!(typeof(post.payload.images) !== "undefined") && post.payload.images.map((image, index) => (
                                             <img key={index} src={image.absolutePath} />
                                         ))}
                                         
@@ -103,7 +103,7 @@ export const PostList = ({
                                                 {
                                                  id: post.id,
                                                  content: post.content, 
-                                                 images: post.payload.images.map((image) => image.absolutePath),
+                                                 images: typeof(post.payload.images) !== "undefined" ? post.payload.images.map((image) => image.absolutePath): [],
                                                  scheduled_at: post.scheduled_at,
                                                  scheduled_at_original: post.scheduled_at_original,
                                                  type: type !== 'past-scheduled' ? 'edit' : 'store'

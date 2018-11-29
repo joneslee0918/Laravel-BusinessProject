@@ -1,19 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Modifier, EditorState} from 'draft-js';
-import { Redirect, Link } from 'react-router-dom';
-import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
-import createEmojiPlugin from 'draft-js-emoji-plugin';
-import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
+import { Redirect } from 'react-router-dom';
 import Popup from "reactjs-popup";
-import ImageUploader from 'react-images-browse/src/component/compiled';
 import moment from "moment";
 import momentTz from "moment-timezone";
 import 'react-dates/initialize';
 import {SingleDatePicker} from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
+import DraftEditor from './DraftEditor';
 import channelSelector from '../selectors/channels';
-import hashtagSuggestionList from '../fixtures/hashtagSuggestions';
 import {publish} from '../requests/channels';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import {hours, minutes, dayTime} from "../fixtures/time";
@@ -23,13 +18,6 @@ import SelectChannelsModal from "./SelectChannelsModal";
 
 
 class Compose extends React.Component{
-
-    emojiPlugin = createEmojiPlugin();
-    imageIcon = React.createRef();
-    hashtagMentionPlugin = createMentionPlugin({
-        mentionPrefix: "#",
-        mentionTrigger: "#"
-    });
 
     defaultPost = {
         id: "",
@@ -41,9 +29,8 @@ class Compose extends React.Component{
     };
 
     defaultState = {
-        editorState: createEditorStateWithText(''),
+        content: "",
         type: 'store',
-        hashtagSuggestions: hashtagSuggestionList,
         selectChannelsModal: false,
         publishChannels: this.props.channels,
         publishState: {
@@ -109,8 +96,6 @@ class Compose extends React.Component{
             }
 
             this.setState(() => ({
-                editorState: createEditorStateWithText(this.props.post.content),
-                pictures: this.props.post.images,
                 postDate: moment(postDate),
                 type: this.props.post ? this.props.post.type : "store",
                 calendarData: {
@@ -136,6 +121,19 @@ class Compose extends React.Component{
             }));
         }
     }
+
+    updateContent = (content = "") => {
+        this.setState(() => ({
+            content: content,
+            letterCount: content.length
+        }));
+    };
+
+    updatePictures = (pictures = []) => {
+        this.setState(() => ({
+            pictures: pictures
+        }));
+    };
 
     onChannelSelectionChange = (obj) => {
 
@@ -166,13 +164,6 @@ class Compose extends React.Component{
         }));
     };
 
-    onImageIconClick = () => {
-        this.imageIcon.current.
-        inputElement.
-        previousSibling.
-        click();
-    }
-
     setPublishState = (publishState, close = false) => {
 
         this.setState(() => ({
@@ -183,7 +174,7 @@ class Compose extends React.Component{
                 close(); 
             }
         });
-    }
+    };
 
     setPublishTimestamp = () => {
         const postDate = this.state.postDate;
@@ -210,37 +201,6 @@ class Compose extends React.Component{
         });
     };
 
-    onChange = (editorState) => {
-        this.setState(() => ({
-            editorState,
-            letterCount: editorState.getCurrentContent().getPlainText().length
-        }));
-    };
-
-    onDrop = (pictures, pictureDataUrls) => {
-        this.setState((prevState) => {
-            if(prevState.pictures !== pictures){
-                return {
-                    pictures: pictureDataUrls
-                }
-            }
-        });
-    };
-
-    focus = () => {
-        this.editor.focus();
-    };
-
-    onHashtagSearchChange = ({ value }) => {
-        this.setState(() => ({
-            hashtagSuggestions: defaultSuggestionsFilter(value, hashtagSuggestionList)
-        }));
-    };
-
-    onAddMention = (mention) => {
-        //console.log('mention', mention)
-    };
-
     onDateChange = (postDate) => {
         this.setState(() => ({postDate}), () => this.setPublishTimestamp());
     };
@@ -261,21 +221,10 @@ class Compose extends React.Component{
         this.setState(() => ({
             selectChannelsModal: !this.state.selectChannelsModal
         }));
-    }
+    };
 
     toggleOptionsMenu = () => {
         this.setState(() => ({optionsMenu: !this.state.optionsMenu}));
-    }
-
-    onHashIconClick = () => {
-        const editorState = this.state.editorState;
-        const selection = editorState.getSelection();
-        const contentState = editorState.getCurrentContent();
-        const ncs = Modifier.insertText(contentState, selection, "#");
-        const es = EditorState.push(editorState, ncs, 'insert-fragment');
-        this.setState(() => ({
-            editorState: es
-        }), () => this.focus());
     };
 
     onHourChange = (e) => {
@@ -316,8 +265,7 @@ class Compose extends React.Component{
     };
 
     publish = () => {
-        const editorState = this.state.editorState;
-        const content = editorState.getCurrentContent().getPlainText();
+        const content = this.state.content;
         const type = this.state.type;
         const id = this.props.post ? this.props.post.id : "";
         const articleId = this.props.post && typeof(this.props.post.articleId) !== "undefined" ? this.props.post.articleId : "";
@@ -369,9 +317,9 @@ class Compose extends React.Component{
     }
 
     render(){
-        const { EmojiSuggestions, EmojiSelect} = this.emojiPlugin;
-        const { MentionSuggestions: HashtagSuggestions } = this.hashtagMentionPlugin;
-        const plugins = [this.emojiPlugin, this.hashtagMentionPlugin];
+
+        const scheduledLabel = (this.state.canSchedule && this.state.publishState.value === "date") 
+        && <div className="schedule-info">{`Scheduled: ${moment(this.state.publishDateTime).format("DD MMMM YYYY hh:mmA")}`}</div>;
 
         return (
             <div className="modal fade" id="compose" tabIndex="-1" data-backdrop="static" data-keyboard="false" role="dialog">
@@ -406,49 +354,13 @@ class Compose extends React.Component{
                             </ul>
                         </div>
 
-                        <div className="modal-body">
-                            <form id="draft_form">
-                            <div>
-                                <div className="editor" onClick={this.focus}>
-                                    {(this.state.canSchedule && this.state.publishState.value === "date") 
-                                    && <div className="schedule-info">{`Scheduled: ${moment(this.state.publishDateTime).format("DD MMMM YYYY hh:mmA")}`}</div>}
-                                    <Editor
-                                        editorState={this.state.editorState}
-                                        onChange={this.onChange}
-                                        plugins={plugins}
-                                        placeholder="What's on your mind?"
-                                        ref={(element) => { this.editor = element; }}
-                                    />
-                                    <ImageUploader
-                                        withIcon={false}
-                                        buttonText=''
-                                        onChange={this.onDrop}
-                                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                                        maxFileSize={5242880}
-                                        withPreview={true}
-                                        withLabel={false}
-                                        buttonClassName='dnone'
-                                        ref={this.imageIcon}
-                                        defaultImages={this.state.pictures}
-                                    />
-
-                                    <EmojiSuggestions />
-                                    <HashtagSuggestions
-                                        onSearchChange={this.onHashtagSearchChange}
-                                        suggestions={this.state.hashtagSuggestions}
-                                        onAddMention={this.onAddMention}
-                                        onClose={() => this.setState({ ...this, suggestions: hashtagSuggestionList })}
-                                    />
-                                </div>
-                            </div>
-                            </form>
-                        </div>
-                        <div className="editor-icons">
-                            <i onClick={this.onImageIconClick} className="fa fa-image upload-images"></i>
-                            {/* <i className="fa fa-map-marker add-location"></i> */}
-                            <EmojiSelect />
-                            <i onClick={this.onHashIconClick} className="fa fa-hashtag add-hashtag"></i>
-                        </div>
+                        <DraftEditor 
+                            scheduledLabel={scheduledLabel}
+                            onChange={this.updateContent}
+                            onImagesChange={this.updatePictures}
+                            content={this.state.content}
+                            pictures={this.state.pictures}
+                        />
 
                         <div className="modal-footer" style={{position:"relative"}}>
                             <div className="publish-group gradient-background-teal-blue link-cursor">
