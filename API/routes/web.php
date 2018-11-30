@@ -22,7 +22,7 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::find(31);
+    $channel = \App\Models\Facebook\Channel::find(29);
     $admin = \App\Models\Facebook\Channel::find($channel->parent_id);
 
     return response()->json($channel->publish("hello there"));

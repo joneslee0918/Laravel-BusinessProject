@@ -1,134 +1,148 @@
 @extends('layouts.homepage')
 
 @section('content')
-<div class="article-banner">
-</div>
-
-<div class="container mt100 mb100">
-	<div class="row">
-		<div class="col-xs-12"><h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1></div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12 mt10 mb10"><span class="article-category">BUSINESS MARKETING</span> / <span>May 23, 2018</span></div>
-	</div>
-	<div class="row">
-		<div class="col-md-1"></div>
-		<div class="col-md-11 col-xs-12 mt50">
-			<p class="article-em">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas facilisis lectus sed mi sodales, convallis consequat ligula vestibulum. Vivamus sit amet dignissim quam, ac ornare tortor. Aliquam vel pulvinar diam, vel feugiat ex. Sed congue purus sed tortor tincidunt vestibulum. Suspendisse vitae dapibus mi. </p>
-		</div>
-	</div>
-	<div class="row mt20">
-		<div class="col-xs-12">
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas aliquet orci sed elementum condimentum. Donec varius, lectus vel molestie gravida, massa dui aliquet ex, nec ultricies massa nunc id lacus. Fusce dapibus augue ac pretium fermentum. Aliquam porta erat ac condimentum congue. Sed non magna elit. Vivamus tincidunt nulla at ipsum laoreet dignissim. Vivamus pretium risus fringilla metus vulputate, eget rutrum nisl tempor. Etiam aliquam risus non laoreet laoreet. Cras pretium diam id felis rutrum pellentesque. Suspendisse blandit dictum massa. Praesent aliquam orci in ligula malesuada volutpat.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas aliquet orci sed elementum condimentum. Donec varius, lectus vel molestie gravida, massa dui aliquet ex, nec ultricies massa nunc id lacus. Fusce dapibus augue ac pretium fermentum. Aliquam porta erat ac condimentum congue. Sed non magna elit. Vivamus tincidunt nulla at ipsum laoreet dignissim. Vivamus pretium risus fringilla metus vulputate, eget rutrum nisl tempor. Etiam aliquam risus non laoreet laoreet. Cras pretium diam id felis rutrum pellentesque. Suspendisse blandit dictum massa. Praesent aliquam orci in ligula malesuada volutpat.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas aliquet orci sed elementum condimentum. Donec varius, lectus vel molestie gravida, massa dui aliquet ex, nec ultricies massa nunc id lacus. Fusce dapibus augue ac pretium fermentum. Aliquam porta erat ac condimentum congue. Sed non magna elit. Vivamus tincidunt nulla at ipsum laoreet dignissim. Vivamus pretium risus fringilla metus vulputate, eget rutrum nisl tempor. Etiam aliquam risus non laoreet laoreet. Cras pretium diam id felis rutrum pellentesque. Suspendisse blandit dictum massa. Praesent aliquam orci in ligula malesuada volutpat.</p>
-		</div>
-	</div>
-	<div class="row mt100 mb80">
-		<div class="col-md-6 col-xs-12 mb20">
-			<div class="article-img panel-shadow">
-				<img class="img-responsive" src="{{ asset('images/article-img-1.png')}}">
-			</div>
-		</div>
-		<div class="col-md-6 col-xs-12 mb20">
-			<div class="article-img panel-shadow">
-				<img class="img-responsive" src="{{ asset('images/article-img-2.png')}}">
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas aliquet orci sed elementum condimentum. Donec varius, lectus vel molestie gravida, massa dui aliquet ex, nec ultricies massa nunc id lacus. Fusce dapibus augue ac pretium fermentum. Aliquam porta erat ac condimentum congue. Sed non magna elit. Vivamus tincidunt nulla at ipsum laoreet dignissim. Vivamus pretium risus fringilla metus vulputate, eget rutrum nisl tempor. Etiam aliquam risus non laoreet laoreet. Cras pretium diam id felis rutrum pellentesque. Suspendisse blandit dictum massa. Praesent aliquam orci in ligula malesuada volutpat.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas aliquet orci sed elementum condimentum. Donec varius, lectus vel molestie gravida, massa dui aliquet ex, nec ultricies massa nunc id lacus. Fusce dapibus augue ac pretium fermentum. Aliquam porta erat ac condimentum congue. Sed non magna elit. Vivamus tincidunt nulla at ipsum laoreet dignissim. Vivamus pretium risus fringilla metus vulputate, eget rutrum nisl tempor. Etiam aliquam risus non laoreet laoreet. Cras pretium diam id felis rutrum pellentesque. Suspendisse blandit dictum massa. Praesent aliquam orci in ligula malesuada volutpat.</p>
-		</div>
-	</div>
-	<div class="row mt50">
-		<div class="col-md-6 col-xs-12 article-share">
-			<h5 class="fw700">SHARE /</h5>
-			<img src="{{asset('/img/f-icon.png')}}">
-			<img src="{{asset('/img/t-icon.png')}}">
-			<img src="{{asset('/img/g-plus-icon.png')}}">
-			<img src="{{asset('/img/l-icon.png')}}">
-		</div>
-		<div class="col-md-6 col-xs-12 text-right">
-			<h5 class="fw700">/ TAGS</h5>
-		</div>
-	</div>
-	<div class="row mt mt50">
-		<div class="col-xs-12">
-			<div class="article-img panel-shadow">
-				<img class="img-responsive" src="{{ asset('images/article-img-3.png')}}">
-			</div>
-		</div>
-	</div>
-	<div class="row mt50">
-		<div class="col-xs-12">
-			<h2 class="h-color fw700">Recent Comments</h2>
-		</div>
-	</div>
-	<div class="row mt50">
-		<div class="col-xs-1">
-			<div class="rp-image"><img class="img-responsive" src="{{asset('images/rp-image-1.png')}}"></div>
-		</div>
-		<div class="col-xs-11">
-			<p class="text-uppercase fw700 fs16 mb0">ALEXA DOE</p>
-			<p>June 3, 2018 - 13:15  <a>Reply</a></p>
-			<p class="mt10">Ut consectetur tellus vel euismod vestibulum. Proin sit amet tincidunt mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi at viverra nisl, id pellentesque mauris. Etiam faucibus, lacus in efficitur tristique, risus neque fringilla augue, vel rutrum dolor dui et orci.</p>
-		</div>
-	</div>
-	<div class="row mt20">
-		<div class="col-xs-1">
-			<div class="rp-image"><img class="img-responsive" src="{{asset('images/rp-image-1.png')}}"></div>
-		</div>
-		<div class="col-xs-11">
-			<p class="text-uppercase fw700 fs16 mb0">ALEXA DOE</p>
-			<p>June 3, 2018 - 13:15  <a>Reply</a></p>
-			<p class="mt10">Ut consectetur tellus vel euismod vestibulum. Proin sit amet tincidunt mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi at viverra nisl, id pellentesque mauris. Etiam faucibus, lacus in efficitur tristique, risus neque fringilla augue, vel rutrum dolor dui et orci.</p>
-		</div>
-	</div>
-	<div class="row mt20">
-		<div class="col-xs-1">
-			<div class="rp-image"><img class="img-responsive" src="{{asset('images/rp-image-1.png')}}"></div>
-		</div>
-		<div class="col-xs-11">
-			<p class="text-uppercase fw700 fs16 mb0">ALEXA DOE</p>
-			<p>June 3, 2018 - 13:15  <a>Reply</a></p>
-			<p class="mt10">Ut consectetur tellus vel euismod vestibulum. Proin sit amet tincidunt mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi at viverra nisl, id pellentesque mauris. Etiam faucibus, lacus in efficitur tristique, risus neque fringilla augue, vel rutrum dolor dui et orci.</p>
-		</div>
-	</div>
-	<div class="row mt50">
-		<div class="col-xs-12">
-			<h2 class="h-color fw700">Leave a Comment</h2>
-		</div>
-	</div>
-	<div class="row">
-		<form class="comment-form">
-			<div class="col-xs-12 mb20">
-				<label>COMMENT</label>
-				<textarea class="form-input" placeholder="Comment..."></textarea>
-			</div>
-			<div class="col-md-4 col-xs-12">
-				<label>Name</label>
-				<input type="text" name="name" class="form-input" placeholder="Name">
-			</div>
-			<div class="col-md-4 col-xs-12">
-				<label>Email</label>
-				<input type="email" name="email" class="form-input" placeholder="Email">
-			</div>
-			<div class="col-md-4 col-xs-12">
-				<label>Website</label>
-				<input type="text" name="website" class="form-input" placeholder="Website">
-			</div>
-			<div class="col-xs-12 mt20">
-				<input type="submit" class="compose-btn btn-start form-btn" value="Post Comment">
-			</div>
-		</form>
-	</div>
-</div>
-
-<div class="bg-grey-content">
+<div id="banner">
 	<div class="container">
-		@include('frontend.includes.footer')
+		<h1>Blog</h1>
+		<p>Manuals take time. These videos will get you started instantly.</p>
 	</div>
 </div>
+
+<div class="container article-page-content">
+	<div class="row mt100 mb100">
+		<div class="col-md-8 col-xs-12">
+			<div class="article-image">
+				<div class="article-image-social">
+					<div class="pb10"><i class="fa fa-facebook"></i></div>
+					<div class="pb10"><i class="fa fa-twitter"></i></div>
+					<div class="pb10"><i class="fa fa-instagram"></i></div>
+				</div>
+				<div class="article-image-image">
+					<img src="{{ asset('/images/article-img-4.png')}}" class="img-responsive">					
+				</div>				
+			</div>
+			<div class="article-content mt50">
+				<h4 class="text-uppercase fw700">Change your way of living</h4>
+				<div class="posted-by">Posted by OnStyle on 05.05.2016 at 3:34PM</div>
+				<p class="pt20">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.orem ipsum dolor sit amet, consectetur.</p>
+				<h5 class="pt20">How to target those problems?</h5>
+				<p class="pt20">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.orem ipsum dolor sit amet, consectetur.</p>
+				<h4 class="mt50 text-uppercase fw700">Recent Comments</h4>
+				<div class="article-comments pt30">
+					<div class="article-comment">
+						<div class="article-comment-photo text-center">
+							<div class="comment-img">
+								<img src="{{ asset('/images/comment-img.png')}}">
+							</div>
+						</div>
+						<div class="article-comment-text">
+							<h5>Jeffrey Caleman</h5>
+							<div class="comment-date">05. 05. 2019 at 7:00 PM</div>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+						</div>
+					</div>
+					<div class="article-comment">
+						<div class="article-comment-photo text-center">
+							<div class="comment-img">
+								<img src="{{ asset('/images/comment-img.png')}}">
+							</div>
+						</div>
+						<div class="article-comment-text">
+							<h5>Jeffrey Caleman</h5>
+							<div class="comment-date">05. 05. 2019 at 7:00 PM</div>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+						</div>
+					</div>
+				</div>
+				<h4 class="mt50 text-uppercase fw700">Leave a Comment</h4>
+				<div>
+					<form class="comment-form">
+						<div class="row pb20 pt20">
+							<div class="col-md-6 col-xs-12">
+								<input type="text" name="name" class="form-input" placeholder="Name">
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<input type="email" name="email" class="form-input" placeholder="E-mail">
+							</div>
+						</div>
+						<div class="row pb20">
+							<div class="col-xs-12">
+								<textarea class="form-input" placeholder="Comment..."></textarea>
+							</div>
+						</div>
+						<div class="row mb20">
+							<div class="col-xs-12 text-right">
+								<a href="#" class="btn theme-btn">Post</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 category-tags-posts">
+			<input type="text" name="name" class="form-input search-input" placeholder="Name">
+			<h4 class="mt50 text-uppercase fw700">Categories</h4>
+			<ul class="article-categories">
+				<li>General</li>
+				<li>Life Style</li>
+				<li>Social Media</li>
+				<li>Tech</li>
+				<li>Music</li>
+				<li>Entertainment</li>
+			</ul>
+			<h4 class="mt50 text-uppercase fw700">Tags</h4>
+			<span class="tag">Funny</span>
+			<span class="tag">Beautiful</span>
+			<span class="tag">Pretty</span>
+			<span class="tag">Healthy</span>
+			<span class="tag">Tasty</span>
+			<span class="tag">Sun</span>
+			<span class="tag">Coffe</span>
+			<span class="tag">Caramel</span>
+			<span class="tag">Plants</span>
+			<h4 class="mt50 text-uppercase fw700">Recent Posts</h4>
+			<div class="recent-posts pt30">
+				<div class="recent-post">
+					<div class="recent-posts-photo text-center">
+						<div class="comment-img">
+							<img src="{{ asset('/images/comment-img.png')}}">
+						</div>
+					</div>
+					<div class="recent-posts-text">
+						<h5>Jeffrey Caleman</h5>
+						<div class="comment-date">Posted by Uniclix</div>
+						<div class="comment-date">23 May 2019</div>
+					</div>
+				</div>
+				<div class="recent-post">
+					<div class="recent-posts-photo text-center">
+						<div class="comment-img">
+							<img src="{{ asset('/images/comment-img.png')}}">
+						</div>
+					</div>
+					<div class="recent-posts-text">
+						<h5>Jeffrey Caleman</h5>
+						<div class="comment-date">Posted by Uniclix</div>
+						<div class="comment-date">23 May 2019</div>
+					</div>
+				</div>
+				<div class="recent-post">
+					<div class="recent-posts-photo text-center">
+						<div class="comment-img">
+							<img src="{{ asset('/images/comment-img.png')}}">
+						</div>
+					</div>
+					<div class="recent-posts-text">
+						<h5>Jeffrey Caleman</h5>
+						<div class="comment-date">Posted by Uniclix</div>
+						<div class="comment-date">23 May 2019</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@include('frontend.includes.footer')
+
 @endsection
