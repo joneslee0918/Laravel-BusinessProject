@@ -4,6 +4,7 @@ import moment from "moment";
 import SweetAlert from 'sweetalert2-react';
 import {setPost} from '../actions/posts';
 import Loader from './Loader';
+import {setComposerModal} from "../actions/composer";
 
 export const PostList = ({
     action, 
@@ -16,7 +17,8 @@ export const PostList = ({
     loading,
     title,
     type,
-    setPost
+    setPost,
+    setComposerModal
 }) => (
             <div>
 
@@ -61,7 +63,7 @@ export const PostList = ({
                 {(posts.length < 1 && !loading) && 
                 <div className="no-data">
                     No posts have been scheduled or published yet.
-                    <div><a data-target="#compose" data-toggle="modal" className="btn compose-btn">Schedule a post</a></div>
+                    <div><a onClick={() => setComposerModal(true)} className="btn compose-btn">Schedule a post</a></div>
                 </div>}
 
                 {loading && <Loader />}
@@ -91,23 +93,23 @@ export const PostList = ({
                                         
                                         <h4>{moment(post.scheduled_at_original).format("h:mm A")}<small className="red-txt">{post.status < 0 ? ' (failed)': ''}</small></h4>
                                         <span>{post.content}</span>
-
-                                        {post.payload.images.map((image, index) => (
+                                        
+                                        {!!(typeof(post.payload.images) !== "undefined") && post.payload.images.map((image, index) => (
                                             <img key={index} src={image.absolutePath} />
                                         ))}
                                         
                                     </div>
                                     <div className="item-actions pull-right">
                                         <ul>
-                                            <li className="text-links link-inactive"><a onClick={() => setPost(
+                                            <li className="text-links link-inactive"><a onClick={() => {setPost(
                                                 {
                                                  id: post.id,
                                                  content: post.content, 
-                                                 images: post.payload.images.map((image) => image.absolutePath),
+                                                 images: typeof(post.payload.images) !== "undefined" ? post.payload.images.map((image) => image.absolutePath): [],
                                                  scheduled_at: post.scheduled_at,
                                                  scheduled_at_original: post.scheduled_at_original,
                                                  type: type !== 'past-scheduled' ? 'edit' : 'store'
-                                                }) } data-toggle="modal" data-target="#compose" className="link-cursor">{`${type === 'past-scheduled' ? 'Reschedule' : 'Edit'}`}</a></li>
+                                                });  setComposerModal(true)} } className="link-cursor">{`${type === 'past-scheduled' ? 'Reschedule' : 'Edit'}`}</a></li>
                                             <li className="text-links link-inactive"><a className="link-cursor danger-btn" onClick={() => setAction({type: 'delete', id: post.id})}>Delete</a></li>
                                             <li className="text-links"><a className="link-cursor" onClick={() => setAction({type: 'post', id: post.id})}>Post Now</a></li>
                                         </ul>
@@ -127,7 +129,8 @@ export const PostList = ({
 );
 
 const mapDispatchToProps = (dispatch) => ({
-    setPost: (post) => dispatch(setPost(post))
+    setPost: (post) => dispatch(setPost(post)),
+    setComposerModal: (modal) => dispatch(setComposerModal(modal))
 });
 
 export default connect(undefined, mapDispatchToProps)(PostList);

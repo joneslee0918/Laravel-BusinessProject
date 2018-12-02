@@ -1,8 +1,10 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {NavLink} from "react-router-dom";
 import {backendUrl} from "../../config/api";
+import {setComposerModal} from "../../actions/composer";
 
-const TopMenu = () => (
+const TopMenu = ({setComposerModal}) => (
     <div className="navbar-uniclix">
         <a href={backendUrl} className="brand"><img src="/images/uniclix.png"/></a>
 
@@ -17,10 +19,14 @@ const TopMenu = () => (
             <li><a href="#" className="upgrade-btn">Upgrade for more features</a></li> 
             <li><NavLink to="/settings" activeClassName="active" className="top-icons"><i className="fa fa-gear"></i></NavLink></li>
             <li>
-                <a data-toggle="modal" data-target="#compose" className="compose-btn">Compose</a>
+                <a onClick={() => setComposerModal(true)} className="compose-btn">Compose</a>
             </li>  
         </ul>
     </div>
 );
 
-export default TopMenu;
+const mapDispatchToProps = (dispatch) => ({
+    setComposerModal: (isOpen) => dispatch(setComposerModal(isOpen))
+});
+
+export default connect(undefined, mapDispatchToProps)(TopMenu);

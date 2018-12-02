@@ -8,6 +8,7 @@ import {getArticles} from '../../../requests/articles';
 import {startSetProfile} from '../../../actions/profile';
 import {setPost} from '../../../actions/posts';
 import {ArticleLoader} from '../../Loader';
+import TailoredPostModal from '../../TailoredPostModal';
 
 class Articles extends React.Component {
 
@@ -17,6 +18,11 @@ class Articles extends React.Component {
         topics: [],
         topic: "",
         isTopicsModalOpen: false,
+        isTailoredPostOpen: false,
+        openedTitle: "",
+        openedImage: "",
+        openedSource: "",
+        openedDescription: "",
         page: 0
     }
 
@@ -67,6 +73,16 @@ class Articles extends React.Component {
             isTopicsModalOpen: !this.state.isTopicsModalOpen
         }));
     };
+
+    toggleTailoredPostModal = ({title = "", image = "", source = "", description = ""}) => {
+        this.setState(() => ({
+            isTailoredPostOpen: !this.state.isTailoredPostOpen,
+            openedTitle: title,
+            openedImage: image,
+            openedSource: source,
+            openedDescription: description
+        }));
+    }
 
     onTopicsFieldChange = (topic) => {
         this.setState(() => ({
@@ -124,9 +140,20 @@ class Articles extends React.Component {
     render(){   
         return(
             <div>
+
+                <TailoredPostModal 
+                    isOpen={this.state.isTailoredPostOpen}
+                    title={this.state.openedTitle}
+                    image={this.state.openedImage}
+                    source={this.state.openedSource}
+                    description={this.state.openedDescription}
+                    toggleTailoredPostModal={this.toggleTailoredPostModal}
+                />
+
                 <Modal
                     isOpen={this.state.isTopicsModalOpen}
                     ariaHideApp={false}
+                    closeTimeoutMS={300}
                     >       
                     <form onSubmit={(e) => this.addTopic(e)}>  
                         <div className="form-group flex_container-center">
@@ -168,7 +195,7 @@ class Articles extends React.Component {
 
                                 return (
                                     <div key={index}>
-                                    <Article key={index} article={article} setPost={this.props.setPost}/>
+                                    <Article key={index} article={article} setPost={this.props.setPost} toggleTailoredPostModal={this.toggleTailoredPostModal}/>
                                     </div>
                                 );
                             })
