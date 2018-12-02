@@ -109,7 +109,7 @@ class TailoredPostModal extends React.Component{
                     <Modal 
                     isOpen={isOpen}
                     ariaHideApp={false}
-                    className="tailored-post-wrapper"
+                    className="tailored-post-wrapper modal-animated-dd"
                     closeTimeoutMS={300}
                     >   
                         <Modal isOpen={this.state.selectChannelsModal} ariaHideApp={false} className="modal-no-bg">
