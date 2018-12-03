@@ -235,7 +235,8 @@ class Compose extends React.Component{
                     <SelectChannelsModal 
                     channels={this.state.publishChannels} 
                     onChange={this.onChannelSelectionChange}
-                    toggle={this.toggleSelectChannelsModal}/>
+                    toggle={this.toggleSelectChannelsModal}
+                    />
 
                     :
                         
@@ -244,11 +245,19 @@ class Compose extends React.Component{
                         <div className="modal-header">
                             <button type="button" id="closeModal" onClick={() => {this.props.setPost(undefined); this.props.setComposerModal(!this.state.openModal); this.setState(() => (this.defaultState))}} className="close fa fa-times-circle"></button>
                             <ul className="compose-header">
-                                <li onClick={this.toggleSelectChannelsModal} className="add-new-channel"><i className="fa fa-plus"></i></li>
+
+                                {
+                                    this.state.type !== "edit" && 
+                                    <li onClick={this.toggleSelectChannelsModal} className="add-new-channel"><i className="fa fa-plus"></i></li>
+                                }
+                                
 
                                     {!!this.state.publishChannels.length && channelSelector(this.state.publishChannels, {selected: true, provider: undefined}).map((channel) => (
                                         <li key={channel.id} className="channel-item">
-                                            <div className="remove-overlay fa fa-close" onClick={() => this.onChannelSelectionChange(channel)}></div>
+                                            {
+                                                this.state.type !== "edit" &&
+                                                <div className="remove-overlay fa fa-close" onClick={() => this.onChannelSelectionChange(channel)}></div>
+                                            }
                                             <img src={channel.avatar}/>
                                         </li>
                                     ))}
