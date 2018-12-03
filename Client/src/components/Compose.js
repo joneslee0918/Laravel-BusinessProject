@@ -242,7 +242,7 @@ class Compose extends React.Component{
                     <div className="modal-content">
         
                         <div className="modal-header">
-                            <button type="button" id="closeModal" onClick={() => {this.props.setPost(this.defaultPost); this.props.setComposerModal(!this.state.openModal); this.setState(() => (this.defaultState))}} className="close fa fa-times-circle"></button>
+                            <button type="button" id="closeModal" onClick={() => {this.props.setPost(undefined); this.props.setComposerModal(!this.state.openModal); this.setState(() => (this.defaultState))}} className="close fa fa-times-circle"></button>
                             <ul className="compose-header">
                                 <li onClick={this.toggleSelectChannelsModal} className="add-new-channel"><i className="fa fa-plus"></i></li>
 

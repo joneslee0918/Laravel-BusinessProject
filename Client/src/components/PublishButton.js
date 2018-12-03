@@ -33,6 +33,36 @@ class PublishButton extends React.Component{
     }
     
     componentDidMount(){
+        if(this.props.post){
+
+            const postDate = (this.props.post ? this.props.post.type : 'store') === 'edit' ? 
+            this.props.post.scheduled_at_original : 
+            moment().add(1, "hours");
+            let publishState = {
+                name: "Custom Time",
+                value: "date"
+            };
+
+            if(this.props.post.type == 'store'){
+                publishState = {
+                    name: "Post at Best Time",
+                    value: "best"
+                }
+            }
+
+            this.setState(() => ({
+                postDate: moment(postDate),
+                calendarData: {
+                    time: {
+                        hour: moment(postDate).format("hh"),
+                        minutes: moment(postDate).format("mm"),
+                        time: moment(postDate).format("A"),
+                    }
+                },
+                publishState
+            }), () => this.setPublishTimestamp());
+        }
+
         if(!this.state.publishTimestamp){
             this.setPublishTimestamp();
         }
@@ -44,7 +74,6 @@ class PublishButton extends React.Component{
             const postDate = (this.props.post ? this.props.post.type : 'store') === 'edit' ? 
             this.props.post.scheduled_at_original : 
             moment().add(1, "hours");
-
             let publishState = {
                 name: "Custom Time",
                 value: "date"
@@ -72,27 +101,31 @@ class PublishButton extends React.Component{
     }
 
     setPublishState = (publishState, close = false) => {
-
         this.setState(() => ({
             publishState,
             showCalendar: false
         }), () => {
-
-            let scheduledLabel = "";
-
-            if(this.state.canSchedule && this.state.publishState.value === "date"){
-                scheduledLabel = `Scheduled: ${moment(this.state.publishDateTime).format("DD MMMM YYYY hh:mmA")}`;
-            }
             
-            if(typeof this.props.onChange !== "undefined"){
-                this.props.onChange(scheduledLabel);
-            }
-            
+            this.setScheduledLabel();
+
             if(close){
                 close(); 
             }
         });
     };
+
+    setScheduledLabel = () => {
+        
+        let scheduledLabel = "";
+
+        if(this.state.canSchedule && this.state.publishState.value === "date"){
+            scheduledLabel = `Scheduled: ${moment(this.state.publishDateTime).format("DD MMMM YYYY hh:mmA")}`;
+        }
+        
+        if(typeof this.props.onChange !== "undefined"){
+            this.props.onChange(scheduledLabel);
+        }
+    }
 
     setPublishTimestamp = () => {
         const postDate = this.state.postDate;
@@ -110,7 +143,9 @@ class PublishButton extends React.Component{
             if(this.state.publishTimestamp > moment().unix()){
                 this.setState(() => ({
                     canSchedule: true
-                }));
+                }), () => {
+                    this.setScheduledLabel();
+                });
             }else{
                 this.setState(() => ({
                     canSchedule: false

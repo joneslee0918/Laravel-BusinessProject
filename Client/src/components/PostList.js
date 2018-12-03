@@ -101,7 +101,7 @@ export const PostList = ({
                                     </div>
                                     <div className="item-actions pull-right">
                                         <ul>
-                                            <li className="text-links link-inactive"><a onClick={() => {setPost(
+                                            <li className="text-links link-inactive"><a onClick={() => {setComposerModal(true); setPost(
                                                 {
                                                  id: post.id,
                                                  content: post.content, 
@@ -109,7 +109,7 @@ export const PostList = ({
                                                  scheduled_at: post.scheduled_at,
                                                  scheduled_at_original: post.scheduled_at_original,
                                                  type: type !== 'past-scheduled' ? 'edit' : 'store'
-                                                });  setComposerModal(true)} } className="link-cursor">{`${type === 'past-scheduled' ? 'Reschedule' : 'Edit'}`}</a></li>
+                                                });} } className="link-cursor">{`${type === 'past-scheduled' ? 'Reschedule' : 'Edit'}`}</a></li>
                                             <li className="text-links link-inactive"><a className="link-cursor danger-btn" onClick={() => setAction({type: 'delete', id: post.id})}>Delete</a></li>
                                             <li className="text-links"><a className="link-cursor" onClick={() => setAction({type: 'post', id: post.id})}>Post Now</a></li>
                                         </ul>
