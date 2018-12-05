@@ -29,6 +29,9 @@ class SocialUserResolver implements SocialUserResolverInterface
             case 'twitter':
                 return $this->authWithTwitter($accessToken, $accessTokenSecret);
                 break;
+            case 'linkedin':
+                return $this->authWithLinkedin($accessToken);
+                break;
             default:
                 throw SocialGrantException::invalidNetwork();
                 break;
@@ -68,6 +71,28 @@ class SocialUserResolver implements SocialUserResolverInterface
             
             $credentials = Socialite::driver("twitter")->userFromTokenAndSecret($accessToken, $accessTokenSecret);
             return $this->resolveTwitterUser($credentials);
+
+        }catch(\Exception $e){
+            
+            return response()->json($e->getMessage());
+        }
+    }
+
+
+    
+    /**
+     * Resolves user by linkedin access token and secret.
+     *
+     * @param string $accessToken
+     * @param string $accessTokenSecret
+     * @return \App\Models\User
+     */
+    protected function authWithLinkedin($accessToken)
+    {   
+        try{
+            
+            $credentials = Socialite::driver("linkedin")->userFromToken($accessToken);
+            return $this->resolveLinkedinUser($credentials);
 
         }catch(\Exception $e){
             
@@ -181,6 +206,56 @@ class SocialUserResolver implements SocialUserResolverInterface
 
             multiRequest(route("sync.follower.ids"), [$twitterChannel], ["sleep" => 0]);
             multiRequest(route("sync.following.ids"), [$twitterChannel], ["sleep" => 0]);
+
+            return $user;
+        }
+
+        return null;
+    }
+
+           /** 
+    * Creates a new user or channel, or uses existing data if tokens are correct
+    * @param object $credentials
+    * @return \App\Models\User
+    */
+    protected function resolveLinkedinUser($credentials)
+    {                   
+        if(is_object($credentials) && !isset($credentials->error)){
+
+            $linkedinChannel = LinkedinChannel::where("email", $credentials->email)->first();
+            if(!$linkedinChannel){
+
+                $user = User::updateOrCreate(
+                    ["email" => $credentials->email], 
+                    [
+                        "name" => $credentials->name, 
+                        "email" => $credentials->email, 
+                        "role_id" => Role::first()->id
+                    ]
+                );
+
+                $channel = $user->channels()->create(["type" => "linkedin"]);
+                $linkedinChannel = $channel->details()->create(
+                    [
+                    "user_id" => $user->id, 
+                    "email" => $credentials->email,
+                    "name" => $credentials->name, 
+                    "payload" => serialize($credentials), 
+                    "access_token" => $credentials->token
+                    ]
+                );
+
+            }else{
+                $user = $linkedinChannel->user;
+                $channel = $user->channels()->where("id", $linkedinChannel->channel_id)->first();
+            }
+
+            $channel->select();
+            $channel->active=1;
+            $channel->save();
+            $linkedinChannel->access_token = $credentials->token;
+            $linkedinChannel->save();
+            $linkedinChannel->select();
 
             return $user;
         }

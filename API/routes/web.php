@@ -26,6 +26,11 @@ Route::get('/test', function(){
     $admin = \App\Models\Facebook\Channel::find($channel->parent_id);
 
     return response()->json($channel->publish("hello there"));
+
+    // $accessToken = "GCtkQvgOIUyIPWQgvI3jkf9lfXKld5wN4jyc";
+    // $credentials = \Laravel\Socialite\Facades\Socialite::driver("linkedin")->userFromToken($accessToken);
+
+    // return response($credentials);
 })->name("test");
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
@@ -34,6 +39,10 @@ Route::get('twitter/error', ['as' => 'twitter.error', 'Twitter\ChannelController
 Route::get('twitter/logout', ['as' => 'twitter.logout', 'uses' => 'Twitter\ChannelController@error']);
 
 Route::get('facebook/callback', function(Request $request){
+    return $request->all();
+});
+
+Route::get('linkedin/callback', function(Request $request){
     return $request->all();
 });
 

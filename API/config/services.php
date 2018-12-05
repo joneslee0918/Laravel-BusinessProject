@@ -44,5 +44,10 @@ return [
         'client_secret'     => function_exists('env') ? env('FACEBOOK_APP_SECRET', '') : '',
         'redirect'        => '/',
     ],
+    'linkedin' => [
+        'client_id'        => function_exists('env') ? env('LINKEDIN_CLIENT_ID', '') : '',
+        'client_secret'     => function_exists('env') ? env('LINKEDIN_CLIENT_SECRET', '') : '',
+        'redirect'        => '/',
+    ],
 
 ];

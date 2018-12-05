@@ -75,3 +75,8 @@ Route::prefix("facebook")->group(function(){
         Route::post('channels/accounts/save', 'Facebook\ChannelController@saveAccounts');
     });
 });
+
+Route::prefix("linkedin")->group(function(){
+
+    Route::get('callback', 'Linkedin\AuthController@accessToken');
+});

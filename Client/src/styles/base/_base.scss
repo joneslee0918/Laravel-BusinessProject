@@ -1545,9 +1545,14 @@ aside .btn-group {
 .kep-login-facebook {
     font-size: 14px !important;
     text-transform: capitalize !important;
-    padding: 12px !important;
+    padding: 11px 14px !important;
     margin: 10px !important;
+    border: none !important;
     border-radius: 5px !important;
+}
+
+.linkedin-login-btn{
+    background: #0077B5 !important;
 }
 
 /*Loader*/

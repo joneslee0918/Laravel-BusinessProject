@@ -2,10 +2,12 @@ import React from 'react';
 import {connect} from "react-redux";
 import TwitterLogin  from "react-twitter-auth";
 import FacebookLogin from 'react-facebook-login';
+import LinkedinSDK from 'react-linkedin-sdk';
 import {startLogin} from "../actions/auth";
 import {startSetChannels} from "../actions/channels";
 import {startSetProfile} from "../actions/profile";
-import {twitterRequestTokenUrl, twitterAccessTokenUrl, backendUrl, facebookAppId} from "../config/api";
+import {twitterRequestTokenUrl, twitterAccessTokenUrl, backendUrl, facebookAppId, linkedinAppId} from "../config/api";
+import {getAccessToken} from "../requests/linkedin/auth";
 import {LoaderWithOverlay} from "./Loader";
 
 export class LoginPage extends React.Component{
@@ -41,7 +43,19 @@ export class LoginPage extends React.Component{
             this.props.startSetChannels();
         }).catch(error => {
             this.setState(() => ({loading: false}));
-        });;
+        });
+    };
+
+    onLinkedInSuccess = (response) => {
+        console.log(response);
+
+        // this.setState(() => ({loading: true}));
+        // this.props.startLogin(response, "linkedin").then(() => {
+        //     this.props.startSetProfile();
+        //     this.props.startSetChannels();
+        // }).catch(error => {
+        //     this.setState(() => ({loading: false}));
+        // });
     };
 
     render(){
@@ -64,6 +78,17 @@ export class LoginPage extends React.Component{
                         fields="name,email,picture"
                         scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,groups_access_member_info,public_profile,email"
                         callback={this.onFacebookSuccess} />
+
+                    <LinkedinSDK
+                        clientId={linkedinAppId}
+                        callBack={this.onLinkedInSuccess}
+                        fields=":(id,num-connections,picture-url,email-address,first-name,last-name)"
+                        className={'linkedin-login-btn'}
+                        loginButtonText={'Login with Linkedin'}
+                        logoutButtonText={'Logout from Linkedin'}
+                        buttonType={'button'}
+                        getOAuthToken={true}
+                      />
                 </div>
             </div>  
         );

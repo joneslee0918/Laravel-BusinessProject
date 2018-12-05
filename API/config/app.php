@@ -162,6 +162,7 @@ return [
         Thujohn\Twitter\TwitterServiceProvider::class,
         Adaojunior\Passport\SocialGrantServiceProvider::class,
         SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
+        Artesaos\LinkedIn\LinkedinServiceProvider::class,
     ],
 
     /*
@@ -212,6 +213,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Twitter' => Thujohn\Twitter\Facades\Twitter::class,
         'Facebook' => SammyK\LaravelFacebookSdk\FacebookFacade::class,
+        'LinkedIn'  => \Artesaos\LinkedIn\Facades\LinkedIn::class,
     ],
 
 ];
