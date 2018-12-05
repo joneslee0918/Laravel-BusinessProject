@@ -2,13 +2,12 @@ import React from 'react';
 import {connect} from "react-redux";
 import TwitterLogin  from "react-twitter-auth";
 import FacebookLogin from 'react-facebook-login';
-import LinkedinSDK from 'react-linkedin-sdk';
 import {startLogin} from "../actions/auth";
 import {startSetChannels} from "../actions/channels";
 import {startSetProfile} from "../actions/profile";
 import {twitterRequestTokenUrl, twitterAccessTokenUrl, backendUrl, facebookAppId, linkedinAppId} from "../config/api";
-import {getAccessToken} from "../requests/linkedin/auth";
 import {LoaderWithOverlay} from "./Loader";
+import LinkedInButton from "./LinkedInButton";
 
 export class LoginPage extends React.Component{
 
@@ -47,8 +46,14 @@ export class LoginPage extends React.Component{
     };
 
     onLinkedInSuccess = (response) => {
-        console.log(response);
-
+       const token = response._token.accessToken;
+       const params = `grant_type=authorization_code&code=${token}&redirect_uri=https://web.uniclix.test&client_id=77d3j1o1cby4cc&client_secret=yCi4G6otW7j6hzWT`;
+       const url = "https://www.linkedin.com/oauth/v2/accessToken?";
+        // const result = axios.get(`${url}${params}`)
+        //     .then((response) => {
+        //         console.log(response);
+        //         return response.data;
+        //     });
         // this.setState(() => ({loading: true}));
         // this.props.startLogin(response, "linkedin").then(() => {
         //     this.props.startSetProfile();
@@ -79,16 +84,10 @@ export class LoginPage extends React.Component{
                         scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,groups_access_member_info,public_profile,email"
                         callback={this.onFacebookSuccess} />
 
-                    <LinkedinSDK
+                    <LinkedInButton 
                         clientId={linkedinAppId}
-                        callBack={this.onLinkedInSuccess}
-                        fields=":(id,num-connections,picture-url,email-address,first-name,last-name)"
-                        className={'linkedin-login-btn'}
-                        loginButtonText={'Login with Linkedin'}
-                        logoutButtonText={'Logout from Linkedin'}
-                        buttonType={'button'}
-                        getOAuthToken={true}
-                      />
+                        redirectUri={`${backendUrl}/api/linkedin/callback`}
+                    />
                 </div>
             </div>  
         );

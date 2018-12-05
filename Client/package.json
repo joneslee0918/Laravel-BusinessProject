@@ -48,7 +48,6 @@
     "react-facebook-login": "^4.1.1",
     "react-geosuggest": "^2.8.0",
     "react-images-browse": "^0.2.4",
-    "react-linkedin-sdk": "^1.0.12",
     "react-modal": "^3.6.1",
     "react-redux": "5.0.7",
     "react-router-dom": "4.3.1",

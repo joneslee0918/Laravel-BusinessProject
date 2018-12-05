@@ -11,20 +11,33 @@ class AuthController extends Controller
 
     public function accessToken(Request $request)
     {   
-        $code = $request->input("oauthToken");
+        $code = $request->input("code");
+        $appUrl = config('app.url');
         $clientUrl = config('frontendclient.client_url');
         $clientId = config('services.linkedin.client_id');
         $clientSecret = config('services.linkedin.client_secret');
-        $params = "grant_type=authorization_code&code={$code}&redirect_uri={$clientUrl}&client_id={$clientId}&client_secret={$clientSecret}";
+        $redirectUrl = "{$appUrl}/api/linkedin/callback";
+        $params = "grant_type=authorization_code&state=123456&code={$code}&redirect_uri={$redirectUrl}&client_id={$clientId}&client_secret={$clientSecret}";
         $url = "https://www.linkedin.com/oauth/v2/accessToken?{$params}";
 
-        $curl = curl_init($url);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        $response = curl_exec($ch);
 
-        $credentials = curl_exec($curl);
+        $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $header = substr($response, 0, $header_size);
+        $body = substr($response, $header_size);
 
-        print_r(curl_getinfo($curl));
-        die();
-        return response()->json($credentials);
+        $body = json_decode($body);
+
+        return response()->json($body);
+        return redirect($clientUrl);
+    }
+
+    public function retrievedToken(Request $request){
+        return $request->all();
     }
 
 }

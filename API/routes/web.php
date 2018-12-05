@@ -22,15 +22,15 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::find(31);
-    $admin = \App\Models\Facebook\Channel::find($channel->parent_id);
+    // $channel = \App\Models\Facebook\Channel::find(31);
+    // $admin = \App\Models\Facebook\Channel::find($channel->parent_id);
 
-    return response()->json($channel->publish("hello there"));
+    // return response()->json($channel->publish("hello there"));
 
-    // $accessToken = "GCtkQvgOIUyIPWQgvI3jkf9lfXKld5wN4jyc";
-    // $credentials = \Laravel\Socialite\Facades\Socialite::driver("linkedin")->userFromToken($accessToken);
+    $accessToken = "AQQE-MJuFJTCM6YwpNmjd1pRH_UTXUZzGoQOGdszVxPVp6YVFFAWuPV_3w6tOu3ljuY60hoiVs-_CWo3OA__D9l5hRrBPq4655AV-utnL6c7BcbPrMSkbgKGbh9cQoWxTd8OYsC0rtU0mYVhGUFsABTINj2iKSBq7DvHurMqJoqU9plr2spoRAIqlVlQtw";
+    $credentials = \Laravel\Socialite\Facades\Socialite::driver("linkedin")->userFromToken($accessToken);
 
-    // return response($credentials);
+    return response()->json($credentials);
 })->name("test");
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
