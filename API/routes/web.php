@@ -22,9 +22,11 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::find(38);
+    $channel = \App\Models\Facebook\Channel::find(6);
+    $scheduledPost = $channel->global->scheduledPosts()->first();
 
-    return response()->json($channel->uploadMedia("https://dev.uniclixapp.com/images/logo.png")->getDecodedBody());
+
+    return response()->json($channel->publishScheduledPost($scheduledPost));
 
 //     $token = "EAAFNlFdu1UgBAMZA753G1bcUZBVRmKfAvoY7NPNIIAquXhvpPUtmJ5pAovwZAGApN3VZBlUnTZB1jOIoR4f8FDGMSpwj5FTmWbfDs4z73EgrD83KPZAaIEgLic6WFYZCp1zPhbZAgDvBTghYaEtnbyIMsgiZATVVbDIsfEC3SCZCpe5FHKM38i4zGe57SrPQx4kEHl4ZBkl6ZBLyzxGECAFajfuwEyCTlWZAH8yVbk20ZCfn46BwZDZD";
 //     $fb = app(SammyK\LaravelFacebookSdk\LaravelFacebookSdk::class);

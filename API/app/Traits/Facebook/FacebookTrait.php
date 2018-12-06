@@ -80,10 +80,9 @@ trait FacebookTrait
             $timezone = $payload['scheduled']['publishTimezone'];
             $appUrl = config("app.url");
             $mediaIds = [];
-
             $mediaCount = 0;
             foreach($images as $image){
-                $relativePath = str_replace('storage', 'public', $image['relativePath']);
+                $relativePath = $image['relativePath'];
                 $fullPath = $appUrl."/".$relativePath;
                 $media = ["url" => $fullPath, "published" => false];
                 $uploadResponse = $this->uploadMedia($media);
@@ -98,6 +97,8 @@ trait FacebookTrait
             if($mediaCount > 0){
                 $post = array_merge($mediaIds, $post);
             }
+
+            return $post;
             
             $this->publish($post);
 
