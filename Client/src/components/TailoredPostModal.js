@@ -6,6 +6,7 @@ import {setPost, setPostedArticle} from "../actions/posts";
 import SelectChannelsModal from './SelectChannelsModal';
 import DraftEditor from './DraftEditor';
 import PublishButton from './PublishButton';
+import {getUrlFromText, removeUrl} from '../utils/helpers';
 
 class TailoredPostModal extends React.Component{
 
@@ -14,6 +15,9 @@ class TailoredPostModal extends React.Component{
         selectChannelsModal: false,
         draftEditorModal: false,
         content: "",
+        facebookContent: "",
+        twitterContent: "",
+        linkedinContent: "",
         pictures: [],
         restricted: false,
         network: ""
@@ -40,11 +44,11 @@ class TailoredPostModal extends React.Component{
     };
 
     toggleDraftEditorModal = (network = "") => {
-        
-        let content = `${this.props.title}  ${this.props.source}`;
+        let body = this.state.content;
+        let content = body ? body : `${this.props.title}  ${this.props.source}`;
         let pictures = [];
 
-        if(network == "facebook"){
+        if(network == "facebook" && !body){
             content = ` ${this.props.source}`;
         }
 
@@ -105,6 +109,19 @@ class TailoredPostModal extends React.Component{
     render(){
         const {title, image, source, description, isOpen, toggleTailoredPostModal} = this.props;
         const selectedChannels = channelSelector(this.state.publishChannels, {selected: true, provider: undefined});
+        const content = this.state.content ? this.state.content : title;
+        let link = this.state.content ? getUrlFromText(this.state.content) : [source];
+        const body = removeUrl(content);
+
+        let picture = "";
+
+        if(link){
+            if(source === link[0]){
+                picture = image;
+                link = link[0];
+            }
+        }
+
         return  (
                     <Modal 
                     isOpen={isOpen}
@@ -127,6 +144,7 @@ class TailoredPostModal extends React.Component{
                                 pictures={this.state.pictures}
                                 toggle={this.toggleDraftEditorModal}
                                 onDone={this.toggleDraftEditorModal}
+                                network={this.state.network}
                                 inclusive={true}
                             />
                         </Modal>
@@ -135,9 +153,9 @@ class TailoredPostModal extends React.Component{
                             <div className="tailored-post-content">
                                 <TailoredPostCard 
                                     network="twitter"
-                                    title={title}
-                                    image={image}
-                                    source={source}
+                                    title={body}
+                                    image={picture}
+                                    source={link}
                                     selectedChannels={selectedChannels}
                                     onOverlayClick={this.toggleSelectChannelsModal}
                                     onEditClick={this.toggleDraftEditorModal}
@@ -145,9 +163,9 @@ class TailoredPostModal extends React.Component{
 
                                 <TailoredPostCard 
                                     network="facebook"
-                                    title={title}
-                                    image={image}
-                                    source={source}
+                                    title={body}
+                                    image={picture}
+                                    source={link}
                                     selectedChannels={selectedChannels}
                                     onOverlayClick={this.toggleSelectChannelsModal}
                                     onEditClick={this.toggleDraftEditorModal}
@@ -227,11 +245,17 @@ const TailoredPostCard = ({network, title, image, source, selectedChannels, onOv
                     </div>
                 }
                 <div className="tailored-post-preview-body">
-                    <img src={image}/>
-                    <div className="tailoredPost__previewCardWrapper__link__text">
-                        <div className="tailoredPost__previewCardWrapper__link__title">{title}</div>
-                        <div className="tailoredPost__previewCardWrapper__link__domain">{source}</div>
-                    </div>
+                    {!!image &&
+                        <img src={image}/>
+                    }
+                    
+                    {!!source &&
+                        <div className="tailoredPost__previewCardWrapper__link__text">
+                            <div className="tailoredPost__previewCardWrapper__link__title">{title}</div>
+                            <div className="tailoredPost__previewCardWrapper__link__domain">{source}</div>
+                        </div>
+                    }
+
                 </div>
             </div>
 
