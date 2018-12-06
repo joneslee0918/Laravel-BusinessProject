@@ -86,21 +86,28 @@ trait FacebookTrait
                 $fullPath = $appUrl."/".$relativePath;
                 $media = ["url" => $fullPath, "published" => false];
                 $uploadResponse = $this->uploadMedia($media);
-                $mediaIds[] = ["attached_media[$mediaCount]" => "{'media_fbid': '$uploadResponse->id'}"];
+                $mediaId = $uploadResponse['id'];
+                $mediaIds["attached_media[$mediaCount]"] = "{'media_fbid': '$mediaId'}";
                 $mediaCount++;
             }
             
-            $post = [
-                'message' => $scheduledPost->content
-            ]; 
+            $text = $scheduledPost->content;
+            $link = findUrlInText($text);
+
+            if($link){
+                $text = str_replace($link, "", $text);
+                $post["link"] = $link;
+            }
+
+            if($text){
+                $post["message"] = $text;
+            }
 
             if($mediaCount > 0){
                 $post = array_merge($mediaIds, $post);
             }
-
-            return $post;
             
-            $this->publish($post);
+            $result = $this->publish($post);
 
             $now = Carbon::now();
             $scheduledPost->posted = 1;
@@ -108,6 +115,8 @@ trait FacebookTrait
             $scheduledPost->scheduled_at = $now;
             $scheduledPost->scheduled_at_original = Carbon::parse($now)->setTimezone($timezone);
             $scheduledPost->save();
+
+            return $result;
 
         }catch(\Exception $e){
             
