@@ -70,8 +70,8 @@ class ChannelController extends Controller
         $response = collect($channel->getGroups());
         $groups = [];
         if(isset($response["data"])){
-            $groups = collect($response["data"])->map(function($group){
-                $group["token"] = "group";
+            $groups = collect($response["data"])->map(function($group) use ($channel){
+                $group["token"] = @$channel->access_token;
                 $group["avatar"] = @$group["picture"]["data"]["url"];
 
                 return $group;

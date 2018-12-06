@@ -46,19 +46,26 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
+    /**
+     * @param array $media
+     * @return mixed
+     */
+    public function uploadMedia($media)
+    {
+        $fb = $this->setAsCurrentUser($this->access_token);
+        $response = $fb->post("/{$this->original_id}/photos", $media);
+        return $response->getDecodedBody();
+    }
+
         /**
      * @param array $tweet
      * @return mixed
      */
     public function publish($post)
     {
-        $admin = self::find($this->parent_id);
-
-        if($admin){
-            $fb = $this->setAsCurrentUser($admin->access_token);
-            $response = $fb->post("/{$this->original_id}/feed?message=$post");
-            return $response->getDecodedBody();
-        }
+        $fb = $this->setAsCurrentUser($this->access_token);
+        $response = $fb->post("/{$this->original_id}/feed", $post);
+        return $response->getDecodedBody();
     }
 
     /**
@@ -71,21 +78,26 @@ trait FacebookTrait
             $payload = unserialize($scheduledPost->payload);
             $images = $payload['images'];
             $timezone = $payload['scheduled']['publishTimezone'];
-
+            $appUrl = config("app.url");
             $mediaIds = [];
 
+            $mediaCount = 0;
             foreach($images as $image){
                 $relativePath = str_replace('storage', 'public', $image['relativePath']);
-
-                $media = ["media" => \Storage::get($relativePath)];
+                $fullPath = $appUrl."/".$relativePath;
+                $media = ["url" => $fullPath, "published" => false];
                 $uploadResponse = $this->uploadMedia($media);
-                $mediaIds[] = $uploadResponse->media_id;
+                $mediaIds[] = ["attached_media[$mediaCount]" => "{'media_fbid': '$uploadResponse->id'}"];
+                $mediaCount++;
             }
             
             $post = [
-                'status' => $scheduledPost->content,
-                'media_ids' => $mediaIds
+                'message' => $scheduledPost->content
             ]; 
+
+            if($mediaCount > 0){
+                $post = array_merge($mediaIds, $post);
+            }
             
             $this->publish($post);
 

@@ -22,15 +22,22 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    // $channel = \App\Models\Facebook\Channel::find(31);
-    // $admin = \App\Models\Facebook\Channel::find($channel->parent_id);
+    $channel = \App\Models\Facebook\Channel::find(38);
 
-    // return response()->json($channel->publish("hello there"));
+    return response()->json($channel->uploadMedia("https://dev.uniclixapp.com/images/logo.png")->getDecodedBody());
 
-    $accessToken = "AQQE-MJuFJTCM6YwpNmjd1pRH_UTXUZzGoQOGdszVxPVp6YVFFAWuPV_3w6tOu3ljuY60hoiVs-_CWo3OA__D9l5hRrBPq4655AV-utnL6c7BcbPrMSkbgKGbh9cQoWxTd8OYsC0rtU0mYVhGUFsABTINj2iKSBq7DvHurMqJoqU9plr2spoRAIqlVlQtw";
-    $credentials = \Laravel\Socialite\Facades\Socialite::driver("linkedin")->userFromToken($accessToken);
+//     $token = "EAAFNlFdu1UgBAMZA753G1bcUZBVRmKfAvoY7NPNIIAquXhvpPUtmJ5pAovwZAGApN3VZBlUnTZB1jOIoR4f8FDGMSpwj5FTmWbfDs4z73EgrD83KPZAaIEgLic6WFYZCp1zPhbZAgDvBTghYaEtnbyIMsgiZATVVbDIsfEC3SCZCpe5FHKM38i4zGe57SrPQx4kEHl4ZBkl6ZBLyzxGECAFajfuwEyCTlWZAH8yVbk20ZCfn46BwZDZD";
+//     $fb = app(SammyK\LaravelFacebookSdk\LaravelFacebookSdk::class);
+//     $fb->setDefaultAccessToken($token);
+//    // $result = $fb->post('/104120780629082/accounts?name=TestPage&category_enum=LITERARY_ARTS&about=For Fun&picture=https://dev.uniclixapp.com/images/logo.png&cover_photo={"url": "https://socialmediadesigns.org/wp-content/uploads/2018/01/facebook-cover-size-2018.jpg"}');
+//     $result = $fb->get("/104120780629082/accounts?fields=id");
+//     return response()->json($result->getDecodedBody());
+    //$fb->setDefaultAccessToken($token);
 
-    return response()->json($credentials);
+    // $accessToken = "AQQE-MJuFJTCM6YwpNmjd1pRH_UTXUZzGoQOGdszVxPVp6YVFFAWuPV_3w6tOu3ljuY60hoiVs-_CWo3OA__D9l5hRrBPq4655AV-utnL6c7BcbPrMSkbgKGbh9cQoWxTd8OYsC0rtU0mYVhGUFsABTINj2iKSBq7DvHurMqJoqU9plr2spoRAIqlVlQtw";
+    // $credentials = \Laravel\Socialite\Facades\Socialite::driver("linkedin")->userFromToken($accessToken);
+
+    // return response()->json($credentials);
 })->name("test");
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);

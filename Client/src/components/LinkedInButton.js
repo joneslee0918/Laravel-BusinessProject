@@ -14,9 +14,9 @@ export default class LinkedInButton extends React.Component{
     
         window.addEventListener(
           "message",
-          (event) => {console.log("fired");
+          (event) => {
+            console.log("fired event");
             if (event.data.type === "access_token") {
-                
               Alert.success(`Access token obtained: ${event.data.access_token}`,{position:'top'});
             }
           },
