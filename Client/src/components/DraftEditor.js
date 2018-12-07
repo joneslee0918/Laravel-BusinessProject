@@ -52,19 +52,24 @@ class DraftEditor extends React.Component{
         this.setState(() => ({
             editorState,
             letterCount: text.length
-        }), this.props.onChange(text));
+        }));
     };
 
     onDrop = (pictures, pictureDataUrls) => {
         this.setState((prevState) => {
             if(prevState.pictures !== pictures){
-
-                this.props.onImagesChange(pictureDataUrls);
                 return {
                     pictures: pictureDataUrls
                 }
             }
         });
+    };
+
+    onDone = () => {
+        const text = this.state.editorState.getCurrentContent().getPlainText();
+        const pictures = this.state.pictures;
+
+        this.props.onDone(text, pictures);
     };
 
     onImageIconClick = () => {
@@ -103,7 +108,7 @@ class DraftEditor extends React.Component{
         const { EmojiSuggestions, EmojiSelect} = emojiPlugin;
         const { MentionSuggestions: HashtagSuggestions } = hashtagMentionPlugin;
         const plugins = [emojiPlugin, hashtagMentionPlugin];
-        const {scheduledLabel, inclusive, toggle, onDone, network} = this.props;
+        const {scheduledLabel, inclusive, toggle} = this.props;
 
         return(
             <div>
@@ -165,7 +170,7 @@ class DraftEditor extends React.Component{
                     
                         <p className={`letter-count pull-left ${this.state.letterCount > 280 ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
 
-                        <button onClick={toggle} className="upgrade-btn pull-right">Done</button>
+                        <button onClick={this.onDone} className="upgrade-btn pull-right">Done</button>
                     </div>
                 }
             </div>

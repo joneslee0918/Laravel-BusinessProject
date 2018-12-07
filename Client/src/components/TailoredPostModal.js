@@ -44,7 +44,7 @@ class TailoredPostModal extends React.Component{
     };
 
     toggleDraftEditorModal = (network = "") => {
-        let body = this.state.content;
+        let body = this.state[network+"Content"];
         let content = body ? body : `${this.props.title}  ${this.props.source}`;
         let pictures = [];
 
@@ -60,17 +60,15 @@ class TailoredPostModal extends React.Component{
         }));
     };
 
-    updateContent = (content = "") => {
+    onDone = (content = "", pictures = []) => {
         this.setState(() => ({
-            content: content,
+            [this.state.network+"Content"] : content,
+            pictures,
+            draftEditorModal: !this.state.draftEditorModal,
             letterCount: content.length
         }));
-    };
 
-    updatePictures = (pictures = []) => {
-        this.setState(() => ({
-            pictures: pictures
-        }));
+        console.log(this.state.network);
     };
 
     onChannelSelectionChange = (obj) => {
@@ -109,18 +107,12 @@ class TailoredPostModal extends React.Component{
     render(){
         const {title, image, source, description, isOpen, toggleTailoredPostModal} = this.props;
         const selectedChannels = channelSelector(this.state.publishChannels, {selected: true, provider: undefined});
-        const content = this.state.content ? this.state.content : title;
-        let link = this.state.content ? getUrlFromText(this.state.content) : [source];
-        const body = removeUrl(content);
 
-        let picture = "";
+        const facebookContent = this.state.facebookContent ? this.state.facebookContent : "";
+        const twitterContent = this.state.twitterContent ? this.state.twitterContent : "";
 
-        if(link){
-            if(source === link[0]){
-                picture = image;
-                link = link[0];
-            }
-        }
+        const facebookBody = removeUrl(facebookContent);
+        const twitterBody = removeUrl(twitterContent);
 
         return  (
                     <Modal 
@@ -138,13 +130,10 @@ class TailoredPostModal extends React.Component{
 
                         <Modal isOpen={this.state.draftEditorModal} ariaHideApp={false} closeTimeoutMS={300} className="modal-bg-radius">
                             <DraftEditor 
-                                onChange={this.updateContent}
-                                onImagesChange={this.updatePictures}
                                 content={this.state.content}
                                 pictures={this.state.pictures}
                                 toggle={this.toggleDraftEditorModal}
-                                onDone={this.toggleDraftEditorModal}
-                                network={this.state.network}
+                                onDone={this.onDone}
                                 inclusive={true}
                             />
                         </Modal>
@@ -153,9 +142,11 @@ class TailoredPostModal extends React.Component{
                             <div className="tailored-post-content">
                                 <TailoredPostCard 
                                     network="twitter"
-                                    title={body}
-                                    image={picture}
-                                    source={link}
+                                    body={twitterBody}
+                                    content={twitterContent}
+                                    title={title}
+                                    image={image}
+                                    source={source}
                                     selectedChannels={selectedChannels}
                                     onOverlayClick={this.toggleSelectChannelsModal}
                                     onEditClick={this.toggleDraftEditorModal}
@@ -163,9 +154,11 @@ class TailoredPostModal extends React.Component{
 
                                 <TailoredPostCard 
                                     network="facebook"
-                                    title={body}
-                                    image={picture}
-                                    source={link}
+                                    body={facebookBody}
+                                    content={facebookContent}
+                                    title={title}
+                                    image={image}
+                                    source={source}
                                     selectedChannels={selectedChannels}
                                     onOverlayClick={this.toggleSelectChannelsModal}
                                     onEditClick={this.toggleDraftEditorModal}
@@ -221,61 +214,76 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(TailoredPostModal);
 
-const TailoredPostCard = ({network, title, image, source, selectedChannels, onOverlayClick, onEditClick}) => (
-    <div className="tailored-post-card">
+const TailoredPostCard = ({network, title, body, content, image, source, selectedChannels, onOverlayClick, onEditClick}) => {
 
-    <div className="tailored-post-card-content">
-            <div onClick={() => onEditClick(network)} className="tailored-post-preview">
+    let link = content ? getUrlFromText(content) : [source];
+  
+    if(link){
+        if(source !== link[0]){
+            image = "";
+            source = "";
+        }
+    }else{
+        image = "";
+        source = "";
+    }
 
-                <div className="tailored-post-preview__header">
-                    <i className={ `socialIcon fa fa-${network} ${network}_bg`}></i>
-                    <div>
-                        <div className="social-preview-title">{network} preview</div>
-                        <div className="small-blurry-text">small text here</div>
+    return(
+        <div className="tailored-post-card">
+
+        <div className="tailored-post-card-content">
+                <div onClick={() => onEditClick(network)} className="tailored-post-preview">
+
+                    <div className="tailored-post-preview__header">
+                        <i className={ `socialIcon fa fa-${network} ${network}_bg`}></i>
+                        <div>
+                            <div className="social-preview-title">{network} preview</div>
+                            <div className="small-blurry-text">small text here</div>
+                        </div>
+                    </div>
+
+                    {network == "facebook" && !body ?
+                        <div className="social-body-text-suggestion">
+                            Click here to add text
+                        </div>
+                        :
+                        <div className="social-body-text">
+                            {body ? body : (source ? title : "")}
+                        </div>
+                    }
+                    <div className="tailored-post-preview-body">
+                        {!!image &&
+                            <img src={image}/>
+                        }
+                        
+                        {!!source &&
+                            <div className="tailoredPost__previewCardWrapper__link__text">
+                                <div className="tailoredPost__previewCardWrapper__link__title">{title}</div>
+                                <div className="tailoredPost__previewCardWrapper__link__domain">{source}</div>
+                            </div>
+                        }
+
                     </div>
                 </div>
 
-                {network == "facebook" ?
-                    <div className="social-body-text-suggestion">
-                        Click here to add text
-                    </div>
-                    :
-                    <div className="social-body-text">
-                        {title}
+                {!(!!channelSelector(selectedChannels, {selected: undefined, provider: network}).length) &&
+                    <div onClick={onOverlayClick} className="tailored-post-overlay flex-center-v">
+                    
+                        <div>
+                            <div className="flex-center-h">
+                                <i className={`overlaySocialIcon fa fa-${network} ${network}_color`}></i>
+                            </div>
+                            <div className="flex-center-h center-inline p10">
+                                Let's reach more people by posting on {network}
+                            </div>
+                            <div className="flex-center-h">
+                                <button className={`connectButton btn ${network}_bg normalizeText`}>Add {network}</button>
+                            </div>
+                        </div>
+
                     </div>
                 }
-                <div className="tailored-post-preview-body">
-                    {!!image &&
-                        <img src={image}/>
-                    }
-                    
-                    {!!source &&
-                        <div className="tailoredPost__previewCardWrapper__link__text">
-                            <div className="tailoredPost__previewCardWrapper__link__title">{title}</div>
-                            <div className="tailoredPost__previewCardWrapper__link__domain">{source}</div>
-                        </div>
-                    }
-
-                </div>
             </div>
-
-            {!(!!channelSelector(selectedChannels, {selected: undefined, provider: network}).length) &&
-                <div onClick={onOverlayClick} className="tailored-post-overlay flex-center-v">
-                
-                    <div>
-                        <div className="flex-center-h">
-                            <i className={`overlaySocialIcon fa fa-${network} ${network}_color`}></i>
-                        </div>
-                        <div className="flex-center-h center-inline p10">
-                            Let's reach more people by posting on {network}
-                        </div>
-                        <div className="flex-center-h">
-                            <button className={`connectButton btn ${network}_bg normalizeText`}>Add {network}</button>
-                        </div>
-                    </div>
-
-                </div>
-            }
         </div>
-    </div>
-);
+    );
+}
