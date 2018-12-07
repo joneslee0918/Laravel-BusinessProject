@@ -46,10 +46,17 @@ class DraftEditor extends React.Component{
     };
 
     onChange = (editorState) => {
+
+        const text = editorState.getCurrentContent().getPlainText();
+
         this.setState(() => ({
             editorState,
             letterCount: text.length
-        }));
+        }), () => {
+            if(typeof(this.props.onChange) !== "undefined"){
+                this.props.onChange(text);
+            }
+        });
     };
 
     onDrop = (pictures, pictureDataUrls) => {
@@ -58,6 +65,10 @@ class DraftEditor extends React.Component{
                 return {
                     pictures: pictureDataUrls
                 }
+            }
+        }, () => {
+            if(typeof(this.props.onImagesChange) !== "undefined"){
+                this.props.onImagesChange(pictureDataUrls);
             }
         });
     };

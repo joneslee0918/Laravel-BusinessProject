@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
 import channelSelector from '../selectors/channels';
+import {publish} from '../requests/channels';
 import {setPost, setPostedArticle} from "../actions/posts";
 import SelectChannelsModal from './SelectChannelsModal';
 import DraftEditor from './DraftEditor';
@@ -23,6 +24,9 @@ class TailoredPostModal extends React.Component{
         twitterPictures: [],
         linkedinPictures: [],
         restricted: false,
+        stored: false,
+        error: false,
+        type: "store",
         network: ""
     };
 
@@ -103,7 +107,61 @@ class TailoredPostModal extends React.Component{
     };
 
     publish = (scheduled, publishType) => {
+        const content = this.state.content;
+        const defaultContent = `${this.props.title} ${this.props.source}`;
+        const facebookContent = this.state.facebookContent ? this.state.facebookContent : this.props.source;
+        const twitterContent = this.state.twitterContent ? this.state.twitterContent : defaultContent;
+        const linkedinContent = this.state.linkedinContent ? this.state.linkedinContent : defaultContent;
+        const facebookPictures = this.state.facebookPictures;
+        const twitterPictures = this.state.twitterPictures;
+        const linkedinPictures = this.state.linkedinPictures;
+        const type = this.state.type;
+        const id = this.props.post ? this.props.post.id : "";
+        const articleId = this.props.postId;
+        const images = this.state.pictures;
+        const publishChannels = channelSelector(this.state.publishChannels, {selected: true, provider: undefined});
 
+        this.setState(() => ({
+            loading: true
+        }));
+
+        publish({
+            content, 
+            facebookContent,
+            twitterContent,
+            linkedinContent,
+            facebookPictures,
+            twitterPictures,
+            linkedinPictures,
+            images,                
+            publishChannels, 
+            publishType, 
+            scheduled,
+            type,
+            id,
+            articleId
+        })
+        .then((response) => {
+            this.setState(() => ({
+                loading: false,
+                stored: true
+            }), () => {
+                console.log(articleId);
+                if(articleId){
+                    this.props.setPostedArticle({
+                        articleId,
+                        posted: publishType == "now" ? 1 : 0
+                    });
+                }
+
+                this.props.toggleTailoredPostModal({});
+            });
+        }).catch((error) => {
+            this.setState(() => ({
+                loading: false,
+                error: true
+            }));
+        });
     };
 
     render(){

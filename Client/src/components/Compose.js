@@ -60,10 +60,10 @@ class Compose extends React.Component{
 
 
             this.setState(() => ({
-                content: this.props.post.content,
+                content: this.props.post.content ? this.props.post.content : "",
                 pictures: this.props.post.images,
                 type: this.props.post ? this.props.post.type : "store",
-                letterCount: this.props.post.content.length,
+                letterCount: this.props.post.content ? this.props.post.content.length : 0,
                 refresh
             }));
         }
