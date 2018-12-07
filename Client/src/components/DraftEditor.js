@@ -46,9 +46,6 @@ class DraftEditor extends React.Component{
     };
 
     onChange = (editorState) => {
-
-        const text = editorState.getCurrentContent().getPlainText();
-
         this.setState(() => ({
             editorState,
             letterCount: text.length
@@ -108,15 +105,15 @@ class DraftEditor extends React.Component{
         const { EmojiSuggestions, EmojiSelect} = emojiPlugin;
         const { MentionSuggestions: HashtagSuggestions } = hashtagMentionPlugin;
         const plugins = [emojiPlugin, hashtagMentionPlugin];
-        const {scheduledLabel, inclusive, toggle} = this.props;
+        const {scheduledLabel, inclusive, toggle, network} = this.props;
 
         return(
             <div>
 
                 {inclusive &&
                     <div className="modal-header">
-                            <button type="button" id="closeModal" onClick={toggle} className="close fa fa-times-circle" data-dismiss="modal"></button>
-                            <h4>Editing</h4>
+                        <button type="button" id="closeModal" onClick={toggle} className="close fa fa-times-circle" data-dismiss="modal"></button>
+                        <h4>Editing</h4>
                     </div>
                 }
 
@@ -168,9 +165,14 @@ class DraftEditor extends React.Component{
                 {inclusive && 
                     <div className="modal-footer" style={{position:"relative"}}>
                     
-                        <p className={`letter-count pull-left ${this.state.letterCount > 280 ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
+                        <p className={`letter-count pull-left ${this.state.letterCount > 280 && network == 'twitter' ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
 
-                        <button onClick={this.onDone} className="upgrade-btn pull-right">Done</button>
+                        {(this.state.letterCount > 280 && network == "twitter") || (this.state.letterCount < 1 && this.state.pictures.length < 1) ?
+                            <button disabled onClick={this.onDone} className={`upgrade-btn pull-right disabled-btn`}>Done</button>
+                        :
+                            <button onClick={this.onDone} className={`upgrade-btn pull-right`}>Done</button>
+                        }
+                        
                     </div>
                 }
             </div>

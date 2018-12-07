@@ -19,9 +19,13 @@ class TailoredPostModal extends React.Component{
         twitterContent: "",
         linkedinContent: "",
         pictures: [],
+        facebookPictures: [],
+        twitterPictures: [],
+        linkedinPictures: [],
         restricted: false,
         network: ""
     };
+
 
     componentDidUpdate(prevProps) {
 
@@ -45,8 +49,8 @@ class TailoredPostModal extends React.Component{
 
     toggleDraftEditorModal = (network = "") => {
         let body = this.state[network+"Content"];
-        let content = body ? body : `${this.props.title}  ${this.props.source}`;
-        let pictures = [];
+        let content = body ? body : `${this.props.title} ${this.props.source}`;
+        let pictures = this.state[network+"Pictures"] ? this.state[network+"Pictures"] : [];
 
         if(network == "facebook" && !body){
             content = ` ${this.props.source}`;
@@ -63,12 +67,10 @@ class TailoredPostModal extends React.Component{
     onDone = (content = "", pictures = []) => {
         this.setState(() => ({
             [this.state.network+"Content"] : content,
-            pictures,
+            [this.state.network+"Pictures"]: pictures,
             draftEditorModal: !this.state.draftEditorModal,
             letterCount: content.length
         }));
-
-        console.log(this.state.network);
     };
 
     onChannelSelectionChange = (obj) => {
@@ -108,11 +110,14 @@ class TailoredPostModal extends React.Component{
         const {title, image, source, description, isOpen, toggleTailoredPostModal} = this.props;
         const selectedChannels = channelSelector(this.state.publishChannels, {selected: true, provider: undefined});
 
-        const facebookContent = this.state.facebookContent ? this.state.facebookContent : "";
-        const twitterContent = this.state.twitterContent ? this.state.twitterContent : "";
+        const facebookContent = this.state.facebookContent;
+        const twitterContent = this.state.twitterContent;
 
         const facebookBody = removeUrl(facebookContent);
         const twitterBody = removeUrl(twitterContent);
+
+        const facebookPictures = this.state.facebookPictures;
+        const twitterPictures = this.state.twitterPictures;
 
         return  (
                     <Modal 
@@ -134,6 +139,7 @@ class TailoredPostModal extends React.Component{
                                 pictures={this.state.pictures}
                                 toggle={this.toggleDraftEditorModal}
                                 onDone={this.onDone}
+                                network={this.state.network}
                                 inclusive={true}
                             />
                         </Modal>
@@ -144,6 +150,7 @@ class TailoredPostModal extends React.Component{
                                     network="twitter"
                                     body={twitterBody}
                                     content={twitterContent}
+                                    pictures={twitterPictures}
                                     title={title}
                                     image={image}
                                     source={source}
@@ -156,6 +163,7 @@ class TailoredPostModal extends React.Component{
                                     network="facebook"
                                     body={facebookBody}
                                     content={facebookContent}
+                                    pictures={facebookPictures}
                                     title={title}
                                     image={image}
                                     source={source}
@@ -214,7 +222,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(TailoredPostModal);
 
-const TailoredPostCard = ({network, title, body, content, image, source, selectedChannels, onOverlayClick, onEditClick}) => {
+const TailoredPostCard = ({network, title, body, content, pictures, image, source, selectedChannels, onOverlayClick, onEditClick}) => {
 
     let link = content ? getUrlFromText(content) : [source];
   
@@ -222,11 +230,20 @@ const TailoredPostCard = ({network, title, body, content, image, source, selecte
         if(source !== link[0]){
             image = "";
             source = "";
+            body = content;
         }
     }else{
         image = "";
         source = "";
+        body = content;
     }
+
+    if(pictures.length){
+        image = pictures[0];
+        body = content;
+    }
+
+    body = body.trim();
 
     return(
         <div className="tailored-post-card">
@@ -256,7 +273,7 @@ const TailoredPostCard = ({network, title, body, content, image, source, selecte
                             <img src={image}/>
                         }
                         
-                        {!!source &&
+                        {!!source && !pictures.length &&
                             <div className="tailoredPost__previewCardWrapper__link__text">
                                 <div className="tailoredPost__previewCardWrapper__link__title">{title}</div>
                                 <div className="tailoredPost__previewCardWrapper__link__domain">{source}</div>
