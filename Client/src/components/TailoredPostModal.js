@@ -68,6 +68,17 @@ class TailoredPostModal extends React.Component{
         }));
     };
 
+    toggleTailoredPostModal = () => {
+        this.setState(() => ({
+            facebookContent: "",
+            facebookPictures: [],
+            twitterContent: "",
+            twitterPictures: [],
+            linkedinContent: "",
+            linkedinPictures: []
+        }), () => this.props.toggleTailoredPostModal({}));
+    };
+
     onDone = (content = "", pictures = []) => {
         this.setState(() => ({
             [this.state.network+"Content"] : content,
@@ -256,7 +267,7 @@ class TailoredPostModal extends React.Component{
                             </div>
                         </div>
                         <div className="tailored-post-close flex-center-h">
-                            <button className="btn tailorCloseBtn" onClick={() => toggleTailoredPostModal({})}>
+                            <button className="btn tailorCloseBtn" onClick={() => this.toggleTailoredPostModal()}>
                                 <i className="fa fa-close"></i>
                             </button>
                         </div>
