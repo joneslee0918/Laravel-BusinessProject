@@ -18,7 +18,7 @@ export const startLogin = (body, network = "twitter") => {
             accessToken = body.oauth_token;
             accessTokenSecret = body.oauth_token_secret;
 
-        }else if(network == "facebook"){
+        }else if(network == "facebook" || network == "linkedin"){
 
             accessToken = body.accessToken;
         }

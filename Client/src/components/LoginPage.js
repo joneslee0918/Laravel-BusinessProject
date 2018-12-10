@@ -46,7 +46,13 @@ export class LoginPage extends React.Component{
     };
 
     onLinkedInSuccess = (response) => {
-        console.log(response);
+        this.setState(() => ({loading: true}));
+        this.props.startLogin(response, "linkedin").then(() => {
+            this.props.startSetProfile();
+            this.props.startSetChannels();
+        }).catch(error => {
+            this.setState(() => ({loading: false}));
+        });
     };
 
     render(){
@@ -67,7 +73,7 @@ export class LoginPage extends React.Component{
                         appId={facebookAppId}
                         autoLoad={false}
                         fields="name,email,picture"
-                        scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,groups_access_member_info,public_profile,email"
+                        scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,public_profile,email"
                         callback={this.onFacebookSuccess} />
 
                     <LinkedInButton 

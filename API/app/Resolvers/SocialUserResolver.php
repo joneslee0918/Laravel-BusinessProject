@@ -8,6 +8,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use App\Models\Twitter\Channel as TwitterChannel;
 use App\Models\Facebook\Channel as FacebookChannel;
+use App\Models\Linkedin\Channel as LinkedinChannel;
 use App\Models\Role;
 
 class SocialUserResolver implements SocialUserResolverInterface

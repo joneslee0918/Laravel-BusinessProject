@@ -78,4 +78,8 @@ Route::prefix("facebook")->group(function(){
 
 Route::prefix("linkedin")->group(function(){
     Route::get('callback', 'Linkedin\AuthController@accessToken');
+
+    Route::middleware('auth:api')->group(function(){
+        Route::post('channels/add', 'Linkedin\ChannelController@add');
+    });
 });
