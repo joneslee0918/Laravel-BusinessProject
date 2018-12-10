@@ -1,10 +1,13 @@
 import React from 'react';
+import {getParameterByName} from '../utils/helpers';
 
 export default class LinkedInButton extends React.Component{
 
     requestOAuthToken = () => {
         const redirectUri = this.props.redirectUri;
         const clientId = this.props.clientId;
+        const onSuccess = this.props.onSuccess;
+        const onError = this.props.onError;
         
         var oauthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&scope=r_basicprofile&state=123456&redirect_uri=${redirectUri}`;
         var width = 450,
@@ -12,29 +15,52 @@ export default class LinkedInButton extends React.Component{
           left = window.screen.width / 2 - width / 2,
           top = window.screen.height / 2 - height / 2;
     
-        window.addEventListener(
-          "message",
-          (event) => {
-            console.log("fired event");
-            if (event.data.type === "access_token") {
-              Alert.success(`Access token obtained: ${event.data.access_token}`,{position:'top'});
-            }
-          },
-          false
-        );
+        // window.addEventListener(
+        //   "message",
+        //   (event) => {
+        //     if (event.data.type === "access_token") {
+        //       Alert.success(`Access token obtained: ${event.data.access_token}`,{position:'top'});
+        //     }
+        //   },
+        //   false
+        // );
     
-        window.open(
+        const targetWindow = window.open(
           oauthUrl,
           "Linkedin",
-          "menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=" +
+          "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=" +
             width +
-            ", height=" +
+            ",height=" +
             height +
-            ", top=" +
+            ",top=" +
             top +
-            ", left=" +
+            ",left=" +
             left
         );
+
+        var targetInterval = setInterval(function(){
+
+          if(targetWindow.document.domain === window.document.domain){
+            if(targetWindow.location.pathname == "/redirect"){
+              
+              const token = getParameterByName("accessToken", targetWindow.location.href);
+              
+              if(token){
+                onSuccess({
+                  "accessToken": token
+                });
+              }else{
+                onError({
+                  "error" : "Something went wrong."
+                });
+              }
+
+              targetWindow.close();
+              clearInterval(targetInterval);
+            }
+          }
+
+        }, 1000);
       };
 
       render(){

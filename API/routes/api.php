@@ -77,7 +77,5 @@ Route::prefix("facebook")->group(function(){
 });
 
 Route::prefix("linkedin")->group(function(){
-
     Route::get('callback', 'Linkedin\AuthController@accessToken');
-    Route::get('retrieve', 'Linkedin\AuthController@retrievedToken');
 });

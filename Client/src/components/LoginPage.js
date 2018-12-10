@@ -46,21 +46,7 @@ export class LoginPage extends React.Component{
     };
 
     onLinkedInSuccess = (response) => {
-       const token = response._token.accessToken;
-       const params = `grant_type=authorization_code&code=${token}&redirect_uri=https://web.uniclix.test&client_id=77d3j1o1cby4cc&client_secret=yCi4G6otW7j6hzWT`;
-       const url = "https://www.linkedin.com/oauth/v2/accessToken?";
-        // const result = axios.get(`${url}${params}`)
-        //     .then((response) => {
-        //         console.log(response);
-        //         return response.data;
-        //     });
-        // this.setState(() => ({loading: true}));
-        // this.props.startLogin(response, "linkedin").then(() => {
-        //     this.props.startSetProfile();
-        //     this.props.startSetChannels();
-        // }).catch(error => {
-        //     this.setState(() => ({loading: false}));
-        // });
+        console.log(response);
     };
 
     render(){
@@ -87,6 +73,8 @@ export class LoginPage extends React.Component{
                     <LinkedInButton 
                         clientId={linkedinAppId}
                         redirectUri={`${backendUrl}/api/linkedin/callback`}
+                        onSuccess={this.onLinkedInSuccess}
+                        onError={this.onFailure}
                     />
                 </div>
             </div>  

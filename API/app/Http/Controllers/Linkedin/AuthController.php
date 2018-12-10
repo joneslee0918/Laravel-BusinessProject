@@ -32,12 +32,7 @@ class AuthController extends Controller
 
         $body = json_decode($body);
 
-        return response()->json($body);
-        return redirect($clientUrl);
-    }
-
-    public function retrievedToken(Request $request){
-        return $request->all();
+        return redirect("$clientUrl/redirect?accessToken=$body->access_token");
     }
 
 }
