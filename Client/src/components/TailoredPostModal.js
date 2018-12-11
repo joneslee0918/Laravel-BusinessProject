@@ -8,6 +8,7 @@ import SelectChannelsModal from './SelectChannelsModal';
 import DraftEditor from './DraftEditor';
 import PublishButton from './PublishButton';
 import {getUrlFromText, removeUrl} from '../utils/helpers';
+import {LoaderWithOverlay} from "./Loader";
 
 class TailoredPostModal extends React.Component{
 
@@ -27,7 +28,8 @@ class TailoredPostModal extends React.Component{
         stored: false,
         error: false,
         type: "store",
-        network: ""
+        network: "",
+        loading: false
     };
 
 
@@ -181,12 +183,15 @@ class TailoredPostModal extends React.Component{
 
         const facebookContent = this.state.facebookContent;
         const twitterContent = this.state.twitterContent;
+        const linkedinContent = this.state.linkedinContent;
 
         const facebookBody = removeUrl(facebookContent);
         const twitterBody = removeUrl(twitterContent);
+        const linkedinBody = removeUrl(linkedinContent);
 
         const facebookPictures = this.state.facebookPictures;
         const twitterPictures = this.state.twitterPictures;
+        const linkedinPictures = this.state.linkedinPictures;
 
         return  (
                     <Modal 
@@ -195,6 +200,8 @@ class TailoredPostModal extends React.Component{
                     className="tailored-post-wrapper modal-animated-dd"
                     closeTimeoutMS={300}
                     >   
+                    {this.state.loading && <LoaderWithOverlay/>}
+                    
                         <Modal isOpen={this.state.selectChannelsModal} ariaHideApp={false} className="modal-no-bg">
                             <SelectChannelsModal 
                             channels={this.state.publishChannels} 
@@ -233,6 +240,19 @@ class TailoredPostModal extends React.Component{
                                     body={facebookBody}
                                     content={facebookContent}
                                     pictures={facebookPictures}
+                                    title={title}
+                                    image={image}
+                                    source={source}
+                                    selectedChannels={selectedChannels}
+                                    onOverlayClick={this.toggleSelectChannelsModal}
+                                    onEditClick={this.toggleDraftEditorModal}
+                                />
+
+                                <TailoredPostCard 
+                                    network="linkedin"
+                                    body={linkedinBody}
+                                    content={linkedinContent}
+                                    pictures={linkedinPictures}
                                     title={title}
                                     image={image}
                                     source={source}
@@ -363,7 +383,7 @@ const TailoredPostCard = ({network, title, body, content, pictures, image, sourc
                                 Let's reach more people by posting on {network}
                             </div>
                             <div className="flex-center-h">
-                                <button className={`connectButton btn ${network}_bg normalizeText`}>Add {network}</button>
+                                <button className={`connectButton btn ${network}_bg normalizeText whiteTxt`}>Add {network}</button>
                             </div>
                         </div>
 

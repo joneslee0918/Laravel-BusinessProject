@@ -9,7 +9,7 @@ export default class LinkedInButton extends React.Component{
         const onSuccess = this.props.onSuccess;
         const onError = this.props.onError;
         
-        var oauthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&scope=r_basicprofile,r_emailaddress&state=123456&redirect_uri=${redirectUri}`;
+        var oauthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&scope=r_basicprofile,r_emailaddress,w_share&state=123456&redirect_uri=${redirectUri}`;
         var width = 450,
           height = 730,
           left = window.screen.width / 2 - width / 2,
