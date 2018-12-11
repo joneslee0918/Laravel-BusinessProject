@@ -320,6 +320,20 @@ input {
     color: white !important;
 }
 
+.smallIcon{
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    position: absolute;
+    left: -5px;
+    top: 0px;
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
 .ReactModalPortal .ReactModal__Overlay {
     display: flex;
     justify-content: center;
@@ -1158,6 +1172,7 @@ input {
 
 .compose-header li {
     float: left;
+    position: relative;
     border: 1px solid #ccc;
     border-radius: 100%;
     width: 34px;
@@ -1165,8 +1180,10 @@ input {
     text-align: center;
     line-height: 2.3;
     margin-left: 5px;
-    cursor:pointer;
-    overflow:hidden;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .compose-header li img {
@@ -1325,11 +1342,16 @@ input {
     display: none;
     color: white;
     text-align: center;
+    border-radius:100%;
     padding: 8px;
 }
 
 .compose-header li:hover > .remove-overlay{
     display:block;
+}
+
+.compose-header li:hover > img{
+    display:none;
 }
 
 .right-radius{

@@ -201,7 +201,7 @@ class TailoredPostModal extends React.Component{
                     closeTimeoutMS={300}
                     >   
                     {this.state.loading && <LoaderWithOverlay/>}
-                    
+
                         <Modal isOpen={this.state.selectChannelsModal} ariaHideApp={false} className="modal-no-bg">
                             <SelectChannelsModal 
                             channels={this.state.publishChannels} 
@@ -269,9 +269,11 @@ class TailoredPostModal extends React.Component{
                                         <li onClick={this.toggleSelectChannelsModal} className="add-new-channel"><i className="fa fa-plus"></i></li>
 
                                         {!!this.state.publishChannels.length && channelSelector(this.state.publishChannels, {selected: true, provider: undefined}).map((channel) => (
+                                            
                                             <li key={channel.id} className="channel-item">
                                                 <div className="remove-overlay fa fa-close" onClick={() => this.onChannelSelectionChange(channel)}></div>
                                                 <img src={channel.avatar}/>
+                                                <i className={`fa fa-${channel.type} ${channel.type}_bg smallIcon`}></i>
                                             </li>
                                         ))}
 
