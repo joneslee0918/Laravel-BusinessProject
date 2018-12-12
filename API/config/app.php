@@ -163,6 +163,7 @@ return [
         Adaojunior\Passport\SocialGrantServiceProvider::class,
         SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
         Artesaos\LinkedIn\LinkedinServiceProvider::class,
+        \SocialiteProviders\Manager\ServiceProvider::class,
     ],
 
     /*

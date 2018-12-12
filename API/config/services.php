@@ -49,5 +49,10 @@ return [
         'client_secret'     => function_exists('env') ? env('LINKEDIN_CLIENT_SECRET', '') : '',
         'redirect'        => '/',
     ],
+    'pinterest' => [
+        'client_id' => function_exists('env') ? env('PINTEREST_KEY', '') : '',
+        'client_secret' => function_exists('env') ? env('PINTEREST_SECRET', '') : '',
+        'redirect' => '/'
+    ],
 
 ];

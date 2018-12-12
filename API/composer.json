@@ -15,6 +15,7 @@
         "laravel/socialite": "^3.1",
         "laravel/tinker": "^1.0",
         "sammyk/laravel-facebook-sdk": "^3.5",
+        "socialiteproviders/pinterest": "^3.0",
         "thujohn/twitter": "^2.2"
     },
     "require-dev": {
