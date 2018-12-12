@@ -52,32 +52,19 @@ class DraftEditor extends React.Component{
         this.setState(() => ({
             editorState,
             letterCount: text.length
-        }), () => {
-            if(typeof(this.props.onChange) !== "undefined"){
-                this.props.onChange(text);
-            }
-        });
+        }), this.props.onChange(text));
     };
 
     onDrop = (pictures, pictureDataUrls) => {
         this.setState((prevState) => {
             if(prevState.pictures !== pictures){
+
+                this.props.onImagesChange(pictureDataUrls);
                 return {
                     pictures: pictureDataUrls
                 }
             }
-        }, () => {
-            if(typeof(this.props.onImagesChange) !== "undefined"){
-                this.props.onImagesChange(pictureDataUrls);
-            }
         });
-    };
-
-    onDone = () => {
-        const text = this.state.editorState.getCurrentContent().getPlainText();
-        const pictures = this.state.pictures;
-
-        this.props.onDone(text, pictures);
     };
 
     onImageIconClick = () => {
@@ -116,15 +103,15 @@ class DraftEditor extends React.Component{
         const { EmojiSuggestions, EmojiSelect} = emojiPlugin;
         const { MentionSuggestions: HashtagSuggestions } = hashtagMentionPlugin;
         const plugins = [emojiPlugin, hashtagMentionPlugin];
-        const {scheduledLabel, inclusive, toggle, network} = this.props;
+        const {scheduledLabel, inclusive, toggle, onDone} = this.props;
 
         return(
             <div>
 
                 {inclusive &&
                     <div className="modal-header">
-                        <button type="button" id="closeModal" onClick={toggle} className="close fa fa-times-circle" data-dismiss="modal"></button>
-                        <h4>Editing</h4>
+                            <button type="button" id="closeModal" onClick={toggle} className="close fa fa-times-circle" data-dismiss="modal"></button>
+                            <h4>Editing</h4>
                     </div>
                 }
 
@@ -176,14 +163,9 @@ class DraftEditor extends React.Component{
                 {inclusive && 
                     <div className="modal-footer" style={{position:"relative"}}>
                     
-                        <p className={`letter-count pull-left ${this.state.letterCount > 280 && network == 'twitter' ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
+                        <p className={`letter-count pull-left ${this.state.letterCount > 280 ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
 
-                        {(this.state.letterCount > 280 && network == "twitter") || (this.state.letterCount < 1 && this.state.pictures.length < 1) ?
-                            <button disabled onClick={this.onDone} className={`upgrade-btn pull-right disabled-btn`}>Done</button>
-                        :
-                            <button onClick={this.onDone} className={`upgrade-btn pull-right`}>Done</button>
-                        }
-                        
+                        <button onClick={toggle} className="upgrade-btn pull-right">Done</button>
                     </div>
                 }
             </div>

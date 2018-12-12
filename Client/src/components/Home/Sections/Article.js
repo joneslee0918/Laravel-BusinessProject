@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-const Article = ({article, postedArticle, toggleTailoredPostModal}) => {
+const Article = ({article, setPost, postedArticle, toggleTailoredPostModal}) => {
     if(article.posted == null){
 
         if(typeof(postedArticle) !== "undefined" && typeof(postedArticle.articleId) !== "undefined"){
@@ -33,8 +33,7 @@ const Article = ({article, postedArticle, toggleTailoredPostModal}) => {
                             title: article.title, 
                             image: article.image_url, 
                             source: article.url,
-                            description: article.description,
-                            postId: article.id
+                            description: article.description
                         }) } className="upgrade-btn">
                             
                             Share

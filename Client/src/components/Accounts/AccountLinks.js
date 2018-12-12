@@ -33,16 +33,6 @@ class AccountLinks extends React.Component {
                             </div>
                         </div>
                     </NavLink>
-
-                    <NavLink to="/accounts/linkedin" >
-                    <div className="account_box linkedin_bg whiteTxt col-xs-12">
-                        <div>
-                            <div className="center-inline"><i className="fa fa-linkedin xl_font"></i></div>
-                            <h4>Add Linkedin Accounts</h4>
-                            <p className="center-inline">Connected: {this.props.linkedinChannels.length}</p>
-                        </div>
-                    </div>
-                </NavLink>
                     
                 </div>
             </div>
@@ -54,14 +44,11 @@ const mapStateToProps = (state) => {
 
     const facebookChannelsFilter = {selected: undefined, provider: "facebook"};
     const twitterChannelsFilter = {selected: undefined, provider: "twitter"};
-    const linkedinChannelsFilter = {selected: undefined, provider: "linkedin"};
     const facebookChannels = channelSelector(state.channels.list, facebookChannelsFilter);
     const twitterChannels = channelSelector(state.channels.list, twitterChannelsFilter);
-    const linkedinChannels = channelSelector(state.channels.list, linkedinChannelsFilter);
     return {
         facebookChannels,
-        twitterChannels,
-        linkedinChannels
+        twitterChannels
     };
 };
 
