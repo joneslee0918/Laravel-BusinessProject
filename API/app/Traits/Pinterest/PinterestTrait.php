@@ -23,23 +23,22 @@ trait PinterestTrait
         return $pinterest->auth->setOAuthToken($this->access_token);
     }
 
-    public function getAvatar($token = "")
-    {
+    public function getBoards()
+    {   
         $pinterest = new Pinterest(config("services.pinterest.client_id"), config("services.pinterest.client_secret"));
-        $pinterest->auth->setOAuthToken($token);
-        return $pinterest->users->me(["fields" => "username,first_name,last_name,image[small,large]"]);
-        if($user = $pinterest->users->me(["fields" => "image"])){
-            return $user->image["60x60"]["url"];
-        }
+        $pinterest->auth->setOAuthToken($this->access_token);
+        
+        return $pinterest->users->getMeBoards();
     }
 
     /**
      * Used to switch between users by using their corresponding
      * access fokens for login
      */
-    public function publish($post = "")
+    public function publish($post)
     {   
-
+        $pinterest = new Pinterest(config("services.pinterest.client_id"), config("services.pinterest.client_secret"));
+        $pinterest->auth->setOAuthToken($token);
     }
 
     

@@ -23,9 +23,9 @@ Route::get('/privacy-policy', function(){
 
 Route::get('/test', function(){
     $channel = \App\Models\Pinterest\Channel::first();
-    $pinterest = new \DirkGroenen\Pinterest\Pinterest(config("services.pinterest.client_id"), config("services.pinterest.client_secret"));
-    $pinterest->auth->setOAuthToken("Aj2PnZvkTp-WdatfiA5hRFh85nJyFW_p8SVgt8NFdeEVOmBVTwZ8ADAAAY5jRXZvBckAfusAAAAA");
-    return $pinterest->users->me(["fields" => "username,first_name,last_name,image[small,large]"])->image["large"]["url"];
+    // $pinterest = new \DirkGroenen\Pinterest\Pinterest(config("services.pinterest.client_id"), config("services.pinterest.client_secret"));
+    // $pinterest->auth->setOAuthToken("Aj2PnZvkTp-WdatfiA5hRFh85nJyFW_p8SVgt8NFdeEVOmBVTwZ8ADAAAY5jRXZvBckAfusAAAAA");
+    return $channel->getBoards();
    // return $channel->getAvatar("Aj2PnZvkTp-WdatfiA5hRFh85nJyFW_p8SVgt8NFdeEVOmBVTwZ8ADAAAY5jRXZvBckAfusAAAAA");
     //  dd($channel);
     // $scheduledPost = $channel->global->scheduledPosts()->first();
