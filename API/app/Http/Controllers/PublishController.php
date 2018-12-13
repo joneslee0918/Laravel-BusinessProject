@@ -56,7 +56,7 @@ class PublishController extends Controller
             foreach($channels as $channel){
 
                 $channel = Channel::find($channel['id']);
-                
+                $networkContent = $channel->type."Content";
                 $publishTime = Carbon::now();
 
                 if($publishType == "date"){
@@ -83,7 +83,7 @@ class PublishController extends Controller
                 $publishOriginalTime = Carbon::parse($publishTime)->setTimezone($scheduled['publishTimezone']);
 
                 $postData = [
-                    'content' => $post['content'],
+                    'content' => isset($post[$networkContent]) ? $post[$networkContent] : $post['content'],
                     'scheduled_at' => $publishTime,
                     'scheduled_at_original' => $publishOriginalTime,
                     'payload' => serialize($payload),

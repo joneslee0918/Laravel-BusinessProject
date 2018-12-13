@@ -5,7 +5,6 @@ export default (state = {}, action) => {
                 post: action.post
             };
         case "SET_POSTED_ARTICLE":
-            console.log(action);
             return {
                 article: action.article
             };

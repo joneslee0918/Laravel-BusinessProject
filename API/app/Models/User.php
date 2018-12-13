@@ -71,6 +71,16 @@ class User extends Authenticatable
         return $this->hasMany(Facebook\Channel::class);
     }
 
+    public function linkedinChannels()
+    {
+        return $this->hasMany(Linkedin\Channel::class);
+    }
+
+    public function pinterestChannels()
+    {
+        return $this->hasMany(Pinterest\Channel::class);
+    }
+
     public function selectedTwitterChannel()
     {
         return $this->twitterChannels()->where("selected", 1)->first();
@@ -79,6 +89,16 @@ class User extends Authenticatable
     public function selectedFacebookChannel()
     {
         return $this->facebookChannels()->where("selected", 1)->first();
+    }
+
+    public function selectedLinkedinChannel()
+    {
+        return $this->linkedinChannels()->where("selected", 1)->first();
+    }
+
+    public function selectedPinterestChannel()
+    {
+        return $this->pinterestChannels()->where("selected", 1)->first();
     }
 
     public function topics()

@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Http\Controllers\Pinterest;
+
+use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Controller;
+
+class ChannelController extends Controller
+{
+
+    public function add(Request $request){
+        
+        $accessToken = $request->input("access_token");
+
+        $credentials = Socialite::driver("pinterest")->userFromToken($accessToken);
+
+        if(is_object($credentials) && !isset($credentials->error)){
+
+            $token = $credentials->token;
+
+            $user = auth()->user();
+            $existingChannel = $user->pinterestChannels()->where("username", $credentials->nickname)->first();
+    
+            if(!$existingChannel){
+                $channel = $user->channels()->create(["type" => "pinterest"]);
+                $pinterestChannel = $channel->details()->create([
+                "user_id" => $user->id, 
+                "name" => $credentials->name,
+                "username" => $credentials->nickname, 
+                "payload" => serialize($credentials), 
+                "access_token" => json_encode($token)]);
+    
+                $channel->select();
+                $pinterestChannel->select();
+    
+            }else{
+                $global = $existingChannel->global;
+                $global->active = 1;
+                $global->save();
+                $pinterestChannel = $existingChannel;
+                $pinterestChannel->access_token = $token;
+                $pinterestChannel->save();
+            }
+
+            return $user->formattedChannels();
+        }
+
+        return response()->json(['error' => 'Channel could not be authenticated with pinterest'], 403);
+    }
+}
