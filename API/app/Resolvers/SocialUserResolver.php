@@ -5,6 +5,7 @@ namespace App\Resolvers;
 use Adaojunior\Passport\SocialGrantException;
 use Adaojunior\Passport\SocialUserResolverInterface;
 use Laravel\Socialite\Facades\Socialite;
+use DirkGroenen\Pinterest\Pinterest;
 use App\Models\User;
 use App\Models\Twitter\Channel as TwitterChannel;
 use App\Models\Facebook\Channel as FacebookChannel;
@@ -115,7 +116,20 @@ class SocialUserResolver implements SocialUserResolverInterface
     {   
         try{
             
-            $credentials = Socialite::driver("pinterest")->userFromToken($accessToken);
+            $pinterest = new Pinterest(config("services.pinterest.client_id"), config("services.pinterest.client_secret"));
+            $pinterest->auth->setOAuthToken($accessToken);
+            $user = $pinterest->users->me(["fields" => "username,first_name,last_name,image[small,large]"]);
+
+            $credentials = false;
+
+            if($user){
+                $credentials = new \stdClass();
+                $credentials->nickname = $user->username;
+                $credentials->name = $user->first_name." ".$user->last_name;
+                $credentials->avatar = $user->image["large"]["url"];
+                $credentials->token = $accessToken; 
+            }
+
             return $this->resolvePinterestUser($credentials);
 
         }catch(\Exception $e){
