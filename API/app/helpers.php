@@ -63,6 +63,22 @@ function exchangeFBToken($accessToken)
     }
 }
 
+
+function findUrlInText($text){
+    // The Regular Expression filter
+    $reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
+
+    // Check if there is a url in the text
+    if(preg_match($reg_exUrl, $text, $url)) {
+
+        return $url[0];
+
+    } else {
+
+        return "";
+    }
+}
+
 /**
  * @param $url
  * @param $payload

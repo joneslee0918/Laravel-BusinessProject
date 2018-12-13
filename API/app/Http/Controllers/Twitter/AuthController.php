@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Twitter;
 
 use App\Http\Controllers\Controller;
-use App\Models\Role;
-use App\Models\Twitter\Channel;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Thujohn\Twitter\Facades\Twitter;
 

@@ -35,10 +35,29 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::find(31);
-    $admin = \App\Models\Facebook\Channel::find($channel->parent_id);
+    $channel = \App\Models\Pinterest\Channel::first();
+    // $pinterest = new \DirkGroenen\Pinterest\Pinterest(config("services.pinterest.client_id"), config("services.pinterest.client_secret"));
+    // $pinterest->auth->setOAuthToken("Aj2PnZvkTp-WdatfiA5hRFh85nJyFW_p8SVgt8NFdeEVOmBVTwZ8ADAAAY5jRXZvBckAfusAAAAA");
+    return $channel->getBoards();
+   // return $channel->getAvatar("Aj2PnZvkTp-WdatfiA5hRFh85nJyFW_p8SVgt8NFdeEVOmBVTwZ8ADAAAY5jRXZvBckAfusAAAAA");
+    //  dd($channel);
+    // $scheduledPost = $channel->global->scheduledPosts()->first();
 
-    return response()->json($channel->publish("hello there"));
+    return response()->json(Socialite::driver('pinterest')->userFromToken("Aj2PnZvkTp-WdatfiA5hRFh85nJyFW_p8SVgt8NFdeEVOmBVTwZ8ADAAAY5jRXZvBckAfusAAAAA"));
+    return $channel->publishScheduledPost($scheduledPost);
+
+//     $token = "EAAFNlFdu1UgBAMZA753G1bcUZBVRmKfAvoY7NPNIIAquXhvpPUtmJ5pAovwZAGApN3VZBlUnTZB1jOIoR4f8FDGMSpwj5FTmWbfDs4z73EgrD83KPZAaIEgLic6WFYZCp1zPhbZAgDvBTghYaEtnbyIMsgiZATVVbDIsfEC3SCZCpe5FHKM38i4zGe57SrPQx4kEHl4ZBkl6ZBLyzxGECAFajfuwEyCTlWZAH8yVbk20ZCfn46BwZDZD";
+//     $fb = app(SammyK\LaravelFacebookSdk\LaravelFacebookSdk::class);
+//     $fb->setDefaultAccessToken($token);
+//    // $result = $fb->post('/104120780629082/accounts?name=TestPage&category_enum=LITERARY_ARTS&about=For Fun&picture=https://dev.uniclixapp.com/images/logo.png&cover_photo={"url": "https://socialmediadesigns.org/wp-content/uploads/2018/01/facebook-cover-size-2018.jpg"}');
+//     $result = $fb->get("/104120780629082/accounts?fields=id");
+//     return response()->json($result->getDecodedBody());
+    //$fb->setDefaultAccessToken($token);
+
+    // $accessToken = "AQQE-MJuFJTCM6YwpNmjd1pRH_UTXUZzGoQOGdszVxPVp6YVFFAWuPV_3w6tOu3ljuY60hoiVs-_CWo3OA__D9l5hRrBPq4655AV-utnL6c7BcbPrMSkbgKGbh9cQoWxTd8OYsC0rtU0mYVhGUFsABTINj2iKSBq7DvHurMqJoqU9plr2spoRAIqlVlQtw";
+    // $credentials = \Laravel\Socialite\Facades\Socialite::driver("linkedin")->userFromToken($accessToken);
+
+    // return response()->json($credentials);
 })->name("test");
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
@@ -47,6 +66,10 @@ Route::get('twitter/error', ['as' => 'twitter.error', 'Twitter\ChannelController
 Route::get('twitter/logout', ['as' => 'twitter.logout', 'uses' => 'Twitter\ChannelController@error']);
 
 Route::get('facebook/callback', function(Request $request){
+    return $request->all();
+});
+
+Route::get('linkedin/callback', function(Request $request){
     return $request->all();
 });
 

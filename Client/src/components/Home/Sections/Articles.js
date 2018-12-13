@@ -23,6 +23,7 @@ class Articles extends React.Component {
         openedImage: "",
         openedSource: "",
         openedDescription: "",
+        openedPostId: "",
         page: 0
     }
 
@@ -74,13 +75,14 @@ class Articles extends React.Component {
         }));
     };
 
-    toggleTailoredPostModal = ({title = "", image = "", source = "", description = ""}) => {
+    toggleTailoredPostModal = ({title = "", image = "", source = "", description = "", postId = ""}) => {
         this.setState(() => ({
             isTailoredPostOpen: !this.state.isTailoredPostOpen,
             openedTitle: title,
             openedImage: image,
             openedSource: source,
-            openedDescription: description
+            openedDescription: description,
+            openedPostId: postId
         }));
     }
 
@@ -143,6 +145,7 @@ class Articles extends React.Component {
 
                 <TailoredPostModal 
                     isOpen={this.state.isTailoredPostOpen}
+                    postId={this.state.openedPostId}
                     title={this.state.openedTitle}
                     image={this.state.openedImage}
                     source={this.state.openedSource}

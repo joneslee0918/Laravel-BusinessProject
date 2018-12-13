@@ -162,6 +162,8 @@ return [
         Thujohn\Twitter\TwitterServiceProvider::class,
         Adaojunior\Passport\SocialGrantServiceProvider::class,
         SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
+        Artesaos\LinkedIn\LinkedinServiceProvider::class,
+        \SocialiteProviders\Manager\ServiceProvider::class,
     ],
 
     /*
@@ -214,6 +216,7 @@ return [
         'Facebook' => SammyK\LaravelFacebookSdk\FacebookFacade::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'LinkedIn'  => \Artesaos\LinkedIn\Facades\LinkedIn::class,
     ],
 
 ];

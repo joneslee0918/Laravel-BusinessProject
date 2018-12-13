@@ -1,12 +1,13 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import channelSelector from '../selectors/channels';
 
 class SelectChannelsModal extends React.Component{
 
     state = {
         twitterSelect: false,
-        facebookSelect: false
+        facebookSelect: false,
+        linkedinSelect: false,
+        pinterestSelect: false
     }
 
     toggleTwitterSelect = () => {
@@ -21,6 +22,18 @@ class SelectChannelsModal extends React.Component{
         }));
     };
 
+    toggleLinkedinSelect = () => {
+        this.setState(() => ({
+            linkedinSelect: !this.state.linkedinSelect
+        }));
+    };
+
+    togglePinterestSelect = () => {
+        this.setState(() => ({
+            pinterestSelect: !this.state.pinterestSelect
+        }));
+    };
+
     onAddAccountsClick = () => {
         window.location.href = "/accounts";
     };
@@ -31,6 +44,8 @@ class SelectChannelsModal extends React.Component{
 
         const twitterChannels = channelSelector(channels, {selected: undefined, provider: "twitter"});
         const facebookChannels = channelSelector(channels, {selected: undefined, provider: "facebook"});
+        const linkedinChannels = channelSelector(channels, {selected: undefined, provider: "linkedin"});
+        const pinterestChannels = channelSelector(channels, {selected: undefined, provider: "pinterest"});
 
         return (
             <div className="modal-content">
@@ -65,6 +80,40 @@ class SelectChannelsModal extends React.Component{
                         facebookChannels.map((channel) => (
                                 <label key={channel.id} className="channel-item selection-container">
                                     <input type="checkbox" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="facebook_channel" />
+                                    <span className="checkmark"></span>
+                                    <img className="avatar-box" src={channel.avatar} /> {channel.name}
+                                </label>
+                        )
+                    )}
+
+                    {!!linkedinChannels.length &&
+                        <h3 className="bg-heading" onClick={this.toggleLinkedinSelect}>
+                        <i className="fa fa-linkedin"> </i> Linkedin
+                        {this.state.linkedinSelect ? <i className="fa fa-minus pull-right"> </i> : <i className="fa fa-plus pull-right"> </i> }
+                        </h3>
+                    }
+                    {!!linkedinChannels.length && this.state.linkedinSelect &&
+                        
+                        linkedinChannels.map((channel) => (
+                                <label key={channel.id} className="channel-item selection-container">
+                                    <input type="checkbox" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="linkedin_channel" />
+                                    <span className="checkmark"></span>
+                                    <img className="avatar-box" src={channel.avatar} /> {channel.name}
+                                </label>
+                        )
+                    )}
+
+                    {!!pinterestChannels.length &&
+                        <h3 className="bg-heading" onClick={this.togglePinterestSelect}>
+                        <i className="fa fa-pinterest"> </i> Pinterest
+                        {this.state.pinterestSelect ? <i className="fa fa-minus pull-right"> </i> : <i className="fa fa-plus pull-right"> </i> }
+                        </h3>
+                    }
+                    {!!pinterestChannels.length && this.state.pinterestSelect &&
+                        
+                        pinterestChannels.map((channel) => (
+                                <label key={channel.id} className="channel-item selection-container">
+                                    <input type="checkbox" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="pinterest_channel" />
                                     <span className="checkmark"></span>
                                     <img className="avatar-box" src={channel.avatar} /> {channel.name}
                                 </label>

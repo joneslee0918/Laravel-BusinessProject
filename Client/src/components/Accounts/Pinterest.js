@@ -1,18 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import SweetAlert from "sweetalert2-react";
-import FacebookLogin from 'react-facebook-login';
-import SelectAccountsModal from './SelectAccountsModal';
-import {facebookAppId} from "../../config/api";
-import {startAddFacebookChannel, startSetChannels} from "../../actions/channels";
+import {pinterestAppId} from "../../config/api";
+import {startAddPinterestChannel, startSetChannels} from "../../actions/channels";
 import channelSelector from "../../selectors/channels";
 import {destroyChannel} from "../../requests/channels";
-import {getAccounts, saveAccounts} from "../../requests/facebook/channels";
 import {logout} from "../../actions/auth";
 import Loader from "../../components/Loader";
 import ChannelItems from "./ChannelItems";
+import PinterestButton from "../PinterestButton";
+import {apiUrl} from "../../config/api";
 
-class Facebook extends React.Component {
+class Pinterest extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -24,8 +23,6 @@ class Facebook extends React.Component {
 
     state = {
         action: this.defaultAction,
-        accountsModal: false,
-        accounts: [],
         error: ""
     }
 
@@ -41,42 +38,11 @@ class Facebook extends React.Component {
 
     onSuccess = (response) => {
         if(response){
-            this.props.startAddFacebookChannel(response.accessToken)
+            this.props.startAddPinterestChannel(response.accessToken)
             .then(() => {
-                getAccounts().then((response) => {
-
-                    if(response.length){
-                        this.setState(() => ({
-                            accounts: response,
-                            accountsModal: true
-                        }));
-                    }
-                });
             });
         }
     };
-
-    onSave = (accounts) => {
-        this.setState(() => ({
-            error: ""
-        }));
-        saveAccounts(accounts)
-        .then(() => {
-            this.props.startSetChannels();
-            this.toggleAccountsModal();
-        }).catch( error => {
-            console.log(error);
-            this.setState(() => ({
-                error: "Something went wrong!"
-            }));
-        });
-    };
-
-    toggleAccountsModal = () => {
-        this.setState(() => ({
-            accountsModal: !this.state.accountsModal
-        }));
-    }
 
     remove = (id) => {
         return destroyChannel(id)
@@ -95,12 +61,6 @@ class Facebook extends React.Component {
     render(){
         return (
             <div className="accounts-container">
-                <SelectAccountsModal 
-                    isOpen={this.state.accountsModal} 
-                    accounts={this.state.accounts}
-                    onSave={this.onSave}
-                    error={this.state.error}
-                />
 
                 <SweetAlert
                     show={!!this.state.action.id}
@@ -120,19 +80,19 @@ class Facebook extends React.Component {
                     }}
                 />
 
-                <h2>HAVE FACEBOOK ACCOUNTS?</h2>
+                <h2>HAVE PINTEREST ACCOUNTS?</h2>
                 <p>Connect them all, and we'll help you get the right audience.</p>
                 
                 <div className="flex_container-center">
-                    <div className="accounts-container__logo facebook_color col-md-1">
+                    <div className="accounts-container__logo pinterest_color col-md-1">
                         <div>
-                            <i className="fa fa-facebook"></i>
+                            <i className="fa fa-pinterest"></i>
                         </div>
                     </div>
                     <div className="accounts-container__content col-md-10">
                         <div className="accounts-container__content__wrapper">
                             <div className="accounts-container__content__wrapper__heading">
-                                <h2>Let's grow your audience using Facebook!</h2>
+                                <h2>Let's grow your audience using Pinterest!</h2>
                             </div> 
                             
                             <ChannelItems channels={this.props.channels} setAction={this.setAction} /> 
@@ -140,15 +100,13 @@ class Facebook extends React.Component {
                         </div> 
             
                         <div className="accounts-container__content__wrapper__footer">
-                            <FacebookLogin
-                                appId={facebookAppId}
-                                autoLoad={false}
-                                fields="name,email,picture"
-                                scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,public_profile,email"
-                                callback={this.onSuccess} 
-                                icon={<i className="fa fa-plus"></i>}
+                            <PinterestButton
+                                clientId={pinterestAppId}
+                                redirectUri={`${apiUrl}/pinterest/callback`}
+                                onSuccess={this.onSuccess} 
+                                onError={() => console.log("something wrong.")}
                                 cssClass="add-channel-plus-btn"
-                                textButton=""
+                                icon={<i className="fa fa-plus"></i>}
                                 />
                             <span className="left-side-label">Have an account? Let's connect!</span>
                         </div> 
@@ -162,8 +120,8 @@ class Facebook extends React.Component {
 
 const mapStateToProps = (state) => {
 
-    const facebookChannelsFilter = {selected: undefined, provider: "facebook"};
-    const channels = channelSelector(state.channels.list, facebookChannelsFilter);
+    const pinterestChannelsFilter = {selected: undefined, provider: "pinterest"};
+    const channels = channelSelector(state.channels.list, pinterestChannelsFilter);
     return {
         channels,
         loading: state.channels.loading
@@ -171,10 +129,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    startAddFacebookChannel: (accessToken) => dispatch(startAddFacebookChannel(accessToken)),
+    startAddPinterestChannel: (accessToken) => dispatch(startAddPinterestChannel(accessToken)),
     startSetChannels: () => dispatch(startSetChannels()),
     logout: () => dispatch(logout())
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Facebook);
+export default connect(mapStateToProps, mapDispatchToProps)(Pinterest);

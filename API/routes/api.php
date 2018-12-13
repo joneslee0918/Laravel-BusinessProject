@@ -75,3 +75,19 @@ Route::prefix("facebook")->group(function(){
         Route::post('channels/accounts/save', 'Facebook\ChannelController@saveAccounts');
     });
 });
+
+Route::prefix("linkedin")->group(function(){
+    Route::get('callback', 'Linkedin\AuthController@accessToken');
+
+    Route::middleware('auth:api')->group(function(){
+        Route::post('channels/add', 'Linkedin\ChannelController@add');
+    });
+});
+
+Route::prefix("pinterest")->group(function(){
+    Route::get('callback', 'Pinterest\AuthController@accessToken');
+
+    Route::middleware('auth:api')->group(function(){
+        Route::post('channels/add', 'Pinterest\ChannelController@add');
+    });
+});
