@@ -2,6 +2,7 @@ import { getChannels, selectChannel as selectGlobalChannel } from "../requests/c
 import { selectChannel as selectTwitterChannel, addChannel as addTwitterChannel } from "../requests/twitter/channels";
 import { addChannel as addFacebookChannel } from "../requests/facebook/channels";
 import { addChannel as addLinkedinChannel } from "../requests/linkedin/channels";
+import { addChannel as addPinterestChannel } from "../requests/pinterest/channels";
 
 export const setChannels = (list) => ({
     type: "SET_CHANNELS",
@@ -56,6 +57,19 @@ export const startAddLinkedinChannel = (accessToken) => {
     return dispatch => {
         dispatch(setChannelsLoading(true));
         return addLinkedinChannel(accessToken)
+                .then((response) => {
+                    dispatch(setChannels(response));
+                    localStorage.setItem("channels", JSON.stringify(response));
+                    dispatch(setChannelsLoading(false));
+                    return response;
+                });
+    };
+}
+
+export const startAddPinterestChannel = (accessToken) => {
+    return dispatch => {
+        dispatch(setChannelsLoading(true));
+        return addPinterestChannel(accessToken)
                 .then((response) => {
                     dispatch(setChannels(response));
                     localStorage.setItem("channels", JSON.stringify(response));

@@ -20,10 +20,12 @@ class TailoredPostModal extends React.Component{
         facebookContent: "",
         twitterContent: "",
         linkedinContent: "",
+        pinterestContent: "",
         pictures: [],
         facebookPictures: [],
         twitterPictures: [],
         linkedinPictures: [],
+        pinterestPictures: [],
         restricted: false,
         stored: false,
         error: false,
@@ -77,7 +79,9 @@ class TailoredPostModal extends React.Component{
             twitterContent: "",
             twitterPictures: [],
             linkedinContent: "",
-            linkedinPictures: []
+            linkedinPictures: [],
+            pinterestContent: "",
+            pinterestPictures: []
         }), () => this.props.toggleTailoredPostModal({}));
     };
 
@@ -125,9 +129,11 @@ class TailoredPostModal extends React.Component{
         const facebookContent = this.state.facebookContent ? this.state.facebookContent : this.props.source;
         const twitterContent = this.state.twitterContent ? this.state.twitterContent : defaultContent;
         const linkedinContent = this.state.linkedinContent ? this.state.linkedinContent : defaultContent;
+        const pinterestContent = this.state.pinterestContent ? this.state.pinterestContent : defaultContent;
         const facebookPictures = this.state.facebookPictures;
         const twitterPictures = this.state.twitterPictures;
         const linkedinPictures = this.state.linkedinPictures;
+        const pinterestPictures = this.state.pinterestPictures;
         const type = this.state.type;
         const id = this.props.post ? this.props.post.id : "";
         const articleId = this.props.postId;
@@ -143,9 +149,11 @@ class TailoredPostModal extends React.Component{
             facebookContent,
             twitterContent,
             linkedinContent,
+            pinterestContent,
             facebookPictures,
             twitterPictures,
             linkedinPictures,
+            pinterestPictures,
             images,                
             publishChannels, 
             publishType, 
@@ -178,20 +186,23 @@ class TailoredPostModal extends React.Component{
     };
 
     render(){
-        const {title, image, source, description, isOpen, toggleTailoredPostModal} = this.props;
+        const {title, image, source, description, isOpen} = this.props;
         const selectedChannels = channelSelector(this.state.publishChannels, {selected: true, provider: undefined});
 
         const facebookContent = this.state.facebookContent;
         const twitterContent = this.state.twitterContent;
         const linkedinContent = this.state.linkedinContent;
+        const pinterestContent = this.state.pinterestContent;
 
         const facebookBody = removeUrl(facebookContent);
         const twitterBody = removeUrl(twitterContent);
         const linkedinBody = removeUrl(linkedinContent);
+        const pinterestBody = removeUrl(pinterestContent);
 
         const facebookPictures = this.state.facebookPictures;
         const twitterPictures = this.state.twitterPictures;
         const linkedinPictures = this.state.linkedinPictures;
+        const pinterestPictures = this.state.pinterestPictures;
 
         return  (
                     <Modal 
@@ -253,6 +264,19 @@ class TailoredPostModal extends React.Component{
                                     body={linkedinBody}
                                     content={linkedinContent}
                                     pictures={linkedinPictures}
+                                    title={title}
+                                    image={image}
+                                    source={source}
+                                    selectedChannels={selectedChannels}
+                                    onOverlayClick={this.toggleSelectChannelsModal}
+                                    onEditClick={this.toggleDraftEditorModal}
+                                />
+
+                                <TailoredPostCard 
+                                    network="pinterest"
+                                    body={pinterestBody}
+                                    content={pinterestContent}
+                                    pictures={pinterestPictures}
                                     title={title}
                                     image={image}
                                     source={source}
