@@ -14,7 +14,3 @@ export const clientSecret = process.env.CLIENT_SECRET ? process.env.CLIENT_SECRE
 
 export const facebookAppId = process.env.FACEBOOK_APP_ID ? process.env.FACEBOOK_APP_ID : '256286968360427';
 
-export const linkedinAppId = process.env.LINKEDIN_APP_ID ? process.env.LINKEDIN_APP_ID : '77d3j1o1cby4cc';
-
-export const pinterestAppId = process.env.PINTEREST_APP_ID ? process.env.PINTEREST_APP_ID : '5005154042182128975';
-

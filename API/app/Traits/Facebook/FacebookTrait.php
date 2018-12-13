@@ -46,26 +46,19 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
-    /**
-     * @param array $media
-     * @return mixed
-     */
-    public function uploadMedia($media)
-    {
-        $fb = $this->setAsCurrentUser($this->access_token);
-        $response = $fb->post("/{$this->original_id}/photos", $media);
-        return $response->getDecodedBody();
-    }
-
         /**
      * @param array $tweet
      * @return mixed
      */
     public function publish($post)
     {
-        $fb = $this->setAsCurrentUser($this->access_token);
-        $response = $fb->post("/{$this->original_id}/feed", $post);
-        return $response->getDecodedBody();
+        $admin = self::find($this->parent_id);
+
+        if($admin){
+            $fb = $this->setAsCurrentUser($admin->access_token);
+            $response = $fb->post("/{$this->original_id}/feed?message=$post");
+            return $response->getDecodedBody();
+        }
     }
 
     /**
@@ -78,36 +71,23 @@ trait FacebookTrait
             $payload = unserialize($scheduledPost->payload);
             $images = $payload['images'];
             $timezone = $payload['scheduled']['publishTimezone'];
-            $appUrl = config("app.url");
+
             $mediaIds = [];
-            $mediaCount = 0;
+
             foreach($images as $image){
-                $relativePath = $image['relativePath'];
-                $fullPath = $appUrl."/".$relativePath;
-                $media = ["url" => $fullPath, "published" => false];
+                $relativePath = str_replace('storage', 'public', $image['relativePath']);
+
+                $media = ["media" => \Storage::get($relativePath)];
                 $uploadResponse = $this->uploadMedia($media);
-                $mediaId = $uploadResponse['id'];
-                $mediaIds["attached_media[$mediaCount]"] = "{'media_fbid': '$mediaId'}";
-                $mediaCount++;
+                $mediaIds[] = $uploadResponse->media_id;
             }
             
-            $text = $scheduledPost->content;
-            $link = findUrlInText($text);
-
-            if($link){
-                $text = str_replace($link, "", $text);
-                $post["link"] = $link;
-            }
-
-            if($text){
-                $post["message"] = $text;
-            }
-
-            if($mediaCount > 0){
-                $post = array_merge($mediaIds, $post);
-            }
+            $post = [
+                'status' => $scheduledPost->content,
+                'media_ids' => $mediaIds
+            ]; 
             
-            $result = $this->publish($post);
+            $this->publish($post);
 
             $now = Carbon::now();
             $scheduledPost->posted = 1;
@@ -115,8 +95,6 @@ trait FacebookTrait
             $scheduledPost->scheduled_at = $now;
             $scheduledPost->scheduled_at_original = Carbon::parse($now)->setTimezone($timezone);
             $scheduledPost->save();
-
-            return $result;
 
         }catch(\Exception $e){
             

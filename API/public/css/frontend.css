@@ -743,6 +743,11 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 }
 .blog-post-image {
     width: 50%;
+    min-height: 335px;
+}
+.blog-post-image img {
+    height: 335px;
+    object-fit: cover;
 }
 .blog-post-content {
     width: 50%;
@@ -820,6 +825,11 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     background-color: #b358b3;
     border-color: #b358b3;
     color: #ffffff;
+}
+.blog-pagination .pagination>.active>span {
+    background-color: #b358b3;
+    border-color: #b358b3;
+    color: #fff!important;
 }
 .learning-item {
     border: 1px solid #ebebeb;
@@ -1008,6 +1018,9 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     font-family: 'Quicksand', sans-serif;
     color: #010101;
 }
+.article-content {
+    overflow: hidden;
+}
 .article-content p {
     font-size: 16px;
     font-family: 'Quicksand', sans-serif;
@@ -1017,6 +1030,7 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     font-family: 'Quicksand', sans-serif;
     font-weight: 400;
     font-size: 18px;
+    margin-bottom: 30px;
 }
 .article-comment {
     padding-bottom: 10px;
@@ -1054,6 +1068,10 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     font-family: 'Quicksand', sans-serif;
     font-size: 16px;
     color: #414141;
+}
+.article-categories li.active {
+    color: #b358b3;
+    font-weight: 700;
 }
 .article-categories li:hover {
     cursor: pointer;

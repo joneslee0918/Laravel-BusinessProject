@@ -18,15 +18,13 @@
 					<div class="pb10"><i class="fa fa-instagram"></i></div>
 				</div>
 				<div class="article-image-image">
-					<img src="{{ asset('/images/article-img-4.png')}}" class="img-responsive">					
+					<img src="/post_images/{{$post->image}}" class="img-responsive">					
 				</div>				
 			</div>
 			<div class="article-content mt50">
-				<h4 class="text-uppercase fw700">Change your way of living</h4>
-				<div class="posted-by">Posted by OnStyle on 05.05.2016 at 3:34PM</div>
-				<p class="pt20">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.orem ipsum dolor sit amet, consectetur.</p>
-				<h5 class="pt20">How to target those problems?</h5>
-				<p class="pt20">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.orem ipsum dolor sit amet, consectetur.</p>
+				<h4 class="text-uppercase fw700">{{$post->title}}</h4>
+				<div class="posted-by">Posted by {{$post->admin->name}} on {{$post->created_at->toDateTimeString()}}</div>
+				{!! $post->content !!}
 				<h4 class="mt50 text-uppercase fw700">Recent Comments</h4>
 				<div class="article-comments pt30">
 					<div class="article-comment">
@@ -83,23 +81,18 @@
 			<input type="text" name="name" class="form-input search-input" placeholder="Name">
 			<h4 class="mt50 text-uppercase fw700">Categories</h4>
 			<ul class="article-categories">
-				<li>General</li>
-				<li>Life Style</li>
-				<li>Social Media</li>
-				<li>Tech</li>
-				<li>Music</li>
-				<li>Entertainment</li>
+				@foreach($categories as $category)
+					@if($category->id == $post->category_id)
+						<li class="active">{{$category->category_name}}</li>
+					@else
+						<li>{{$category->category_name}}</li>
+					@endif
+				@endforeach
 			</ul>
 			<h4 class="mt50 text-uppercase fw700">Tags</h4>
-			<span class="tag">Funny</span>
-			<span class="tag">Beautiful</span>
-			<span class="tag">Pretty</span>
-			<span class="tag">Healthy</span>
-			<span class="tag">Tasty</span>
-			<span class="tag">Sun</span>
-			<span class="tag">Coffe</span>
-			<span class="tag">Caramel</span>
-			<span class="tag">Plants</span>
+			@foreach($post->tags as $tag)
+				<span class="tag">{{$tag->tag_name}}</span>
+			@endforeach
 			<h4 class="mt50 text-uppercase fw700">Recent Posts</h4>
 			<div class="recent-posts pt30">
 				<div class="recent-post">

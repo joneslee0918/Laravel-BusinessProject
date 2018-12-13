@@ -5,10 +5,8 @@ import FacebookLogin from 'react-facebook-login';
 import {startLogin} from "../actions/auth";
 import {startSetChannels} from "../actions/channels";
 import {startSetProfile} from "../actions/profile";
-import {twitterRequestTokenUrl, twitterAccessTokenUrl, backendUrl, facebookAppId, linkedinAppId, pinterestAppId} from "../config/api";
+import {twitterRequestTokenUrl, twitterAccessTokenUrl, backendUrl, facebookAppId} from "../config/api";
 import {LoaderWithOverlay} from "./Loader";
-import LinkedInButton from "./LinkedInButton";
-import PinterestButton from "./PinterestButton";
 
 export class LoginPage extends React.Component{
 
@@ -43,27 +41,7 @@ export class LoginPage extends React.Component{
             this.props.startSetChannels();
         }).catch(error => {
             this.setState(() => ({loading: false}));
-        });
-    };
-
-    onLinkedInSuccess = (response) => {
-        this.setState(() => ({loading: true}));
-        this.props.startLogin(response, "linkedin").then(() => {
-            this.props.startSetProfile();
-            this.props.startSetChannels();
-        }).catch(error => {
-            this.setState(() => ({loading: false}));
-        });
-    };
-
-    onPinterestSuccess = (response) => {
-        this.setState(() => ({loading: true}));
-        this.props.startLogin(response, "pinterest").then(() => {
-            this.props.startSetProfile();
-            this.props.startSetChannels();
-        }).catch(error => {
-            this.setState(() => ({loading: false}));
-        });
+        });;
     };
 
     render(){
@@ -84,22 +62,8 @@ export class LoginPage extends React.Component{
                         appId={facebookAppId}
                         autoLoad={false}
                         fields="name,email,picture"
-                        scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,public_profile,email"
+                        scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,groups_access_member_info,public_profile,email"
                         callback={this.onFacebookSuccess} />
-
-                    <LinkedInButton 
-                        clientId={linkedinAppId}
-                        redirectUri={`${backendUrl}/api/linkedin/callback`}
-                        onSuccess={this.onLinkedInSuccess}
-                        onError={this.onFailure}
-                    />
-
-                    <PinterestButton 
-                        clientId={pinterestAppId}
-                        redirectUri={`${backendUrl}/api/pinterest/callback`}
-                        onSuccess={this.onPinterestSuccess}
-                        onError={this.onFailure}
-                    />
                 </div>
             </div>  
         );

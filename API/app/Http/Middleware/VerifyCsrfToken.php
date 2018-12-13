@@ -16,5 +16,6 @@ class VerifyCsrfToken extends Middleware
         'sync/twitter/follower/ids',
         'twitter/follow',
         'twitter/unfollow',
+        'admin/post/image/upload'
     ];
 }

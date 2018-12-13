@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Admin\Post;
+use App\Models\Admin\PostCategory;
+use App\Models\Admin\PostTag;
+
 class PagesController extends Controller
 {
 
@@ -47,15 +51,21 @@ class PagesController extends Controller
      */
     public function blog()
     {
-    	return view('frontend.blog');
+        $posts = Post::paginate(5);
+
+    	return view('frontend.blog', compact('posts'));
     }
 
     /**
      *
      * Show Article page
      */
-    public function article()
+    public function article($id)
     {
-    	return view('frontend.article');
+        $post = Post::findOrFail($id);
+        $categories = PostCategory::all();
+        $tags = PostTag::all();
+
+    	return view('frontend.article', compact('post', 'categories', 'tags'));
     }
 }

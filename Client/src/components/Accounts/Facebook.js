@@ -144,7 +144,7 @@ class Facebook extends React.Component {
                                 appId={facebookAppId}
                                 autoLoad={false}
                                 fields="name,email,picture"
-                                scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,public_profile,email"
+                                scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,groups_access_member_info,public_profile,email"
                                 callback={this.onSuccess} 
                                 icon={<i className="fa fa-plus"></i>}
                                 cssClass="add-channel-plus-btn"
