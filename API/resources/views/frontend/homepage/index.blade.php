@@ -10,8 +10,8 @@
     <div class="container">
         <div class="row pb50">
             <div class="col-md-5 col-xs-12 pb50">
-                <h1>Social Media,<br>Simplified</h1>
-                <p class="mt20">Nulla imperdiet imperdiet tempus. Cras consectetur odio et velit auctor, nec pretium mauris varius.</p>
+                <h1>Social Media Management,<br>Simplified</h1>
+                <p class="mt20">With a single platform, Uniclix helps you build a community of followers & and centralize your social activities, automate your post with couple of clix.</p>
                 <a href="#" class="btn theme-btn mt30">Get Started</a>
             </div>
             <div class="col-md-7 col-xs-12 pb50">
@@ -25,7 +25,7 @@
         <div class="row text-center">
             <div class="col-xs-12">
                 <h2>Optimize your Social Media Accounts</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mauris ante, vulputate et justo in, condimentum ornare metus.</p>
+                <p>The most affordable & easy to use platform for managing all things Social. Uniclix connects you with real people that care about your product. Publish content from your sites and schedule your posts in advance with Uniclix.</p>
             </div>
             <div class="col-xs-12 pt50 pb50 border-bottom-grey">
                 <img src="{{ asset('images/home-img-1.png') }}" class="img-responsive center-img">
@@ -36,29 +36,29 @@
                 <div class="feature-img">
                     <img src="{{ asset('images/feature-img-1.png') }}">
                 </div>                
-                <h6>Schedule posts and articles</h6>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+                <h6>Automatically Schedule posts</h6>
+                <p>Publish content and schedule your post in advance with uniclix.</p>
             </div>
             <div class="col-md-3 col-xs-12 text-center">
                 <div class="feature-img">
                     <img src="{{ asset('images/feature-img-2.png') }}">
                 </div>
-                <h6>Share articles based on topics</h6>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+                <h6>Discover new content and articles</h6>
+                <p>Create search streams based on keywords to find curated content that you can share on the fly.</p>
             </div>
             <div class="col-md-3 col-xs-12 text-center">
                 <div class="feature-img">
                     <img src="{{ asset('images/feature-img-3.png') }}">
                 </div>
-                <h6>Add targets on Twitter</h6>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+                <h6>Hack your Twitter!</h6>
+                <p>Build community of followers with targeted audience. Think of us as a matchmaker that connects you with people most interested in what you have to offer.</p>
             </div>
             <div class="col-md-3 col-xs-12 text-center">
                 <div class="feature-img">
                     <img src="{{ asset('images/feature-img-4.png') }}">
                 </div>
-                <h6>Easily switch accounts</h6>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+                <h6>Manage Multiple Accounts</h6>
+                <p>Manage more than one account in one centralized platform, we support Twitter, Facebook, Linkedin and Pinterest.</p>
             </div>
         </div>
     </div>

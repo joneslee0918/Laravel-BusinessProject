@@ -22,6 +22,7 @@ Route::prefix("admin")->middleware(["auth:admin"])->group(function(){
     Route::get('post/edit/{id}', ['as'=>'post.edit', 'uses'=>'Admin\AdminController@editPost']);
     Route::post('post/edit/{id}',['as'=>'post.edit.store', 'uses'=>'Admin\AdminController@editPostStore']);
     Route::post('post/image/upload', ['as'=>'post.image.store', 'uses'=>'Admin\AdminController@uploadPostImage']);
+    Route::post('post/delete/{id}',['as'=>'post.delete', 'uses'=>'Admin\AdminController@deletePost']);
 });
 
 Route::get('/', ['as' => 'homepage.index', 'uses' => 'PagesController@index']);
