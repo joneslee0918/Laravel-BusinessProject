@@ -124,17 +124,5 @@ class AdminController extends Controller
     {
     	$imgpath = request()->file('file')->store('post_images', 'public');
     }
-
-    public function deletePost($id)
-    {
-        $post = Post::findOrFail($id);
-
-        try {
-            $post->delete();
-            return redirect()->back();              
-        } catch (Exception $e) {
-            
-        }
-    }
     
 }	
