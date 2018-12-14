@@ -1005,6 +1005,12 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 .article-image-image {
     width: 97%;
     float: right;
+    height: 350px;
+}
+.article-image-image img {
+    height: 350px;
+    width: 100%;
+    object-fit: cover;
 }
 .article-image-social i:hover {
     color:#b358b3;

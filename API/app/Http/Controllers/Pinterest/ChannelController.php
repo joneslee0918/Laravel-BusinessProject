@@ -38,12 +38,11 @@ class ChannelController extends Controller
             if(!$existingChannel){
                 $channel = $user->channels()->create(["type" => "pinterest"]);
                 $pinterestChannel = $channel->details()->create([
-                    "user_id" => $user->id, 
-                    "name" => $credentials->name,
-                    "username" => $credentials->nickname, 
-                    "payload" => serialize($credentials), 
-                    "access_token" => json_encode($token)
-                ]);
+                "user_id" => $user->id, 
+                "name" => $credentials->name,
+                "username" => $credentials->nickname, 
+                "payload" => serialize($credentials), 
+                "access_token" => json_encode($token)]);
     
                 $channel->select();
                 $pinterestChannel->select();
@@ -61,17 +60,5 @@ class ChannelController extends Controller
         }
 
         return response()->json(['error' => 'Channel could not be authenticated with pinterest'], 403);
-    }
-
-    public function getBoards(Request $request)
-    {
-        $user = auth()->user();
-        $channel = $user->channels()->find($request->input("id"));
-
-        if(!$channel){
-            return response()->json(["error" => "Channel not found."], 404);
-        }
-
-        return $channel->details->getBoards();
     }
 }

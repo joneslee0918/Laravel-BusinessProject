@@ -57,9 +57,8 @@ class TailoredPostModal extends React.Component{
 
     toggleDraftEditorModal = (network = "") => {
         let body = this.state[network+"Content"];
-        let defaultContent = network == "pinterest" ? `${this.props.title} ${this.props.description} ${this.props.source}` : `${this.props.title} ${this.props.source}`;
-        let content = body ? body : defaultContent;
-        let pictures = (this.state[network+"Pictures"] && this.state[network+"Pictures"].length) ? this.state[network+"Pictures"] : (network == "pinterest" ? [this.props.image] : []);
+        let content = body ? body : `${this.props.title} ${this.props.source}`;
+        let pictures = this.state[network+"Pictures"] ? this.state[network+"Pictures"] : [];
 
         if(network == "facebook" && !body){
             content = ` ${this.props.source}`;
@@ -127,11 +126,10 @@ class TailoredPostModal extends React.Component{
     publish = (scheduled, publishType) => {
         const content = this.state.content;
         const defaultContent = `${this.props.title} ${this.props.source}`;
-        const defaultPinterestContent = `${this.props.title} ${this.props.description} ${this.props.source}`
         const facebookContent = this.state.facebookContent ? this.state.facebookContent : this.props.source;
         const twitterContent = this.state.twitterContent ? this.state.twitterContent : defaultContent;
         const linkedinContent = this.state.linkedinContent ? this.state.linkedinContent : defaultContent;
-        const pinterestContent = this.state.pinterestContent ? this.state.pinterestContent : defaultPinterestContent;
+        const pinterestContent = this.state.pinterestContent ? this.state.pinterestContent : defaultContent;
         const facebookPictures = this.state.facebookPictures;
         const twitterPictures = this.state.twitterPictures;
         const linkedinPictures = this.state.linkedinPictures;
@@ -188,7 +186,7 @@ class TailoredPostModal extends React.Component{
     };
 
     render(){
-        const {title, image, source, description, body, isOpen} = this.props;
+        const {title, image, source, description, isOpen} = this.props;
         const selectedChannels = channelSelector(this.state.publishChannels, {selected: true, provider: undefined});
 
         const facebookContent = this.state.facebookContent;
@@ -241,7 +239,6 @@ class TailoredPostModal extends React.Component{
                                     content={twitterContent}
                                     pictures={twitterPictures}
                                     title={title}
-                                    description={description}
                                     image={image}
                                     source={source}
                                     selectedChannels={selectedChannels}
@@ -255,7 +252,6 @@ class TailoredPostModal extends React.Component{
                                     content={facebookContent}
                                     pictures={facebookPictures}
                                     title={title}
-                                    description={description}
                                     image={image}
                                     source={source}
                                     selectedChannels={selectedChannels}
@@ -269,7 +265,6 @@ class TailoredPostModal extends React.Component{
                                     content={linkedinContent}
                                     pictures={linkedinPictures}
                                     title={title}
-                                    description={description}
                                     image={image}
                                     source={source}
                                     selectedChannels={selectedChannels}
@@ -283,7 +278,6 @@ class TailoredPostModal extends React.Component{
                                     content={pinterestContent}
                                     pictures={pinterestPictures}
                                     title={title}
-                                    description={description}
                                     image={image}
                                     source={source}
                                     selectedChannels={selectedChannels}
@@ -343,7 +337,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(TailoredPostModal);
 
-const TailoredPostCard = ({network, title, body, content, description, pictures, image, source, selectedChannels, onOverlayClick, onEditClick}) => {
+const TailoredPostCard = ({network, title, body, content, pictures, image, source, selectedChannels, onOverlayClick, onEditClick}) => {
+
     let link = content ? getUrlFromText(content) : [source];
   
     if(link){
@@ -378,30 +373,25 @@ const TailoredPostCard = ({network, title, body, content, description, pictures,
                             <div className="small-blurry-text">small text here</div>
                         </div>
                     </div>
-                    
+
                     {network == "facebook" && !body ?
                         <div className="social-body-text-suggestion">
                             Click here to add text
                         </div>
                         :
-                        (network != "pinterest" ? 
                         <div className="social-body-text">
                             {body ? body : (source ? title : "")}
-                        </div>: ""
-                        )
+                        </div>
                     }
                     <div className="tailored-post-preview-body">
                         {!!image &&
                             <img src={image}/>
                         }
                         
-                        {network != "pinterest" ? (!!source && !pictures.length &&
+                        {!!source && !pictures.length &&
                             <div className="tailoredPost__previewCardWrapper__link__text">
                                 <div className="tailoredPost__previewCardWrapper__link__title">{title}</div>
                                 <div className="tailoredPost__previewCardWrapper__link__domain">{source}</div>
-                            </div>) : 
-                            <div className="social-body-text height-109">
-                                {body ? body : (source ? `${title} ${description ? description : ""} ${source}` : "")}
                             </div>
                         }
 

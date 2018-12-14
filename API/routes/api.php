@@ -89,6 +89,5 @@ Route::prefix("pinterest")->group(function(){
 
     Route::middleware('auth:api')->group(function(){
         Route::post('channels/add', 'Pinterest\ChannelController@add');
-        Route::get('channels/boards', 'Pinterest\ChannelController@getBoards');
     });
 });
