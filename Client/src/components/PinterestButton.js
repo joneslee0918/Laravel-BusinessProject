@@ -18,7 +18,7 @@ export default class PinterestButton extends React.Component{
     
         const targetWindow = window.open(
           oauthUrl,
-          "Linkedin",
+          "Pinterest",
           "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=" +
             width +
             ",height=" +
@@ -30,27 +30,29 @@ export default class PinterestButton extends React.Component{
         );
 
         var targetInterval = setInterval(function(){
+          try{
+            if(targetWindow.document.domain === window.document.domain){
+              if(targetWindow.location.pathname == "/redirect"){
+                
+                const token = getParameterByName("accessToken", targetWindow.location.href);
+                
+                if(token){
+                  onSuccess({
+                    "accessToken": token
+                  });
+                }else{
+                  onError({
+                    "error" : "Something went wrong."
+                  });
+                }
 
-          if(targetWindow.document.domain === window.document.domain){
-            if(targetWindow.location.pathname == "/redirect"){
-              
-              const token = getParameterByName("accessToken", targetWindow.location.href);
-              
-              if(token){
-                onSuccess({
-                  "accessToken": token
-                });
-              }else{
-                onError({
-                  "error" : "Something went wrong."
-                });
+                targetWindow.close();
+                clearInterval(targetInterval);
               }
-
-              targetWindow.close();
-              clearInterval(targetInterval);
             }
-          }
+          }catch(e){
 
+          }
         }, 1000);
       };
 

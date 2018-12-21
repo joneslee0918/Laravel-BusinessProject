@@ -8,3 +8,9 @@ export const addChannel = (accessToken) => {
                 return response.data;
             });
 };
+
+export const getBoards = (id) => {
+    return axios.get(`${apiUrl}/pinterest/channels/boards?id=${id}`).then((response) => {
+                return response.data;
+            });
+};
