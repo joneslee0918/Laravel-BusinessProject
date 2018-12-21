@@ -65,7 +65,8 @@ class PagesController extends Controller
         $post = Post::findOrFail($id);
         $categories = PostCategory::all();
         $tags = PostTag::all();
+        $recent_posts = Post::whereNotIn('id',[$post->id])->latest()->take(3)->get();
 
-    	return view('frontend.article', compact('post', 'categories', 'tags'));
+    	return view('frontend.article', compact('post', 'categories', 'tags','recent_posts'));
     }
 }

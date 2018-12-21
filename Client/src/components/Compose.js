@@ -5,12 +5,10 @@ import { Redirect } from 'react-router-dom';
 import moment from "moment";
 import DraftEditor from './DraftEditor';
 import channelSelector from '../selectors/channels';
-import boardsSelector from '../selectors/boards';
 import {publish} from '../requests/channels';
 import {setPost, setPostedArticle} from "../actions/posts";
 import {LoaderWithOverlay} from "./Loader";
 import SelectChannelsModal from "./SelectChannelsModal";
-import SelectPinterestBoards from './SelectPinterestBoards';
 import PublishButton from './PublishButton';
 import {setComposerModal} from "../actions/composer";
 
@@ -35,13 +33,11 @@ class Compose extends React.Component{
         optionsMenu: false,
         letterCount: 0,
         pictures: [],
-        selectedPinterestChannel: false, 
         loading: false,
         stored: false,
         refresh: true,
         restricted: false,
         twitterRestricted: false,
-        pinterestRestricted: false,
         scheduledLabel: "",
         error: false
     };
@@ -61,6 +57,7 @@ class Compose extends React.Component{
             if(typeof(this.props.post.refresh) !== "undefined"){
                 refresh = this.props.post.refresh;
             }
+
 
             this.setState(() => ({
                 content: this.props.post.content ? this.props.post.content : "",
@@ -104,25 +101,15 @@ class Compose extends React.Component{
         const twitterRestricted = (this.state.letterCount > 280 || this.state.pictures.length > 4) 
         && channelSelector(selectedChannels, {selected: undefined, provider: "twitter"}).length;
 
-        const pinterestRestricted = (this.state.pictures.length < 1) 
-        && channelSelector(selectedChannels, {selected: undefined, provider: "pinterest"}).length
 
         this.setState(() => ({
             restricted,
-            twitterRestricted,
-            pinterestRestricted
+            twitterRestricted
         }));
     };
 
     toggleModal = () => {
         this.props.setComposerModal(!this.state.openModal);
-    };
-
-    toggleSelectPinterestBoardsModal = () => {
-        this.setState(() => ({
-            selectedPinterestChannel: false,
-            selectChannelsModal: true
-        }));
     };
 
     updateContent = (content = "") => {
@@ -145,7 +132,6 @@ class Compose extends React.Component{
     };
 
     onChannelSelectionChange = (obj) => {
-        const selectedPinterestChannel = !obj.selected && obj.type == "pinterest" ? obj : false;
 
         const publishChannels = this.state.publishChannels.map((channel) => {
             if(channel.id === obj.id){
@@ -170,40 +156,10 @@ class Compose extends React.Component{
         });
 
         this.setState(() => ({
-            publishChannels,
-            selectedPinterestChannel
-        }));
-    };
-
-    onPinterestBoardSelectionChange = (obj, boards) => {
-        const selectedBoards = boardsSelector(boards, {selected: true});
-        const publishChannels = this.state.publishChannels.map((channel) => {
-            if(channel.id === obj.id){
-                return {
-                    ...channel,
-                    boards,
-                    selectedBoards
-                };
-            }
-            else{
-        
-                if(obj.type == "twitter" && channel.type == "twitter"){
-                    return {
-                        ...channel,
-                        selected:0
-                    };
-                }else{
-                    return {
-                        ...channel
-                    };
-                }
-            }
-        });
-
-        this.setState(() => ({
             publishChannels
         }));
     };
+
 
     toggleSelectChannelsModal = () => {
 
@@ -273,12 +229,6 @@ class Compose extends React.Component{
                 {this.state.loading && <LoaderWithOverlay/>}
                 
                 <div className="modal-dialog modal-dialog-centered compose-dialog" role="document">
-                    <Modal isOpen={!!this.state.selectedPinterestChannel} ariaHideApp={false} className="modal-no-bg">
-                        <SelectPinterestBoards 
-                        onChange={this.onPinterestBoardSelectionChange}
-                        channel={this.state.selectedPinterestChannel} 
-                        toggle={this.toggleSelectPinterestBoardsModal}/>
-                    </Modal>
 
                     {this.state.selectChannelsModal ? 
                     
@@ -328,7 +278,7 @@ class Compose extends React.Component{
                             <PublishButton 
                                 action={this.publish} 
                                 onChange={this.updateScheduledLabel}
-                                restricted={this.state.restricted || this.state.twitterRestricted || this.state.pinterestRestricted}
+                                restricted={this.state.restricted}
                                 />
 
                             <p className={`letter-count ${this.state.twitterRestricted && this.state.letterCount > 280 ? 'red-txt' : ''}`}>{this.state.letterCount}</p>

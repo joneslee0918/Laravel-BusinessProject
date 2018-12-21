@@ -1,5 +1,5 @@
 <?php
-set_time_limit (200);
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,16 +37,14 @@ Route::get('/privacy-policy', function(){
 
 Route::get('/test', function(){
     $channel = \App\Models\Pinterest\Channel::first();
-    $post = $channel->global->scheduledPosts()->first();
-    //return $post;
     // $pinterest = new \DirkGroenen\Pinterest\Pinterest(config("services.pinterest.client_id"), config("services.pinterest.client_secret"));
     // $pinterest->auth->setOAuthToken("Aj2PnZvkTp-WdatfiA5hRFh85nJyFW_p8SVgt8NFdeEVOmBVTwZ8ADAAAY5jRXZvBckAfusAAAAA");
-    //return $channel->getBoards();
+    return $channel->getBoards();
    // return $channel->getAvatar("Aj2PnZvkTp-WdatfiA5hRFh85nJyFW_p8SVgt8NFdeEVOmBVTwZ8ADAAAY5jRXZvBckAfusAAAAA");
     //  dd($channel);
     // $scheduledPost = $channel->global->scheduledPosts()->first();
 
-    return response()->json($channel->publishScheduledPost($post));
+    return response()->json(Socialite::driver('pinterest')->userFromToken("Aj2PnZvkTp-WdatfiA5hRFh85nJyFW_p8SVgt8NFdeEVOmBVTwZ8ADAAAY5jRXZvBckAfusAAAAA"));
     return $channel->publishScheduledPost($scheduledPost);
 
 //     $token = "EAAFNlFdu1UgBAMZA753G1bcUZBVRmKfAvoY7NPNIIAquXhvpPUtmJ5pAovwZAGApN3VZBlUnTZB1jOIoR4f8FDGMSpwj5FTmWbfDs4z73EgrD83KPZAaIEgLic6WFYZCp1zPhbZAgDvBTghYaEtnbyIMsgiZATVVbDIsfEC3SCZCpe5FHKM38i4zGe57SrPQx4kEHl4ZBkl6ZBLyzxGECAFajfuwEyCTlWZAH8yVbk20ZCfn46BwZDZD";

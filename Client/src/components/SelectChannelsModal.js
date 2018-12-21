@@ -109,7 +109,7 @@ class SelectChannelsModal extends React.Component{
                         {this.state.pinterestSelect ? <i className="fa fa-minus pull-right"> </i> : <i className="fa fa-plus pull-right"> </i> }
                         </h3>
                     }
-                    {!!pinterestChannels.length &&                                                                                                                                                                          this.state.pinterestSelect &&
+                    {!!pinterestChannels.length && this.state.pinterestSelect &&
                         
                         pinterestChannels.map((channel) => (
                                 <label key={channel.id} className="channel-item selection-container">

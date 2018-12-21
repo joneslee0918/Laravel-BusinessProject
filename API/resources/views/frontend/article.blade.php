@@ -13,8 +13,8 @@
 		<div class="col-md-8 col-xs-12">
 			<div class="article-image">
 				<div class="article-image-social">
-					<div class="pb10"><i class="fa fa-facebook"></i></div>
-					<div class="pb10"><i class="fa fa-twitter"></i></div>
+					<div class="pb10"><a href="http://www.facebook.com/sharer.php?u={{route('article', $post->id)}}" target="_blank"><i class="fa fa-facebook"></i></div></a>
+					<div class="pb10"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text={{route('article', $post->id)}}" target="_blank"><i class="fa fa-twitter"></i></a></div>
 					<div class="pb10"><i class="fa fa-instagram"></i></div>
 				</div>
 				<div class="article-image-image">
@@ -25,7 +25,7 @@
 				<h4 class="text-uppercase fw700">{{$post->title}}</h4>
 				<div class="posted-by">Posted by {{$post->admin->name}} on {{$post->created_at->toDateTimeString()}}</div>
 				{!! $post->content !!}
-				<h4 class="mt50 text-uppercase fw700">Recent Comments</h4>
+				<!-- <h4 class="mt50 text-uppercase fw700">Recent Comments</h4>
 				<div class="article-comments pt30">
 					<div class="article-comment">
 						<div class="article-comment-photo text-center">
@@ -74,7 +74,7 @@
 							</div>
 						</div>
 					</form>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="col-md-4 col-xs-12 category-tags-posts">
@@ -95,42 +95,20 @@
 			@endforeach
 			<h4 class="mt50 text-uppercase fw700">Recent Posts</h4>
 			<div class="recent-posts pt30">
+				@foreach($recent_posts as $rpost)
 				<div class="recent-post">
-					<div class="recent-posts-photo text-center">
+					<!-- <div class="recent-posts-photo text-center">
 						<div class="comment-img">
 							<img src="{{ asset('/images/comment-img.png')}}">
 						</div>
-					</div>
+					</div> -->
 					<div class="recent-posts-text">
-						<h5>Jeffrey Caleman</h5>
-						<div class="comment-date">Posted by Uniclix</div>
-						<div class="comment-date">23 May 2019</div>
+						<a href=""><h5>{{$rpost->title}}</h5></a>
+						<div class="comment-date">Posted by {{$rpost->admin->name}}</div>
+						<div class="comment-date">{{$rpost->created_at->format('d F Y')}}</div>
 					</div>
 				</div>
-				<div class="recent-post">
-					<div class="recent-posts-photo text-center">
-						<div class="comment-img">
-							<img src="{{ asset('/images/comment-img.png')}}">
-						</div>
-					</div>
-					<div class="recent-posts-text">
-						<h5>Jeffrey Caleman</h5>
-						<div class="comment-date">Posted by Uniclix</div>
-						<div class="comment-date">23 May 2019</div>
-					</div>
-				</div>
-				<div class="recent-post">
-					<div class="recent-posts-photo text-center">
-						<div class="comment-img">
-							<img src="{{ asset('/images/comment-img.png')}}">
-						</div>
-					</div>
-					<div class="recent-posts-text">
-						<h5>Jeffrey Caleman</h5>
-						<div class="comment-date">Posted by Uniclix</div>
-						<div class="comment-date">23 May 2019</div>
-					</div>
-				</div>
+				@endforeach
 			</div>
 		</div>
 	</div>

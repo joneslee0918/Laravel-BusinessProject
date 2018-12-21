@@ -34,7 +34,6 @@ const Article = ({article, postedArticle, toggleTailoredPostModal}) => {
                             image: article.image_url, 
                             source: article.url,
                             description: article.description,
-                            articleBody: article.content ? article.content : article.description,
                             postId: article.id
                         }) } className="upgrade-btn">
                             

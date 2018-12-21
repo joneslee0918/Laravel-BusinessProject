@@ -48,37 +48,17 @@ class PublishController extends Controller
 
             $uploadedImages = $this->uploadImages($images);
 
+            $payload = [
+                'images' => $uploadedImages,
+                'scheduled' => $scheduled
+            ];
+
             foreach($channels as $channel){
-
-                $boards = false;
-
-                if($channel["type"] == "pinterest" && !isset($channel["selectedBoards"])){
-                    continue;
-                }
-
-                if(isset($channel["selectedBoards"])){
-                    $boards = $channel["selectedBoards"];
-                }
 
                 $channel = Channel::find($channel['id']);
                 $networkContent = $channel->type."Content";
-                $networkPictures = $channel->type."Pictures";
                 $publishTime = Carbon::now();
 
-                if(isset($post[$networkPictures])){
-                    $images = $post[$networkPictures];
-                    $uploadedImages = $this->uploadImages($images);
-                }
-
-                $payload = [
-                    'images' => $uploadedImages,
-                    'scheduled' => $scheduled
-                ];
-
-                if($boards){
-                    $payload["boards"] = $boards;
-                }
-                
                 if($publishType == "date"){
                     
                     $publishTime = $scheduledTime;
@@ -124,6 +104,7 @@ class PublishController extends Controller
         }catch(\Exception $e){
             return getErrorResponse($e, $this->selectedChannel);
         }
+
 
         return response()->json(['message' => 'Your post was successfuly stored!']);
     }

@@ -29,28 +29,26 @@ export default class LinkedInButton extends React.Component{
         );
 
         var targetInterval = setInterval(function(){
-          try{
-            if(targetWindow.document.domain === window.document.domain){
-              if(targetWindow.location.pathname == "/redirect"){
-                
-                const token = getParameterByName("accessToken", targetWindow.location.href);
-                
-                if(token){
-                  onSuccess({
-                    "accessToken": token
-                  });
-                }else{
-                  onError({
-                    "error" : "Something went wrong."
-                  });
-                }
 
-                targetWindow.close();
-                clearInterval(targetInterval);
+          if(targetWindow.document.domain === window.document.domain){
+            if(targetWindow.location.pathname == "/redirect"){
+              
+              const token = getParameterByName("accessToken", targetWindow.location.href);
+              
+              if(token){
+                onSuccess({
+                  "accessToken": token
+                });
+              }else{
+                onError({
+                  "error" : "Something went wrong."
+                });
               }
-            }
-          }catch(e){}
 
+              targetWindow.close();
+              clearInterval(targetInterval);
+            }
+          }
 
         }, 1000);
       };

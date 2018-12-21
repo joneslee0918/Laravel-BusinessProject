@@ -1065,8 +1065,11 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     padding-bottom: 20px;
 }
 .recent-posts-text {
-    width: 60%;
+    width: 100%;
     float: right;
+}
+.recent-posts-text a {
+    text-decoration: none;
 }
 .article-categories {
     padding: 0;
