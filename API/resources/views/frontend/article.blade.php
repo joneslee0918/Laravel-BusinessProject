@@ -103,7 +103,7 @@
 						</div>
 					</div> -->
 					<div class="recent-posts-text">
-						<a href=""><h5>{{$rpost->title}}</h5></a>
+						<a href="{{ route('article', $post->id) }}"><h5>{{$rpost->title}}</h5></a>
 						<div class="comment-date">Posted by {{$rpost->admin->name}}</div>
 						<div class="comment-date">{{$rpost->created_at->format('d F Y')}}</div>
 					</div>
