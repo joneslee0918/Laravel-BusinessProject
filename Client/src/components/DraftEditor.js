@@ -178,7 +178,7 @@ class DraftEditor extends React.Component{
                     
                         <p className={`letter-count pull-left ${this.state.letterCount > 280 && network == 'twitter' ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
 
-                        {(this.state.letterCount > 280 && network == "twitter") || (this.state.letterCount < 1 && this.state.pictures.length < 1) ?
+                        {(this.state.letterCount > 280 && network == "twitter") || (this.state.pictures.length < 1 && network == "pinterest") || (this.state.letterCount < 1 && this.state.pictures.length < 1) ?
                             <button disabled onClick={this.onDone} className={`upgrade-btn pull-right disabled-btn`}>Done</button>
                         :
                             <button onClick={this.onDone} className={`upgrade-btn pull-right`}>Done</button>

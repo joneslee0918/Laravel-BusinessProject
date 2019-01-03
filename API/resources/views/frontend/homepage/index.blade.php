@@ -10,9 +10,10 @@
     <div class="container">
         <div class="row pb50">
             <div class="col-md-5 col-xs-12 pb50">
-                <h1>Social Media Management,<br>Simplified</h1>
-                <p class="mt20">With a single platform, Uniclix helps you build a community of followers & and centralize your social activities, automate your post with couple of clix.</p>
-                <a href="#" class="btn theme-btn mt30">Get Started</a>
+                <h1>Social Media Management<br>Simplified</h1>
+                <p class="mt20">Uniclix helps you centralize, manage and grow your social media accounts with just a couple of clicks.</p>
+                <h3 style="color:white;">Start at only $7.99</h3>
+                <a href="#" class="btn theme-btn mt30">Learn more</a>
             </div>
             <div class="col-md-7 col-xs-12 pb50">
                 <img src="{{ asset('images/laptop.png') }}" class="img-responsive laptop-img">
@@ -24,41 +25,46 @@
     <div class="container">
         <div class="row text-center">
             <div class="col-xs-12">
-                <h2>Optimize your Social Media Accounts</h2>
-                <p>The most affordable & easy to use platform for managing all things Social. Uniclix connects you with real people that care about your product. Publish content from your sites and schedule your posts in advance with Uniclix.</p>
+                <h3>The most affordable and simple to use social media management platform</h3>
+                <!-- <h2>Optimize your Social Media Accounts</h2>
+                <p>The most affordable & easy to use platform for managing all things Social. Uniclix connects you with real people that care about your product. Publish content from your sites and schedule your posts in advance with Uniclix.</p> -->
             </div>
-            <div class="col-xs-12 pt50 pb50 border-bottom-grey">
+            <!-- <div class="col-xs-12 pt50 pb50 border-bottom-grey">
                 <img src="{{ asset('images/home-img-1.png') }}" class="img-responsive center-img">
-            </div>
+            </div> -->
         </div>
         <div class="row home-features mt50">
             <div class="col-md-3 col-xs-12 text-center">
                 <div class="feature-img">
                     <img src="{{ asset('images/feature-img-1.png') }}">
                 </div>                
-                <h6>Automatically Schedule posts</h6>
-                <p>Publish content and schedule your post in advance with uniclix.</p>
+                <h6>Scheduled posts</h6>
+                <p>Publish & schedule posts for multiple social media networks & accounts with a couple of clicks. 
+Uniclix helps you determine best times to post to reach maximum engagement.</p>
             </div>
             <div class="col-md-3 col-xs-12 text-center">
                 <div class="feature-img">
                     <img src="{{ asset('images/feature-img-2.png') }}">
                 </div>
-                <h6>Discover new content and articles</h6>
-                <p>Create search streams based on keywords to find curated content that you can share on the fly.</p>
+                <h6>Auto-curated content</h6>
+                <p>Find & share content on the fly.
+Uniclix auto-suggests content relevant to your topics of interest so that you don’t have to spend hours searching on the internet.
+</p>
             </div>
             <div class="col-md-3 col-xs-12 text-center">
                 <div class="feature-img">
                     <img src="{{ asset('images/feature-img-3.png') }}">
                 </div>
-                <h6>Hack your Twitter!</h6>
-                <p>Build community of followers with targeted audience. Think of us as a matchmaker that connects you with people most interested in what you have to offer.</p>
+                <h6>Audience Booster (Twitter only)</h6>
+                <p>Grow your community on Twitter by targeting the right audience. Think of our Booster tool as a matchmaker that connects you with people most interested in what you have to offer.</p>
             </div>
             <div class="col-md-3 col-xs-12 text-center">
                 <div class="feature-img">
                     <img src="{{ asset('images/feature-img-4.png') }}">
                 </div>
-                <h6>Manage Multiple Accounts</h6>
-                <p>Manage more than one account in one centralized platform, we support Twitter, Facebook, Linkedin and Pinterest.</p>
+                <h6>Packages starting at just $7.99</h6>
+                <p>Take advantage of our First 5k launch campaign.
+In order to build a global Uniclix community we are offering our services at unbeatable prices to the <strong>first five thousand</strong> subscribers who will maintain a lifetime membership at introductory prices. We offer multiple plans so that you only pay for the services you need.</p>
             </div>
         </div>
     </div>
