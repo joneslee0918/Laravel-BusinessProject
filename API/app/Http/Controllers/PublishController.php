@@ -61,13 +61,17 @@ class PublishController extends Controller
                 }
 
                 $channel = Channel::find($channel['id']);
-                $networkContent = $channel->type."Content";
-                $networkPictures = $channel->type."Pictures";
+                $networkContent = strtolower($channel->type)."Content";
+                $networkPictures = strtolower($channel->type)."Pictures";
                 $publishTime = Carbon::now();
 
                 if(isset($post[$networkPictures])){
+                    
                     $images = $post[$networkPictures];
-                    $uploadedImages = $this->uploadImages($images);
+                    
+                    if(count($images)){
+                        $uploadedImages = $this->uploadImages($images);
+                    }
                 }
 
                 $payload = [
@@ -135,23 +139,35 @@ class PublishController extends Controller
 
         foreach($images as $image){
 
-            if(str_contains($image, "http")){
+            if(str_contains($image, "http") && str_contains($image, "storage")){
+
+                $relativePath = 'storage'.explode('storage', $image)[1];
+
                 $uploadedImages[] = [
-                    'relativePath' => 'storage'.explode('storage', $image)[1],
+                    'relativePath' => $relativePath,
                     'absolutePath' => $image
                 ];
             }else{
-                $imageData = explode(',', $image);
-                $imageBase64 = $imageData[1];
-                $imageInfo = explode(';', $imageData[0]);
-                $imageOriginalName = explode('.',$imageInfo[1]);
-                $imageExtension = $imageOriginalName[1];
-    
-                $imageName = str_random(35).'.'.$imageExtension;
+
+                if(str_contains($image, "http")){
+                    $contents = file_get_contents($image);
+                    $name = substr($image, strrpos($image, '/') + 1);
+                    $imageName = str_contains($name, "?") ? explode("?", $name)[0] : $name;
+                    $imageName = str_random(35)."-".$imageName;
+                }else{
+                    $imageData = explode(',', $image);
+                    $imageBase64 = $imageData[1];
+                    $imageInfo = explode(';', $imageData[0]);
+                    $imageOriginalName = explode('.',$imageInfo[1]);
+                    $imageExtension = $imageOriginalName[1];
+                    $contents = base64_decode($imageBase64);
+                    $imageName = str_random(35).'.'.$imageExtension;
+                }
+
                 $today = Carbon::today();
                 $uploadPath = "public/$today->year/$today->month/$today->day/$imageName";
     
-                \Storage::put($uploadPath, base64_decode($imageBase64));
+                \Storage::put($uploadPath, $contents);
     
                 $relativePublicPath = str_replace("public", "storage", $uploadPath);
 

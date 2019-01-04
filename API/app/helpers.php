@@ -35,7 +35,7 @@ function formatBigNums($input){
 
 function getErrorResponse($e, $channel = false){
     $error = $e->getMessage();
-    if(str_contains($error, "log in") || str_contains($error, "expired token")){
+    if(str_contains($error, "log in") || str_contains($error, "expired token") || str_contains($error, "session") || str_contains($error, "denied")){
 
         if($channel){
             $channel->active = 0;
@@ -44,7 +44,7 @@ function getErrorResponse($e, $channel = false){
         
         return response()->json(['error' => $error], 401);
     }
-    return response()->json(['error' => $error], 400);
+    return response()->json(['error' => $e->getTrace()], 400);
 }
 
 function exchangeFBToken($accessToken)

@@ -178,13 +178,14 @@ class TailoredPostModal extends React.Component{
         const facebookPictures = this.state.facebookPictures;
         const twitterPictures = this.state.twitterPictures;
         const linkedinPictures = this.state.linkedinPictures;
-        const pinterestPictures = this.state.pinterestPictures;
+        const pinterestPictures = this.state.pinterestPictures.length ? this.state.pinterestPictures : [this.props.image];
         const type = this.state.type;
         const id = this.props.post ? this.props.post.id : "";
         const articleId = this.props.postId;
         const images = this.state.pictures;
         const publishChannels = channelSelector(this.state.publishChannels, {selected: true, provider: undefined});
 
+        // console.log(pinterestPictures); return;
         this.setState(() => ({
             loading: true
         }));

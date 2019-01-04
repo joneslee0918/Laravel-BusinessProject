@@ -28,7 +28,7 @@
 				</div>
 				<div class="blog-post-content fright">
 					<h4>{{$post->title}}</h4>
-					<div class="blog-post-date"><span class="blog-post-author">{{$post->admin->name}}</span><span>{{$post->created_at->format('y-m-d')}}</span></div>
+					<div class="blog-post-date"><span class="blog-post-author">By {{$post->admin->name}}</span><span>{{$post->created_at->format('F d, Y')}}</span></div>
 					{!! str_limit($post->content, 190, '...') !!}
 					<div class="blog-post-footer">
 						<div class="blog-post-share">
