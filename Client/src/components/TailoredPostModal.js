@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
-import channelSelector from '../selectors/channels';
+import channelSelector, {publishChannels as publishableChannels} from '../selectors/channels';
 import boardsSelector from '../selectors/boards';
 import {publish} from '../requests/channels';
 import {setPost, setPostedArticle} from "../actions/posts";
@@ -15,7 +15,7 @@ import {LoaderWithOverlay} from "./Loader";
 class TailoredPostModal extends React.Component{
 
     state = {
-        publishChannels: this.props.channels,
+        publishChannels: publishableChannels(this.props.channels),
         selectChannelsModal: false,
         draftEditorModal: false,
         content: "",
@@ -42,7 +42,7 @@ class TailoredPostModal extends React.Component{
 
         if(prevProps.channels !== this.props.channels){
             this.setState(() => ({
-                publishChannels: this.props.channels
+                publishChannels: publishableChannels(this.props.channels)
             }));
         }
     }
@@ -54,6 +54,7 @@ class TailoredPostModal extends React.Component{
         }
 
         this.setState(() => ({
+            publishChannels: publishableChannels(this.state.publishChannels),
             selectChannelsModal: !this.state.selectChannelsModal
         }));
     };
@@ -106,7 +107,7 @@ class TailoredPostModal extends React.Component{
     };
 
     onChannelSelectionChange = (obj) => {
-        const selectedPinterestChannel = !obj.selected && obj.type == "pinterest" ? obj : false;
+        const selectedPinterestChannel = (!obj.selected || typeof(obj.boards) === "undefined") && obj.type == "pinterest" ? obj : false;
 
         const publishChannels = this.state.publishChannels.map((channel) => {
             if(channel.id === obj.id){
