@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import { Redirect } from 'react-router-dom';
 import moment from "moment";
 import DraftEditor from './DraftEditor';
-import channelSelector, {publishChannels as publishableChannels} from '../selectors/channels';
+import channelSelector from '../selectors/channels';
 import boardsSelector from '../selectors/boards';
 import {publish} from '../requests/channels';
 import {setPost, setPostedArticle} from "../actions/posts";
@@ -31,7 +31,7 @@ class Compose extends React.Component{
         type: 'store',
         selectChannelsModal: false,
         openModal: this.props.composer,
-        publishChannels: publishableChannels(this.props.channel),
+        publishChannels: this.props.channels,
         optionsMenu: false,
         letterCount: 0,
         pictures: [],
@@ -53,8 +53,6 @@ class Compose extends React.Component{
     }
 
     componentDidUpdate(prevProps, prevState) {
-
-        const currentChannels = publishableChannels(this.props.channels);
 
         if(prevProps.post !== this.props.post && this.props.post){
 
@@ -79,7 +77,7 @@ class Compose extends React.Component{
 
         if(prevProps.channels !== this.props.channels){
             this.setState(() => ({
-                publishChannels: currentChannels
+                publishChannels: this.props.channels
             }));
         }
 
@@ -91,7 +89,6 @@ class Compose extends React.Component{
 
         if(prevState.letterCount !== this.state.letterCount 
             || prevState.pictures !== this.state.pictures 
-            || prevProps.channels !== this.props.channels
             || prevState.publishChannels !== this.state.publishChannels){
             this.setRestrictions();
         }
@@ -215,7 +212,6 @@ class Compose extends React.Component{
         }
 
         this.setState(() => ({
-            publishChannels: publishableChannels(this.state.publishChannels),
             selectChannelsModal: !this.state.selectChannelsModal
         }));
     };

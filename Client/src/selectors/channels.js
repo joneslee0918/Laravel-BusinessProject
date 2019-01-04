@@ -1,5 +1,3 @@
-import boardSelector from "./boards";
-
 export default (channels = [], {selected, provider, publishable}) => {
 
     if(!channels.length) return channels;
@@ -27,21 +25,5 @@ export default (channels = [], {selected, provider, publishable}) => {
         }
 
         return filter;
-    });
-};
-
-//qitu jom met me pinterest channels kur pe selekton bordin spo bon kajhere
-export const publishChannels = (channels = []) => {
-    return channels.map((channel) => {
-        if(channel.selected && channel.type == "pinterest" && (typeof(channel.boards) === "undefined" || boardSelector(channel.boards, {selected: 1}).length < 1)){
-            return {
-                ...channel,
-                selected: 0
-            }
-        }else{
-            return {
-                ...channel
-            }
-        }
     });
 };
