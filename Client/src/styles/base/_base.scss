@@ -434,6 +434,40 @@ input {
     justify-content: center;
 }
 
+.noSidePadding{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.pinterestPreviewImage{
+    height: 200px !important;
+}
+
+.giveMeEllipsis-5 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    line-height: 1.5;
+    max-height: 90px;
+ }
+
+ .giveMeEllipsis-2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 1.5;
+    max-height: 40px;
+ }
+
+.sideIcon-r{
+    float: left;
+    margin-right: 5px;
+}
+
 .small-blurry-text{
     font-size: 6px;
     margin-left: 10px;
@@ -970,7 +1004,7 @@ input {
 .publish-group{
     border-radius: 20px;
     float:left;
-    width: 185px;
+    width: 200px;
     height:35px;
     font-family: open-sansSemiBold, sans-serif;
     color: white;

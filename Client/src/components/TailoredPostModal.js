@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
-import channelSelector from '../selectors/channels';
+import channelSelector, {publishChannels as publishableChannels} from '../selectors/channels';
 import boardsSelector from '../selectors/boards';
 import {publish} from '../requests/channels';
 import {setPost, setPostedArticle} from "../actions/posts";
@@ -15,7 +15,7 @@ import {LoaderWithOverlay} from "./Loader";
 class TailoredPostModal extends React.Component{
 
     state = {
-        publishChannels: this.props.channels,
+        publishChannels: publishableChannels(this.props.channels),
         selectChannelsModal: false,
         draftEditorModal: false,
         content: "",
@@ -42,7 +42,7 @@ class TailoredPostModal extends React.Component{
 
         if(prevProps.channels !== this.props.channels){
             this.setState(() => ({
-                publishChannels: this.props.channels
+                publishChannels: publishableChannels(this.props.channels)
             }));
         }
     }
@@ -54,6 +54,7 @@ class TailoredPostModal extends React.Component{
         }
 
         this.setState(() => ({
+            publishChannels: publishableChannels(this.state.publishChannels),
             selectChannelsModal: !this.state.selectChannelsModal
         }));
     };
@@ -106,7 +107,7 @@ class TailoredPostModal extends React.Component{
     };
 
     onChannelSelectionChange = (obj) => {
-        const selectedPinterestChannel = !obj.selected && obj.type == "pinterest" ? obj : false;
+        const selectedPinterestChannel = (!obj.selected || typeof(obj.boards) === "undefined") && obj.type == "pinterest" ? obj : false;
 
         const publishChannels = this.state.publishChannels.map((channel) => {
             if(channel.id === obj.id){
@@ -421,13 +422,16 @@ const TailoredPostCard = ({network, title, body, content, description, pictures,
         <div className="tailored-post-card-content">
                 <div onClick={() => onEditClick(network)} className="tailored-post-preview">
 
-                    <div className="tailored-post-preview__header">
-                        <i className={ `socialIcon fa fa-${network} ${network}_bg`}></i>
-                        <div>
-                            <div className="social-preview-title">{network} preview</div>
-                            <div className="small-blurry-text">small text here</div>
+                    {network != "pinterest" &&
+                        <div className="tailored-post-preview__header">
+                            <i className={ `socialIcon fa fa-${network} ${network}_bg`}></i>
+                            <div>
+                                <div className="social-preview-title">{network} preview</div>
+                                <div className="small-blurry-text">small text here</div>
+                            </div>
                         </div>
-                    </div>
+                    }
+
                     
                     {network == "facebook" && !body ?
                         <div className="social-body-text-suggestion">
@@ -435,14 +439,14 @@ const TailoredPostCard = ({network, title, body, content, description, pictures,
                         </div>
                         :
                         (network != "pinterest" ? 
-                        <div className="social-body-text">
+                        <div className="social-body-text giveMeEllipsis-2">
                             {body ? body : (source ? title : "")}
                         </div>: ""
                         )
                     }
                     <div className="tailored-post-preview-body">
                         {!!image &&
-                            <img src={image}/>
+                            <img className={network == "pinterest" ? "pinterestPreviewImage" : ""} src={image}/>
                         }
                         
                         {network != "pinterest" ? (!!source && !pictures.length &&
@@ -450,8 +454,11 @@ const TailoredPostCard = ({network, title, body, content, description, pictures,
                                 <div className="tailoredPost__previewCardWrapper__link__title">{title}</div>
                                 <div className="tailoredPost__previewCardWrapper__link__domain">{source}</div>
                             </div>) : 
-                            <div className="social-body-text height-109">
-                                {body ? body : (source ? `${title} ${description ? description : ""} ${source}` : "")}
+                            <div className="social-body-text noSidePadding height-109">
+                                <div className="flex-center-h">
+                                    <div className="social-preview-title"><i className={ `socialIcon sideIcon-r fa fa-${network} ${network}_bg`}></i></div>
+                                    <div className="giveMeEllipsis-5"> <strong>{network} preview </strong> {body ? body : (source ? `${title} ${description ? description : ""} ${source}` : "")}</div>
+                                </div>
                             </div>
                         }
 

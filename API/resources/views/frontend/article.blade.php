@@ -23,7 +23,7 @@
 			</div>
 			<div class="article-content mt50">
 				<h4 class="text-uppercase fw700">{{$post->title}}</h4>
-				<div class="posted-by">By {{$post->admin->name}} on {{$post->created_at->format('F d, Y')}}</div>
+				<div class="posted-by">Posted by {{$post->admin->name}} on {{$post->created_at->toDateTimeString()}}</div>
 				{!! $post->content !!}
 				<!-- <h4 class="mt50 text-uppercase fw700">Recent Comments</h4>
 				<div class="article-comments pt30">
@@ -105,7 +105,7 @@
 					<div class="recent-posts-text">
 						<a href="{{ route('article', $post->id) }}"><h5>{{$rpost->title}}</h5></a>
 						<div class="comment-date">Posted by {{$rpost->admin->name}}</div>
-						<div class="comment-date">{{$rpost->created_at->format('F d, Y')}}</div>
+						<div class="comment-date">{{$rpost->created_at->format('d F Y')}}</div>
 					</div>
 				</div>
 				@endforeach
