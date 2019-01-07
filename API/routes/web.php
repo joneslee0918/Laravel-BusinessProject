@@ -36,8 +36,8 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Channel::first();
-    $post = $channel->details->getAvatar();
+    $channel = \App\Models\Facebook\Channel::latest()->first();
+    $post = $channel->getNonProfileAvatar();
     //return $post;
     // $pinterest = new \DirkGroenen\Pinterest\Pinterest(config("services.pinterest.client_id"), config("services.pinterest.client_secret"));
     // $pinterest->auth->setOAuthToken("Aj2PnZvkTp-WdatfiA5hRFh85nJyFW_p8SVgt8NFdeEVOmBVTwZ8ADAAAY5jRXZvBckAfusAAAAA");

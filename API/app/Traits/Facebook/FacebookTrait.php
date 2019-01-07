@@ -46,16 +46,55 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
-    public function getAvatar(){
+    public function getNonProfileAvatar()
+    {
+       try{
+            $fb = $this->setAsCurrentUser();
+            $response = $fb->get("$this->original_id/?fields=picture");
+            $data = $response->getDecodedBody();
 
+           if($data){
+                return $data["picture"]["data"]["url"];
+           }
+       }catch(\Exception $e){
+            //throw $e;
+       }
+        
+        return "";
+    }
+
+    public function getProfileAvatar()
+    {
+        try{
+            $profile = Socialite::driver("facebook")->userFromToken($this->access_token);
+
+            if($profile){
+                return $profile->avatar;
+            }
+
+        }catch(\Exception $e){
+           
+        } 
+        
+        return "";
+    }
+
+
+
+    public function getAvatar(){
         try{
             $key = $this->id . "-facebookAvatar";
-            $minutes = 60;
+            $minutes = 10;
             return Cache::remember($key, $minutes, function () {
-                $profile = Socialite::driver("facebook")->userFromToken($this->access_token);
+                $avatar = "";
+                if($this->account_type == "profile"){
+                    $avatar = $this->getProfileAvatar();
+                }else{
+                    $avatar = $this->getNonProfileAvatar();
+                }
 
-                if($profile){
-                    return $profile->avatar;
+                if($avatar){
+                    return $avatar;
                 }
 
                 return public_path()."/images/dummy_profile.png";

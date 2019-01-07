@@ -56,7 +56,7 @@ trait Tweetable
     {
         try {
             $key = $this->id . "-twitterAvatar";
-            $minutes = 60;
+            $minutes = 10;
             return Cache::remember($key, $minutes, function () {
                 $data = $this->getData();
 

@@ -105,7 +105,7 @@ trait LinkedinTrait
 
         try{
             $key = $this->id . "-linkedinAvatar";
-            $minutes = 60;
+            $minutes = 10;
             return Cache::remember($key, $minutes, function () {
                 $profile = Socialite::driver("linkedin")->userFromToken($this->access_token);
 

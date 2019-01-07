@@ -43,7 +43,7 @@ trait PinterestTrait
     public function getAvatar(){
         try{
             $key = $this->id . "-pinterestAvatar";
-            $minutes = 60;
+            $minutes = 10;
             return Cache::remember($key, $minutes, function () {
                 $pinterest = new Pinterest(config("services.pinterest.client_id"), config("services.pinterest.client_secret"));
                 $pinterest->auth->setOAuthToken($this->access_token);
