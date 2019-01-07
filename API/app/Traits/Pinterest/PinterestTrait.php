@@ -40,6 +40,26 @@ trait PinterestTrait
         }
     }
 
+    public function getAvatar(){
+        try{
+            $key = $this->id . "-pinterestAvatar";
+            $minutes = 60;
+            return Cache::remember($key, $minutes, function () {
+                $pinterest = new Pinterest(config("services.pinterest.client_id"), config("services.pinterest.client_secret"));
+                $pinterest->auth->setOAuthToken($this->access_token);
+                $profile =  $pinterest->users->me(["fields" => "username,first_name,last_name,image[small,large]"]);
+
+                if($profile){
+                    return $profile->image["large"]["url"];
+                }
+
+                return public_path()."/images/dummy_profile.png";
+            });
+        }catch(\Exception $e){
+            return false;
+        }
+    }
+
     /**
      * Used to switch between users by using their corresponding
      * access fokens for login

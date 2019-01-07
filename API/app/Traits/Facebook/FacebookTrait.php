@@ -46,6 +46,25 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
+    public function getAvatar(){
+
+        try{
+            $key = $this->id . "-facebookAvatar";
+            $minutes = 60;
+            return Cache::remember($key, $minutes, function () {
+                $profile = Socialite::driver("facebook")->userFromToken($this->access_token);
+
+                if($profile){
+                    return $profile->avatar;
+                }
+
+                return public_path()."/images/dummy_profile.png";
+            });
+        }catch(\Exception $e){
+            return false;
+        }
+    }
+
     /**
      * @param array $media
      * @return mixed

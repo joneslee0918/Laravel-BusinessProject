@@ -40,6 +40,7 @@ class User extends Authenticatable
         if($channels = $this->channels()->get()){
             
             return collect($channels)->map(function($channel){
+                    
                     $channel->details = @$channel->details;
 
                     if($channel->details){
