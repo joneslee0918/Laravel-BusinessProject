@@ -13,7 +13,7 @@
                 <h1>Social Media Management<br>Simplified</h1>
                 <p class="mt20">Uniclix helps you centralize, manage and grow your social media accounts with just a couple of clicks.</p>
                 <h3 style="color:white;">Start at only $7.99</h3>
-                <a href="#" class="btn theme-btn mt30">Learn more</a>
+                <a href="/pricing" class="btn theme-btn mt30">Learn more</a>
             </div>
             <div class="col-md-7 col-xs-12 pb50">
                 <img src="{{ asset('images/laptop.png') }}" class="img-responsive laptop-img">
