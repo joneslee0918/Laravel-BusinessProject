@@ -2,6 +2,7 @@ import React from 'react';
 import {NavLink, Link} from "react-router-dom";
 
 const VerticalMenu = ({ menuItems, channels, selectedChannel, selectChannel }) => {
+    console.log(channels);
     return (
         <div>
             <aside className="vertical-menu gradient-background-teal-blue">
@@ -21,7 +22,10 @@ const VerticalMenu = ({ menuItems, channels, selectedChannel, selectChannel }) =
 const ProfileInfo = ({ selectedChannel }) => (
     <div className="user-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div className="profile-info pull-right">
-            <img className="pull-left" src={selectedChannel.avatar} />
+            <span className="pull-left profile-img-container">
+                <img src={selectedChannel.avatar} />
+                <i className={`fa fa-${selectedChannel.type} ${selectedChannel.type}_bg smallIcon`}></i>
+            </span>
             <div className="pull-left">
                 <p className="profile-name">{selectedChannel.name}</p>
                 <p className="profile-username">{!!selectedChannel.username && `@${selectedChannel.username}`}</p>
@@ -35,12 +39,14 @@ const ProfileInfo = ({ selectedChannel }) => (
 
 const ProfileSelectionDropDown = ({ channels, selectChannel }) => (
     <div className="dropdown-menu select-channel">
-        {!!channels.length && 
-            channels.map((channel) => (
-                <ProfileSelectionItem key={channel.id} channel={channel} selectChannel={selectChannel}/>
-            ))
-        }
         <Link to="/accounts" className="add-channel-btn block-urls">Add new channel</Link>
+        <div className="channel-list">
+            {!!channels.length && 
+                channels.map((channel) => (
+                    <ProfileSelectionItem key={channel.id} channel={channel} selectChannel={selectChannel}/>
+                ))
+            }
+        </div>
     </div>
 );
 
@@ -48,9 +54,12 @@ const ProfileSelectionItem = ({ channel, selectChannel }) => (
     <div className="channel-container">
         <a href="#" className="block-urls" onClick={(e) => { selectChannel(channel.id) }}>
             <div className="profile-info pull-right">
-                <img className="pull-left" src={channel.avatar} />
+                <span className="pull-left profile-img-container">
+                    <img src={channel.avatar} />
+                    <i className={`fa fa-${channel.type} ${channel.type}_bg smallIcon`}></i>
+                </span>
                 <div className="pull-left">
-                    <p className="profile-name">{channel.name}</p>
+                    <p className="profile-name" title={channel.name}>{channel.name}</p>
                     <p className="profile-username">{!!channel.username && `@${channel.username}`}</p>
                 </div>
             </div>
@@ -69,7 +78,7 @@ const MenuItems = ({ menuItems }) => (
 const SupportSection = () => (
     <div className="support">
         <div>
-            <a href="mailto:info@oda-lab.com?Subject=The%20sky%20is%20falling!"><i className="fa fa-comment"></i> SUPPORT</a>
+            <a href="mailto:info@uniclixapp.com?Subject=The%20sky%20is%20falling!"><i className="fa fa-comment"></i> SUPPORT</a>
         </div>
     </div>
 );

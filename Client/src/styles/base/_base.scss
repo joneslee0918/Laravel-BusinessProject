@@ -1544,16 +1544,30 @@ input {
     overflow-y: auto;
 }
 
+.select-channel{
+    padding: 0px 0 !important;
+}
+
+.channel-container:hover{
+    background: #46a8ce;
+}
+
+.channel-container:hover .profile-info{
+    color:white;
+}
+
 .add-channel-btn, .add-channel-btn:hover {
     margin: 10px auto;
-    padding: 5px 10px;
+    padding: 8px 10px;
     text-align: center;
     border: 1px solid #ccc;
     color: white;
     background: #46a8ce;
     font-family: open-sansBold, sans-serif;
-    width: 150px;
+    width: 160px;
     font-size: 14px;
+    border: none;
+    border-radius: 30px;
 }
 
 .height-109{
@@ -1623,7 +1637,7 @@ aside .btn-group {
 .kep-login-facebook {
     font-size: 14px !important;
     text-transform: capitalize !important;
-    padding: 11px 16px !important;
+    padding: 11px 15px !important;
     border: none !important;
     border-radius: 5px !important;
 }
@@ -1690,6 +1704,17 @@ aside .btn-group {
 
 .dnone{
     display:none;
+}
+
+.profile-img-container{
+    display:block;
+    position:relative;
+}
+
+.channel-list{
+    overflow-y: auto;
+    max-height: 250px;
+    border-top:1px solid #ccc;
 }
 
 .fileContainer .deleteImage {
