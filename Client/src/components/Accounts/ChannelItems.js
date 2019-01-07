@@ -11,7 +11,7 @@ const ChannelItem = ({ channel, setAction }) => (
         <div className="channel-container">
             <a href="#" className="block-urls">
                 <div className="profile-info pull-right">
-                    <img className="pull-left" src={channel.avatar} />
+                    <img className="pull-left" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} />
                     <div className="pull-left">
                         <p className="profile-name">{channel.name}</p>
                         <p className="profile-username">{!!channel.username && `@${channel.username}`}</p>

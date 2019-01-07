@@ -354,7 +354,7 @@ class TailoredPostModal extends React.Component{
                                             
                                             <li key={channel.id} className="channel-item">
                                                 <div className="remove-overlay fa fa-close" onClick={() => this.onChannelSelectionChange(channel)}></div>
-                                                <img src={channel.avatar}/>
+                                                <img onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar}/>
                                                 <i className={`fa fa-${channel.type} ${channel.type}_bg smallIcon`}></i>
                                             </li>
                                         ))}
