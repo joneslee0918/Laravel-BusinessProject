@@ -36,10 +36,18 @@ class Linkedin extends React.Component {
         console.log(response);
     };
 
+    setError = (error) => {
+        this.setState(() => ({
+            error
+        }));
+    };
+
     onSuccess = (response) => {
         if(response){
             this.props.startAddLinkedinChannel(response.accessToken)
             .then(() => {
+            }).catch(error => {
+                this.setError("This Linkedin profile is already associated with another Uniclix account.");
             });
         }
     };
@@ -77,6 +85,18 @@ class Linkedin extends React.Component {
                             console.log('something went wrong');
                         }
                         this.setAction();
+                    }}
+                />
+
+                <SweetAlert
+                    show={!!this.state.error}
+                    title={`Error`}
+                    text={this.state.error}
+                    type="error"
+                    confirmButtonText="Ok"
+                    cancelButtonText="No"
+                    onConfirm={() => {
+                        this.setError("");
                     }}
                 />
 

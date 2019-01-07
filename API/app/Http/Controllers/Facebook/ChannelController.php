@@ -20,7 +20,7 @@ class ChannelController extends Controller
         if(is_object($credentials) && !isset($credentials->error)){
 
             $user = auth()->user();
-            $existingChannel = $user->facebookChannels()->where("email", $credentials->email)->first();
+            $existingChannel = Channel::where("email", $credentials->email)->first();
     
             if(!$existingChannel){
                 $channel = $user->channels()->create(["type" => "facebook"]);
@@ -37,12 +37,17 @@ class ChannelController extends Controller
                 $facebookChannel->select();
     
             }else{
-                $global = $existingChannel->global;
-                $global->active = 1;
-                $global->save();
-                $facebookChannel = $existingChannel;
-                $facebookChannel->access_token = $credentials->token;
-                $facebookChannel->save();
+
+                if($existingChannel->user_id == $user->id){
+                    $global = $existingChannel->global;
+                    $global->active = 1;
+                    $global->save();
+                    $facebookChannel = $existingChannel;
+                    $facebookChannel->access_token = $credentials->token;
+                    $facebookChannel->save(); 
+                }else{
+                    return response()->json(['error' => 'Channel already exists with some other account'], 400);
+                }
             }
 
             return $user->formattedChannels();

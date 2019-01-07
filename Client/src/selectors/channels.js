@@ -13,9 +13,12 @@ export default (channels = [], {selected, provider, publishable}) => {
 
         if(publishable){
 
-            if(typeof channel.details.account_type !== "undefined"){
-                filter = filter && channel.details.account_type !== "profile";
-            }
+            try{
+                if(typeof(channel.details.account_type) !== "undefined"){
+                    filter = filter && channel.details.account_type !== "profile";
+                }
+            }catch(e){}
+
         }
 
         if(!isNaN(selected)){
@@ -30,7 +33,6 @@ export default (channels = [], {selected, provider, publishable}) => {
     });
 };
 
-//qitu jom met me pinterest channels kur pe selekton bordin spo bon kajhere
 export const publishChannels = (channels = []) => {
 
     if(!channels.length) return channels;

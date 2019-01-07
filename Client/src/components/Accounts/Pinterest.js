@@ -30,7 +30,13 @@ class Pinterest extends React.Component {
         this.setState(() => ({
             action
         }));
-    }
+    };
+
+    setError = (error) => {
+        this.setState(() => ({
+            error
+        }));
+    };
 
     onFailure = (response) => {
         console.log(response);
@@ -40,6 +46,8 @@ class Pinterest extends React.Component {
         if(response){
             this.props.startAddPinterestChannel(response.accessToken)
             .then(() => {
+            }).catch(error => {
+                this.setError("This Pinterest profile is already associated with another Uniclix account.");
             });
         }
     };
@@ -77,6 +85,18 @@ class Pinterest extends React.Component {
                             console.log('something went wrong');
                         }
                         this.setAction();
+                    }}
+                />
+
+                <SweetAlert
+                    show={!!this.state.error}
+                    title={`Error`}
+                    text={this.state.error}
+                    type="error"
+                    confirmButtonText="Ok"
+                    cancelButtonText="No"
+                    onConfirm={() => {
+                        this.setError("");
                     }}
                 />
 
