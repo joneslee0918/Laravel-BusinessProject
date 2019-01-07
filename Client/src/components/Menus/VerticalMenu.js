@@ -2,7 +2,6 @@ import React from 'react';
 import {NavLink, Link} from "react-router-dom";
 
 const VerticalMenu = ({ menuItems, channels, selectedChannel, selectChannel }) => {
-    console.log(channels);
     return (
         <div>
             <aside className="vertical-menu gradient-background-teal-blue">
