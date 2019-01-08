@@ -49,28 +49,6 @@ trait Tweetable
         }
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAvatar()
-    {
-        try {
-            $key = $this->id . "-twitterAvatar";
-            $minutes = 10;
-            return Cache::remember($key, $minutes, function () {
-                $data = $this->getData();
-
-                if($data){
-                    return $data->profile_image_url;
-                }
-                
-                return public_path()."/images/dummy_profile.png";
-            });
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
-
 
     /**
      * @param array $media

@@ -39,12 +39,6 @@ class Facebook extends React.Component {
         console.log(response);
     };
 
-    setError = (error) => {
-        this.setState(() => ({
-            error
-        }));
-    };
-
     onSuccess = (response) => {
         if(response){
             this.props.startAddFacebookChannel(response.accessToken)
@@ -57,9 +51,7 @@ class Facebook extends React.Component {
                             accountsModal: true
                         }));
                     }
-                })
-            }).catch(error => {
-                this.setError("You are logged in with a facebook account that is already connected with another Uniclix account.");
+                });
             });
         }
     };
@@ -125,18 +117,6 @@ class Facebook extends React.Component {
                             console.log('something went wrong');
                         }
                         this.setAction();
-                    }}
-                />
-
-                <SweetAlert
-                    show={!!this.state.error}
-                    title={`Error`}
-                    text={this.state.error}
-                    type="error"
-                    confirmButtonText="Ok"
-                    cancelButtonText="No"
-                    onConfirm={() => {
-                        this.setError("");
                     }}
                 />
 

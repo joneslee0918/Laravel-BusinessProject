@@ -21,8 +21,7 @@ class Twitter extends React.Component {
     };
 
     state = {
-        action: this.defaultAction,
-        error: ""
+        action: this.defaultAction
     }
 
     setAction = (action = this.defaultAction) => {
@@ -35,17 +34,9 @@ class Twitter extends React.Component {
         console.log(response);
     };
 
-    setError = (error) => {
-        this.setState(() => ({
-            error
-        }));
-    };
-
     onSuccess = (response) => {
         response.json().then(body => {
-            this.props.startAddTwitterChannel(body.oauth_token, body.oauth_token_secret).catch(error => {
-                this.setError("This Twitter profile is already associated with another Uniclix account.");
-            });
+            this.props.startAddTwitterChannel(body.oauth_token, body.oauth_token_secret);
         });
     };
 
@@ -82,18 +73,6 @@ class Twitter extends React.Component {
                             console.log('something went wrong');
                         }
                         this.setAction();
-                    }}
-                />
-
-                <SweetAlert
-                    show={!!this.state.error}
-                    title={`Error`}
-                    text={this.state.error}
-                    type="error"
-                    confirmButtonText="Ok"
-                    cancelButtonText="No"
-                    onConfirm={() => {
-                        this.setError("");
                     }}
                 />
 

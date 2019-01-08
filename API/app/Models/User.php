@@ -40,13 +40,11 @@ class User extends Authenticatable
         if($channels = $this->channels()->get()){
             
             return collect($channels)->map(function($channel){
-                    
                     $channel->details = @$channel->details;
 
                     if($channel->details){
-                        $avatar = @$channel->details->getAvatar();
                         $channel->details->payload = @unserialize($channel->details->payload);
-                        $channel->avatar = @$avatar ? @$avatar : @$channel->details->payload->avatar;
+                        $channel->avatar = @$channel->details->payload->avatar;
                         $channel->name = @$channel->details->payload->name;
                         $channel->username = @$channel->details->payload->nickname;
                     }

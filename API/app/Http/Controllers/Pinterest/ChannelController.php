@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use DirkGroenen\Pinterest\Pinterest;
 use App\Http\Controllers\Controller;
-use App\Models\Pinterest\Channel;
 
 class ChannelController extends Controller
 {
@@ -34,7 +33,7 @@ class ChannelController extends Controller
             $token = $credentials->token;
 
             $user = auth()->user();
-            $existingChannel = Channel::where("username", $credentials->nickname)->first();
+            $existingChannel = $user->pinterestChannels()->where("username", $credentials->nickname)->first();
     
             if(!$existingChannel){
                 $channel = $user->channels()->create(["type" => "pinterest"]);
@@ -50,16 +49,12 @@ class ChannelController extends Controller
                 $pinterestChannel->select();
     
             }else{
-                if($existingChannel->user_id == $user->id){
-                    $global = $existingChannel->global;
-                    $global->active = 1;
-                    $global->save();
-                    $pinterestChannel = $existingChannel;
-                    $pinterestChannel->access_token = $token;
-                    $pinterestChannel->save();
-                }else{
-                    return response()->json(['error' => 'Channel already exists with some other account'], 400);
-                }
+                $global = $existingChannel->global;
+                $global->active = 1;
+                $global->save();
+                $pinterestChannel = $existingChannel;
+                $pinterestChannel->access_token = $token;
+                $pinterestChannel->save();
             }
 
             return $user->formattedChannels();

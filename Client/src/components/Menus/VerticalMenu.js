@@ -2,6 +2,7 @@ import React from 'react';
 import {NavLink, Link} from "react-router-dom";
 
 const VerticalMenu = ({ menuItems, channels, selectedChannel, selectChannel }) => {
+    console.log(channels);
     return (
         <div>
             <aside className="vertical-menu gradient-background-teal-blue">
@@ -54,7 +55,7 @@ const ProfileSelectionItem = ({ channel, selectChannel }) => (
         <a href="#" className="block-urls" onClick={(e) => { selectChannel(channel.id) }}>
             <div className="profile-info pull-right">
                 <span className="pull-left profile-img-container">
-                    <img onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} />
+                    <img src={channel.avatar} />
                     <i className={`fa fa-${channel.type} ${channel.type}_bg smallIcon`}></i>
                 </span>
                 <div className="pull-left">

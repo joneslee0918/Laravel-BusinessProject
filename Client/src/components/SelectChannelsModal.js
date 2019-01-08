@@ -64,7 +64,7 @@ class SelectChannelsModal extends React.Component{
                                 <label key={channel.id} className="channel-item selection-container">
                                     <input type="radio" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="twitter_channel" />
                                     <span className="checkmark round"></span>
-                                    <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
+                                    <img className="avatar-box" src={channel.avatar} /> {channel.name}
                                 </label>
                         )
                     )}
@@ -81,7 +81,7 @@ class SelectChannelsModal extends React.Component{
                                 <label key={channel.id} className="channel-item selection-container">
                                     <input type="checkbox" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="facebook_channel" />
                                     <span className="checkmark"></span>
-                                    <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
+                                    <img className="avatar-box" src={channel.avatar} /> {channel.name}
                                 </label>
                         )
                     )}
@@ -98,7 +98,7 @@ class SelectChannelsModal extends React.Component{
                                 <label key={channel.id} className="channel-item selection-container">
                                     <input type="checkbox" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="linkedin_channel" />
                                     <span className="checkmark"></span>
-                                    <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
+                                    <img className="avatar-box" src={channel.avatar} /> {channel.name}
                                 </label>
                         )
                     )}
@@ -115,7 +115,7 @@ class SelectChannelsModal extends React.Component{
                                 <label key={channel.id} className="channel-item selection-container">
                                     <input type="checkbox" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="pinterest_channel" />
                                     <span className="checkmark"></span>
-                                    <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
+                                    <img className="avatar-box" src={channel.avatar} /> {channel.name}
                                 </label>
                         )
                     )}

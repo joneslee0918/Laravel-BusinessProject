@@ -5,7 +5,6 @@ namespace App\Traits\Linkedin;
 use Carbon\Carbon;
 use Laravel\Socialite\Facades\Socialite;
 use \Artesaos\LinkedIn\Facades\LinkedIn;
-use Illuminate\Support\Facades\Cache;
 
 trait LinkedinTrait
 {
@@ -98,25 +97,6 @@ trait LinkedinTrait
 
 
             throw $e;
-        }
-    }
-
-    public function getAvatar(){
-
-        try{
-            $key = $this->id . "-linkedinAvatar";
-            $minutes = 10;
-            return Cache::remember($key, $minutes, function () {
-                $profile = Socialite::driver("linkedin")->userFromToken($this->access_token);
-
-                if($profile){
-                    return $profile->avatar;
-                }
-
-                return public_path()."/images/dummy_profile.png";
-            });
-        }catch(\Exception $e){
-            return false;
         }
     }
 }

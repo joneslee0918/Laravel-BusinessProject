@@ -312,7 +312,7 @@ class Compose extends React.Component{
                                                 this.state.type !== "edit" &&
                                                 <div className="remove-overlay fa fa-close" onClick={() => this.onChannelSelectionChange(channel)}></div>
                                             }
-                                            <img onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar}/>
+                                            <img src={channel.avatar}/>
                                             <i className={`fa fa-${channel.type} ${channel.type}_bg smallIcon`}></i>
                                         </li>
                                     ))}

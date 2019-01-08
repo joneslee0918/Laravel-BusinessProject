@@ -23,9 +23,6 @@ export const startSetChannels = () => {
                     localStorage.setItem("channels", JSON.stringify(response));
                     dispatch(setChannelsLoading(false));
                     return response;
-                }).catch(error => {
-                    dispatch(setChannelsLoading(false));
-                    Promise.reject(error);
                 });
     };
 };
@@ -39,9 +36,6 @@ export const startAddTwitterChannel = (accessToken, accessTokenSecret) => {
                     localStorage.setItem("channels", JSON.stringify(response));
                     dispatch(setChannelsLoading(false));
                     return response;
-                }).catch(error => {
-                    dispatch(setChannelsLoading(false));
-                    return Promise.reject(error);
                 });
     };
 }
@@ -55,9 +49,6 @@ export const startAddFacebookChannel = (accessToken) => {
                     localStorage.setItem("channels", JSON.stringify(response));
                     dispatch(setChannelsLoading(false));
                     return response;
-                }).catch(error => {
-                    dispatch(setChannelsLoading(false));
-                    return Promise.reject(error);
                 });
     };
 }
@@ -71,9 +62,6 @@ export const startAddLinkedinChannel = (accessToken) => {
                     localStorage.setItem("channels", JSON.stringify(response));
                     dispatch(setChannelsLoading(false));
                     return response;
-                }).catch(error => {
-                    dispatch(setChannelsLoading(false));
-                    return Promise.reject(error);
                 });
     };
 }
@@ -87,9 +75,6 @@ export const startAddPinterestChannel = (accessToken) => {
                     localStorage.setItem("channels", JSON.stringify(response));
                     dispatch(setChannelsLoading(false));
                     return response;
-                }).catch(error => {
-                    dispatch(setChannelsLoading(false));
-                    return Promise.reject(error);
                 });
     };
 }
@@ -103,9 +88,6 @@ export const setGlobalChannel = (id) => {
                     localStorage.setItem("channels", JSON.stringify(response));
                     dispatch(setChannelsLoading(false));
                     return response;
-                }).catch(error => {
-                    dispatch(setChannelsLoading(false));
-                    return Promise.reject(error);
                 });
     }
 }
@@ -119,9 +101,6 @@ export const setTwitterChannel = (id) => {
                     localStorage.setItem("channels", JSON.stringify(response));
                     dispatch(setChannelsLoading(false));
                     return response;
-                }).catch(error => {
-                    dispatch(setChannelsLoading(false));
-                    return Promise.reject(error);
                 });
     }
 }
