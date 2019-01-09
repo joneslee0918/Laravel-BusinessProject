@@ -97,6 +97,10 @@ input {
     object-fit: contain;
 }
 
+.green-txt{
+    color: green !important;
+}
+
 .box-container{
     width: 300px;
     padding: 25px 50px;
@@ -105,7 +109,11 @@ input {
     text-align: center;
 }
 
-.box-container > button{
+.account-info p{
+    max-width:250px !important;
+}
+
+.box-container > button, .social-login > button{
     background: #00aced;
     border: none;
     padding: 10px 20px;

@@ -5,6 +5,7 @@ namespace App\Traits\Linkedin;
 use Carbon\Carbon;
 use Laravel\Socialite\Facades\Socialite;
 use \Artesaos\LinkedIn\Facades\LinkedIn;
+use Illuminate\Support\Facades\Cache;
 
 trait LinkedinTrait
 {
@@ -78,6 +79,8 @@ trait LinkedinTrait
                 if($result["status"] != 200){
                     $scheduledPost->posted = 0;
                     $scheduledPost->status = -1;
+
+                    throw new \Exception('Something is wrong with the token');
                 }
             }
 
@@ -97,6 +100,26 @@ trait LinkedinTrait
 
 
             throw $e;
+        }
+    }
+
+    public function getAvatar(){
+
+        try{
+            $key = $this->id . "-linkedinAvatar";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () {
+                $profile = Socialite::driver("linkedin")->userFromToken($this->access_token);
+
+                if($profile){
+                    return $profile->avatar;
+                }
+
+                return public_path()."/images/dummy_profile.png";
+            });
+        }catch(\Exception $e){
+            getErrorResponse($e, $this->global);
+            return false;
         }
     }
 }

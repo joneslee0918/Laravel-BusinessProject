@@ -7,8 +7,8 @@ import "normalize.css/normalize.css";
 import "./styles/styles.scss";
 import { login, logout } from "./actions/auth";
 import setAuthorizationHeader from "./utils/setAuthorizationHeader";
-import { setProfile } from "./actions/profile";
-import { setChannels } from "./actions/channels";
+import { setProfile, startSetProfile } from "./actions/profile";
+import { setChannels, startSetChannels } from "./actions/channels";
 
 const store = configStore();
 
@@ -39,7 +39,7 @@ const setAuthentication = () => {
     store.dispatch(login(token));
     setAuthorizationHeader(token);
 
-    if(token && token !== "undefined"){
+    if(token && token !== "undefined" && typeof(token) !== "undefined"){
         let channels = localStorage.getItem("channels");
         channels = channels ? JSON.parse(channels) : [];
 
@@ -52,8 +52,15 @@ const setAuthentication = () => {
             setAuthorizationHeader(undefined);
         }
 
-        store.dispatch(setProfile(profile));
-        store.dispatch(setChannels(channels));
+        new Promise(function(resolve, reject) {
+            store.dispatch(setProfile(profile));
+            store.dispatch(setChannels(channels));
+
+            return resolve(true);
+        }).then(() => {
+            store.dispatch(startSetProfile());
+            store.dispatch(startSetChannels());
+        });
     }
 
     renderApp();

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use DirkGroenen\Pinterest\Pinterest;
 use App\Http\Controllers\Controller;
+use App\Models\Pinterest\Channel;
 
 class ChannelController extends Controller
 {
@@ -33,7 +34,7 @@ class ChannelController extends Controller
             $token = $credentials->token;
 
             $user = auth()->user();
-            $existingChannel = $user->pinterestChannels()->where("username", $credentials->nickname)->first();
+            $existingChannel = Channel::where("username", $credentials->nickname)->first();
     
             if(!$existingChannel){
                 $channel = $user->channels()->create(["type" => "pinterest"]);
@@ -49,12 +50,16 @@ class ChannelController extends Controller
                 $pinterestChannel->select();
     
             }else{
-                $global = $existingChannel->global;
-                $global->active = 1;
-                $global->save();
-                $pinterestChannel = $existingChannel;
-                $pinterestChannel->access_token = $token;
-                $pinterestChannel->save();
+                if($existingChannel->user_id == $user->id){
+                    $global = $existingChannel->global;
+                    $global->active = 1;
+                    $global->save();
+                    $pinterestChannel = $existingChannel;
+                    $pinterestChannel->access_token = $token;
+                    $pinterestChannel->save();
+                }else{
+                    return response()->json(['error' => 'Channel already exists with some other account'], 400);
+                }
             }
 
             return $user->formattedChannels();
@@ -64,14 +69,19 @@ class ChannelController extends Controller
     }
 
     public function getBoards(Request $request)
-    {
-        $user = auth()->user();
-        $channel = $user->channels()->find($request->input("id"));
+    {   
+        try{
+            $user = auth()->user();
+            $channel = $user->channels()->find($request->input("id"));
 
-        if(!$channel){
-            return response()->json(["error" => "Channel not found."], 404);
+            if(!$channel){
+                return response()->json(["error" => "Channel not found."], 404);
+            }
+
+            return $channel->details->getBoards(); 
+        }catch(\Exception $e){
+            return getErrorResponse($e, $channel);
         }
 
-        return $channel->details->getBoards();
     }
 }

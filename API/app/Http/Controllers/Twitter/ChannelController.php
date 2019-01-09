@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Twitter;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Controller;
+use App\Models\Twitter\Channel;
 
 class ChannelController extends Controller
 {
@@ -24,7 +25,7 @@ class ChannelController extends Controller
             ];
 
             $user = auth()->user();
-            $existingChannel = $user->twitterChannels()->where("username", $credentials->nickname)->first();
+            $existingChannel = Channel::where("username", $credentials->nickname)->first();
     
             if(!$existingChannel){
                 $channel = $user->channels()->create(["type" => "twitter"]);
@@ -43,12 +44,18 @@ class ChannelController extends Controller
                 multiRequest(route("sync.follower.ids"), [$twitterChannel], ["sleep" => 0]);
                 multiRequest(route("sync.following.ids"), [$twitterChannel], ["sleep" => 0]);
             }else{
-                $global = $existingChannel->global;
-                $global->active = 1;
-                $global->save();
-                $twitterChannel = $existingChannel;
-                $twitterChannel->access_token = json_encode($token);
-                $twitterChannel->save();
+
+                if($existingChannel->user_id == $user->id){
+                    $global = $existingChannel->global;
+                    $global->active = 1;
+                    $global->save();
+                    $twitterChannel = $existingChannel;
+                    $twitterChannel->access_token = json_encode($token);
+                    $twitterChannel->save();
+                }else{
+                    return response()->json(['error' => 'Channel already exists with some other account'], 400);
+                }
+
             }
 
             return $user->formattedChannels();
