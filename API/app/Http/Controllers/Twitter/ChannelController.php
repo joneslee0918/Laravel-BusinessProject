@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Twitter;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Controller;
-use App\Modal\Twitter\Channel;
+use App\Models\Twitter\Channel;
 
 class ChannelController extends Controller
 {

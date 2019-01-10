@@ -1,12 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {getBoards} from '../requests/pinterest/channels';
+import {startSetChannels} from "../actions/channels";
 import Loader from './Loader';
 
 class SelectPinterestBoards extends React.Component{
 
     state = {
         boards: [],
-        loading: false
+        loading: false,
+        error: false,
     }
 
     componentDidMount(){
@@ -24,8 +27,14 @@ class SelectPinterestBoards extends React.Component{
                         }));
                     }
                 }).catch((error) => {
+                    let errorMessage = "Something went wrong";
+                    if(error.response.status === 401){
+                        errorMessage = error.response.data.message;
+                        window.location.reload();
+                    }
                     this.setState(() => ({
-                        loading: false
+                        loading: false,
+                        error: errorMessage
                     }));
                 });
             }else{
@@ -84,13 +93,20 @@ class SelectPinterestBoards extends React.Component{
                 </div>
         
                 <div className="modal-footer">
-                    <div onClick={toggle} className="publish-btn-group gradient-background-teal-blue link-cursor pull-right">
-                        <button className="publish-btn naked-button">Done</button>
-                    </div>
+                    {!this.state.loading && 
+                        <div onClick={toggle} className="publish-btn-group gradient-background-teal-blue link-cursor pull-right">
+                            <button className="publish-btn naked-button">Done</button>
+                        </div>
+                    }
+
                 </div>
             </div>
         );
     }
 }
 
-export default SelectPinterestBoards;
+const mapDispatchToProps = (dispatch) => ({
+    startSetChannels: () => dispatch(startSetChannels())
+});
+
+export default connect(undefined, mapDispatchToProps)(SelectPinterestBoards);

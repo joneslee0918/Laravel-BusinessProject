@@ -25,7 +25,7 @@ export const startSetChannels = () => {
                     return response;
                 }).catch(error => {
                     dispatch(setChannelsLoading(false));
-                    Promise.reject(error);
+                    return Promise.reject(error);
                 });
     };
 };

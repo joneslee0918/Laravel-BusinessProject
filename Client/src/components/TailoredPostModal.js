@@ -224,9 +224,14 @@ class TailoredPostModal extends React.Component{
                 this.props.toggleTailoredPostModal({});
             });
         }).catch((error) => {
+            let errorMessage = "Something went wrong";
+            if(error.response.status === 401){
+                errorMessage = error.response.data.message;
+                window.location.reload();
+            }
             this.setState(() => ({
                 loading: false,
-                error: true
+                error: errorMessage
             }));
         });
     };

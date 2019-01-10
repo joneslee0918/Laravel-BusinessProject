@@ -84,7 +84,7 @@ trait FacebookTrait
     public function getAvatar(){
         try{
             $key = $this->id . "-facebookAvatar";
-            $minutes = 10;
+            $minutes = 1;
             return Cache::remember($key, $minutes, function () {
                 $avatar = "";
                 if($this->account_type == "profile"){
@@ -100,6 +100,7 @@ trait FacebookTrait
                 return public_path()."/images/dummy_profile.png";
             });
         }catch(\Exception $e){
+            getErrorResponse($e, $this->global);
             return false;
         }
     }

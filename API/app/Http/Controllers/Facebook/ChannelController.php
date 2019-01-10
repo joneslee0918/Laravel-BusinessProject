@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 use Carbon\Carbon;
 use App\Models\Facebook\Channel;
+use App\Models\Channel as GlobalChannel;
 
 class ChannelController extends Controller
 {
@@ -120,8 +121,11 @@ class ChannelController extends Controller
 
                 }else{
                     $existingChannel->access_token = $account["token"];
-                    $existingChannel->global()->select();
                     $existingChannel->save();
+                    $global = $existingChannel->global;
+                    $global->active = 1;
+                    $global->selected = 1;
+                    $global->save();
                 }
             }
     

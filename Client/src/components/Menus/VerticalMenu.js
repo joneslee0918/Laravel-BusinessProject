@@ -22,7 +22,7 @@ const ProfileInfo = ({ selectedChannel }) => (
     <div className="user-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div className="profile-info pull-right">
             <span className="pull-left profile-img-container">
-                <img src={selectedChannel.avatar} />
+                <img onError={(e) => e.target.src='/images/dummy_profile.png'} src={selectedChannel.avatar} />
                 <i className={`fa fa-${selectedChannel.type} ${selectedChannel.type}_bg smallIcon`}></i>
             </span>
             <div className="pull-left">
