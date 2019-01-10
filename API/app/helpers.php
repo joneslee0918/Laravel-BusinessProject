@@ -35,26 +35,16 @@ function formatBigNums($input){
 
 function getErrorResponse($e, $channel = false){
     $error = $e->getMessage();
-    if(str_contains($error, "log in") 
-    || str_contains($error, "token") 
-    || str_contains($error, "session") 
-    || str_contains($error, "denied") 
-    || str_contains($error, "permission")
-    || str_contains($error, "Authorization")
-    || str_contains($error, "invalid")
-    || str_contains($error, "Authentication")){
+    if(str_contains($error, "log in") || str_contains($error, "expired token") || str_contains($error, "session") || str_contains($error, "denied")){
 
         if($channel){
             $channel->active = 0;
-            $channel->select();
             $channel->save();
         }
         
-        $username = $channel->details->name;
-        $type = $channel->type;
-        return response()->json(['error' => $error, 'message' => "Your $type account \"$username\" needs to be reconnected."], 401);
+        return response()->json(['error' => $error], 401);
     }
-    return response()->json(['message' => $e->getMessage(), 'error' => $e->getTrace()], 400);
+    return response()->json(['error' => $e->getTrace()], 400);
 }
 
 function exchangeFBToken($accessToken)

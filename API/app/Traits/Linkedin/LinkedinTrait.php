@@ -79,8 +79,6 @@ trait LinkedinTrait
                 if($result["status"] != 200){
                     $scheduledPost->posted = 0;
                     $scheduledPost->status = -1;
-
-                    throw new \Exception('Something is wrong with the token');
                 }
             }
 
@@ -107,7 +105,7 @@ trait LinkedinTrait
 
         try{
             $key = $this->id . "-linkedinAvatar";
-            $minutes = 1;
+            $minutes = 10;
             return Cache::remember($key, $minutes, function () {
                 $profile = Socialite::driver("linkedin")->userFromToken($this->access_token);
 
@@ -118,7 +116,6 @@ trait LinkedinTrait
                 return public_path()."/images/dummy_profile.png";
             });
         }catch(\Exception $e){
-            getErrorResponse($e, $this->global);
             return false;
         }
     }

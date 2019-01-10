@@ -57,7 +57,7 @@ class Facebook extends React.Component {
                             accountsModal: true
                         }));
                     }
-                });
+                })
             }).catch(error => {
                 this.setError("You are logged in with a facebook account that is already connected with another Uniclix account.");
             });

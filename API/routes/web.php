@@ -36,8 +36,8 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::where("parent_id", 8)->update(["access_token" => 8]);
-    //$post = $channel->getNonProfileAvatar();
+    $channel = \App\Models\Facebook\Channel::latest()->first();
+    $post = $channel->getNonProfileAvatar();
     //return $post;
     // $pinterest = new \DirkGroenen\Pinterest\Pinterest(config("services.pinterest.client_id"), config("services.pinterest.client_secret"));
     // $pinterest->auth->setOAuthToken("Aj2PnZvkTp-WdatfiA5hRFh85nJyFW_p8SVgt8NFdeEVOmBVTwZ8ADAAAY5jRXZvBckAfusAAAAA");
@@ -45,7 +45,7 @@ Route::get('/test', function(){
    // return $channel->getAvatar("Aj2PnZvkTp-WdatfiA5hRFh85nJyFW_p8SVgt8NFdeEVOmBVTwZ8ADAAAY5jRXZvBckAfusAAAAA");
     //  dd($channel);
     // $scheduledPost = $channel->global->scheduledPosts()->first();
-    die("Done");
+
     dd($post);
     return $channel->publishScheduledPost($scheduledPost);
 

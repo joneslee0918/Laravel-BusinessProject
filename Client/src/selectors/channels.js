@@ -50,11 +50,3 @@ export const publishChannels = (channels = []) => {
         }
     });
 };
-
-export const findAccounts = (accounts = [], {prop}) => {
-    if(!accounts.length) return accounts;
-
-    return accounts.filter((account) => {
-        return account.id == prop;
-    });
-};

@@ -56,7 +56,6 @@ trait PinterestTrait
                 return public_path()."/images/dummy_profile.png";
             });
         }catch(\Exception $e){
-            getErrorResponse($e, $this->global);
             return false;
         }
     }

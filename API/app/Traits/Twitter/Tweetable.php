@@ -56,7 +56,7 @@ trait Tweetable
     {
         try {
             $key = $this->id . "-twitterAvatar";
-            $minutes = 1;
+            $minutes = 10;
             return Cache::remember($key, $minutes, function () {
                 $data = $this->getData();
 
@@ -67,7 +67,6 @@ trait Tweetable
                 return public_path()."/images/dummy_profile.png";
             });
         } catch (\Exception $e) {
-            getErrorResponse($e, $this->global);
             return false;
         }
     }

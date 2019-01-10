@@ -9,7 +9,6 @@ import boardsSelector from '../selectors/boards';
 import {publish} from '../requests/channels';
 import {setPost, setPostedArticle} from "../actions/posts";
 import {LoaderWithOverlay} from "./Loader";
-import {startSetChannels} from "../actions/channels";
 import SelectChannelsModal from "./SelectChannelsModal";
 import SelectPinterestBoards from './SelectPinterestBoards';
 import PublishButton from './PublishButton';
@@ -260,14 +259,9 @@ class Compose extends React.Component{
                 }
             });
         }).catch((error) => {
-            let errorMessage = "Something went wrong";
-            if(error.response.status === 401){
-                errorMessage = error.response.data.message;
-                window.location.reload();
-            }
             this.setState(() => ({
                 loading: false,
-                error: errorMessage
+                error: true
             }));
         });
     }
@@ -343,7 +337,7 @@ class Compose extends React.Component{
 
                             <p className={`letter-count ${this.state.twitterRestricted && this.state.letterCount > 280 ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
                         </div>
-                        {!!this.state.error && <div className='alert alert-danger'>{this.state.error}</div>}
+                        {this.state.error && <div className='alert alert-danger'>Something went wrong.</div>}
                     </div>
                     }
 
@@ -366,8 +360,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     setPost: (post) => dispatch(setPost(post)),
     setPostedArticle: (article) => dispatch(setPostedArticle(article)),
-    setComposerModal: (modal) => dispatch(setComposerModal(modal)),
-    startSetChannels: () => dispatch(startSetChannels())
+    setComposerModal: (modal) => dispatch(setComposerModal(modal))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Compose);

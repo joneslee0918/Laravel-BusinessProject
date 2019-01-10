@@ -45,11 +45,11 @@ class PublishController extends Controller
             $images = $post['images'];
             $publishType = $post['publishType'];
             $scheduledTime = Carbon::parse($scheduled['publishUTCDateTime'])->format("Y-m-d H:i:s");
-            $currentChannel = $this->selectedChannel;
 
             $uploadedImages = $this->uploadImages($images);
 
             foreach($channels as $channel){
+
                 $boards = false;
 
                 if($channel["type"] == "pinterest" && !isset($channel["selectedBoards"])){
@@ -61,7 +61,6 @@ class PublishController extends Controller
                 }
 
                 $channel = Channel::find($channel['id']);
-                $currentChannel = $channel;
                 $networkContent = strtolower($channel->type)."Content";
                 $networkPictures = strtolower($channel->type)."Pictures";
                 $publishTime = Carbon::now();
@@ -127,7 +126,7 @@ class PublishController extends Controller
                 }
             }  
         }catch(\Exception $e){
-            return getErrorResponse($e, $currentChannel);
+            return getErrorResponse($e, $this->selectedChannel);
         }
 
         return response()->json(['message' => 'Your post was successfuly stored!']);
@@ -186,6 +185,7 @@ class PublishController extends Controller
     {
 
         $scheduledPost = unserialize($request->input('item'));
+        //$scheduledPost = \App\Models\ScheduledPost::first();
         if(!$scheduledPost) return;
         
         $channel = Channel::find($scheduledPost->channel_id);
@@ -194,7 +194,6 @@ class PublishController extends Controller
             try{
                $channel->details->publishScheduledPost($scheduledPost); 
             }catch(\Exception $e){
-                getErrorResponse($e, $channel);
                 throw $e;
             }
         }

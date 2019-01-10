@@ -69,19 +69,14 @@ class ChannelController extends Controller
     }
 
     public function getBoards(Request $request)
-    {   
-        try{
-            $user = auth()->user();
-            $channel = $user->channels()->find($request->input("id"));
+    {
+        $user = auth()->user();
+        $channel = $user->channels()->find($request->input("id"));
 
-            if(!$channel){
-                return response()->json(["error" => "Channel not found."], 404);
-            }
-
-            return $channel->details->getBoards(); 
-        }catch(\Exception $e){
-            return getErrorResponse($e, $channel);
+        if(!$channel){
+            return response()->json(["error" => "Channel not found."], 404);
         }
 
+        return $channel->details->getBoards();
     }
 }
