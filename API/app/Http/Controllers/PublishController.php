@@ -113,6 +113,14 @@ class PublishController extends Controller
                         $publishTime = $bestTime;
                     }
 
+                }else if($publishType == "now"){
+
+                    if(!$bestTime){
+                        $publishTime = Carbon::now();
+                        $bestTime = $publishTime;
+                    }else{
+                        $publishTime = $bestTime;
+                    }
                 }
 
                 $publishOriginalTime = Carbon::parse($publishTime)->setTimezone($scheduled['publishTimezone']);
@@ -122,7 +130,8 @@ class PublishController extends Controller
                     'scheduled_at' => $publishTime,
                     'scheduled_at_original' => $publishOriginalTime,
                     'payload' => serialize($payload),
-                    'posted' => $publishType == 'now' ? 1 : 0,
+                    // 'posted' => $publishType == 'now' ? 1 : 0,
+                    'posted' => 0,
                     'article_id' => $post['articleId'] ? $post['articleId'] : null
                 ];
 
@@ -132,9 +141,9 @@ class PublishController extends Controller
                     $scheduledPost = $channel->scheduledPosts()->create($postData);
                 }
 
-                if($publishType == 'now'){
-                    $channel->details->publishScheduledPost($scheduledPost);
-                }
+                // if($publishType == 'now'){
+                //     $channel->details->publishScheduledPost($scheduledPost);
+                // }
             }  
         }catch(\Exception $e){
             return getErrorResponse($e, $currentChannel);
