@@ -24,12 +24,12 @@ class ScheduledController extends Controller
         });
     }
 
-    public function scheduledPosts()
+    public function scheduledPosts(Request $request)
     {
         $posts = $this->selectedChannel->scheduledPosts()
         ->where("posted", 0)
         ->orderBy('scheduled_at', 'asc')
-        ->get();
+        ->paginate(20);
 
         foreach($posts as $post){
             $post->payload = unserialize($post->payload);
@@ -42,12 +42,12 @@ class ScheduledController extends Controller
         return response()->json(["items" => $posts->values()]);
     }
 
-    public function pastScheduled()
+    public function pastScheduled(Request $request)
     {
         $posts = $this->selectedChannel->scheduledPosts()
         ->where("posted", 1)
         ->orderBy('scheduled_at', 'desc')
-        ->get();
+        ->paginate(20);
 
         foreach($posts as $post){
             $post->payload = unserialize($post->payload);

@@ -49,6 +49,8 @@ class PublishController extends Controller
 
             $uploadedImages = $this->uploadImages($images);
 
+            $bestTime = false;
+
             foreach($channels as $channel){
                 $boards = false;
 
@@ -90,19 +92,27 @@ class PublishController extends Controller
 
                 }else if($publishType == "best"){
 
-                    //TODO: improve best time accuracy
-                    $latestScheduledPost = $channel->scheduledPosts()
-                    ->where("scheduled_at", ">", Carbon::now())
-                    ->orderBy("scheduled_at", "desc")->first();
+                    if(!$bestTime){
 
-                    if($latestScheduledPost){
+                        $latestScheduledPost = $channel->scheduledPosts()
+                        ->where("scheduled_at", ">", Carbon::now())
+                        ->orderBy("scheduled_at", "desc")->first();
 
-                        $publishTime = Carbon::parse($latestScheduledPost->scheduled_at)->addHours(mt_rand(1,12))->addMinutes(mt_rand(0, 59));
+                        if($latestScheduledPost){
+
+                            $publishTime = Carbon::parse($latestScheduledPost->scheduled_at)->addHours(mt_rand(1,12))->addMinutes(mt_rand(0, 59));
+
+                        }else{
+
+                            $publishTime = Carbon::now()->addHours(mt_rand(1,12))->addMinutes(mt_rand(0, 59));
+                        }
+
+                        $bestTime = $publishTime;
 
                     }else{
-
-                        $publishTime = Carbon::now()->addHours(mt_rand(1,12))->addMinutes(mt_rand(0, 59));
+                        $publishTime = $bestTime;
                     }
+
                 }
 
                 $publishOriginalTime = Carbon::parse($publishTime)->setTimezone($scheduled['publishTimezone']);

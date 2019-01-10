@@ -38,15 +38,15 @@ export const destroyPost = (postId) => {
     });
 };
 
-export const scheduledPosts = () => {
-    return axios.get(`${apiUrl}/scheduled/posts`)
+export const scheduledPosts = (page = 1) => {
+    return axios.get(`${apiUrl}/scheduled/posts?page=${page}`)
     .then((response) => {
         return response.data;
     });
 };
 
-export const pastScheduled = () => {
-    return axios.get(`${apiUrl}/scheduled/past`)
+export const pastScheduled = (page) => {
+    return axios.get(`${apiUrl}/scheduled/past?page=${page}`)
     .then((response) => {
         return response.data;
     });
