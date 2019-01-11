@@ -264,6 +264,49 @@ trait Tweetable
             throw $e;
         }
     }
+    
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    public function getTweets($params = [])
+    {
+        try {
+            $this->setAsCurrentUser();
+            return Twitter::getUserTimeline(['screen_name'=>$this->username, 'count'=>200]);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    public function getRetweets($params = [])
+    {
+        try {
+            $this->setAsCurrentUser();
+            return Twitter::getRtsTimeline(['screen_name'=>$this->username]);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    public function getLikes($params = [])
+    {
+        try {
+            $this->setAsCurrentUser();
+            return Twitter::getFavorites(['screen_name'=>$this->username]);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 
 
     /**
@@ -303,6 +346,19 @@ trait Tweetable
         try {
             $this->setAsCurrentUser();
             return Twitter::getGeo($id);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * 
+     */
+    public function tweetLookup($ids)
+    {
+        try {
+            $this->setAsCurrentUser();
+            return Twitter::getStatusesLookup($ids);
         } catch (\Exception $e) {
             throw $e;
         }
@@ -684,5 +740,65 @@ trait Tweetable
                 }
             }
         }
+    }
+
+    /**
+     * Synchronize tweets from API
+     * 
+     * @param int $sleep
+     * @param bool $logCursor
+     */
+    public function syncTweets()
+    {
+        $lookUpTweets = \DB::table('twitter_tweets')->where('channel_id',$this->id)->take(300)->pluck('tweet_id')->toArray();
+
+        $deletedIds = [];
+
+        foreach (array_chunk($lookUpTweets, 100) as $chunk) {
+            $results = $this->tweetLookup(["id" => $chunk]);
+            
+            if(!$results) continue;
+
+            $lookUpIds = collect($results)->pluck('id')->toArray();
+
+            $diffIds = array_diff($chunk, $lookUpIds);
+
+            $deletedIds = array_merge($deletedIds, $diffIds);
+        }        
+
+        if($deletedIds)
+        {
+            \DB::table('twitter_tweets')->whereIn('tweet_id',$deletedIds)->delete();
+            die();
+        }
+
+        $tweets = $this->getTweets();
+
+        if(!$tweets) return;
+
+        $ids = collect($tweets)->pluck('id');
+
+        $existingIds = \DB::table('twitter_tweets')->whereIn('tweet_id',$ids)->pluck('tweet_id');
+
+        $filterTweets = collect($tweets)->whereNotIn('id',$existingIds);
+
+        $data = [];
+
+        foreach($filterTweets as $tweet)
+        {
+            $data[] = [
+                'channel_id' => $this->id,
+                'tweet_id' => $tweet->id,
+                'original_created_at' => Carbon::parse($tweet->created_at)->toDateTimeString(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+        }
+
+        if($filterTweets)
+        {
+            \DB::table('twitter_tweets')->insert($data);
+        }
+        
     }
 }

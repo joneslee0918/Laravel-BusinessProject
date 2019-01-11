@@ -46,7 +46,7 @@ function getErrorResponse($e, $channel = false){
 
         if($channel){
             $channel->active = 0;
-            // $channel->select();
+            $channel->select();
             $channel->save();
         }
         
@@ -161,7 +161,6 @@ function multiRequest($url, $payload, $params = [])
             curl_close($request);
         }
     }
-    
     return $response;
 }
 

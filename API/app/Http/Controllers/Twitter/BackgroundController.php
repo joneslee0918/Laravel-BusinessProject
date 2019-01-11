@@ -24,7 +24,7 @@ class BackgroundController extends Controller
         try{
             $channel->syncFollowerIds($sleep);
         }catch(\Exception $e){
-            return getErrorResponse($e, $channel->global);
+            getErrorResponse($e, $channel->global);
         }
 
         $channel->stopProcess("syncTwitterFollowerIds");
@@ -46,9 +46,26 @@ class BackgroundController extends Controller
         try{
             $channel->syncFollowingIds($sleep);
         }catch(\Exception $e){
-            return getErrorResponse($e, $channel->global);
+            getErrorResponse($e, $channel->global);
         }
 
         $channel->stopProcess("syncTwitterFollowingIds");
+    }
+
+    public function syncTweets(Request $request)
+    {
+        if(!($item = $request->input('item'))) return;
+
+        $channel = unserialize($item);
+
+        $channel->startProcess("syncTweets");
+
+        try{
+            $channel->syncTweets();
+        }catch(\Exception $e){
+            getErrorResponse($e, $channel->global);
+        }
+
+        $channel->stopProcess("syncTweets");
     }
 }

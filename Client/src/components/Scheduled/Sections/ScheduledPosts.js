@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import BottomScrollListener from 'react-bottom-scroll-listener';
 import channelSelector from '../../../selectors/channels';
 import {scheduledPosts, destroyPost, postNow} from '../../../requests/channels';
 import PostList from '../../PostList';
-import Loader from '../../Loader';
 
 export class ScheduledPosts extends React.Component{
 
@@ -109,30 +107,6 @@ export class ScheduledPosts extends React.Component{
             });
     };
 
-    loadMore = () => {
-        this.setLoading(true);
-        let page = this.state.page + 1;
-        scheduledPosts(page)
-            .then((response) => {
-                this.setState((prevState) => ({
-                    posts: prevState.posts.concat(response.items),
-                    page,
-                    loading: false
-                }));
-            }).catch((error) => {
-                this.setLoading(false);
-
-                if(error.response.status === 401){
-                    
-                    if(this.props.selectedChannel.active){
-                       this.props.startSetChannels();
-                    }
-                }
-
-                return Promise.reject(error);
-            });
-    };
-
     render(){
         return(
             <div>
@@ -149,9 +123,6 @@ export class ScheduledPosts extends React.Component{
                     title="SCHEDULED POSTS"
                     type="scheduled-posts"
                 />
-
-                <BottomScrollListener onBottom={this.loadMore} />
-                {this.state.loading && <Loader />}
             </div>
             
         );

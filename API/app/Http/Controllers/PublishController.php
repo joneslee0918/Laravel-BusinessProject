@@ -49,8 +49,6 @@ class PublishController extends Controller
 
             $uploadedImages = $this->uploadImages($images);
 
-            $bestTime = false;
-
             foreach($channels as $channel){
                 $boards = false;
 
@@ -92,34 +90,18 @@ class PublishController extends Controller
 
                 }else if($publishType == "best"){
 
-                    if(!$bestTime){
+                    //TODO: improve best time accuracy
+                    $latestScheduledPost = $channel->scheduledPosts()
+                    ->where("scheduled_at", ">", Carbon::now())
+                    ->orderBy("scheduled_at", "desc")->first();
 
-                        $latestScheduledPost = $channel->scheduledPosts()
-                        ->where("scheduled_at", ">", Carbon::now())
-                        ->orderBy("scheduled_at", "desc")->first();
+                    if($latestScheduledPost){
 
-                        if($latestScheduledPost){
-
-                            $publishTime = Carbon::parse($latestScheduledPost->scheduled_at)->addHours(mt_rand(1,12))->addMinutes(mt_rand(0, 59));
-
-                        }else{
-
-                            $publishTime = Carbon::now()->addHours(mt_rand(1,12))->addMinutes(mt_rand(0, 59));
-                        }
-
-                        $bestTime = $publishTime;
+                        $publishTime = Carbon::parse($latestScheduledPost->scheduled_at)->addHours(mt_rand(1,12))->addMinutes(mt_rand(0, 59));
 
                     }else{
-                        $publishTime = $bestTime;
-                    }
 
-                }else if($publishType == "now"){
-
-                    if(!$bestTime){
-                        $publishTime = Carbon::now();
-                        $bestTime = $publishTime;
-                    }else{
-                        $publishTime = $bestTime;
+                        $publishTime = Carbon::now()->addHours(mt_rand(1,12))->addMinutes(mt_rand(0, 59));
                     }
                 }
 
@@ -130,8 +112,7 @@ class PublishController extends Controller
                     'scheduled_at' => $publishTime,
                     'scheduled_at_original' => $publishOriginalTime,
                     'payload' => serialize($payload),
-                    // 'posted' => $publishType == 'now' ? 1 : 0,
-                    'posted' => 0,
+                    'posted' => $publishType == 'now' ? 1 : 0,
                     'article_id' => $post['articleId'] ? $post['articleId'] : null
                 ];
 
@@ -141,9 +122,9 @@ class PublishController extends Controller
                     $scheduledPost = $channel->scheduledPosts()->create($postData);
                 }
 
-                // if($publishType == 'now'){
-                //     $channel->details->publishScheduledPost($scheduledPost);
-                // }
+                if($publishType == 'now'){
+                    $channel->details->publishScheduledPost($scheduledPost);
+                }
             }  
         }catch(\Exception $e){
             return getErrorResponse($e, $currentChannel);

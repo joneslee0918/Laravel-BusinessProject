@@ -34,12 +34,12 @@ const renderApp = () => {
 const setAuthentication = () => {
     let token = localStorage.getItem("token") || undefined;
 
-    token = token == "undefined" || typeof(token) === "undefined" ? undefined : token;
+    token = token == "undefined" ? undefined : token;
 
     store.dispatch(login(token));
     setAuthorizationHeader(token);
 
-    if(token && token !== "undefined"){
+    if(token && token !== "undefined" && typeof(token) !== "undefined"){
         let channels = localStorage.getItem("channels");
         channels = channels ? JSON.parse(channels) : [];
 
@@ -55,6 +55,7 @@ const setAuthentication = () => {
         new Promise(function(resolve, reject) {
             store.dispatch(setProfile(profile));
             store.dispatch(setChannels(channels));
+
             return resolve(true);
         }).then(() => {
             store.dispatch(startSetProfile());
