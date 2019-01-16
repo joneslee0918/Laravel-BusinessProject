@@ -152,6 +152,8 @@ class ActiveChecker extends React.Component{
                     onError={this.onFailure}
                     />
                 );
+             }else{
+                 return (<div></div>);
              }
         };
 

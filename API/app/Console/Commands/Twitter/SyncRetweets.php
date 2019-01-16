@@ -11,14 +11,14 @@ class SyncRetweets extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'sync:retweets';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Sync retweets of user tweets';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,11 @@ class SyncRetweets extends Command
      */
     public function handle()
     {
-        //
+        $channels = Channel::whereDoesntHave("processes", function($q){
+            $q->where('process_name', 'syncRetweets');
+        })->get();
+
+        $action = route('sync.retweets');
+        multiRequest($action, $channels);
     }
 }

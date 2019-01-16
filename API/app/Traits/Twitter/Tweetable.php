@@ -801,4 +801,125 @@ trait Tweetable
         }
         
     }
+
+    /**
+     * Synchronize rettweets from API
+     * 
+     * @param int $sleep
+     * @param bool $logCursor
+     */
+    public function syncRetweets()
+    {
+        $lookUpTweets = \DB::table('twitter_retweets')->where('channel_id',$this->id)->take(300)->pluck('tweet_id')->toArray();
+
+        $deletedIds = [];
+
+        foreach (array_chunk($lookUpTweets, 100) as $chunk) {
+            $results = $this->tweetLookup(["id" => $chunk]);
+            
+            if(!$results) continue;
+
+            $lookUpIds = collect($results)->pluck('id')->toArray();
+
+            $diffIds = array_diff($chunk, $lookUpIds);
+
+            $deletedIds = array_merge($deletedIds, $diffIds);
+        }        
+
+        if($deletedIds)
+        {
+            \DB::table('twitter_retweets')->whereIn('tweet_id',$deletedIds)->delete();
+            die();
+        }
+
+        $retweets = $this->getRetweets();
+
+        if(!$retweets) return;
+
+        $ids = collect($retweets)->pluck('id');
+
+        $existingIds = \DB::table('twitter_retweets')->whereIn('tweet_id',$ids)->pluck('tweet_id');
+
+        $filterTweets = collect($retweets)->whereNotIn('id',$existingIds);
+
+        $data = [];
+
+        foreach($filterTweets as $tweet)
+        {
+            $data[] = [
+                'channel_id' => $this->id,
+                'tweet_id' => $tweet->id,
+                'original_created_at' => Carbon::parse($tweet->created_at)->toDateTimeString(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+        }
+
+        if($filterTweets)
+        {
+            \DB::table('twitter_retweets')->insert($data);
+        }
+        
+    }
+
+    /**
+     * Synchronize rettweets from API
+     * 
+     * @param int $sleep
+     * @param bool $logCursor
+     */
+    public function syncLikes()
+    {
+        $lookUpTweets = \DB::table('twitter_likes')->where('channel_id',$this->id)->take(300)->pluck('tweet_id')->toArray();
+
+        $deletedIds = [];
+
+        foreach (array_chunk($lookUpTweets, 100) as $chunk) {
+            $results = $this->tweetLookup(["id" => $chunk]);
+            
+            if(!$results) continue;
+
+            $lookUpIds = collect($results)->where('favorited',true)->pluck('id')->toArray();
+
+            $diffIds = array_diff($chunk, $lookUpIds);
+
+            $deletedIds = array_merge($deletedIds, $diffIds);
+
+        }        
+
+        if($deletedIds)
+        {
+            \DB::table('twitter_likes')->whereIn('tweet_id',$deletedIds)->delete();
+            die();
+        }
+
+        $tweets = $this->getLikes();
+
+        if(!$tweets) return;
+
+        $ids = collect($tweets)->pluck('id');
+
+        $existingIds = \DB::table('twitter_likes')->whereIn('tweet_id',$ids)->pluck('tweet_id');
+
+        $filterTweets = collect($tweets)->whereNotIn('id',$existingIds);
+
+        $data = [];
+
+        foreach($filterTweets as $tweet)
+        {
+            $data[] = [
+                'channel_id' => $this->id,
+                'tweet_id' => $tweet->id,
+                'original_created_at' => Carbon::parse($tweet->created_at)->toDateTimeString(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+        }
+
+        if($filterTweets)
+        {
+            \DB::table('twitter_likes')->insert($data);
+        }
+        
+    }
 }

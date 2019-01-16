@@ -68,4 +68,38 @@ class BackgroundController extends Controller
 
         $channel->stopProcess("syncTweets");
     }
+
+    public function syncRetweets(Request $request)
+    {
+        if(!($item = $request->input('item'))) return;
+
+        $channel = unserialize($item);
+
+        $channel->startProcess("syncRetweets");
+
+        try{
+            $channel->syncRetweets();
+        }catch(\Exception $e){
+            getErrorResponse($e, $channel->global);
+        }
+
+        $channel->stopProcess("syncRetweets");
+    }
+
+    public function syncLikes(Request $request)
+    {
+        if(!($item = $request->input('item'))) return;
+
+        $channel = unserialize($item);
+
+        $channel->startProcess("syncLikes");
+
+        try{
+            $channel->syncLikes();
+        }catch(\Exception $e){
+            getErrorResponse($e, $channel->global);
+        }
+
+        $channel->stopProcess("syncLikes");
+    }
 }

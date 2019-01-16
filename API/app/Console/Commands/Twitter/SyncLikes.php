@@ -11,14 +11,14 @@ class SyncLikes extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'sync:likes';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Sync likes of user';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,11 @@ class SyncLikes extends Command
      */
     public function handle()
     {
-        //
+        $channels = Channel::whereDoesntHave("processes", function($q){
+            $q->where('process_name', 'syncLikes');
+        })->get();
+
+        $action = route('sync.likes');
+        multiRequest($action, $channels);
     }
 }
