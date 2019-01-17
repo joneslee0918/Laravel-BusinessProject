@@ -16,7 +16,12 @@ class Overview extends React.Component {
         const data = this.state.data;
         return (
             <div>
-                <h2>ANALYTICS OVERVIEW</h2>             
+                <h2>ANALYTICS OVERVIEW</h2>  
+                <ul className="analytics-filter">
+                    <li className="analytics-filter-li"><a>Today</a></li>
+                    <li className="analytics-filter-li"><a>Last 7 Days</a></li>
+                    <li className="analytics-filter-li"><a>Last 30 Days</a></li>
+                </ul>           
                 <TwitterAnalytics />
             </div>
         );

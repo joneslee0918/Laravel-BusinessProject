@@ -113,4 +113,19 @@ class Channel extends Model
         }
     }
 
+    public function getAnalytics($days=1)
+    {
+        $data = [];
+        $startDate = Carbon::now()->subDays(30);
+
+        if($this->created_at->diffInMinutes(Carbon::now()) < 15)
+        {
+            $startDate = Carbon::now()->addMinutes(15);
+        }
+
+        $followers = $this->followingIds()->whereNull('unfollowed_you_at')->whereBetween('created_at', [$startDate, Carbon::now()->addDays(1)])->get();
+
+        return $followers->count();
+    }
+
 }

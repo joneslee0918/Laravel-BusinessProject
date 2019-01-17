@@ -1,6 +1,47 @@
 import React from 'react';
+import { getAnalytics } from "../../requests/twitter/channels";
 
-class TwitterAnalytics extends React.Component {    
+class TwitterAnalytics extends React.Component {   
+    
+    constructor(props){
+        super(props);
+    }
+
+    state = {
+        data: false
+    }
+    
+    componentDidMount() {
+        
+        if(!this.props.channelsLoading){
+            this.fetchAnalytics();
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+    
+        if(this.props.selectedChannel !== prevProps.selectedChannel){
+            this.fetchAnalytics();
+        }
+    }
+
+    fetchAnalytics = () => {
+        getAnalytics()
+        .then((response) => {
+            this.setState(() => ({
+                data: response
+            }));
+        }).catch(error => {
+            if(error.response.status === 401){
+                    
+                if(this.props.selectedChannel.active){
+                   this.props.startSetChannels();
+                }
+            }
+            return Promise.reject(error);
+        });
+    };
+
 
     render(){
         return (
@@ -8,7 +49,11 @@ class TwitterAnalytics extends React.Component {
                 <div className="col-xs-12">
                     <div className="row border-bottom tw-img-followers">
                         <div className="col-md-6 col-xs-12 text-left">
-                            <img  src="https://pbs.twimg.com/profile_images/974287695269842944/wx7mGmVd_normal.jpg" />
+                            <div className="twitter-profile-img">
+                                <img  src="https://pbs.twimg.com/profile_images/974287695269842944/wx7mGmVd_normal.jpg" />
+                                <img className="platform-profile" src="/images/twitter.png"></img>
+                            </div>  
+                            <div>@spectatechall</div>                        
                         </div>
                         <div className="col-md-6 col-xs-12 text-right">
                             @twitterfollowers

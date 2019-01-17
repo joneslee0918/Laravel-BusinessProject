@@ -8,6 +8,13 @@ export const getDashboard = () => {
         });
 };
 
+export const getAnalytics = (days=1) => {
+    return axios.get(`${apiUrl}/twitter/analytics?days=${days}`)
+        .then((response) => {
+            return response.data;
+        });
+};
+
 
 export const selectChannel = (id) => {
     return axios.patch(`${apiUrl}/twitter/channels/select/${id}`)

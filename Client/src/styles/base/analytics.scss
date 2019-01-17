@@ -11,3 +11,26 @@
 .tw-img-followers {
     padding: 20px 0;
 }
+.twitter-profile-img{
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 50%;
+    float: left;
+}
+.platform-profile {
+    width: 14px;
+    position: absolute;
+    bottom: 0;
+    left: 45px;
+    z-index: 1;
+}
+.analytics-filter-li {
+    display: inline;
+    padding-right:20px;
+}
+.analytics-filter-li a{
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: underline;
+}
