@@ -15,6 +15,8 @@ class VerifyCsrfToken extends Middleware
         'sync/twitter/following/ids',
         'sync/twitter/follower/ids',
         'sync/twitter/tweets',
+        'sync/twitter/retweets',
+        'sync/twitter/likes',
         'twitter/follow',
         'twitter/unfollow',
         'admin/post/image/upload'

@@ -8,6 +8,7 @@ use App\Models\Channel as GlobalChannel;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Channel extends Model
 {
@@ -69,6 +70,21 @@ class Channel extends Model
         return $this->hasMany(FollowingId::class);
     }
 
+    public function tweets()
+    {
+        return $this->hasMany(Tweet::class);
+    }
+
+    public function retweets()
+    {
+        return $this->hasMany(Retweet::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
     public function cursor()
     {
         return $this->hasOne(Cursor::class);
@@ -115,17 +131,33 @@ class Channel extends Model
 
     public function getAnalytics($days=1)
     {
-        $data = [];
-        $startDate = Carbon::now()->subDays(30);
-
-        if($this->created_at->diffInMinutes(Carbon::now()) < 15)
-        {
-            $startDate = Carbon::now()->addMinutes(15);
+        try {
+            $key = $this->id . "-twitterAnalytics-$days";
+            $minutes = 15;
+            return Cache::remember($key, $minutes, function () use ($days) {
+                $data = [];
+                $startDate = Carbon::now();
+        
+                $followers = $this->followerIds()->whereNull('unfollowed_you_at')->whereBetween('created_at', [$startDate->subDays($days), Carbon::now()])->whereNotBetween('created_at', [$this->created_at , $this->created_at->addMinutes(5)])->get();
+                $unfollowers = $this->followerIds()->whereNotNull('unfollowed_you_at')->whereBetween('unfollowed_you_at', [$startDate->subDays($days), Carbon::now()])->get();
+                $tweets = $this->tweets()->whereBetween('original_created_at', [$startDate->subDays($days), Carbon::now()])->get();
+                $retweets = $this->retweets()->whereBetween('original_created_at', [$startDate->subDays($days), Carbon::now()])->get();
+                $likes = $this->likes()->whereBetween('original_created_at', [$startDate->subDays($days), Carbon::now()])->get();
+        
+                $data = [
+                    'followers' => $followers->count(),
+                    'unfollowers' => $unfollowers->count(),
+                    'tweets' => $tweets->count(),
+                    'retweets' => $retweets->count(),
+                    'likes' => $likes->count(),
+                    'profile' => $this->getData()
+                ];
+        
+                return $data;
+            });
+        } catch (\Exception $e) {
+            throw $e;
         }
-
-        $followers = $this->followingIds()->whereNull('unfollowed_you_at')->whereBetween('created_at', [$startDate, Carbon::now()->addDays(1)])->get();
-
-        return $followers->count();
     }
 
 }

@@ -1,6 +1,7 @@
 .twitter-profile-analytics {
     border: 1px solid #eee;
     border-radius: 4px;
+    margin-bottom:30px;
 }
 .border-bottom {
     border-bottom: 1px solid #eee;
@@ -9,7 +10,7 @@
     border-right: 1px solid #eee;
 }
 .tw-img-followers {
-    padding: 20px 0;
+    padding: 10px 0;
 }
 .twitter-profile-img{
     width: 40px;
@@ -33,4 +34,10 @@
     font-weight: 700;
     cursor: pointer;
     text-decoration: underline;
+}
+.analytics-header {
+    padding-left: 20px;
+    font-size: 20px;
+    color: #666;
+    line-height: 2;
 }

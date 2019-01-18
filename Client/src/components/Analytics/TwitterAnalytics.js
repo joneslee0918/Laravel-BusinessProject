@@ -1,5 +1,6 @@
 import React from 'react';
 import { getAnalytics } from "../../requests/twitter/channels";
+import Loader from "../Loader";
 
 class TwitterAnalytics extends React.Component {   
     
@@ -8,7 +9,8 @@ class TwitterAnalytics extends React.Component {
     }
 
     state = {
-        data: false
+        data: false,
+        loading: false
     }
     
     componentDidMount() {
@@ -19,44 +21,53 @@ class TwitterAnalytics extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-    
-        if(this.props.selectedChannel !== prevProps.selectedChannel){
+        if(this.props.days !== prevProps.days){
             this.fetchAnalytics();
         }
     }
 
     fetchAnalytics = () => {
-        getAnalytics()
-        .then((response) => {
-            this.setState(() => ({
-                data: response
-            }));
-        }).catch(error => {
-            if(error.response.status === 401){
-                    
-                if(this.props.selectedChannel.active){
-                   this.props.startSetChannels();
-                }
-            }
-            return Promise.reject(error);
-        });
+        this.setState(() => ({
+            loading: true
+        }));
+        try {
+           getAnalytics(this.props.channel.id, this.props.days)
+            .then((response) => {
+                this.setState(() => ({
+                    data: response,
+                    loading: false
+                }));
+            }).catch(error => {
+                this.setState(() => ({
+                    loading: false
+                }));
+                return Promise.reject(error);
+            }); 
+        } catch (error) {
+            
+        }
+        
     };
 
 
     render(){
+        const {channel} = this.props;
         return (
+            <div>
+            {this.state.loading && <Loader />}
+            {this.state.data && 
             <div className="row twitter-profile-analytics">
                 <div className="col-xs-12">
                     <div className="row border-bottom tw-img-followers">
                         <div className="col-md-6 col-xs-12 text-left">
                             <div className="twitter-profile-img">
-                                <img  src="https://pbs.twimg.com/profile_images/974287695269842944/wx7mGmVd_normal.jpg" />
+                                <img  src={channel.avatar} />
                                 <img className="platform-profile" src="/images/twitter.png"></img>
                             </div>  
-                            <div>@spectatechall</div>                        
+                            <div><span className="analytics-header">@{channel.username}</span></div>                        
                         </div>
                         <div className="col-md-6 col-xs-12 text-right">
-                            @twitterfollowers
+                        <span className="analytics-header">{this.state.data.profile.friends_count} Followers</span>
                         </div>
                     </div>
                 </div>
@@ -65,33 +76,34 @@ class TwitterAnalytics extends React.Component {
                         <div className="col-md-6 col-xs-12">
                             <div className="row">
                                 <div className="col-md-6 col-xs-12 border-right">
-                                    <h3>4589</h3>
-                                    <p>Followers</p>
+                                    <h3>{this.state.data.followers}</h3>
+                                    <p>New followers</p>
                                 </div>
                                 <div className="col-md-6 col-xs-12 border-right">
-                                    <h3>4589</h3>
-                                    <p>Followers</p>
+                                    <h3>{this.state.data.unfollowers}</h3>
+                                    <p>Unfollowers</p>
                                 </div>
                             </div>
                         </div>
                         <div className="col-md-6 col-xs-12">
                             <div className="row">
                                 <div className="col-md-4 col-xs-12 border-right">
-                                    <h3>34</h3>
+                                    <h3>{this.state.data.tweets}</h3>
                                     <p>Tweets</p>
                                 </div>
                                 <div className="col-md-4 col-xs-12 border-right">
-                                    <h3>89</h3>
+                                    <h3>{this.state.data.likes}</h3>
                                     <p>Likes</p>
                                 </div>
                                 <div className="col-md-4 col-xs-12">
-                                    <h3>12</h3>
+                                    <h3>{this.state.data.retweets}</h3>
                                     <p>Retweets</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>}
             </div>
         );
     }

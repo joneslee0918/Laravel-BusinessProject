@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Twitter;
 
 use Illuminate\Console\Command;
+use App\Models\Twitter\Channel;
 
 class SyncLikes extends Command
 {

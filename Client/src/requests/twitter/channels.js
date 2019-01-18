@@ -8,8 +8,8 @@ export const getDashboard = () => {
         });
 };
 
-export const getAnalytics = (days=1) => {
-    return axios.get(`${apiUrl}/twitter/analytics?days=${days}`)
+export const getAnalytics = (id, days=1) => {
+    return axios.get(`${apiUrl}/twitter/analytics?id=${id}&days=${days}`)
         .then((response) => {
             return response.data;
         });

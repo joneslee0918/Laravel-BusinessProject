@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Twitter;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class AnalyticsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
-        $channel = $user->selectedTwitterChannel();
+        $channel = $user->channels()->find($request->id);
 
         try{
             if($channel){
-                return response()->json($channel->getAnalytics());
+                $channel = $channel->details;
+                return response()->json($channel->getAnalytics($request->id, $request->days));
             }
         }catch(\Exception $e){
             return getErrorResponse($e, $channel->global);

@@ -37,7 +37,7 @@ Route::get('/privacy-policy', function(){
 
 Route::get('/test', function(){
     $channel = \App\Models\Twitter\Channel::first();
-    $channel->syncLikes();
+    return $channel->syncLikes();
     // return Carbon\Carbon::parse('Tue Jan 08 13:34:52 +0000 2019')->toDateTimeString();
 
 })->name("test");
