@@ -46,6 +46,20 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
+    public function getPosts(){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/feed");
+
+        return $response->getDecodedBody();
+    }
+
+    public function getLikes(){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/likes");
+
+        return $response->getDecodedBody();
+    }
+
     public function getNonProfileAvatar()
     {
        try{
@@ -185,6 +199,26 @@ trait FacebookTrait
 
             throw $e;
         }
+    }
+
+        /**
+     * Synchronize tweets from API
+     * 
+     * @param int $sleep
+     * @param bool $logCursor
+     */
+    public function syncFacebookPosts()
+    {
+        $data[] = [
+            'channel_id' => $this->id,
+            'post_id' => 12,
+            'message' => 'test',
+            'original_created_at' => Carbon::now(),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ];
+
+        \DB::table('facebook_posts')->insert($data);
     }
 
 }

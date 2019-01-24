@@ -36,9 +36,8 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Twitter\Channel::first();
-    return $channel->syncLikes();
-    // return Carbon\Carbon::parse('Tue Jan 08 13:34:52 +0000 2019')->toDateTimeString();
+    $channel = \App\Models\Facebook\Channel::find(6);
+    return $channel->getLikes();
 
 })->name("test");
 
@@ -91,6 +90,7 @@ Route::prefix("sync")->group(function(){
     Route::post('/twitter/tweets', ['as' => 'sync.tweets', 'uses' => 'Twitter\BackgroundController@syncTweets']);
     Route::post('/twitter/retweets', ['as' => 'sync.retweets', 'uses' => 'Twitter\BackgroundController@syncRetweets']);
     Route::post('/twitter/likes', ['as' => 'sync.likes', 'uses' => 'Twitter\BackgroundController@syncLikes']);
+    Route::post('/facebook/posts', ['as' => 'sync.facebook-posts', 'uses' => 'Facebook\BackgroundController@syncFacebookPosts']);
 });
 
 Route::prefix("scheduled")->middleware("auth")->group(function(){

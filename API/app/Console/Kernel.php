@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\Twitter\SyncTweets::class,
         Commands\Twitter\SyncRetweets::class,
         Commands\Twitter\SyncLikes::class,
+        Commands\Facebook\SyncPosts::class,
         Commands\RunScheduledPosts::class,
         Commands\SyncArticles::class
     ];

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TwitterAnalytics from '../TwitterAnalytics';
+import FacebookAnalytics from '../FacebookAnalytics';
 import channelSelector from '../../../selectors/channels';
 
 class Overview extends React.Component {
@@ -27,6 +28,10 @@ class Overview extends React.Component {
         const Analytics = ({channel}) => {
             if(channel.type == "twitter") {
                 return <TwitterAnalytics days={this.state.days} channel={channel}/>
+            }
+
+            if(channel.type == "facebook") {
+                return <FacebookAnalytics days={this.state.days} channel={channel}/>
             }
 
             return <div></div>

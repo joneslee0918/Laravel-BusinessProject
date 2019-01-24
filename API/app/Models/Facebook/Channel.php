@@ -38,4 +38,19 @@ class Channel extends Model
     {
         return $this->belongsTo(GlobalChannel::class, "channel_id");
     }
+
+    public function processes()
+    {
+        return $this->hasMany(Process::class);
+    }
+
+    public function startProcess($processName)
+    {
+        $this->processes()->create(["process_name" => $processName]);
+    }
+
+    public function stopProcess($processName)
+    {
+        $this->processes()->where("process_name", $processName)->delete();
+    }
 }
