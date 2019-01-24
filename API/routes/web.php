@@ -37,7 +37,7 @@ Route::get('/privacy-policy', function(){
 
 Route::get('/test', function(){
     $channel = \App\Models\Facebook\Channel::find(6);
-    return $channel->getLikes();
+    return $channel->syncFacebookPosts();
 
 })->name("test");
 
