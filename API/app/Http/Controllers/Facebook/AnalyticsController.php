@@ -15,7 +15,7 @@ class AnalyticsController extends Controller
         try{
             if($channel){
                 $channel = $channel->details;
-                return response()->json($channel->getAnalytics($request->id, $request->days));
+                return response()->json($channel->getAnalytics($request->days));
             }
         }catch(\Exception $e){
             return getErrorResponse($e, $channel->global);

@@ -67,6 +67,20 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
+    public function pageEngagement($period){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/insights/page_engaged_users/{$period}");
+
+        return $response->getDecodedBody();
+    }
+
+    public function pageReactions($period){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_total/{$period}");
+
+        return $response->getDecodedBody();
+    }
+
     public function getNonProfileAvatar()
     {
        try{

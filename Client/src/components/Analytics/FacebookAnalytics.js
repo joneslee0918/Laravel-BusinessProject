@@ -95,7 +95,7 @@ class FacebookAnalytics extends React.Component {
                                     <p>Reactions</p>
                                 </div>
                                 <div className="col-md-4 col-xs-12">
-                                    <h3>0</h3>
+                                    <h3>{this.state.data.engagement}</h3>
                                     <p>Engagement</p>
                                 </div>
                             </div>

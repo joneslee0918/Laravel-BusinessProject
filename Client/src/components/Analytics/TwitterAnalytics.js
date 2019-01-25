@@ -108,6 +108,4 @@ class TwitterAnalytics extends React.Component {
     }
 }
 
-
-
 export default TwitterAnalytics;

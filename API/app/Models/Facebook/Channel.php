@@ -72,20 +72,23 @@ class Channel extends Model
                 $period = 'day';
                 break;
         }
+
         try {
             $key = $this->id . "-facebookAnalytics-$days";
             $minutes = 15;
             return Cache::remember($key, $minutes, function () use ($days, $period) {
                 $data = [];    
-                
+
                 $likes = $this->pageLikes($period)['data'][0]['values'][1]['value'];
                 $unlikes = $this->pageUnlikes($period)['data'][0]['values'][1]['value'];
+                $engagement = $this->pageEngagement($period)['data'][0]['values'][1]['value'];
         
                 $data = [
                     'likes' => $likes,
-                    'unlikes' => $unlikes
+                    'unlikes' => $unlikes,
+                    'engagement' => $engagement
                 ];
-        
+
                 return $data;
             });
         } catch (\Exception $e) {
