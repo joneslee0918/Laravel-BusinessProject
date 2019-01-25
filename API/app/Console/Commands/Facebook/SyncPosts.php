@@ -5,7 +5,7 @@ namespace App\Console\Commands\Facebook;
 use Illuminate\Console\Command;
 use App\Models\Facebook\Channel;
 
-class SynccPosts extends Command
+class SyncPosts extends Command
 {
     /**
      * The name and signature of the console command.

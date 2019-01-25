@@ -53,9 +53,16 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
-    public function getLikes(){
+    public function pageLikes($period){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/likes");
+        $response = $fb->get("/{$this->original_id}/insights/page_fan_adds_unique/{$period}");
+
+        return $response->getDecodedBody();
+    }
+
+    public function pageUnlikes($period){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/insights/page_fan_removes_unique/{$period}");
 
         return $response->getDecodedBody();
     }
@@ -92,8 +99,6 @@ trait FacebookTrait
         
         return "";
     }
-
-
 
     public function getAvatar(){
         try{

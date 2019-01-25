@@ -8,6 +8,7 @@ use App\Models\Channel as GlobalChannel;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Channel extends Model
 {
@@ -52,5 +53,43 @@ class Channel extends Model
     public function stopProcess($processName)
     {
         $this->processes()->where("process_name", $processName)->delete();
+    }
+
+    public function getAnalytics($days=1)
+    {
+        switch ($days) {
+            case 1:
+                $period = 'day';
+                break;
+            case 7:
+                $period = 'week';
+                break;
+            case 30:
+                $period = 'month';
+                break;
+            
+            default:
+                $period = 'day';
+                break;
+        }
+        try {
+            $key = $this->id . "-facebookAnalytics-$days";
+            $minutes = 15;
+            return Cache::remember($key, $minutes, function () use ($days, $period) {
+                $data = [];    
+                
+                $likes = $this->pageLikes($period)['data'][0]['values'][1]['value'];
+                $unlikes = $this->pageUnlikes($period)['data'][0]['values'][1]['value'];
+        
+                $data = [
+                    'likes' => $likes,
+                    'unlikes' => $unlikes
+                ];
+        
+                return $data;
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 }

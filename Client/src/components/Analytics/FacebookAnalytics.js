@@ -1,4 +1,6 @@
 import React from 'react';
+import { getAnalytics } from "../../requests/facebook/channels";
+import Loader from "../Loader";
 
 class FacebookAnalytics extends React.Component { 
     
@@ -11,10 +13,48 @@ class FacebookAnalytics extends React.Component {
         loading: false
     }
 
+    componentDidMount() {
+        
+        if(!this.props.channelsLoading){
+            this.fetchAnalytics();
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.days !== prevProps.days){
+            this.fetchAnalytics();
+        }
+    }
+
+    fetchAnalytics = () => {
+        this.setState(() => ({
+            loading: true
+        }));
+        try {
+           getAnalytics(this.props.channel.id, this.props.days)
+            .then((response) => {
+                this.setState(() => ({
+                    data: response,
+                    loading: false
+                }));
+            }).catch(error => {
+                this.setState(() => ({
+                    loading: false
+                }));
+                return Promise.reject(error);
+            }); 
+        } catch (error) {
+            
+        }
+        
+    };
+
     render(){
         const {channel} = this.props;
         return (
             <div>
+            {this.state.loading && <Loader />}
+            {this.state.data && 
             <div className="row twitter-profile-analytics">
                 <div className="col-xs-12">
                     <div className="row border-bottom tw-img-followers">
@@ -35,11 +75,11 @@ class FacebookAnalytics extends React.Component {
                         <div className="col-md-6 col-xs-12">
                             <div className="row">
                                 <div className="col-md-6 col-xs-12 border-right">
-                                    <h3>0</h3>
+                                    <h3>{this.state.data.likes}</h3>
                                     <p>Page Likes</p>
                                 </div>
                                 <div className="col-md-6 col-xs-12 border-right">
-                                    <h3>0</h3>
+                                    <h3>{this.state.data.unlikes}</h3>
                                     <p>Unlikes</p>
                                 </div>
                             </div>
@@ -62,7 +102,7 @@ class FacebookAnalytics extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>}
             </div>
         );
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import SweetAlert from "sweetalert2-react";
-import FacebookLogin from 'react-facebook-login';
+import FacebookButton from '../FacebookButton';
 import SelectAccountsModal from './SelectAccountsModal';
 import {facebookAppId} from "../../config/api";
 import {startAddFacebookChannel, startSetChannels} from "../../actions/channels";
@@ -160,16 +160,12 @@ class Facebook extends React.Component {
                         </div> 
             
                         <div className="accounts-container__content__wrapper__footer">
-                            <FacebookLogin
+                            <FacebookButton
                                 appId={facebookAppId}
-                                autoLoad={false}
-                                fields="name,email,picture"
-                                scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,public_profile,email"
-                                callback={this.onSuccess} 
+                                onSuccess={this.onSuccess}
                                 icon={<i className="fa fa-plus"></i>}
                                 cssClass="add-channel-plus-btn"
-                                textButton=""
-                                />
+                                textButton="" />
                             <span className="left-side-label">Have an account? Let's connect!</span>
                         </div> 
                     </div>

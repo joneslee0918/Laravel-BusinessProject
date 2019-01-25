@@ -23,3 +23,10 @@ export const saveAccounts = (accounts) => {
                 return response.data;
             });
 };
+
+export const getAnalytics = (id, days=1) => {
+    return axios.get(`${apiUrl}/facebook/analytics?id=${id}&days=${days}`)
+        .then((response) => {
+            return response.data;
+        });
+};

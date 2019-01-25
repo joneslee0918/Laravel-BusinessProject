@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import TwitterLogin  from "react-twitter-auth";
-import FacebookLogin from 'react-facebook-login';
+import FacebookButton from './FacebookButton';
 import {startLogin} from "../actions/auth";
 import {startSetChannels} from "../actions/channels";
 import {startSetProfile} from "../actions/profile";
@@ -80,12 +80,9 @@ export class LoginPage extends React.Component{
                                 >
                     </TwitterLogin>
 
-                    <FacebookLogin
+                    <FacebookButton
                         appId={facebookAppId}
-                        autoLoad={false}
-                        fields="name,email,picture"
-                        scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,public_profile,email"
-                        callback={this.onFacebookSuccess} />
+                        onSuccess={this.onFacebookSuccess} />
 
                     <LinkedInButton 
                         clientId={linkedinAppId}

@@ -49,7 +49,6 @@ class TwitterAnalytics extends React.Component {
         
     };
 
-
     render(){
         const {channel} = this.props;
         return (
