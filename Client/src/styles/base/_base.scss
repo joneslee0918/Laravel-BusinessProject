@@ -1768,6 +1768,22 @@ aside .btn-group {
     width: 90%;
 }
 
+.sp-container{
+    margin: 100px auto;
+}
+
+.sky-bg{
+    background: #f4fbff !important;
+}
+
+.bordered-tab{
+    border:1px solid #ddd !important;
+}
+
+.active > .bordered-tab{
+    border-bottom:1px solid transparent !important;
+}
+
 .accounts-container h2{
     font-family: open-sans, sans-serif;
     font-size: 20px;
