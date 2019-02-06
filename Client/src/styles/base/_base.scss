@@ -178,6 +178,22 @@ input {
     cursor:pointer;
 }
 
+.pos-relative{
+    position: relative !important
+}
+
+.tab-close-btn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 12px;
+    background: #efefef;
+    border-radius: 10px;
+    padding: 1px 2px;
+    cursor: pointer;
+    color: #777;
+}
+
 .trash-btn{
     color:#e2e2e2;
     cursor:pointer;
