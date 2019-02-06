@@ -29,13 +29,7 @@ class Tabs extends React.Component{
 
     newTab = () => {
         
-        const tabs = this.state.tabs.map( tab => {
-            return {
-                name: tab.name,
-                id: tab.id,
-                active:false
-            }
-        });
+        const tabs = this.state.tabs.map( tab => ({...tab, active: false}) );
 
         this.setState(() => ({
             tabs: [
@@ -56,7 +50,17 @@ class Tabs extends React.Component{
         this.setState(() => ({
             tabs
         }));
-    }
+    };
+
+    selectTab = (id) => {
+
+        const tabs = this.state.tabs.map( tab => ({...tab, active: id === tab.id ? true: false}) );
+        console.log(tabs);
+        this.setState(() => ({
+            tabs
+        }));
+
+    };
 
     
 
@@ -66,7 +70,7 @@ class Tabs extends React.Component{
                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                     {this.state.tabs.map( (tab, index) => (
                         <li key={index} className={`nav-item pos-relative ${tab.active ? 'active' : ''}`}>
-                            <a className={`nav-link bordered-tab ${tab.active ? 'active' : ''}`} id={`${tab.id}-tab`} data-toggle="tab" href={`#${tab.id}`} role="tab" aria-controls={tab.id} aria-selected="true">{tab.name} 
+                            <a className={`nav-link bordered-tab ${tab.active ? 'active' : ''}`} onClick={() => this.selectTab(tab.id)} id={`${tab.id}-tab`} data-toggle="tab" href={`#${tab.id}`} role="tab" aria-controls={tab.id} aria-selected="true">{tab.name} 
                             </a><i onClick={ () => this.removeTab(tab.id)} className="fa tab-close-btn fa-close pull-right"></i>
                         </li>
                     ))}
