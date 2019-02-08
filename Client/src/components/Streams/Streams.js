@@ -1,9 +1,9 @@
 import React from 'react';
-import Tabs from './Tabs';
+import CTabs from './Tabs';
 
 const Streams = () => (
     <div className="sp-container">
-        <Tabs />
+        <CTabs />
     </div>
 );
 

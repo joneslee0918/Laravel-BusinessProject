@@ -194,6 +194,87 @@ input {
     color: #777;
 }
 
+.react-tabs-container {
+    background-color: #ffffff !important;
+    border-color: #c3e7f1 !important;
+    border: none !important;
+}
+
+.react-tabs-tab-close{
+    width:20px !important;
+    height: 18px !important;
+}
+
+.react-tabs-tab {
+    color: rgba(153, 178, 184, 0.6) !important;
+    border: 1px solid !important;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+}
+
+.react-tabs-active {
+    color: #2a7496 !important;
+    background-color: #dff5fb !important;
+    border-color: #45c3e3 !important;
+    border-bottom: none !important;
+}
+
+.react-tabs-active .react-tabs-tab-close, .react-tabs-tab .react-tabs-tab-close {
+    border-color: #002b36;
+    border: none !important;
+}
+
+.react-tabs-child {
+    padding: 0px !important;
+    font-size: 18px !important;
+    margin-left: 0 !important;
+    outline:none !important;
+}
+
+.react-tabs-child button{
+    background: none !important;
+    border: 1px solid #ccc !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 100% !important;
+    width: 40px !important;
+}
+
+.dndTabBarAfter{
+    background-color: #ddf5ff !important;
+    border-bottom: 1px solid #ddf5ff !important;
+}
+
+.dndTab{
+    background: #efefef !important;
+    border: none !important;
+    border-bottom: none !important;
+}
+
+.dndTabBefore, .dndTabAfter{
+    background: #efefef !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-top: none !important;
+}
+
+.rdTabActive, .rdTabActive .dndTabAfter, .rdTabActive .dndTabBefore{
+    background:#ddf5ff !important;
+    border: none !important;
+}
+
+.dndTabTitle{
+    color: #777 !important;
+}
+
+.dndTabBefore{
+    border-right: none !important;
+}
+
+.dndTabAfter{
+    border-left: none !important;
+}
+
 .trash-btn{
     color:#e2e2e2;
     cursor:pointer;
