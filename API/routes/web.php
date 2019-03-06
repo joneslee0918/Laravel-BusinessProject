@@ -37,7 +37,9 @@ Route::get('/privacy-policy', function(){
 
 Route::get('/test', function(){
     $channel = \App\Models\Facebook\Channel::find(15);
-    return $channel->pageReactions('day');
+    return \App\Models\User::with(["channels" => function($q){
+        $q->orderBy("id", "desc")->take(2);
+    }])->get();
 
 })->name("test");
 

@@ -26,7 +26,7 @@ const tabsClassNames = {
     tabAfter: {}
   };
 
-class CTabs extends Component {
+class StreamTabs extends Component {
 
     state = {
       tabs:[
@@ -69,7 +69,7 @@ class CTabs extends Component {
     }
     
     componentDidUpdate(){
-       // console.log(this.state.selectedTab, "yeah");
+        console.log(this.state.selectedTab, "yeah");
     }
 
     getChildContext(){
@@ -79,23 +79,24 @@ class CTabs extends Component {
     makeListeners(key) {
         return {
           //onClick: (e) => { console.log('onClick', key, e);}, // never called
-          onContextMenu: (e) => { console.log('onContextMenu', key, e); this.handleTabContextMenu(key, e)},
+          onContextMenu: (e) => { console.log('onContextMeun', key, e); this.handleTabContextMenu(key, e)},
           onDoubleClick: (e) => { console.log('onDoubleClick', key, e); this.handleTabDoubleClick(key, e)},
         }
     }
 
     handleTabSelect(e, key, currentTabs) {
-        console.log('handleTabSelect key:', key);
+       // console.log('handleTabSelect key:', key);
         this.setState({selectedTab: key, tabs: currentTabs});
     }
     
     handleTabClose(e, key, currentTabs) {
-        console.log('tabClosed key:', key);
+       // console.log('tabClosed key:', key);
         this.setState({tabs: currentTabs});
     }
 
     handleTabPositionChange(e, key, currentTabs) {
-        console.log('tabPositionChanged key:', key);
+        console.log(currentTabs);
+       // console.log('tabPositionChanged key:', key);
         this.setState({tabs: currentTabs});
     }
 
@@ -262,8 +263,8 @@ class CTabs extends Component {
   }
 }
 
-CTabs.childContextTypes = {
+StreamTabs.childContextTypes = {
     muiTheme: PropTypes.object
 };
 
-export default CTabs;
+export default StreamTabs;
