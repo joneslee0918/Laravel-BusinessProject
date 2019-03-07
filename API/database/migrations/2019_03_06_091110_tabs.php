@@ -15,11 +15,15 @@ class Tabs extends Migration
     {
         Schema::create("tabs", function(Blueprint $table){
             $table->increments("id");
+            $table->integer("user_id")->unsigned();
             $table->integer("index");
-            $table->string("key");
+            $table->boolean("selected");
+            $table->string("key")->index();
             $table->string("title");
 
             $table->timestamps();
+
+            $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
         });
     }
 

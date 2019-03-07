@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {Dialog, FlatButton, Menu, MenuItem, TextField} from 'material-ui';
 import {Tabs, Tab} from "react-draggable-tab";
+import {getStreams, updateTabs} from "../../requests/streams";
+import StreamItems from "./StreamItems";
 
 const tabsClassNames = {
     tabWrapper: 'dndWrapper',
@@ -29,51 +31,24 @@ const tabsClassNames = {
 class StreamTabs extends Component {
 
     state = {
-      tabs:[
-        (<Tab key={'tab2'} title={'2ndTab Too long Toooooooooooooooooo long'} {...this.makeListeners('tab2')}>
-          <div>
-            <pre>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-            </pre>
-          </div>
-        </Tab>),
-    
-        (<Tab key={'tab4'} title={'Custom container'} containerStyle={{backgroundColor: 'gray', width: '50%'}} {...this.makeListeners('tab4')}>
-          <div>
-            <h1>This is tab4 with custom container style</h1>
-          </div>
-        </Tab>),
-
-        (<Tab key={'tab5'} title={'Big content1 with left:-9999999px'} hiddenContainerStyle={{left: '-9999999px', top: '-9999999px'}} {...this.makeListeners('tab5')}>
-          <div>
-            <h1>Super big content</h1>
-              {Array(10000).fill(0).map((_, i) => <p key={i}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>)}
-          </div>
-        </Tab>),
-
-        (<Tab key={'tab6'} title={'after big content'} {...this.makeListeners('tab6')}>
-          <div>
-            <pre>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-            </pre>
-          </div>
-        </Tab>),
-      ],                                                                                                                                                                                                                                                                  
+      tabs:[],                                                                                                                                                                                                                                                                  
       badgeCount: 0,
       menuPosition: {},
       showMenu: false,
       dialogOpen: false,
-      selectedTab: "tab6"
+      selectedTab: "tab0"
     };
 
     componentDidMount(){
-       // console.log(this.state.selectedTab, "yeah");
+       this.fetchStreamTabs();
     }
     
     componentDidUpdate(){
-        console.log(this.state.selectedTab, "yeah");
+        console.log("sda");
     }
 
     getChildContext(){
-        return { muiTheme: getMuiTheme()};
+        return { muiTheme: getMuiTheme() };
     }
 
     makeListeners(key) {
@@ -85,7 +60,6 @@ class StreamTabs extends Component {
     }
 
     handleTabSelect(e, key, currentTabs) {
-       // console.log('handleTabSelect key:', key);
         this.setState({selectedTab: key, tabs: currentTabs});
     }
     
@@ -95,20 +69,26 @@ class StreamTabs extends Component {
     }
 
     handleTabPositionChange(e, key, currentTabs) {
-        console.log(currentTabs);
-       // console.log('tabPositionChanged key:', key);
+       console.log('tabPositionChanged key:', key);
         this.setState({tabs: currentTabs});
     }
 
     handleTabAddButtonClick(e, currentTabs) {
     // key must be unique
         const key = 'newTab_' + Date.now();
+
+        if(currentTabs.length > 10){
+            alert("You have reached the tab limit");
+            return;
+        }
+
         let newTab = (<Tab key={key} title='untitled' {...this.makeListeners(key)}>
                         <div>
-                            <h1>New Empty Tab</h1>
+                            <StreamItems/>
                         </div>
                         </Tab>);
         let newTabs = currentTabs.concat([newTab]);
+        console.log(currentTabs);
 
         this.setState({
             tabs: newTabs,
@@ -193,6 +173,27 @@ class StreamTabs extends Component {
         return window.confirm('close?');
     }
     
+    fetchStreamTabs = () => {
+        getStreams().then((response) => {
+           let selectedTab = response.filter(tab => tab.selected === 1);
+           selectedTab = !!selectedTab.length ? selectedTab[0].key : "tab0";
+           
+            if(!!response.length){
+                 this.setState(() => ({
+                     tabs: response.map(tab => 
+                         (
+                             <Tab key={tab.key} title={tab.title} {...this.makeListeners(tab.key)}>
+                                 <div>
+                                     <h1>New Empty Tab</h1>
+                                 </div>
+                             </Tab>
+                         )
+                       ),
+                    selectedTab: selectedTab
+                 }));
+            }
+        });
+    }
 
     render() {
         
@@ -219,45 +220,50 @@ class StreamTabs extends Component {
           };
           
         return (
-            <div>
-                <Tabs
-                tabsClassNames={tabsClassNames}
-                tabsStyles={tabsStyles}
-                selectedTab={this.state.selectedTab ? this.state.selectedTab : 'tab2'}
-                onTabSelect={this.handleTabSelect.bind(this)}
-                onTabClose={this.handleTabClose.bind(this)}
-                onTabAddButtonClick={this.handleTabAddButtonClick.bind(this)}
-                onTabPositionChange={this.handleTabPositionChange.bind(this)}
-                shouldTabClose={this.shouldTabClose.bind(this)}
-                tabs={this.state.tabs}
-                shortCutKeys={
-                    {
-                    'close': ['alt+command+w', 'alt+ctrl+w'],
-                    'create': ['alt+command+t', 'alt+ctrl+t'],
-                    'moveRight': ['alt+command+tab', 'alt+ctrl+tab'],
-                    'moveLeft': ['shift+alt+command+tab', 'shift+alt+ctrl+tab']
-                    }
-                }
-                keepSelectedTab={true}
-                />
 
-                <div style={menuStyle}>
-                    <Menu>
-                        {this.state.contextTarget === 'tab0' ? '' : <MenuItem primaryText="Close" onClick={this.closeFromContextMenu.bind(this)}/>}
-                        <MenuItem primaryText="Rename" onClick={this.renameFromContextMenu.bind(this)}/>
-                        <MenuItem primaryText="Cancel" onClick={this.cancelContextMenu.bind(this)}/>
-                    </Menu>
-                </div>
-                <Dialog
-                title="Change tab name"
-                ref="dialog"
-                actions={standardActions}
-                modal={true}
-                open={this.state.dialogOpen}
-                onShow={this._onDialogShow.bind(this)}>
-                <TextField
-                    ref='input' id="rename-input" style={{width: '90%'}}/>
-                </Dialog>
+            <div>
+                {!!this.state.tabs.length &&             
+                    <div>
+                        <Tabs
+                        tabsClassNames={tabsClassNames}
+                        tabsStyles={tabsStyles}
+                        selectedTab={this.state.selectedTab ? this.state.selectedTab : 'tab2'}
+                        onTabSelect={this.handleTabSelect.bind(this)}
+                        onTabClose={this.handleTabClose.bind(this)}
+                        onTabAddButtonClick={this.handleTabAddButtonClick.bind(this)}
+                        onTabPositionChange={this.handleTabPositionChange.bind(this)}
+                        shouldTabClose={this.shouldTabClose.bind(this)}
+                        tabs={this.state.tabs}
+                        shortCutKeys={
+                            {
+                            'close': ['alt+command+w', 'alt+ctrl+w'],
+                            'create': ['alt+command+t', 'alt+ctrl+t'],
+                            'moveRight': ['alt+command+tab', 'alt+ctrl+tab'],
+                            'moveLeft': ['shift+alt+command+tab', 'shift+alt+ctrl+tab']
+                            }
+                        }
+                        keepSelectedTab={true}
+                        />
+        
+                        <div style={menuStyle}>
+                            <Menu>
+                                {this.state.contextTarget === 'tab0' ? '' : <MenuItem primaryText="Close" onClick={this.closeFromContextMenu.bind(this)}/>}
+                                <MenuItem primaryText="Rename" onClick={this.renameFromContextMenu.bind(this)}/>
+                                <MenuItem primaryText="Cancel" onClick={this.cancelContextMenu.bind(this)}/>
+                            </Menu>
+                        </div>
+                        <Dialog
+                        title="Change tab name"
+                        ref="dialog"
+                        actions={standardActions}
+                        modal={true}
+                        open={this.state.dialogOpen}
+                        onShow={this._onDialogShow.bind(this)}>
+                        <TextField
+                            ref='input' id="rename-input" style={{width: '90%'}}/>
+                        </Dialog>
+                </div>}
+               
             </div>
         );
   }

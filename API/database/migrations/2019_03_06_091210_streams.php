@@ -17,12 +17,14 @@ class Streams extends Migration
             $table->increments("id");
             $table->integer("index");
             $table->integer("tab_id")->unsigned();
+            $table->integer("channel_id")->unsigned();
             $table->string("title");
             $table->string("type");
             $table->string("network");
             $table->timestamps();
 
             $table->foreign("tab_id")->references("id")->on("tabs")->onDelete("cascade");
+            $table->foreign("channel_id")->references("id")->on("channels")->onDelete("cascade");
         });
     }
 

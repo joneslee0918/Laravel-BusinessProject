@@ -28,6 +28,9 @@ Route::middleware('auth:api')->group(function(){
     Route::post('/post/{postId}', 'PublishController@postNow');
 
     Route::get('/articles', 'ArticlesController@articles');
+
+    Route::get('/streams', 'StreamsController@index');
+    Route::post('/streams/new/tab', 'StreamsController@newTab');
 });
 
 Route::post('/publish', 'PublishController@publish')->name('publish');
