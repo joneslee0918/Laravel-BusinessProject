@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {Dialog, FlatButton, Menu, MenuItem, TextField} from 'material-ui';
 import {Tabs, Tab} from "react-draggable-tab";
-import {getStreams, updateTabs} from "../../requests/streams";
+import {getStreams, selectTab, positionTab, addTab, deleteTab, renameTab} from "../../requests/streams";
 import StreamItems from "./StreamItems";
 
 const tabsClassNames = {
@@ -44,7 +44,7 @@ class StreamTabs extends Component {
     }
     
     componentDidUpdate(){
-        console.log("sda");
+        
     }
 
     getChildContext(){
@@ -60,24 +60,29 @@ class StreamTabs extends Component {
     }
 
     handleTabSelect(e, key, currentTabs) {
-        this.setState({selectedTab: key, tabs: currentTabs});
+        this.setState({selectedTab: key, tabs: currentTabs}, () => {
+            selectTab(key);
+        })
     }
     
     handleTabClose(e, key, currentTabs) {
        // console.log('tabClosed key:', key);
-        this.setState({tabs: currentTabs});
+        this.setState({tabs: currentTabs}, () => {
+            deleteTab({key, selectedKey: this.state.selectedTab});
+        });
     }
 
     handleTabPositionChange(e, key, currentTabs) {
-       console.log('tabPositionChanged key:', key);
-        this.setState({tabs: currentTabs});
+        this.setState({tabs: currentTabs}, () => {
+            positionTab(currentTabs, key);
+        });
     }
 
     handleTabAddButtonClick(e, currentTabs) {
     // key must be unique
         const key = 'newTab_' + Date.now();
 
-        if(currentTabs.length > 10){
+        if(currentTabs.length > 9){
             alert("You have reached the tab limit");
             return;
         }
@@ -87,12 +92,19 @@ class StreamTabs extends Component {
                             <StreamItems/>
                         </div>
                         </Tab>);
+
         let newTabs = currentTabs.concat([newTab]);
-        console.log(currentTabs);
+
+        const data = {
+            key,
+            title: "untitled"
+        };
 
         this.setState({
             tabs: newTabs,
             selectedTab: key
+        }, () => {
+            addTab(data);
         });
     }
 
@@ -123,6 +135,7 @@ class StreamTabs extends Component {
     }
 
     renameFromContextMenu(){
+        console.log(this.state.contextTarget);
         this.setState({
             showMenu: false,
             contextTarget: null,
@@ -152,6 +165,8 @@ class StreamTabs extends Component {
         this.setState({
             tabs: newTabs,
             dialogOpen: false
+        }, () => {
+            renameTab({key: this.state.editTabKey, title: this.refs.input.getValue()});
         });
     }
 
@@ -170,7 +185,7 @@ class StreamTabs extends Component {
 
     shouldTabClose(e, key){
         console.log('should tab close', e, key);
-        return window.confirm('close?');
+        return window.confirm('Closing this tab will remove the streams associated with it. Are you sure?');
     }
     
     fetchStreamTabs = () => {
@@ -180,11 +195,11 @@ class StreamTabs extends Component {
            
             if(!!response.length){
                  this.setState(() => ({
-                     tabs: response.map(tab => 
+                    tabs: response.map(tab => 
                          (
                              <Tab key={tab.key} title={tab.title} {...this.makeListeners(tab.key)}>
                                  <div>
-                                     <h1>New Empty Tab</h1>
+                                 <StreamItems/>
                                  </div>
                              </Tab>
                          )

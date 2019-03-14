@@ -10,7 +10,8 @@ class Tab extends Model
         "user_id",
         "title",
         "key",
-        "index"
+        "index",
+        "selected"
     ];
 
     public function streams()

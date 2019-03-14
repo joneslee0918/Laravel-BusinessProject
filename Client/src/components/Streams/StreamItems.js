@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import StreamFeedItem from './StreamFeedItem';
 
 // fake data generator
 const getItems = count =>
@@ -17,20 +18,30 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const grid = 8;
+const grid = 5;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: 'none',
-  padding: grid * 2,
-  margin: `0 ${grid}px 0 0`,
+  margin: `10px ${grid}px 10px 5px`,
+  width: `500px`,
+  height: `auto`,
 
   // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
+  background: isDragging ? '#efefef' : '#efefef',
 
   // styles we need to apply on draggables
   ...draggableStyle,
 });
+
+const getTitleStyle = (isDragging, draggableStyle) => ({
+    // some basic styles to make the items look a bit nicer
+    userSelect: 'none',
+    background: isDragging ? 'lightgreen' : 'white',
+  
+    // styles we need to apply on draggables
+    //...draggableStyle,
+  });
 
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'lightblue' : 'lightgrey',
@@ -43,7 +54,7 @@ class StreamItems extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: getItems(6),
+      items: getItems(3),
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
@@ -89,7 +100,35 @@ class StreamItems extends Component {
                         provided.draggableProps.style
                       )}
                     >
-                      {item.content}
+                      <h3 style={getTitleStyle(
+                        snapshot.isDragging,
+                        provided.draggableProps.style
+                      )} className="stream-title">{item.content}</h3>
+
+                      <StreamFeedItem profilePic="https://web.uniclix.test/images/uniclix.png" username="Uniclix" date="Feb 20" content="        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet"/>
+
+                      <StreamFeedItem profilePic="https://web.uniclix.test/images/uniclix.png" username="Uniclix" date="Feb 20" content="        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet"/>
+
+                      <StreamFeedItem profilePic="https://web.uniclix.test/images/uniclix.png" username="Uniclix" date="Feb 20" content="        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet"/>
+
+                      <StreamFeedItem profilePic="https://web.uniclix.test/images/uniclix.png" username="Uniclix" date="Feb 20" content="        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet"/>
+
+                      <StreamFeedItem profilePic="https://web.uniclix.test/images/uniclix.png" username="Uniclix" date="Feb 20" content="        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet"/>
                     </div>
                   )}
                 </Draggable>

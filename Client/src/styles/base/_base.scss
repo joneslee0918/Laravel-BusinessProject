@@ -446,6 +446,34 @@ input {
     color: white;
 }
 
+.stream-feed-container{
+    width: 100%;
+    background: white;
+    padding:16px;
+    margin-bottom: 5px;
+}
+
+.stream-feed-container .post-info img, .stream-feed-container .post-info > div{
+    display:block;
+    float:left;
+}
+
+.stream-feed-container .post-info img{
+    width: 55px;
+}
+
+.stream-feed-container .post-content{
+    clear:both;
+    margin-top:50px;
+}
+
+.stream-title{
+    background:white;
+    border-bottom:1px solid #ccc;
+    margin:0;
+    padding:10px;
+}
+
 .ReactModalPortal .ReactModal__Overlay {
     display: flex;
     justify-content: center;
