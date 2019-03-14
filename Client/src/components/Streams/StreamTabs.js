@@ -237,7 +237,7 @@ class StreamTabs extends Component {
         return (
 
             <div>
-                {!!this.state.tabs.length &&             
+                {!!this.state.tabs.length > 0 ?            
                     <div>
                         <Tabs
                         tabsClassNames={tabsClassNames}
@@ -277,7 +277,9 @@ class StreamTabs extends Component {
                         <TextField
                             ref='input' id="rename-input" style={{width: '90%'}}/>
                         </Dialog>
-                </div>}
+                </div> :
+                <div>No tabs now</div>
+            }
                
             </div>
         );
