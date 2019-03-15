@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {Dialog, FlatButton, Menu, MenuItem, TextField} from 'material-ui';
 import {Tabs, Tab} from "react-draggable-tab";
+import Select from 'react-select';
 import {getStreams, selectTab, positionTab, addTab, deleteTab, renameTab} from "../../requests/streams";
 import StreamItems from "./StreamItems";
 
@@ -36,7 +37,8 @@ class StreamTabs extends Component {
       menuPosition: {},
       showMenu: false,
       dialogOpen: false,
-      selectedTab: "tab0"
+      selectedTab: "tab0",
+      selectedAccount: ""
     };
 
     componentDidMount(){
@@ -187,6 +189,13 @@ class StreamTabs extends Component {
         console.log('should tab close', e, key);
         return window.confirm('Closing this tab will remove the streams associated with it. Are you sure?');
     }
+
+    handleAccountChange = (selectedAccount) => {
+        this.setState(() => ({
+            selectedAccount
+        }));
+        console.log(selectedAccount);
+    };
     
     fetchStreamTabs = () => {
         getStreams().then((response) => {
@@ -278,7 +287,90 @@ class StreamTabs extends Component {
                             ref='input' id="rename-input" style={{width: '90%'}}/>
                         </Dialog>
                 </div> :
-                <div>No tabs now</div>
+
+                <div className="streams-default-container">
+                    <div className="account-selection">
+                        <Select
+                            value={this.state.selectedAccount}
+                            onChange={this.handleAccountChange}
+                            options={[
+                                {
+                                    label: <div className="channel-container">
+                                                <div className="profile-info pull-right">
+                                                <span className="pull-left profile-img-container">
+                                                <img src="https://graph.facebook.com/v3.0/10212123910470153/picture?type=normal"/>
+                                                <i className="fa fa-facebook facebook_bg smallIcon"></i></span>
+                                                <div className="pull-left"><p className="profile-name" title="Albert Feka">Albert Feka</p>
+                                                <p className="profile-username"></p>
+                                                </div>
+                                                </div>
+                                                
+                                                </div>,
+                                    value: "username"
+                                },
+                                {
+                                    label: <div className="channel-container">
+                                                <div className="profile-info pull-right">
+                                                    <span className="pull-left profile-img-container">
+                                                        <img src="https://graph.facebook.com/v3.0/10212123910470153/picture?type=normal"/>
+                                                        <i className="fa fa-facebook facebook_bg smallIcon"></i>
+                                                    </span>
+                                                    <div className="pull-left"><p className="profile-name" title="Albert Feka">Albert Feka</p>
+                                                        <p className="profile-username"></p>
+                                                    </div>
+                                                </div>
+                                            </div>,
+                                    value: "username2"
+                                },
+                                {
+                                    label: <div className="channel-container">
+                                                <div className="profile-info pull-right">
+                                                <span className="pull-left profile-img-container">
+                                                <img src="https://graph.facebook.com/v3.0/10212123910470153/picture?type=normal"/>
+                                                <i className="fa fa-facebook facebook_bg smallIcon"></i></span>
+                                                <div className="pull-left"><p className="profile-name" title="Albert Feka">Albert Feka</p>
+                                                <p className="profile-username"></p>
+                                                </div>
+                                                </div>
+                                                </div>,
+                                    value: "username3"
+                                }
+                            ]}
+                        />
+                    </div>
+                    <div className="streams-default">
+
+                            <div className="selection-item">
+                                <i className="fa fa-home"></i>
+                                <span>Home</span>
+                            </div>
+                            <div className="selection-item">
+                                <i className="fa fa-at"></i>
+                                <span>Mentions</span>
+                            </div>
+                            <div className="selection-item">
+                                <i className="fa fa-retweet"></i>
+                                <span>Retweets</span>
+                            </div>
+                            <div className="selection-item">
+                                <i className="fa fa-heart"></i>
+                                <span>Likes</span>
+                            </div>
+                            <div className="selection-item">
+                                <i className="fa fa-mail-forward"></i>
+                                <span>My Tweets</span>
+                            </div>
+                            <div className="selection-item">
+                                <i className="fa fa-search"></i>
+                                <span>Search</span>
+                            </div>
+                            <div className="selection-item">
+                                <i className="fa fa-clock-o"></i>
+                                <span>Scheduled</span>
+                            </div>
+
+                    </div>
+                </div>
             }
                
             </div>

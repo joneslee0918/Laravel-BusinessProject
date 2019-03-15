@@ -432,6 +432,41 @@ input {
     color: white !important;
 }
 
+.streams-default{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+
+.streams-default .selection-item {
+    font-size: 5em;
+    text-align: center;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #c4eeff;
+    color: #61b7cc;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.streams-default .selection-item:hover{
+    background:#84dcff;
+    color:#31708f;
+}
+
+.streams-default .selection-item span{
+    font-size: 0.2em;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: open-sansBold;
+}
+
 .smallIcon{
     width: 15px;
     height: 15px;
@@ -1678,6 +1713,22 @@ input {
     overflow-y: auto;
 }
 
+.streams-default-container .account-selection{
+    max-width: 700px;
+    margin: 10px auto;
+    padding: 10px;
+}
+
+.streams-default-container .account-selection .profile-info{
+    color: #61b7cc;
+    margin:0 !important;
+    padding:10px;
+    border:none;
+}
+
+.streams-default-container .css-1hwfws3 {
+    padding: 18px !important;
+}
 .select-channel{
     padding: 0px 0 !important;
 }
