@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Select from 'react-select';
 import channelSelector, {streamChannels} from '../../selectors/channels';
+import streamTypes from './StreamTypesFixture';
 
 class StreamCreator extends React.Component{
 
@@ -30,35 +31,13 @@ class StreamCreator extends React.Component{
                         />
                     </div>
                     <div className="streams-default">
-
-                            <div className="selection-item">
-                                <i className="fa fa-home"></i>
-                                <span>Home</span>
+                            
+                        {(streamTypes[this.state.selectedAccount.type]).map((item, index) => (
+                            <div key={index} className="selection-item">
+                                <i className={`fa fa-${item.icon}`}></i>
+                                <span>{item.label}</span>
                             </div>
-                            <div className="selection-item">
-                                <i className="fa fa-at"></i>
-                                <span>Mentions</span>
-                            </div>
-                            <div className="selection-item">
-                                <i className="fa fa-retweet"></i>
-                                <span>Retweets</span>
-                            </div>
-                            <div className="selection-item">
-                                <i className="fa fa-heart"></i>
-                                <span>Likes</span>
-                            </div>
-                            <div className="selection-item">
-                                <i className="fa fa-mail-forward"></i>
-                                <span>My Tweets</span>
-                            </div>
-                            <div className="selection-item">
-                                <i className="fa fa-search"></i>
-                                <span>Search</span>
-                            </div>
-                            <div className="selection-item">
-                                <i className="fa fa-clock-o"></i>
-                                <span>Scheduled</span>
-                            </div>
+                        ))}
 
                     </div>
                 </div>);
