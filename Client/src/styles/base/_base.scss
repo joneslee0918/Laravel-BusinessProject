@@ -1738,6 +1738,14 @@ input {
     padding: 0px 0 !important;
 }
 
+.streams-default-container .channel-container:hover{
+    background: none;
+}
+
+.streams-default-container .channel-container:hover .profile-info{
+    color: #46a8ce;
+}
+
 .channel-container:hover{
     background: #46a8ce;
 }
@@ -1851,9 +1859,23 @@ aside .btn-group {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+    background-color: rgba(255, 255, 255, 0.7); /* Black background with opacity */
     z-index: 1000; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
+}
+
+.fixed-center{
+    position: fixed;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9999;
 }
 
 .lds-ripple {

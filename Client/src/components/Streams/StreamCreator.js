@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import Select from 'react-select';
 import channelSelector, {streamChannels} from '../../selectors/channels';
 import streamTypes from './StreamTypesFixture';
+import {addStream} from '../../requests/streams';
+import Loader from '../Loader';
 
 class StreamCreator extends React.Component{
 
@@ -10,7 +12,8 @@ class StreamCreator extends React.Component{
         selectedAccount:  Object.entries(this.props.selectedChannel).length ? 
         {label: <ProfileChannel channel={this.props.selectedChannel} />, value: this.props.selectedChannel.id, type: this.props.selectedChannel.type} : 
         (this.props.channels.length ? 
-          {label: <ProfileChannel channel={this.props.channels[0]} />, value: this.props.channels[0].id, type: this.props.channels[0].type} : {})
+          {label: <ProfileChannel channel={this.props.channels[0]} />, value: this.props.channels[0].id, type: this.props.channels[0].type} : {}),
+        loading: false
     }
 
     handleAccountChange = (selectedAccount) => {
@@ -19,8 +22,24 @@ class StreamCreator extends React.Component{
         }));
     };
 
+    handleTypeClick = (item) => {
+
+        this.setState(() => ({
+            loading: true
+        }));
+
+        const channelId = this.state.selectedAccount.value;
+        const network = this.state.selectedAccount.type;
+        const selectedTab = this.props.selectedTab;
+        addStream(item, channelId, selectedTab, network).then(() => this.props.reload()).then(() => {
+            // this.setState(() => ({
+            //     loading: false
+            // }));
+        });
+    };
+
     render(){
-        return (<div className="streams-default-container">
+        return (this.state.loading ? <Loader /> : <div className="streams-default-container">
                     <div className="account-selection">
                         <Select
                             value={this.state.selectedAccount}
@@ -33,7 +52,7 @@ class StreamCreator extends React.Component{
                     <div className="streams-default">
                             
                         {(streamTypes[this.state.selectedAccount.type]).map((item, index) => (
-                            <div key={index} className="selection-item">
+                            <div key={index} className="selection-item" onClick={(e) => this.handleTypeClick(item)}>
                                 <i className={`fa fa-${item.icon}`}></i>
                                 <span>{item.label}</span>
                             </div>

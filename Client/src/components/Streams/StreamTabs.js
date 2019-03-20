@@ -7,6 +7,7 @@ import {Tabs, Tab} from "react-draggable-tab";
 import {getStreams, selectTab, positionTab, addTab, deleteTab, renameTab} from "../../requests/streams";
 import StreamItems from "./StreamItems";
 import StreamCreator from "./StreamCreator";
+import Loader from "../Loader";
 
 const tabsClassNames = {
     tabWrapper: 'dndWrapper',
@@ -37,7 +38,8 @@ class StreamTabs extends Component {
       menuPosition: {},
       showMenu: false,
       dialogOpen: false,
-      selectedTab: ""
+      selectedTab: "tab0",
+      loading: false
     };
 
     componentDidMount(){
@@ -89,7 +91,7 @@ class StreamTabs extends Component {
 
         let newTab = (<Tab key={key} title='untitled' {...this.makeListeners(key)}>
                         <div>
-                            <StreamItems/>
+                            <StreamCreator selectedTab = {key} reload = {this.fetchStreamTabs}/>
                         </div>
                         </Tab>);
 
@@ -188,6 +190,9 @@ class StreamTabs extends Component {
     }
     
     fetchStreamTabs = () => {
+        this.setState(() => ({
+            loading: true
+        }));
         getStreams().then((response) => {
            let selectedTab = response.filter(tab => tab.selected === 1);
            selectedTab = !!selectedTab.length ? selectedTab[0].key : "tab0";
@@ -206,6 +211,10 @@ class StreamTabs extends Component {
                     selectedTab: selectedTab
                  }));
             }
+
+            this.setState(() => ({
+                loading: false
+            }));
         });
     }
 
@@ -235,50 +244,50 @@ class StreamTabs extends Component {
           
         return (
 
-            <div>
-                {!!this.state.tabs.length > 0 ?            
-                    <div>
-                        <Tabs
-                        tabsClassNames={tabsClassNames}
-                        tabsStyles={tabsStyles}
-                        selectedTab={this.state.selectedTab ? this.state.selectedTab : 'tab2'}
-                        onTabSelect={this.handleTabSelect.bind(this)}
-                        onTabClose={this.handleTabClose.bind(this)}
-                        onTabAddButtonClick={this.handleTabAddButtonClick.bind(this)}
-                        onTabPositionChange={this.handleTabPositionChange.bind(this)}
-                        shouldTabClose={this.shouldTabClose.bind(this)}
-                        tabs={this.state.tabs}
-                        shortCutKeys={
-                            {
-                            'close': ['alt+command+w', 'alt+ctrl+w'],
-                            'create': ['alt+command+t', 'alt+ctrl+t'],
-                            'moveRight': ['alt+command+tab', 'alt+ctrl+tab'],
-                            'moveLeft': ['shift+alt+command+tab', 'shift+alt+ctrl+tab']
+            <div>{this.state.loading ? <Loader /> :
+             
+                    this.state.tabs.length > 0 ?            
+                        <div>
+                            <Tabs
+                            tabsClassNames={tabsClassNames}
+                            tabsStyles={tabsStyles}
+                            selectedTab={this.state.selectedTab ? this.state.selectedTab : 'tab2'}
+                            onTabSelect={this.handleTabSelect.bind(this)}
+                            onTabClose={this.handleTabClose.bind(this)}
+                            onTabAddButtonClick={this.handleTabAddButtonClick.bind(this)}
+                            onTabPositionChange={this.handleTabPositionChange.bind(this)}
+                            shouldTabClose={this.shouldTabClose.bind(this)}
+                            tabs={this.state.tabs}
+                            shortCutKeys={
+                                {
+                                'close': ['alt+command+w', 'alt+ctrl+w'],
+                                'create': ['alt+command+t', 'alt+ctrl+t'],
+                                'moveRight': ['alt+command+tab', 'alt+ctrl+tab'],
+                                'moveLeft': ['shift+alt+command+tab', 'shift+alt+ctrl+tab']
+                                }
                             }
-                        }
-                        keepSelectedTab={true}
-                        />
-        
-                        <div style={menuStyle}>
-                            <Menu>
-                                {this.state.contextTarget === 'tab0' ? '' : <MenuItem primaryText="Close" onClick={this.closeFromContextMenu.bind(this)}/>}
-                                <MenuItem primaryText="Rename" onClick={this.renameFromContextMenu.bind(this)}/>
-                                <MenuItem primaryText="Cancel" onClick={this.cancelContextMenu.bind(this)}/>
-                            </Menu>
-                        </div>
-                        <Dialog
-                        title="Change tab name"
-                        ref="dialog"
-                        actions={standardActions}
-                        modal={true}
-                        open={this.state.dialogOpen}
-                        onShow={this._onDialogShow.bind(this)}>
-                        <TextField
-                            ref='input' id="rename-input" style={{width: '90%'}}/>
-                        </Dialog>
-                </div> : <StreamCreator />
-            }
-               
+                            keepSelectedTab={true}
+                            />
+            
+                            <div style={menuStyle}>
+                                <Menu>
+                                    {this.state.contextTarget === 'tab0' ? '' : <MenuItem primaryText="Close" onClick={this.closeFromContextMenu.bind(this)}/>}
+                                    <MenuItem primaryText="Rename" onClick={this.renameFromContextMenu.bind(this)}/>
+                                    <MenuItem primaryText="Cancel" onClick={this.cancelContextMenu.bind(this)}/>
+                                </Menu>
+                            </div>
+                            <Dialog
+                            title="Change tab name"
+                            ref="dialog"
+                            actions={standardActions}
+                            modal={true}
+                            open={this.state.dialogOpen}
+                            onShow={this._onDialogShow.bind(this)}>
+                            <TextField
+                                ref='input' id="rename-input" style={{width: '90%'}}/>
+                            </Dialog>
+                    </div> : <StreamCreator selectedTab = {this.state.selectedTab} reload = {this.fetchStreamTabs}/>  
+                }
             </div>
         );
   }

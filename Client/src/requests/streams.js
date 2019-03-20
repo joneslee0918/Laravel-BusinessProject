@@ -42,3 +42,10 @@ export const renameTab = (data) => {
                 return response.data;
             });
 };
+
+export const addStream = (type, channelId, selectedTab, network) => {
+    return axios.post(`${apiUrl}/streams/add`, {type, channelId, selectedTab, network})
+            .then((response) => {
+                return response.data;
+            });
+};

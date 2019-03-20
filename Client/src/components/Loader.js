@@ -2,12 +2,14 @@ import React from 'react';
 import ContentLoader from "react-content-loader"
 
 const Loader = () => (
-    <div className="lds-ripple"><div></div><div></div></div>
+	<div>
+		<img className="fixed-center" src="/images/uniclix_loader.svg" />
+	</div>
 );
 
 export const LoaderWithOverlay = () => (
     <div>
-        <div className="lds-ripple lds-ripple-light"><div></div><div></div></div>
+		<img className="fixed-center" src="/images/uniclix_loader.svg" />
         <div id="overlay"></div>
     </div>
 );
@@ -31,4 +33,5 @@ export const ArticleLoader = props => (
 	</ContentLoader>
 )
 
+//export const UniclixLoader
 export default Loader;

@@ -115,7 +115,8 @@ class StreamsController extends Controller
 
         if(!$tab) return;
 
-        if($tab->selected == 1){
+        if($tab->selected == 1 && isset($data["selectedKey"])){
+            
             $firstTab = $this->user->tabs()->where("key", $data["selectedKey"])->first();
 
             if(!$firstTab) return;
@@ -139,5 +140,37 @@ class StreamsController extends Controller
         $this->user->tabs()->where("key", $data["key"])->update(["title" => $data["title"]]);
     }
 
-    
+    public function addStream(Request $request){
+        $channelId = $request->input("channelId");
+        $type = $request->input("type");
+        $network = $request->input("network");
+        $selectedTab = $request->input("selectedTab");
+
+        if(!$type || !$channelId || !$network) return;
+
+        $tabs = $this->user->tabs();
+
+        if(!$selectedTab || $selectedTab == "tab0"){
+            $tab = $tabs->create([
+                "key" => "first_tab",
+                "title" => "untitled",
+                "index" => 0,
+                "selected" => 1
+            ]);
+        }else{
+            $tab = $this->user->tabs()->where("key", $selectedTab)->first();
+        }
+
+        $latestStream = $tab->streams()->latest()->first();
+
+        $stream = $tab->streams()->create([
+            "index" => ($latestStream ? $latestStream->index + 1 : 0),
+            "channel_id" => $channelId,
+            "title" => $type["label"],
+            "type" => $type["value"],
+            "network" => $network
+        ]);
+
+        return response()->json($stream, 200);
+    }
 }
