@@ -45,6 +45,9 @@
     border: 1px solid #3333;
     padding: 8px;
     height: 65px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .overview-cards-container {
     margin-top:20px;
@@ -157,14 +160,19 @@
     font-size: 13px;
 }
 .analytics-head-left {
-    width: 50%;
-    float: left;
+    flex: 2;
     font-size: 18px;
     padding: 11px;
     font-weight: bold;
 }
+.streams-default-container {
+    flex: 1;
+}
 .analytics-head-right {
-    float: right;
-    width: 50%;
+    flex: 1;
     text-align: right;
+}
+.account-selection .profile-info img {
+    width: 40px !important;
+    height: 40px !important;
 }

@@ -20,8 +20,8 @@ const PostsTable = ({name, data}) =>
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map(post=> (
-                            <tr>
+                        {data.map((post, index)=> (
+                            <tr key={index}>
                                 <th scope="row">
                                     <div className="post-table-images">
                                         <img className="pt-page-img" src="/images/uniclix.png" />

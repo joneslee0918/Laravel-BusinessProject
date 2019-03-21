@@ -33,6 +33,26 @@ export default (channels = [], {selected, provider, publishable}) => {
     });
 };
 
+export const streamChannels = (channels = []) => {
+
+    if(!channels.length) return channels;
+
+    return channels.filter((channel) => {
+        let filter = true;
+
+        filter = (channel.type == "facebook" || channel.type == "twitter" || channel.type == "linkedin");
+
+        
+        try{
+            if(typeof(channel.details.account_type) !== "undefined"){
+                filter = filter && channel.details.account_type !== "profile";
+            }
+        }catch(e){}
+
+        return filter;
+    });
+};
+
 export const publishChannels = (channels = []) => {
 
     if(!channels.length) return channels;
