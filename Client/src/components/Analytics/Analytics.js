@@ -12,6 +12,11 @@ const menuItems = [
         uri: "/analytics/overview" 
     },
     {   
+        id: "facebook_overview",
+        displayName: "Facebook Overview",
+        uri: "/analytics/facebook-overview" 
+    },
+    {   
         id: "advanced",
         displayName: "Advanced",
         uri: "/analytics/advanced" 

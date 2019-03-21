@@ -28,14 +28,6 @@ Route::middleware('auth:api')->group(function(){
     Route::post('/post/{postId}', 'PublishController@postNow');
 
     Route::get('/articles', 'ArticlesController@articles');
-
-    Route::get('/streams', 'StreamsController@index');
-    Route::post('/streams/add', 'StreamsController@addStream');
-    Route::post('/streams/tabs/select', 'StreamsController@selectTab');
-    Route::post('/streams/tabs/position', 'StreamsController@positionTab');
-    Route::post('/streams/tabs/add', 'StreamsController@addTab');
-    Route::post('/streams/tabs/delete', 'StreamsController@deleteTab');
-    Route::post('/streams/tabs/rename', 'StreamsController@renameTab');
 });
 
 Route::post('/publish', 'PublishController@publish')->name('publish');
@@ -83,6 +75,7 @@ Route::prefix("facebook")->group(function(){
         Route::get('channels/accounts', 'Facebook\ChannelController@getAccounts');
         Route::post('channels/accounts/save', 'Facebook\ChannelController@saveAccounts');
         Route::get('analytics', 'Facebook\AnalyticsController@index');
+        Route::get('insights/page', 'Facebook\AnalyticsController@pageInsights');
     });
 });
 

@@ -41,3 +41,130 @@
     color: #666;
     line-height: 2;
 }
+.analytics-head {
+    border: 1px solid #3333;
+    padding: 8px;
+    height: 65px;
+}
+.overview-cards-container {
+    margin-top:20px;
+}
+.overview-card {
+    padding: 10px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 2px 4px 0 rgba(47,53,56,.25);
+    box-shadow: 0 2px 4px 0 rgba(47,53,56,.25);
+}
+.card-img {
+    width: 20px;
+    height: 20px;
+}
+.card-analytics-body {
+    text-align: center;
+    overflow: hidden;
+    min-height: 310px;
+    padding-top: 65px;
+}
+.card-number {
+    color: #46a5d1;
+    font-size: 70px;
+    font-weight: 700;
+}
+.card-description {
+    font-size: 24px;
+}
+.card-footer {
+    text-align: center;
+}
+.card-header {
+    font-size: 20px;
+    padding-bottom: 30px;
+}
+.card-header i {
+    float: right;
+    cursor: pointer
+}
+.mb20 {
+    margin-bottom: 20px;
+}
+.analytics-card {
+    min-height: 400px;
+    max-height: 400px;
+}
+.anl-desc{
+    float: left;
+}
+.anl-count {
+    float: right;
+    background: rgb(63, 92, 125);
+    border-radius: 4px;
+    padding: 2px 8px;
+    color: #fff;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 1.6em;
+}
+.anl-post-page {
+    padding-top:140px;
+}
+.eng-card-section {
+    overflow:hidden;
+    padding: 35px 0;
+}
+.eng-card-section-middle {
+    border-top: 1px solid #dedfe0;
+    border-bottom: 1px solid #dedfe0;
+}
+.anl-posts-table {
+    width:100%;
+    font-size: 12px;
+}
+.anl-posts-table-th-first {
+    width:10%;
+}
+.anl-posts-table-th-second {
+    width:70%;
+}
+.pt-page-img {
+    width: 50px;
+}
+.post-table-images {
+    width: 30%;
+    float: left;
+    position: relative;
+}
+.pt-page-facebook {
+    width: 15px;
+    position: absolute;
+    bottom: 0;
+    left: 33px;
+    z-index: 1;
+}
+.post-table-page-date {
+    width: 70%;
+    float: right;
+    padding-left:20px;
+}
+.post-table-page-date p {
+    margin:0;
+    padding:0;
+}
+.pt-post-date {
+    color: #46a5d1;
+    font-size: 10px;
+}
+.pt-page-name {
+    font-size: 13px;
+}
+.analytics-head-left {
+    width: 50%;
+    float: left;
+    font-size: 18px;
+    padding: 11px;
+    font-weight: bold;
+}
+.analytics-head-right {
+    float: right;
+    width: 50%;
+    text-align: right;
+}

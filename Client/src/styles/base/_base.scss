@@ -178,103 +178,6 @@ input {
     cursor:pointer;
 }
 
-.pos-relative{
-    position: relative !important
-}
-
-.tab-close-btn{
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 12px;
-    background: #efefef;
-    border-radius: 10px;
-    padding: 1px 2px;
-    cursor: pointer;
-    color: #777;
-}
-
-.react-tabs-container {
-    background-color: #ffffff !important;
-    border-color: #c3e7f1 !important;
-    border: none !important;
-}
-
-.react-tabs-tab-close{
-    width:20px !important;
-    height: 18px !important;
-}
-
-.react-tabs-tab {
-    color: rgba(153, 178, 184, 0.6) !important;
-    border: 1px solid !important;
-    border-top-left-radius: 5px !important;
-    border-top-right-radius: 5px !important;
-}
-
-.react-tabs-active {
-    color: #2a7496 !important;
-    background-color: #dff5fb !important;
-    border-color: #45c3e3 !important;
-    border-bottom: none !important;
-}
-
-.react-tabs-active .react-tabs-tab-close, .react-tabs-tab .react-tabs-tab-close {
-    border-color: #002b36;
-    border: none !important;
-}
-
-.react-tabs-child {
-    padding: 0px !important;
-    font-size: 18px !important;
-    margin-left: 0 !important;
-    outline:none !important;
-}
-
-.react-tabs-child button{
-    background: none !important;
-    border: 1px solid #ccc !important;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    height: 100% !important;
-    width: 40px !important;
-}
-
-.dndTabBarAfter{
-    background-color: #e2f7ff !important;
-    border-bottom: 1px solid #e2f7ff !important;
-}
-
-.dndTab{
-    background: #efefef !important;
-    border: none !important;
-    border-bottom: none !important;
-}
-
-.dndTabBefore, .dndTabAfter{
-    background: #efefef !important;
-    border: none !important;
-    box-shadow: none !important;
-    border-top: none !important;
-}
-
-.rdTabActive, .rdTabActive .dndTabAfter, .rdTabActive .dndTabBefore{
-    background:#e2f7ff !important;
-    border: none !important;
-}
-
-.dndTabTitle{
-    color: #777 !important;
-}
-
-.dndTabBefore{
-    border-right: none !important;
-}
-
-.dndTabAfter{
-    border-left: none !important;
-}
-
 .trash-btn{
     color:#e2e2e2;
     cursor:pointer;
@@ -432,41 +335,6 @@ input {
     color: white !important;
 }
 
-.streams-default{
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-
-.streams-default .selection-item {
-    font-size: 5em;
-    text-align: center;
-    width: 120px;
-    height: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: #c4eeff;
-    color: #61b7cc;
-    margin: 10px;
-    cursor: pointer;
-}
-
-.streams-default .selection-item:hover{
-    background:#84dcff;
-    color:#31708f;
-}
-
-.streams-default .selection-item span{
-    font-size: 0.2em;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-family: open-sansBold;
-}
-
 .smallIcon{
     width: 15px;
     height: 15px;
@@ -479,34 +347,6 @@ input {
     justify-content: center;
     align-items: center;
     color: white;
-}
-
-.stream-feed-container{
-    width: 100%;
-    background: white;
-    padding:16px;
-    margin-bottom: 5px;
-}
-
-.stream-feed-container .post-info img, .stream-feed-container .post-info > div{
-    display:block;
-    float:left;
-}
-
-.stream-feed-container .post-info img{
-    width: 55px;
-}
-
-.stream-feed-container .post-content{
-    clear:both;
-    margin-top:50px;
-}
-
-.stream-title{
-    background:white;
-    border-bottom:1px solid #ccc;
-    margin:0;
-    padding:10px;
 }
 
 .ReactModalPortal .ReactModal__Overlay {
@@ -1713,37 +1553,8 @@ input {
     overflow-y: auto;
 }
 
-.streams-default-container .account-selection{
-    max-width: 700px;
-    margin: 10px auto;
-    padding: 10px;
-}
-
-.streams-default-container .account-selection .profile-info{
-    color: #61b7cc;
-    margin:0 !important;
-    padding:10px;
-    border:none;
-}
-
-.streams-default-container .css-1hwfws3 {
-    padding: 18px !important;
-}
-
-.streams-default-container .profile-info p{
-    max-width:300px;
-}
-
 .select-channel{
     padding: 0px 0 !important;
-}
-
-.streams-default-container .channel-container:hover{
-    background: none;
-}
-
-.streams-default-container .channel-container:hover .profile-info{
-    color: #46a8ce;
 }
 
 .channel-container:hover{
@@ -1859,23 +1670,9 @@ aside .btn-group {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.7); /* Black background with opacity */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
     z-index: 1000; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
-}
-
-.fixed-center{
-    position: fixed;
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 9999;
 }
 
 .lds-ripple {
@@ -1969,22 +1766,6 @@ aside .btn-group {
 .accounts-container{
     margin: 100px auto;
     width: 90%;
-}
-
-.sp-container{
-    margin: 100px auto;
-}
-
-.sky-bg{
-    background: #f4fbff !important;
-}
-
-.bordered-tab{
-    border:1px solid #ddd !important;
-}
-
-.active > .bordered-tab{
-    border-bottom:1px solid transparent !important;
 }
 
 .accounts-container h2{

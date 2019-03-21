@@ -46,16 +46,16 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
-    public function getPosts(){
+    public function getPosts($since=null, $until=null){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/feed");
+        $response = $fb->get("/{$this->original_id}/feed?since={$since}&until={$until}");
 
         return $response->getDecodedBody();
     }
 
-    public function pageLikes($period){
+    public function pageLikes($period, $since=null, $until=null){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/insights/page_fan_adds_unique/{$period}");
+        $response = $fb->get("/{$this->original_id}/insights/page_fan_adds_unique?since={$since}&until={$until}&period={$period}");
 
         return $response->getDecodedBody();
     }
@@ -74,11 +74,88 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
-    public function pageReactions($period){
+    public function pageLikeReactions($period){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_total/{$period}");
+        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_like_total/{$period}");
 
         return $response->getDecodedBody();
+    }
+
+    public function pageLoveReactions($period){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_love_total/{$period}");
+
+        return $response->getDecodedBody();
+    }
+
+    public function pageWowReactions($period){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_wow_total/{$period}");
+
+        return $response->getDecodedBody();
+    }
+
+    public function pageHahaReactions($period){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_haha_total/{$period}");
+
+        return $response->getDecodedBody();
+    }
+
+    public function pageSorryReactions($period){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_sorry_total/{$period}");
+
+        return $response->getDecodedBody();
+    }
+
+    public function pageAngerReactions($period){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_anger_total/{$period}");
+
+        return $response->getDecodedBody();
+    }
+
+    public function pagePostEngagements($period){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/insights/page_post_engagements/{$period}");
+
+        return $response->getDecodedBody();
+    }
+
+    public function postComments($object_id){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$object_id}/comments");
+
+        return $response->getDecodedBody();
+    }
+
+    public function postReactions($object_id){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$object_id}/reactions");
+
+        return $response->getDecodedBody();
+    }
+
+    public function postShares($object_id){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$object_id}/sharedposts");
+
+        return $response->getDecodedBody();
+    }
+
+    public function pageTotalReactions($period){
+        $like = $this->pageLikeReactions($period)['data'][0]['values'][1]['value'];
+        $love = $this->pageLoveReactions($period)['data'][0]['values'][1]['value'];
+        $wow = $this->pageWowReactions($period)['data'][0]['values'][1]['value'];
+        $haha = $this->pageHahaReactions($period)['data'][0]['values'][1]['value'];
+        $sorry = $this->pageSorryReactions($period)['data'][0]['values'][1]['value'];
+        $anger = $this->pageAngerReactions($period)['data'][0]['values'][1]['value'];
+
+        $total = $like+$love+$wow+$haha+$sorry+$anger;
+
+        return $total;
+
     }
 
     public function getNonProfileAvatar()
@@ -228,16 +305,27 @@ trait FacebookTrait
      */
     public function syncFacebookPosts()
     {
-        $data[] = [
-            'channel_id' => $this->id,
-            'post_id' => 12,
-            'message' => 'test',
-            'original_created_at' => Carbon::now(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ];
+        $posts = $this->getPosts();
 
-        \DB::table('facebook_posts')->insert($data);
+        if($posts)
+        {
+            foreach($posts['data'] as $post)
+            {
+                $data[] = [
+                    'channel_id' => $this->id,
+                    'post_id' => $post['id'],
+                    'message' => array_key_exists('message', $post) ? $post['message'] : null,
+                    'story' => array_key_exists('story', $post) ? $post['story'] : null,
+                    'original_created_at' => Carbon::parse($post['created_time'])->toDateTimeString(),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+            }
+
+            \DB::table('facebook_posts')->insert($data);
+        }
+
+
     }
 
 }

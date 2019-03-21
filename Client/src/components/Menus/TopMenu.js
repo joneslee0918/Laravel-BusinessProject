@@ -12,7 +12,6 @@ const TopMenu = ({setComposerModal}) => (
             <li><NavLink to="/home" activeClassName="active">HOME</NavLink></li> 
             <li><NavLink to="/manage" activeClassName="active">MANAGE</NavLink></li> 
             <li><NavLink to="/scheduled" activeClassName="active">SCHEDULED</NavLink></li>  
-            <li><NavLink to="/streams" activeClassName="active">STREAMS</NavLink></li>  
             <li><NavLink to="/accounts" activeClassName="active">ACCOUNTS</NavLink></li>
             <li><NavLink to="/analytics" activeClassName="active">ANALYTICS</NavLink></li> 
         </ul>

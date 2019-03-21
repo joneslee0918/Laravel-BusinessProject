@@ -23,4 +23,24 @@ class AnalyticsController extends Controller
 
         return response()->json(['error' => 'No channel found'], 404);
     }
+    /**
+     * 
+     * Prepare data for Facebook Page Insights
+     */
+    public function pageInsights(Request $request)
+    {
+        $user = auth()->user();
+        $channel = $user->channels()->find($request->id);
+
+        try{
+            if($channel){
+                $channel = $channel->details;
+                return response()->json($channel->pageInsights($request->startDate, $request->endDate));
+            }
+        }catch(\Exception $e){
+            return getErrorResponse($e, $channel->global);
+        }
+
+        return response()->json(['error' => 'No channel found'], 404);
+    }
 }

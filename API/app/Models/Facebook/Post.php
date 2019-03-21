@@ -11,6 +11,7 @@ class Post extends Model
         "channel_id",
         "post_id",
         "message",
+        "story",
         "original_created_at",
         "created_at",
         "updated_at"

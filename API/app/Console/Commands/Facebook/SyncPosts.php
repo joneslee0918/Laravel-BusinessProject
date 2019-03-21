@@ -38,7 +38,7 @@ class SyncPosts extends Command
      */
     public function handle()
     {
-        $channels = Channel::whereDoesntHave("processes", function($q){
+        $channels = Channel::where('account_type','page')->whereDoesntHave("processes", function($q){
             $q->where('process_name', 'syncFacebookPosts');
         })->get();
 

@@ -30,3 +30,10 @@ export const getAnalytics = (id, days=1) => {
             return response.data;
         });
 };
+
+export const pageInsights = (id, startDate, endDate) => {
+    return axios.get(`${apiUrl}/facebook/insights/page?id=${id}&startDate=${startDate}&endDate=${endDate}`)
+        .then((response) => {
+            return response.data;
+        });
+};

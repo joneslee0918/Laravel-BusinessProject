@@ -19,6 +19,7 @@ class VerifyCsrfToken extends Middleware
         'sync/twitter/likes',
         'twitter/follow',
         'twitter/unfollow',
-        'admin/post/image/upload'
+        'admin/post/image/upload',
+        'sync/facebook/posts'
     ];
 }

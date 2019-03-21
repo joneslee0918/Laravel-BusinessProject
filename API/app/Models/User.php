@@ -108,11 +108,6 @@ class User extends Authenticatable
         return $this->hasMany(Topic::class);
     }
 
-    public function tabs()
-    {
-        return $this->hasMany(Tab::class);
-    }
-
     public function locations()
     {
         return $this->hasMany(Location::class);

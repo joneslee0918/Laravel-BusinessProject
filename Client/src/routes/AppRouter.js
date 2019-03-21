@@ -4,7 +4,6 @@ import createHistory from "history/createBrowserHistory";
 import Home from "../components/Home/Home";
 import Manage from "../components/Manage/Manage";
 import Scheduled from "../components/Scheduled/Scheduled";
-import Streams from "../components/Streams/Streams";
 import Accounts from "../components/Accounts/Accounts";
 import Settings from "../components/Settings/Settings";
 import Analytics from "../components/Analytics/Analytics";
@@ -25,7 +24,6 @@ class AppRouter extends React.Component {
                         <PrivateRoute path="/home" component={Home} />
                         <PrivateRoute path="/manage" component={Manage} />
                         <PrivateRoute path="/scheduled" component={Scheduled} />
-                        <PrivateRoute path="/streams" component={Streams} />
                         <PrivateRoute path="/accounts" component={Accounts} />
                         <PrivateRoute path="/settings" component={Settings} />
                         <PrivateRoute path="/analytics" component={Analytics} />

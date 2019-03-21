@@ -87,11 +87,11 @@ class FacebookAnalytics extends React.Component {
                         <div className="col-md-6 col-xs-12">
                             <div className="row">
                                 <div className="col-md-4 col-xs-12 border-right">
-                                    <h3>0</h3>
+                                    <h3>{this.state.data.posts}</h3>
                                     <p>Posts</p>
                                 </div>
                                 <div className="col-md-4 col-xs-12 border-right">
-                                    <h3>0</h3>
+                                    <h3>{this.state.data.reactions}</h3>
                                     <p>Reactions</p>
                                 </div>
                                 <div className="col-md-4 col-xs-12">
