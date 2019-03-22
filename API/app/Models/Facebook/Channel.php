@@ -8,6 +8,7 @@ use App\Models\Channel as GlobalChannel;
 use App\Models\Facebook\Post as FacebookPost;
 use App\Models\User;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
@@ -124,21 +125,27 @@ class Channel extends Model
                 $data = []; 
                 $startDate = Carbon::now();   
 
-                $fans = collect($this->pageLikes($period, $sDate, $eDate)['data'][0]['values'])->sum('value');
-                $engagement = $this->pageEngagement($period)['data'][0]['values'][1]['value'];
+                $fans = collect($this->pageLikes('day', $sDate, $eDate)['data'][0]['values'])->last()['value'];
                 $posts = $this->getPosts($sDate, $eDate)['data'];
                 $postsChartData = $this->postsChartData($sDate, $eDate);
                 $fansChartData = $this->fansChartData($sDate, $eDate);
-                $reactions = $this->pageTotalReactions($period);
+                $postsData = $this->postsData($sDate, $eDate);
+                $reactions = $postsData->sum('reactions');
+                $comments = $postsData->sum('comments');
+                $shares = $postsData->sum('shares');
+                $engagementByTypeData = $this->engagementByTypeData($sDate, $eDate);
         
                 $data = [                    
                     'posts' => count($posts),
                     'fans' => $fans,
-                    'engagement' => $engagement,
                     'postsChartData' => $postsChartData,
                     'fansChartData' => $fansChartData,
+                    'postsData' => $postsData,
                     'reactions' => $reactions,
-                    'postsData' => $this->postsData(),
+                    'comments' => $comments,
+                    'shares' => $shares,
+                    'engagement' => $reactions + $comments + $shares,
+                    'engagementByTypeData' => $engagementByTypeData
                 ];
 
                 return $data;
@@ -163,7 +170,7 @@ class Channel extends Model
 
         foreach($grouped_posts as $key=>$value)
         {
-            $data[] = [$key, count($value)];
+            $data[] = [Carbon::parse($key)->timestamp*1000, count($value)];
         }
 
         return $data;
@@ -176,13 +183,15 @@ class Channel extends Model
     {
         $data = [];
 
-        $fans = $this->pageLikes('month', $sDate, $eDate);
+        $fans = $this->pageLikes('day', $sDate, $eDate);
 
         $values = $fans['data'][0]['values'];
 
+
         foreach($values as $value)
         {
-            $data[] = [Carbon::parse($value['end_time'])->format("Y-m-d"), $value['value']];
+
+            $data[] = [Carbon::parse($value['end_time'])->timestamp*1000, $value['value']];
         }
 
         return $data;
@@ -191,18 +200,58 @@ class Channel extends Model
     /**
      * Prepare data for Posts Table
      */
-    public function postsData()
-    {
-        $posts = $this->posts;
+    public function postsData($sDate, $eDate)
+    {        
+        $posts = $this->getPosts($sDate, $eDate)['data']; 
+
+        $preparePosts = collect();
 
         foreach($posts as $post)
         {
-            $post->date = Carbon::parse($post->original_created_at)->format('M y, H:i');
-            $post->reactions = count($this->postReactions($post->post_id)['data']);
-            $post->comments = count($this->postComments($post->post_id)['data']);
-            $post->shares = count($this->postShares($post->post_id)['data']);
+            $post = collect($post);
+            $post->put('date', Carbon::parse($post['created_time'])->format('M y, H:i'));
+            $post->put('reactions', count($this->postReactions($post['id'])['data']));
+            $post->put('comments', count($this->postComments($post['id'])['data']));
+            $post->put('shares', count($this->postShares($post['id'])['data']));
+            $post->put('timestamp', Carbon::parse($post['created_time'])->timestamp);
+            
+            $preparePosts->push($post);
         }
 
-        return $posts;
+        return $preparePosts;
+    }
+
+    /**
+     * Prepare data for Posts Table
+     */
+    public function engagementByTypeData($startDate, $endDate)
+    {   
+        $likes = collect($this->pageLikeReactions('day', $startDate, $endDate)['data'][0]['values']);
+        $love = collect($this->pageLoveReactions('day', $startDate, $endDate)['data'][0]['values']);
+        $wow = collect($this->pageWowReactions('day', $startDate, $endDate)['data'][0]['values']);
+        $haha = collect($this->pageHahaReactions('day', $startDate, $endDate)['data'][0]['values']);
+        $sorry = collect($this->pageSorryReactions('day', $startDate, $endDate)['data'][0]['values']);
+        $anger = collect($this->pageAngerReactions('day', $startDate, $endDate)['data'][0]['values']);
+
+        $merged = $likes->merge($love)->merge($wow)->merge($haha)->merge($sorry)->merge($anger);
+
+        $keyed = $merged->mapWithKeys(function ($item) {
+            return [$item['end_time'] => $item['value'] + $item['value']];
+        });
+        
+        // return $keyed->toArray();
+
+        $data = collect();
+
+        $data->put('name', 'Reactions');
+
+        $reactions = [];
+        foreach($keyed->toArray() as $key => $value)
+        {
+            $reactions[] = [Carbon::parse($key)->timestamp*1000, $value];
+        }
+        $data->put('data', $reactions);
+
+        return $data;
     }
 }
