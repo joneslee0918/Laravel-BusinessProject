@@ -49,3 +49,10 @@ export const addStream = (type, channelId, selectedTab, network) => {
                 return response.data;
             });
 };
+
+export const getStreamFeed = (type, network, channelId) => {
+    return axios.get(`${apiUrl}/${network}/streams/${type}?channelId=${channelId}`)
+        .then((response) => {
+            return response.data;
+        });
+};

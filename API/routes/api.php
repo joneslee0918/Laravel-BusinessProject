@@ -73,6 +73,8 @@ Route::prefix("twitter")->group(function(){
         Route::patch('unfollow/{userId}', 'Twitter\Actions\UnfollowController@unfollow');
 
         Route::post('tweet', 'Twitter\Actions\StatusController@tweet');
+
+        Route::get('streams/home', 'Twitter\StreamsFeedController@home');
     });
 });
 

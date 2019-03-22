@@ -131,12 +131,15 @@ class FacebookOverview extends React.Component {
                     <div className="col-md-9 col-xs-12"><PostsChart name="Fans" data={this.state.data.fansChartData}/></div>
                 </div>
                 <div className="row mb20">
-                    <div className="col-md-3 col-xs-12"><EngagementCard name="Engagement by Type" reactions={this.state.data.reactions} comments={this.state.data.comments} shares={this.state.data.shares}/></div>
-                    <div className="col-md-9 col-xs-12"><EngagementChart name="Engagement by Type" data={this.state.data.engagementByTypeData} startDate = {this.state.startDate} endDate={this.state.endDate}/></div>
+                    <div className="col-md-3 col-xs-12"><EngagementCard name="Engagement by Type" count="599" description="Uniclix"/></div>
+                    <div className="col-md-9 col-xs-12"><EngagementChart name="Fans"/></div>
                 </div>
                 <div className="row mb20">
                     <div className="col-xs-12"><PostsTable name="Posts Table" count="0" data={this.state.data.postsData}/></div>
                 </div>
+                {/* <div className="row mb20">
+                    <div className="col-xs-12"><VideoViewsTable name="Posts Views Table" /></div>
+                </div> */}
             </div> }
             </div>
         );

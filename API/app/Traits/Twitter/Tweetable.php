@@ -270,15 +270,39 @@ trait Tweetable
      * @param array $params
      * @return array
      */
-    public function getTweets($params = [])
-    {
+    public function getTweets($params = [], $limit = 200)
+    {   
         try {
-            $this->setAsCurrentUser();
-            return Twitter::getUserTimeline(['screen_name'=>$this->username, 'count'=>200]);
+            $key = $this->id . "-userTimeline";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($limit){
+                $this->setAsCurrentUser();
+                return Twitter::getUserTimeline(['screen_name'=>$this->username, 'count'=>$limit]);
+            });
         } catch (\Exception $e) {
             throw $e;
         }
     }
+
+
+        /**
+     * @param array $params
+     * @return array
+     */
+    public function getHome($params = [], $limit = 200)
+    {   
+        try {
+            $key = $this->id . "-homeTimeline";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($limit){
+                $this->setAsCurrentUser();
+                return Twitter::getHomeTimeline(['screen_name'=>$this->username, 'count'=>$limit]);
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
 
     /**
      * @param array $params

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EngagementCard = ({name, reactions, comments, shares}) => 
+const EngagementCard = ({name, count, description, growth}) => 
 
     (
         <div className="overview-card analytics-card">
@@ -10,15 +10,15 @@ const EngagementCard = ({name, reactions, comments, shares}) =>
             </div>
             <div className="eng-card-section">
                 <span className="anl-desc card-description">Reactions</span>
-                <span className="anl-count">{reactions}</span>
+                <span className="anl-count">10</span>
             </div>
             <div className="eng-card-section eng-card-section-middle">
                 <span className="anl-desc card-description">Comments</span>
-                <span className="anl-count">{comments}</span>
+                <span className="anl-count">10</span>
             </div>
             <div className="eng-card-section">
                 <span className="anl-desc card-description">Shares</span>
-                <span className="anl-count">{shares}</span>
+                <span className="anl-count">10</span>
             </div>
         </div>
     );

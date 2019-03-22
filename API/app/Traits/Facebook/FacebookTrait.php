@@ -53,9 +53,9 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
-    public function pageLikes($period='day', $since=null, $until=null){
+    public function pageLikes($period, $since=null, $until=null){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/insights/page_fans?since={$since}&until={$until}&period={$period}");
+        $response = $fb->get("/{$this->original_id}/insights/page_fan_adds_unique?since={$since}&until={$until}&period={$period}");
 
         return $response->getDecodedBody();
     }
@@ -67,51 +67,51 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
-    public function pageEngagement($period, $since=null, $until=null){
+    public function pageEngagement($period){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/insights/page_engaged_users?{$period}&since={$since}&until={$until}");
+        $response = $fb->get("/{$this->original_id}/insights/page_engaged_users/{$period}");
 
         return $response->getDecodedBody();
     }
 
-    public function pageLikeReactions($period, $since=null, $until=null){
+    public function pageLikeReactions($period){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_like_total?since={$since}&until={$until}&period={$period}");
+        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_like_total/{$period}");
 
         return $response->getDecodedBody();
     }
 
-    public function pageLoveReactions($period, $since=null, $until=null){
+    public function pageLoveReactions($period){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_love_total?since={$since}&until={$until}&period={$period}");
+        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_love_total/{$period}");
 
         return $response->getDecodedBody();
     }
 
-    public function pageWowReactions($period, $since=null, $until=null){
+    public function pageWowReactions($period){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_wow_total?since={$since}&until={$until}&period={$period}");
+        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_wow_total/{$period}");
 
         return $response->getDecodedBody();
     }
 
-    public function pageHahaReactions($period, $since=null, $until=null){
+    public function pageHahaReactions($period){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_haha_total?since={$since}&until={$until}&period={$period}");
+        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_haha_total/{$period}");
 
         return $response->getDecodedBody();
     }
 
-    public function pageSorryReactions($period, $since=null, $until=null){
+    public function pageSorryReactions($period){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_sorry_total?since={$since}&until={$until}&period={$period}");
+        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_sorry_total/{$period}");
 
         return $response->getDecodedBody();
     }
 
-    public function pageAngerReactions($period, $since=null, $until=null){
+    public function pageAngerReactions($period){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_anger_total?since={$since}&until={$until}&period={$period}");
+        $response = $fb->get("/{$this->original_id}/insights/page_actions_post_reactions_anger_total/{$period}");
 
         return $response->getDecodedBody();
     }
