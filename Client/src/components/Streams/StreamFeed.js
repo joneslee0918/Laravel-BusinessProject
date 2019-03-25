@@ -21,7 +21,7 @@ class StreamFeed extends React.Component{
     render(){
         
         return (
-            <div>
+            <div className="stream-feed scrollbar">
                 {this.state.items.length ? this.state.items.map(item => (
                     <StreamFeedItem  feedItem={item} key={item.id} />
                 )) : <div>No data</div>}
