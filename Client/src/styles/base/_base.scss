@@ -468,7 +468,7 @@ input {
 }
 
 .stream-feed{
-    height: 80vh;
+    height: 75vh;
     overflow:auto;
 }
 
@@ -493,9 +493,22 @@ input {
     margin-bottom: 5px;
 }
 
+.stream-feed-container .post-info img, .stream-feed-container .post-info{
+    overflow:hidden;
+    color:#999;
+}
+
 .stream-feed-container .post-info img, .stream-feed-container .post-info > div{
     display:block;
     float:left;
+}
+
+.stream-feed-container .post-info img, .stream-feed-container .post-info .post-info-item{
+    margin-left:10px;
+}
+
+.stream-feed-container .post-info img, .stream-feed-container .post-info .profile-info .post-date{
+    color: #777;
 }
 
 .stream-feed-container .post-info img{
@@ -503,8 +516,8 @@ input {
 }
 
 .stream-feed-container .post-content{
-    clear:both;
-    margin-top:50px;
+    margin-top:10px;
+    color: #666;
 }
 
 .stream-title{

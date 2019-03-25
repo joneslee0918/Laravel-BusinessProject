@@ -58,6 +58,10 @@ class StreamCreator extends React.Component{
                         ))}
 
                     </div>
+                    {typeof this.props.close !== "undefined" && 
+                    <div className="txt-center p10">
+                            <a href="#" onClick={this.props.close}>Cancel</a>
+                    </div>}
                 </div>);
     }
 }

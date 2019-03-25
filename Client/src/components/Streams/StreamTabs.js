@@ -48,7 +48,8 @@ class StreamTabs extends Component {
        this.fetchStreamTabs();
     }
     
-    componentDidUpdate(){
+    componentDidUpdate(prevProps, prevState){
+
     }
 
     getChildContext(){

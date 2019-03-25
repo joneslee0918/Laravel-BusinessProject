@@ -9,7 +9,6 @@ class StreamFeed extends React.Component{
 
     componentDidMount(){
         const {streamItem} = this.props;
-
         getStreamFeed(streamItem.type, streamItem.network, streamItem.channel_id).then((response) => {
             if(!response.length) return;
             this.setState(() => ({
