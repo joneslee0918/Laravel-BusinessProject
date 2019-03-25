@@ -33,9 +33,7 @@ class StreamCreator extends React.Component{
         const selectedTab = this.props.selectedTab;
 
         addStream(item, channelId, selectedTab, network).then(() => this.props.reload()).then(() => {
-            // this.setState(() => ({
-            //     loading: false
-            // }));
+            if(typeof this.props.close !== "undefined") this.props.close();
         });
     };
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import _ from 'lodash';
+import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {Dialog, FlatButton, Menu, MenuItem, TextField} from 'material-ui';
@@ -39,7 +40,8 @@ class StreamTabs extends Component {
       showMenu: false,
       dialogOpen: false,
       selectedTab: "tab0",
-      loading: false
+      loading: false,
+      addStream: false
     };
 
     componentDidMount(){
@@ -188,6 +190,12 @@ class StreamTabs extends Component {
         console.log('should tab close', e, key);
         return window.confirm('Closing this tab will remove the streams associated with it. Are you sure?');
     }
+
+    handleAddStream = () => {
+        this.setState(() => ({
+            addStream: !this.state.addStream
+        }));
+    }
     
     fetchStreamTabs = () => {
         this.setState(() => ({
@@ -204,7 +212,10 @@ class StreamTabs extends Component {
                              <Tab key={tab.key} title={tab.title} {...this.makeListeners(tab.key)}>
                                  <div>
                                     {tab.streams.length ? 
-                                    <StreamItems streams={tab.streams}/>
+                                    <div className="lightgrey-bg">
+                                        <button className="white-txt-btn" onClick={this.handleAddStream}>Add Stream</button>
+                                        <StreamItems streams={tab.streams}/>
+                                    </div>
                                     : 
                                     <StreamCreator selectedTab = {selectedTab} reload = {this.fetchStreamTabs} />}
                                     
@@ -252,6 +263,10 @@ class StreamTabs extends Component {
              
                     this.state.tabs.length > 0 ?            
                         <div>
+                            <Modal isOpen={!!this.state.addStream} ariaHideApp={false} className="stream-type-modal">
+                                <StreamCreator selectedTab = {this.state.selectedTab} reload = {this.fetchStreamTabs} close={this.handleAddStream} />
+                            </Modal>
+
                             <Tabs
                             tabsClassNames={tabsClassNames}
                             tabsStyles={tabsStyles}

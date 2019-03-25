@@ -3,10 +3,10 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import StreamFeed from "./StreamFeed";
 
 // fake data generator
-const getItems = count =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `item-${k}`,
-    content: `item ${k}`,
+const getItems = streams =>
+  streams.map(k => ({
+    id: k.id,
+    content: k.title,
   }));
 
 // a little function to help us with reordering the result
@@ -23,7 +23,7 @@ const grid = 5;
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: 'none',
-  margin: `10px ${grid}px 10px 5px`,
+  margin: `0px ${grid}px 10px 5px`,
   width: `500px`,
   height: `auto`,
 
@@ -54,7 +54,7 @@ class StreamItems extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: getItems(3),
+      items: this.props.streams.length ? this.props.streams : [],
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
@@ -79,7 +79,6 @@ class StreamItems extends Component {
   // Normally you would want to split things out into separate components.
   // But in this example everything is just done in one place for simplicity
   render() {
-    const {streams} = this.props;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal">
@@ -89,7 +88,8 @@ class StreamItems extends Component {
               style={getListStyle(snapshot.isDraggingOver)}
               {...provided.droppableProps}
             >
-              {streams.map((item, index) => (
+              {this.state.items.map((item, index) => {
+                return (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
                     <div
@@ -101,6 +101,7 @@ class StreamItems extends Component {
                         provided.draggableProps.style
                       )}
                     >
+                    
                       <h3 style={getTitleStyle(
                         snapshot.isDragging,
                         provided.draggableProps.style
@@ -111,7 +112,7 @@ class StreamItems extends Component {
                     </div>
                   )}
                 </Draggable>
-              ))}
+              )})}
               {provided.placeholder}
             </div>
           )}
