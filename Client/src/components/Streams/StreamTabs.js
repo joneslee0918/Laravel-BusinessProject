@@ -195,7 +195,7 @@ class StreamTabs extends Component {
         }));
         getStreams().then((response) => {
            let selectedTab = response.filter(tab => tab.selected === 1);
-           selectedTab = !!selectedTab.length ? selectedTab[0].key : "tab0";
+           selectedTab = !!selectedTab.length ? selectedTab[0].key : this.state.selectedTab;
 
             if(!!response.length){
                  this.setState(() => ({
@@ -206,7 +206,7 @@ class StreamTabs extends Component {
                                     {tab.streams.length ? 
                                     <StreamItems streams={tab.streams}/>
                                     : 
-                                    <StreamCreator selectedTab = {this.state.selectedTab} reload = {this.fetchStreamTabs} />}
+                                    <StreamCreator selectedTab = {selectedTab} reload = {this.fetchStreamTabs} />}
                                     
                                  </div>
                              </Tab>

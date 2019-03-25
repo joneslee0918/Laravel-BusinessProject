@@ -31,6 +31,7 @@ class StreamCreator extends React.Component{
         const channelId = this.state.selectedAccount.value;
         const network = this.state.selectedAccount.type;
         const selectedTab = this.props.selectedTab;
+
         addStream(item, channelId, selectedTab, network).then(() => this.props.reload()).then(() => {
             // this.setState(() => ({
             //     loading: false
