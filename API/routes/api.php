@@ -31,6 +31,7 @@ Route::middleware('auth:api')->group(function(){
 
     Route::get('/streams', 'StreamsController@index');
     Route::post('/streams/add', 'StreamsController@addStream');
+    Route::post('/streams/position', 'StreamsController@positionStream');
     Route::post('/streams/tabs/select', 'StreamsController@selectTab');
     Route::post('/streams/tabs/position', 'StreamsController@positionTab');
     Route::post('/streams/tabs/add', 'StreamsController@addTab');
