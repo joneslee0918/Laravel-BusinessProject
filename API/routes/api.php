@@ -74,7 +74,7 @@ Route::prefix("twitter")->group(function(){
 
         Route::post('tweet', 'Twitter\Actions\StatusController@tweet');
 
-        Route::get('streams/home', 'Twitter\StreamsFeedController@home');
+        Route::get('streams/{type}', 'Twitter\StreamsFeedController@index');
     });
 });
 

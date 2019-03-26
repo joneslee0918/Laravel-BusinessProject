@@ -285,7 +285,7 @@ trait Tweetable
     }
 
 
-        /**
+    /**
      * @param array $params
      * @return array
      */
@@ -303,16 +303,37 @@ trait Tweetable
         }
     }
 
-
     /**
      * @param array $params
      * @return array
      */
-    public function getRetweets($params = [])
-    {
+    public function getMentions($params = [], $limit = 200)
+    {   
         try {
-            $this->setAsCurrentUser();
-            return Twitter::getRtsTimeline(['screen_name'=>$this->username]);
+            $key = $this->id . "-mentionsTimeline";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($limit){
+                $this->setAsCurrentUser();
+                return Twitter::getMentionsTimeline(['screen_name'=>$this->username, 'count'=>$limit]);
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+        /**
+     * @param array $params
+     * @return array
+     */
+    public function getRetweets($params = [], $limit = 200)
+    {   
+        try {
+            $key = $this->id . "-rtsTimeline";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($limit){
+                $this->setAsCurrentUser();
+                return Twitter::getRtsTimeline(['screen_name'=>$this->username, 'count'=>$limit]);
+            });
         } catch (\Exception $e) {
             throw $e;
         }
@@ -322,11 +343,37 @@ trait Tweetable
      * @param array $params
      * @return array
      */
-    public function getLikes($params = [])
-    {
+    public function getFollowers($params = [], $limit = 200)
+    {   
         try {
-            $this->setAsCurrentUser();
-            return Twitter::getFavorites(['screen_name'=>$this->username]);
+            $key = $this->id . "-followersTimeline";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($limit){
+                $this->setAsCurrentUser();
+                $result = Twitter::getFollowers(['screen_name'=>$this->username, 'count'=>$limit]);
+
+                if(!property_exists($result, "users")) return [];
+
+                return $result->users;
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+        /**
+     * @param array $params
+     * @return array
+     */
+    public function getLikes($params = [], $limit = 200)
+    {   
+        try {
+            $key = $this->id . "-likesTimeline";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($limit){
+                $this->setAsCurrentUser();
+                return Twitter::getFavorites(['screen_name'=>$this->username, 'count'=>$limit]);
+            });
         } catch (\Exception $e) {
             throw $e;
         }

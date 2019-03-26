@@ -17,7 +17,8 @@ class StreamsFeedController extends Controller{
         });
     }
 
-    public function home(Request $request){
+    public function index($type, Request $request){
+
         $channelId = $request->get("channelId");
 
         if(!$channelId) return;
@@ -28,11 +29,12 @@ class StreamsFeedController extends Controller{
 
         $channel = $channel->details;
 
-        $feed = $channel->getHome();
+        $func = "get".ucfirst($type);
+
+        $feed = $channel->{$func}();
 
         if(!$feed) return;
 
         return response()->json($feed, 200);
     }
-
 }
