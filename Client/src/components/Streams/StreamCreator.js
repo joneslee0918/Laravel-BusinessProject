@@ -31,9 +31,10 @@ class StreamCreator extends React.Component{
         const channelId = this.state.selectedAccount.value;
         const network = this.state.selectedAccount.type;
         const selectedTab = this.props.selectedTab;
-
         addStream(item, channelId, selectedTab, network).then(() => this.props.reload()).then(() => {
-            if(typeof this.props.close !== "undefined") this.props.close();
+            // this.setState(() => ({
+            //     loading: false
+            // }));
         });
     };
 
@@ -58,10 +59,6 @@ class StreamCreator extends React.Component{
                         ))}
 
                     </div>
-                    {typeof this.props.close !== "undefined" && 
-                    <div className="txt-center p10">
-                            <a href="#" onClick={this.props.close}>Cancel</a>
-                    </div>}
                 </div>);
     }
 }

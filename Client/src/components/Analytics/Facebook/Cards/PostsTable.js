@@ -1,14 +1,57 @@
 import React from 'react';
+import { pageInsightsByType } from "../../../../requests/facebook/channels";
 
-const PostsTable = ({name, data}) => 
+class PostsTable extends React.Component{
+    state = {
+        posts: null,
+        loading: false
+    };
 
-    (
+    componentDidMount(){
+        this.fetchAnalytics();
+    };
+
+    componentDidUpdate(prevProps){
+        if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
+        {
+            this.fetchAnalytics();
+        }
+        
+    }
+
+    fetchAnalytics = () => {
+        this.setState(() => ({
+            loading: true
+        }));
+        try {
+            pageInsightsByType(this.props.selectedAccount, this.props.startDate, this.props.endDate, this.props.type)            
+            .then((response) => {
+                this.setState(() => ({
+                    posts: response,
+                    loading: false
+                }));
+            }).catch(error => {
+                this.setState(() => ({
+                    loading: false
+                }));
+                return Promise.reject(error);
+            }); 
+        } catch (error) {
+            
+        }
+        
+    };
+
+    render(){
+        const {name} = this.props;
+        return (
         <div className="overview-card">
             <div className="card-header">
                 <img className="card-img" src="/images/facebook.png"></img> {name}
                 <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
             </div>
             <div className="card-table">
+                {this.state.posts !=null &&
                 <table className="table anl-posts-table">
                     <thead>
                         <tr>
@@ -20,7 +63,7 @@ const PostsTable = ({name, data}) =>
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((post, index)=> (
+                        {this.state.posts.map((post, index)=> (
                             <tr key={index}>
                                 <th scope="row">
                                     <div className="post-table-images">
@@ -39,9 +82,11 @@ const PostsTable = ({name, data}) =>
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </table>}
             </div>
         </div>
-    );
+        );
+    }
+}
 
 export default PostsTable;

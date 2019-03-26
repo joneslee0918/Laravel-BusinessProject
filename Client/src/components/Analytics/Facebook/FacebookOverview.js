@@ -13,74 +13,41 @@ import { DateRangePicker } from 'react-dates';
 import { isInclusivelyBeforeDay } from 'react-dates';
 import channelSelector from '../../../selectors/channels';
 import Select from 'react-select';
-import Loader from '../../Loader';
 
 class FacebookOverview extends React.Component {
 
-    constructor(props){
-        super(props);
-    }
-
     state = {
-        data: false,
         startDate: moment().subtract(30, 'days'),
         endDate: moment().add(1, 'days'),
         selectedAccount: Object.entries(this.props.selectedChannel).length ? 
         {label: <ProfileChannel channel={this.props.selectedChannel} />, value: this.props.selectedChannel.id, type: this.props.selectedChannel.type} : 
         (this.props.channels.length ? 
           {label: <ProfileChannel channel={this.props.channels[0]} />, value: this.props.channels[0].id, type: this.props.channels[0].type} : {}),
-        loading: false
-    }
-
-    componentDidMount() {      
-        this.fetchAnalytics();
-    }
-
-    componentDidUpdate() {
-        console.log(this.props.channels);
+        loading: false,
+        calendarChange: false
     }
 
     handleAccountChange = (selectedAccount) => {
         this.setState(() => ({
             selectedAccount
-        }), () => {
-            this.fetchAnalytics();
-        });
+        }));
     };
 
     onCalendarClose() {
-        this.fetchAnalytics();
+        this.setState(() => ({
+            calendarChange : !this.state.calendarChange
+        }));
     }
 
-    fetchAnalytics = () => {
-        this.setState(() => ({
-            loading: true
-        }));
-        try {
-            pageInsights(this.state.selectedAccount.value, this.state.startDate, this.state.endDate)            
-            .then((response) => {
-                this.setState(() => ({
-                    data: response,
-                    loading: false
-                }));
-            }).catch(error => {
-                this.setState(() => ({
-                    loading: false
-                }));
-                return Promise.reject(error);
-            }); 
-        } catch (error) {
-            
-        }
-        
-    };
-
     render(){
-        const data = this.state.data;
+        const propData = {
+            startDate: this.state.startDate,
+            endDate: this.state.endDate, 
+            selectedAccount: this.state.selectedAccount.value,
+            calendarChange: this.state.calendarChange,
+        }
         return (
             <div>
-            {this.state.loading && <Loader />}
-            {this.state.data && 
             <div>
                 <div className="row">            
                     <div className="col-xs-12">
@@ -117,27 +84,84 @@ class FacebookOverview extends React.Component {
                     </div>
                 </div>
                 <div className="row overview-cards-container mb20">
-                    <div className="col-md-3 col-xs-12"><OverviewCard name='Posts' count={this.state.data.posts} description='posts' growth='10 from 0' /></div>
-                    <div className="col-md-3 col-xs-12"><OverviewCard name='Fans' count={this.state.data.fans} description='fans' growth='1 from 601' /></div>
-                    <div className="col-md-3 col-xs-12"><OverviewCard name='Engagement' count={this.state.data.engagement} description='engagements' growth='6 from 0' /></div>
-                    <div className="col-md-3 col-xs-12"><OverviewCard name='Traffic' count='0' description='clicks' growth='0 from 0' /></div>
+                    <div className="col-md-3 col-xs-12">
+                        <OverviewCard 
+                            name='Posts' 
+                            type="postsCount" 
+                            description='posts' 
+                            {...propData}/>
+                    </div>
+                    <div className="col-md-3 col-xs-12">
+                        <OverviewCard 
+                            name='Fans' 
+                            type="fansCount"
+                            description='fans'
+                            {...propData} />
+                    </div>
+                    <div className="col-md-3 col-xs-12">
+                        <OverviewCard 
+                            name='Engagement'
+                            type='engagementsCount' 
+                            description='engagements'
+                            {...propData} />
+                    </div>
+                    <div className="col-md-3 col-xs-12">
+                        <OverviewCard name='Traffic' description='clicks' />
+                    </div>
                 </div>
                 <div className="row mb20">
-                    <div className="col-md-3 col-xs-12"><PageOverviewCard name="Posts by Page" count={this.state.data.posts} description="Uniclix"/></div>
-                    <div className="col-md-9 col-xs-12"><PostsChart name="Posts" data={this.state.data.postsChartData}/></div>
+                    <div className="col-md-3 col-xs-12">
+                        <PageOverviewCard 
+                            name="Posts by Page"  
+                            type='postsCount'
+                            description="Uniclix"
+                            {...propData}/>
+                    </div>
+                    <div className="col-md-9 col-xs-12">
+                        <PostsChart 
+                            name="Posts" 
+                            type='postsChartData'
+                            {...propData}/>
+                    </div>
                 </div>
                 <div className="row mb20">
-                    <div className="col-md-3 col-xs-12"><PageOverviewCard name="Fans by Page" count={this.state.data.fans} description="Uniclix"/></div>
-                    <div className="col-md-9 col-xs-12"><PostsChart name="Fans" data={this.state.data.fansChartData}/></div>
+                    <div className="col-md-3 col-xs-12">
+                        <PageOverviewCard 
+                            name="Fans by Page" 
+                            type='fansCount'
+                            description="Uniclix"
+                            {...propData}/>
+                    </div>
+                    <div className="col-md-9 col-xs-12">
+                        <PostsChart 
+                            name="Fans" 
+                            type='fansChartData'
+                            {...propData}/>
+                    </div>
                 </div>
                 <div className="row mb20">
-                    <div className="col-md-3 col-xs-12"><EngagementCard name="Engagement by Type" reactions={this.state.data.reactions} comments={this.state.data.comments} shares={this.state.data.shares}/></div>
-                    <div className="col-md-9 col-xs-12"><EngagementChart name="Engagement by Type" data={this.state.data.engagementByTypeData} startDate = {this.state.startDate} endDate={this.state.endDate}/></div>
+                    <div className="col-md-3 col-xs-12">
+                        <EngagementCard 
+                            name="Engagement by Type" 
+                            type='engagementsByType'
+                            {...propData}/>
+                    </div>
+                    <div className="col-md-9 col-xs-12">
+                        <EngagementChart 
+                            name="Engagement by Type" 
+                            type='engagementByTypeData'
+                            {...propData}/>
+                    </div>
                 </div>
                 <div className="row mb20">
-                    <div className="col-xs-12"><PostsTable name="Posts Table" count="0" data={this.state.data.postsData}/></div>
+                    <div className="col-xs-12">
+                        <PostsTable 
+                            name="Posts Table" 
+                            type='postsData'
+                            {...propData}/>
+                        </div>
                 </div>
-            </div> }
+            </div> 
             </div>
         );
     }

@@ -1,10 +1,53 @@
 import React from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
- 
-const PostsChart = ({name, data}) => 
+import { pageInsightsByType } from "../../../../requests/facebook/channels";
 
-    {
+class PostsChart extends React.Component{
+    state = {
+        data: null,
+        loading: false
+    };
+
+    componentDidMount(){
+        this.fetchAnalytics();
+    };
+
+    componentDidUpdate(prevProps){
+        if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
+        {
+            this.fetchAnalytics();
+            console.log('updated');
+        }
+        
+    }
+
+    fetchAnalytics = () => {
+        this.setState(() => ({
+            loading: true
+        }));
+        try {
+            pageInsightsByType(this.props.selectedAccount, this.props.startDate, this.props.endDate, this.props.type)            
+            .then((response) => {
+                this.setState(() => ({
+                    data: response,
+                    loading: false
+                }));
+            }).catch(error => {
+                this.setState(() => ({
+                    loading: false
+                }));
+                return Promise.reject(error);
+            }); 
+        } catch (error) {
+            
+        }
+        
+    };
+
+    render(){
+        const {name} = this.props;
+
         const options = {
             chart: {
                 type: 'spline',
@@ -45,10 +88,10 @@ const PostsChart = ({name, data}) =>
             // that in JavaScript, months start at 0 for January, 1 for February etc.
             series: [{
                 showInLegend: false,
-                data: data
+                name: name,
+                data: this.state.data
             }]
         }
-
         return (
             <div className="overview-card analytics-card">
                 <div className="card-header">
@@ -63,7 +106,8 @@ const PostsChart = ({name, data}) =>
                     />
                 </div>
             </div>
-        );
+            );
     }
- 
+}
+
 export default PostsChart;

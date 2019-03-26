@@ -1,10 +1,51 @@
 import React from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
- 
-const EngagementChart = ({name, data}) => 
+import { pageInsightsByType } from "../../../../requests/facebook/channels";
 
-    {
+class EngagementChart extends React.Component{
+    state = {
+        data: [],
+        loading: false
+    };
+
+    componentDidMount(){
+        this.fetchAnalytics();
+    };
+
+    componentDidUpdate(prevProps){
+        if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
+        {
+            this.fetchAnalytics();
+        }
+        
+    }
+
+    fetchAnalytics = () => {
+        this.setState(() => ({
+            loading: true
+        }));
+        try {
+            pageInsightsByType(this.props.selectedAccount, this.props.startDate, this.props.endDate, this.props.type)            
+            .then((response) => {
+                this.setState(() => ({
+                    data: response,
+                    loading: false
+                }));
+            }).catch(error => {
+                this.setState(() => ({
+                    loading: false
+                }));
+                return Promise.reject(error);
+            }); 
+        } catch (error) {
+            
+        }
+        
+    };
+
+    render(){
+        const {name} = this.props;
         const options = {
             chart: {
                 type: 'column',
@@ -30,7 +71,7 @@ const EngagementChart = ({name, data}) =>
                     borderWidth: 0
                 }
             },
-            series: [data]
+            series: this.state.data
         }
         return (
             <div className="overview-card analytics-card">
@@ -45,7 +86,8 @@ const EngagementChart = ({name, data}) =>
                     />
                 </div>
             </div>
-        )
+            );
     }
- 
+}
+
 export default EngagementChart;

@@ -27,7 +27,7 @@ const streamTypes = {
         },
         {
             label: "My Tweets",
-            value: "tweets",
+            value: "my_tweets",
             icon: "mail-forward"
         },
         {

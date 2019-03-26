@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import StreamFeed from "./StreamFeed";
+import StreamFeedItem from './StreamFeedItem';
 
 // fake data generator
-const getItems = streams =>
-  streams.map(k => ({
-    id: k.id,
-    content: k.title,
+const getItems = count =>
+  Array.from({ length: count }, (v, k) => k).map(k => ({
+    id: `item-${k}`,
+    content: `item ${k}`,
   }));
 
 // a little function to help us with reordering the result
@@ -23,9 +23,8 @@ const grid = 5;
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: 'none',
-  margin: `0px ${grid}px 10px 5px`,
+  margin: `10px ${grid}px 10px 5px`,
   width: `500px`,
-  minWidth: `320px`,
   height: `auto`,
 
   // change background colour if dragging
@@ -55,7 +54,7 @@ class StreamItems extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: this.props.streams.length ? this.props.streams : [],
+      items: getItems(3),
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
@@ -89,8 +88,7 @@ class StreamItems extends Component {
               style={getListStyle(snapshot.isDraggingOver)}
               {...provided.droppableProps}
             >
-              {this.state.items.map((item, index) => {
-                return (
+              {this.state.items.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
                     <div
@@ -102,18 +100,39 @@ class StreamItems extends Component {
                         provided.draggableProps.style
                       )}
                     >
-                    
                       <h3 style={getTitleStyle(
                         snapshot.isDragging,
                         provided.draggableProps.style
-                      )} className="stream-title"><i className={`fa fa-${item.network} ${item.network}_color`}></i> {item.title}</h3>
+                      )} className="stream-title">{item.content}</h3>
 
-                      <StreamFeed streamItem = {item}/>
-                      
+                      <StreamFeedItem profilePic="https://web.uniclix.test/images/uniclix.png" username="Uniclix" date="Feb 20" content="        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet"/>
+
+                      <StreamFeedItem profilePic="https://web.uniclix.test/images/uniclix.png" username="Uniclix" date="Feb 20" content="        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet"/>
+
+                      <StreamFeedItem profilePic="https://web.uniclix.test/images/uniclix.png" username="Uniclix" date="Feb 20" content="        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet"/>
+
+                      <StreamFeedItem profilePic="https://web.uniclix.test/images/uniclix.png" username="Uniclix" date="Feb 20" content="        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet"/>
+
+                      <StreamFeedItem profilePic="https://web.uniclix.test/images/uniclix.png" username="Uniclix" date="Feb 20" content="        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet
+                      Lorem ipsum dolor sit amet"/>
                     </div>
                   )}
                 </Draggable>
-              )})}
+              ))}
               {provided.placeholder}
             </div>
           )}

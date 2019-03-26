@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class StreamsController extends Controller
 {
@@ -141,8 +140,7 @@ class StreamsController extends Controller
         $this->user->tabs()->where("key", $data["key"])->update(["title" => $data["title"]]);
     }
 
-    public function addStream(Request $request)
-    {
+    public function addStream(Request $request){
         $channelId = $request->input("channelId");
         $type = $request->input("type");
         $network = $request->input("network");
@@ -154,7 +152,7 @@ class StreamsController extends Controller
 
         if(!$selectedTab || $selectedTab == "tab0"){
             $tab = $tabs->create([
-                "key" => "newtab_".Carbon::now()->timestamp,
+                "key" => "first_tab",
                 "title" => "untitled",
                 "index" => 0,
                 "selected" => 1

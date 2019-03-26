@@ -31,7 +31,6 @@ Route::middleware('auth:api')->group(function(){
 
     Route::get('/streams', 'StreamsController@index');
     Route::post('/streams/add', 'StreamsController@addStream');
-    Route::post('/streams/position', 'StreamsController@positionStream');
     Route::post('/streams/tabs/select', 'StreamsController@selectTab');
     Route::post('/streams/tabs/position', 'StreamsController@positionTab');
     Route::post('/streams/tabs/add', 'StreamsController@addTab');
@@ -74,8 +73,6 @@ Route::prefix("twitter")->group(function(){
         Route::patch('unfollow/{userId}', 'Twitter\Actions\UnfollowController@unfollow');
 
         Route::post('tweet', 'Twitter\Actions\StatusController@tweet');
-
-        Route::get('streams/{type}', 'Twitter\StreamsFeedController@index');
     });
 });
 
@@ -87,6 +84,7 @@ Route::prefix("facebook")->group(function(){
         Route::post('channels/accounts/save', 'Facebook\ChannelController@saveAccounts');
         Route::get('analytics', 'Facebook\AnalyticsController@index');
         Route::get('insights/page', 'Facebook\AnalyticsController@pageInsights');
+        Route::get('insights/page/{type}', 'Facebook\AnalyticsController@pageInsightsByType');
     });
 });
 
