@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class StreamsController extends Controller
 {
@@ -140,11 +141,13 @@ class StreamsController extends Controller
         $this->user->tabs()->where("key", $data["key"])->update(["title" => $data["title"]]);
     }
 
-    public function addStream(Request $request){
+    public function addStream(Request $request)
+    {
         $channelId = $request->input("channelId");
         $type = $request->input("type");
         $network = $request->input("network");
         $selectedTab = $request->input("selectedTab");
+        $searchTerm = $request->input("searchTerm");
 
         if(!$type || !$channelId || !$network) return;
 
@@ -152,7 +155,7 @@ class StreamsController extends Controller
 
         if(!$selectedTab || $selectedTab == "tab0"){
             $tab = $tabs->create([
-                "key" => "first_tab",
+                "key" => "newtab_".Carbon::now()->timestamp,
                 "title" => "untitled",
                 "index" => 0,
                 "selected" => 1
@@ -166,11 +169,23 @@ class StreamsController extends Controller
         $stream = $tab->streams()->create([
             "index" => ($latestStream ? $latestStream->index + 1 : 0),
             "channel_id" => $channelId,
+            "search_query" => $searchTerm ? $searchTerm : null,
             "title" => $type["label"],
             "type" => $type["value"],
             "network" => $network
         ]);
 
         return response()->json($stream, 200);
+    }
+
+    public function updateStream(Request $request){
+        $streamId = $request->input("streamId");
+        $data = $request-input("data");
+
+        if(!$streamId) return;
+
+        \DB::table("streams")->where("id", $streamId)->update($data);
+
+        return response()->json("Update successful!", 200);
     }
 }

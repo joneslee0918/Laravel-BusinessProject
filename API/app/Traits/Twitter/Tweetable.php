@@ -270,11 +270,34 @@ trait Tweetable
      * @param array $params
      * @return array
      */
-    public function getTweets($params = [])
-    {
+    public function getTweets($params = [], $limit = 200)
+    {   
         try {
-            $this->setAsCurrentUser();
-            return Twitter::getUserTimeline(['screen_name'=>$this->username, 'count'=>200]);
+            $key = $this->id . "-userTimeline";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($limit){
+                $this->setAsCurrentUser();
+                return Twitter::getUserTimeline(['screen_name'=>$this->username, 'count'=>$limit]);
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    public function getHome($params = [], $limit = 200)
+    {   
+        try {
+            $key = $this->id . "-homeTimeline";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($limit){
+                $this->setAsCurrentUser();
+                return Twitter::getHomeTimeline(['screen_name'=>$this->username, 'count'=>$limit]);
+            });
         } catch (\Exception $e) {
             throw $e;
         }
@@ -284,11 +307,33 @@ trait Tweetable
      * @param array $params
      * @return array
      */
-    public function getRetweets($params = [])
-    {
+    public function getMentions($params = [], $limit = 200)
+    {   
         try {
-            $this->setAsCurrentUser();
-            return Twitter::getRtsTimeline(['screen_name'=>$this->username]);
+            $key = $this->id . "-mentionsTimeline";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($limit){
+                $this->setAsCurrentUser();
+                return Twitter::getMentionsTimeline(['screen_name'=>$this->username, 'count'=>$limit]);
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+        /**
+     * @param array $params
+     * @return array
+     */
+    public function getRetweets($params = [], $limit = 200)
+    {   
+        try {
+            $key = $this->id . "-rtsTimeline";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($limit){
+                $this->setAsCurrentUser();
+                return Twitter::getRtsTimeline(['screen_name'=>$this->username, 'count'=>$limit]);
+            });
         } catch (\Exception $e) {
             throw $e;
         }
@@ -298,11 +343,37 @@ trait Tweetable
      * @param array $params
      * @return array
      */
-    public function getLikes($params = [])
-    {
+    public function getFollowers($params = [], $limit = 200)
+    {   
         try {
-            $this->setAsCurrentUser();
-            return Twitter::getFavorites(['screen_name'=>$this->username]);
+            $key = $this->id . "-followersTimeline";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($limit){
+                $this->setAsCurrentUser();
+                $result = Twitter::getFollowers(['screen_name'=>$this->username, 'count'=>$limit]);
+
+                if(!property_exists($result, "users")) return [];
+
+                return $result->users;
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+        /**
+     * @param array $params
+     * @return array
+     */
+    public function getLikes($params = [], $limit = 200)
+    {   
+        try {
+            $key = $this->id . "-likesTimeline";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($limit){
+                $this->setAsCurrentUser();
+                return Twitter::getFavorites(['screen_name'=>$this->username, 'count'=>$limit]);
+            });
         } catch (\Exception $e) {
             throw $e;
         }
@@ -315,9 +386,20 @@ trait Tweetable
      */
     public function getSearch($params = []){
 
+        if(!isset($params["q"])) return [];
+
         try {
-            $this->setAsCurrentUser();
-            return Twitter::getSearch($params);
+            $key = $this->id . "-search-{$params['q']}-Timeline";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($params){
+                $this->setAsCurrentUser();
+                $result = Twitter::getSearch($params);
+    
+                if(!property_exists($result, "statuses")) return [];
+    
+                return $result->statuses;
+            });
+
         } catch (\Exception $e) {
             throw $e;
         }

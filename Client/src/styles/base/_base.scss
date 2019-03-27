@@ -140,6 +140,23 @@ input {
     overflow:hidden;
 }
 
+.search-modal{
+    padding:30px;
+    text-align:center
+}
+
+.search-modal input{
+    padding:5px;
+    width:50%;
+}
+
+.search-modal button {
+    border: none;
+    border-radius: 0;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
 .sortLabel {
     margin-right: 10px;
 }
@@ -467,6 +484,11 @@ input {
     font-family: open-sansBold;
 }
 
+.stream-feed{
+    height: 75vh;
+    overflow:auto;
+}
+
 .smallIcon{
     width: 15px;
     height: 15px;
@@ -488,9 +510,22 @@ input {
     margin-bottom: 5px;
 }
 
+.stream-feed-container .post-info img, .stream-feed-container .post-info{
+    overflow:hidden;
+    color:#999;
+}
+
 .stream-feed-container .post-info img, .stream-feed-container .post-info > div{
     display:block;
     float:left;
+}
+
+.stream-feed-container .post-info img, .stream-feed-container .post-info .post-info-item{
+    margin-left:10px;
+}
+
+.stream-feed-container .post-info img, .stream-feed-container .post-info .profile-info .post-date{
+    color: #777;
 }
 
 .stream-feed-container .post-info img{
@@ -498,8 +533,8 @@ input {
 }
 
 .stream-feed-container .post-content{
-    clear:both;
-    margin-top:50px;
+    margin-top:10px;
+    color: #666;
 }
 
 .stream-title{
@@ -560,6 +595,13 @@ input {
     background: none !important;
     border: none !important;
     margin: 10px;
+}
+
+.stream-type-modal{
+    width: 566px !important;
+    margin: 10px;
+    background: white;
+    border-radius: 5px;
 }
 
 .modal-bg-radius{
@@ -1972,7 +2014,39 @@ aside .btn-group {
 }
 
 .sp-container{
-    margin: 100px auto;
+    margin: 100px auto 0 auto;
+}
+
+.scrollbar::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+.scrollbar::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+.scrollbar::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+.white-txt-btn{
+    padding: 10px;
+    margin: 10px 0 0 10px;
+    border: none;
+    border-radius: 5px;
+    background: white;
+}
+
+.lightgrey-bg{
+    background: lightgrey;
 }
 
 .sky-bg{

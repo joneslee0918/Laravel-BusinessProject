@@ -9,6 +9,7 @@ class Stream extends Model
     protected $fillable = [
         "channel_id",
         "tab_id",
+        "search_query",
         "title",
         "index",
         "type",

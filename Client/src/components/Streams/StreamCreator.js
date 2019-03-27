@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Select from 'react-select';
+import Modal from 'react-modal';
 import channelSelector, {streamChannels} from '../../selectors/channels';
 import streamTypes from './StreamTypesFixture';
 import {addStream} from '../../requests/streams';
@@ -13,7 +14,9 @@ class StreamCreator extends React.Component{
         {label: <ProfileChannel channel={this.props.selectedChannel} />, value: this.props.selectedChannel.id, type: this.props.selectedChannel.type} : 
         (this.props.channels.length ? 
           {label: <ProfileChannel channel={this.props.channels[0]} />, value: this.props.channels[0].id, type: this.props.channels[0].type} : {}),
-        loading: false
+        loading: false,
+        searchModal: false,
+        searchTerm: ""
     }
 
     handleAccountChange = (selectedAccount) => {
@@ -22,7 +25,7 @@ class StreamCreator extends React.Component{
         }));
     };
 
-    handleTypeClick = (item) => {
+    submitStream = (item) => {
 
         this.setState(() => ({
             loading: true
@@ -31,15 +34,52 @@ class StreamCreator extends React.Component{
         const channelId = this.state.selectedAccount.value;
         const network = this.state.selectedAccount.type;
         const selectedTab = this.props.selectedTab;
-        addStream(item, channelId, selectedTab, network).then(() => this.props.reload()).then(() => {
-            // this.setState(() => ({
-            //     loading: false
-            // }));
+        const searchTerm = this.state.searchTerm;
+
+        addStream(item, channelId, selectedTab, network, searchTerm).then(() => this.props.reload()).then(() => {
+           if(typeof this.props.close !== "undefined") this.props.close();
         });
     };
 
+    handleTypeClick = (item) => {
+        if(item.value !== "search"){
+            this.submitStream(item);
+        }else{
+            this.toggleSearchModal();
+        }
+    }
+
+    handleSearchInputChange = (event) => {
+
+        try{
+            const value = event.target.value;
+            this.setState(() => (
+                {searchTerm: value}
+            ));
+        }catch(e){}
+    } 
+
+    toggleSearchModal = () => {
+        this.setState(() => ({
+            searchModal: !this.state.searchModal
+        }), () => {
+            if(!this.state.searchModal && this.state.searchTerm !== ""){
+                this.submitStream({label: "Search", value: "search", icon: "search"});
+            }
+        });
+    }
+
+
     render(){
         return (this.state.loading ? <Loader /> : <div className="streams-default-container">
+
+                    <Modal isOpen={!!this.state.searchModal} ariaHideApp={false} className="stream-type-modal search-modal">
+                        <div>
+                            <input type="text" onChange={e => this.handleSearchInputChange(e)} value={this.state.searchTerm} placeholder="Example: coca cola or #fashion"/>
+                            <button onClick={this.toggleSearchModal} className="publish-btn-group gradient-background-teal-blue link-cursor">Done</button>
+                        </div>
+                    </Modal>
+
                     <div className="account-selection">
                         <Select
                             value={this.state.selectedAccount}
@@ -59,6 +99,10 @@ class StreamCreator extends React.Component{
                         ))}
 
                     </div>
+                    {typeof this.props.close !== "undefined" && 
+                    <div className="txt-center p10">
+                            <a href="#" onClick={this.props.close}>Cancel</a>
+                    </div>}
                 </div>);
     }
 }

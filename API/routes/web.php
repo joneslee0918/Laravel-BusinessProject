@@ -36,9 +36,9 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::find(15);
+    $channel = \App\Models\Twitter\Channel::first();
 
-    return $channel->pagePostEngagements('month');
+    return response()->json($channel->getSearch(["q" => "#trump"]));
 
 })->name("test");
 

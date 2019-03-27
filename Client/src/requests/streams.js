@@ -43,9 +43,24 @@ export const renameTab = (data) => {
             });
 };
 
-export const addStream = (type, channelId, selectedTab, network) => {
-    return axios.post(`${apiUrl}/streams/add`, {type, channelId, selectedTab, network})
+export const addStream = (type, channelId, selectedTab, network, searchTerm = "") => {
+    return axios.post(`${apiUrl}/streams/add`, {type, channelId, selectedTab, network, searchTerm})
             .then((response) => {
                 return response.data;
             });
+};
+
+export const updateStream = (streamId, data) => {
+    return axios.post(`${apiUrl}/streams/add`, {streamId, data})
+            .then((response) => {
+                return response.data;
+            });
+};
+
+export const getStreamFeed = (type, network, channelId, query = "") => {
+    console.log(query);
+    return axios.post(`${apiUrl}/${network}/streams/${type}`, {channelId, query})
+        .then((response) => {
+            return response.data;
+        });
 };
