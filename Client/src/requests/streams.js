@@ -58,7 +58,6 @@ export const updateStream = (streamId, data) => {
 };
 
 export const getStreamFeed = (type, network, channelId, query = "") => {
-    console.log(query);
     return axios.post(`${apiUrl}/${network}/streams/${type}`, {channelId, query})
         .then((response) => {
             return response.data;

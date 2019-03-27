@@ -36,9 +36,9 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Twitter\Channel::first();
+    $channel = \App\Models\Channel::first();
 
-    return response()->json($channel->getSearch(["q" => "#trump"]));
+    return response()->json($channel->scheduledPosts()->get());
 
 })->name("test");
 

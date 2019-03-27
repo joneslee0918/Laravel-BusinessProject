@@ -21,7 +21,7 @@ class ChannelController extends Controller
         if(is_object($credentials) && !isset($credentials->error)){
 
             $user = auth()->user();
-            $existingChannel = Channel::where("email", $credentials->email)->first();
+            $existingChannel = Channel::where("email", $credentials->email)->whereNotNull("email")->first();
     
             if(!$existingChannel){
                 $channel = $user->channels()->create(["type" => "facebook"]);
