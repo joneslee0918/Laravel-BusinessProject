@@ -18,11 +18,11 @@ class StreamFeed extends React.Component{
     }
 
     render(){
-        const {streamItem} = this.props;
+        const {streamItem, channel} = this.props;
         return (
             <div className="stream-feed scrollbar">
                 {this.state.items.length ? this.state.items.map(item => (
-                    <StreamFeedItem  feedItem={item} streamItem={streamItem} key={item.id} />
+                    <StreamFeedItem  feedItem={item} streamItem={streamItem} key={item.id} channel={channel}/>
                 )) : <div>No data</div>}
             </div>
         );

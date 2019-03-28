@@ -31,7 +31,7 @@ class StreamCreator extends React.Component{
             loading: true
         }));
 
-        const channelId = this.state.selectedAccount.value;
+        const channelId = this.state.selectedAccount.id;
         const network = this.state.selectedAccount.type;
         const selectedTab = this.props.selectedTab;
         const searchTerm = this.state.searchTerm;
@@ -85,7 +85,7 @@ class StreamCreator extends React.Component{
                             value={this.state.selectedAccount}
                             onChange={this.handleAccountChange}
                             options={this.props.channels.map(channel => {
-                                return {label: <ProfileChannel channel={channel} />, value: channel.id, type: channel.type}
+                                return {label: <ProfileChannel channel={channel} />, value: channel.name, type: channel.type, id: channel.id}
                             })}
                         />
                     </div>
@@ -101,7 +101,7 @@ class StreamCreator extends React.Component{
                     </div>
                     {typeof this.props.close !== "undefined" && 
                     <div className="txt-center p10">
-                            <a href="#" onClick={this.props.close}>Cancel</a>
+                            <p onClick={this.props.close} className="link-cursor">Cancel</p>
                     </div>}
                 </div>);
     }

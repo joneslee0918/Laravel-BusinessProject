@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import StreamFeed from "./StreamFeed";
+import channelSelector, {channelById} from '../../selectors/channels';
 
 // fake data generator
 const getItems = streams =>
@@ -80,6 +82,8 @@ class StreamItems extends Component {
   // Normally you would want to split things out into separate components.
   // But in this example everything is just done in one place for simplicity
   render() {
+    const {channels} = this.props;
+
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal">
@@ -90,6 +94,7 @@ class StreamItems extends Component {
               {...provided.droppableProps}
             >
               {this.state.items.map((item, index) => {
+                const channel = channelById(channels, {id: item.channel_id});
                 return (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
@@ -106,9 +111,9 @@ class StreamItems extends Component {
                       <h3 style={getTitleStyle(
                         snapshot.isDragging,
                         provided.draggableProps.style
-                      )} className="stream-title"><i className={`fa fa-${item.network} ${item.network}_color`}></i> {item.title}</h3>
+                      )} className="stream-title"><i className={`fa fa-${item.network} ${item.network}_color`}></i> {item.title} <span className="stream-user">{item.network == "twitter" ? channel.username : channel.name}</span></h3>
 
-                      <StreamFeed streamItem = {item}/>
+                      <StreamFeed streamItem = {item} channel={channel}/>
                       
                     </div>
                   )}
@@ -123,4 +128,11 @@ class StreamItems extends Component {
   }
 }
 
-export default StreamItems;
+const mapStateToProps = (state) => {
+  const channels = channelSelector(state.channels.list, {selected: undefined, provider: undefined, publishable: true});
+  return {
+      channels
+  }
+}
+
+export default connect(mapStateToProps)(StreamItems);
