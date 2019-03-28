@@ -33,6 +33,21 @@ export default (channels = [], {selected, provider, publishable}) => {
     });
 };
 
+export const channelById = (channels = [], {id}) => {
+
+    if(!channels.length) return channels;
+
+    return channels.filter((channel) => {
+        let filter = true;
+
+        if(id){
+            filter = channel.id == id;
+        }
+
+        return filter;
+    })[0];
+};
+
 export const streamChannels = (channels = []) => {
 
     if(!channels.length) return channels;
