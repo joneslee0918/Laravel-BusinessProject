@@ -90,6 +90,9 @@ Route::prefix("facebook")->group(function(){
         Route::get('analytics', 'Facebook\AnalyticsController@index');
         Route::get('insights/page', 'Facebook\AnalyticsController@pageInsights');
         Route::get('insights/page/{type}', 'Facebook\AnalyticsController@pageInsightsByType');
+
+        Route::post('streams/scheduled', 'Twitter\StreamsFeedController@scheduled');
+        Route::post('streams/{type}', 'Twitter\StreamsFeedController@index');
     });
 });
 

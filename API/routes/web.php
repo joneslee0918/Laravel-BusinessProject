@@ -36,9 +36,9 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Channel::first();
+    $channel = \App\Models\Facebook\Channel::latest()->first();
 
-    return response()->json($channel->scheduledPosts()->get());
+    return response()->json($channel->getActivities());
 
 })->name("test");
 

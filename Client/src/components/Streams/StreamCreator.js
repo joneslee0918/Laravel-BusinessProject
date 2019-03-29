@@ -11,9 +11,9 @@ class StreamCreator extends React.Component{
 
     state = {
         selectedAccount:  Object.entries(this.props.selectedChannel).length ? 
-        {label: <ProfileChannel channel={this.props.selectedChannel} />, value: this.props.selectedChannel.id, type: this.props.selectedChannel.type} : 
+        {label: <ProfileChannel channel={this.props.selectedChannel} />, value: this.props.selectedChannel.name, type: this.props.selectedChannel.type, id: this.props.selectedChannel.id} : 
         (this.props.channels.length ? 
-          {label: <ProfileChannel channel={this.props.channels[0]} />, value: this.props.channels[0].id, type: this.props.channels[0].type} : {}),
+          {label: <ProfileChannel channel={this.props.channels[0]} />, value: this.props.channels[0].name, type: this.props.channels[0].type, id: this.props.channels[0].id} : {}),
         loading: false,
         searchModal: false,
         searchTerm: ""

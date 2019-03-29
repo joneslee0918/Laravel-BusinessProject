@@ -12,8 +12,16 @@ const StreamFeedItem = ({feedItem, streamItem, channel}) => {
             }else{
                 return <TwitterDefaultFeed feedItem={feedItem} />;
             }
-        }else{
+        }
+        else if(streamItem.network === "facebook"){
+
+            if(streamItem.type === "conversations"){
+                return <FacebookMessagesFeed feedItem = {feedItem} channel={channel}/>
+            }else{
+                return <FacebookPostsFeed feedItem = {feedItem} />
+            }
             
+        }else{
             return <div></div>;
         }
     }catch(e){
@@ -21,38 +29,54 @@ const StreamFeedItem = ({feedItem, streamItem, channel}) => {
     }
 };
 
-const TwitterDefaultFeed = ({feedItem}) => (
-    <div className="stream-feed-container">
-                <div className="post-info">
-                    <img src={feedItem.user.profile_image_url} />
-                    <div className="post-info-item">
-                        <a href="#" className="username"><strong>{feedItem.user.screen_name}</strong></a>
-                        <div className="post-date">{new Date(feedItem.created_at).toDateString()}</div>
+const TwitterDefaultFeed = ({feedItem}) => {
+    try{
+        return (
+            <div className="stream-feed-container">
+                        <div className="post-info">
+                            <img src={feedItem.user.profile_image_url} />
+                            <div className="post-info-item">
+                                <a href="#" className="username"><strong>{feedItem.user.screen_name}</strong></a>
+                                <div className="post-date">{new Date(feedItem.created_at).toDateString()}</div>
+                            </div>
+                        </div>
+                        <div className="post-content">
+                            {feedItem.text}
+                        </div>
                     </div>
-                </div>
-                <div className="post-content">
-                    {feedItem.text}
-                </div>
-            </div>
-);
+        );
+    }catch(e){
+        console.log(e);
+        return <div></div>
+    }
+}
 
-const TwitterFollowersFeed = ({feedItem}) => (
-    <div className="stream-feed-container">
-                <div className="post-info">
-                    <img src={feedItem.profile_image_url} />
-                    <div className="post-info-item">
-                        <a href="#" className="username"><strong>{feedItem.screen_name}</strong></a>
-                        <div className="post-date">{new Date(feedItem.status["created_at"]).toDateString()}</div>
+const TwitterFollowersFeed = ({feedItem}) => {
+    try{
+        return(
+            <div className="stream-feed-container">
+                        <div className="post-info">
+                            <img src={feedItem.profile_image_url} />
+                            <div className="post-info-item">
+                                <a href="#" className="username"><strong>{feedItem.screen_name}</strong></a>
+                                <div className="post-date">{new Date(feedItem.status["created_at"]).toDateString()}</div>
+                            </div>
+                        </div>
+                        <div className="post-content">
+                            {feedItem.status["text"]}
+                        </div>
                     </div>
-                </div>
-                <div className="post-content">
-                    {feedItem.status["text"]}
-                </div>
-            </div>
-);
+        ); 
+    }catch(e){
+        console.log(e);
+        return <div></div>
+    }
+
+}
 
 const ScheduledFeed = ({feedItem, channel}) => {
-    return (
+    try{
+        return (
             <div className="stream-feed-container">
                         <div className="post-info">
                             <img src={channel.avatar} />
@@ -65,6 +89,55 @@ const ScheduledFeed = ({feedItem, channel}) => {
                             {feedItem.content}
                         </div>
                     </div>
-)};
+        )}catch(e){ 
+            console.log(e);
+            return <div></div>
+        }
+};
+
+const FacebookPostsFeed = ({feedItem}) => {
+
+    try{
+            return (
+            <div className="stream-feed-container">
+                        <div className="post-info">
+                            <img src={feedItem.from.picture.data.url} />
+                            <div className="post-info-item">
+                                <a href="#" className="username"><strong>{feedItem.from.name}</strong></a>
+                                <div className="post-date">{new Date(feedItem.created_time).toDateString()}</div>
+                            </div>
+                        </div>
+                        <div className="post-content">
+                            {feedItem.message}
+                        </div>
+                    </div>
+)
+    }catch(e){
+        console.log(e);
+        return <div></div>;
+    }
+};
+
+const FacebookMessagesFeed = ({feedItem, channel}) => {
+    try{
+            return (
+            <div className="stream-feed-container">
+                        <div className="post-info">
+                            <img src={channel.name === feedItem.messages.data[0].from.name ? channel.avatar : "/images/dummy_profile.png"} />
+                            <div className="post-info-item">
+                                <a href="#" className="username"><strong>{feedItem.messages.data[0].from.name}</strong></a>
+                                <div className="post-date">{(new Date(feedItem.updated_time)).toDateString("MMM dd, yyyy hh:mm a")}</div>
+                            </div>
+                        </div>
+                        <div className="post-content">
+                            {feedItem.messages.data[0].message}
+                        </div>
+                    </div>
+)
+    }catch(e){
+        console.log(e);
+        return <div></div>;
+    }
+};
 
 export default StreamFeedItem;

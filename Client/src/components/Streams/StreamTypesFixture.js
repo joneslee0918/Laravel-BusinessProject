@@ -49,7 +49,7 @@ const streamTypes = {
         },
         {
             label: "My Posts",
-            value: "my_posts",
+            value: "myPosts",
             icon: "bullhorn"
         },
         {
@@ -59,7 +59,7 @@ const streamTypes = {
         },
         {
             label: "Messages",
-            value: "message",
+            value: "conversations",
             icon: "envelope"
         },
         {
@@ -67,16 +67,11 @@ const streamTypes = {
             value: "unpublished",
             icon: "calendar"
         },
-        {
-            label: "Activity",
-            value: "activity",
-            icon: "list-ul"
-        },
-        {
-            label: "Pages",
-            value: "pages",
-            icon: "flag"
-        },
+        // {
+        //     label: "Pages",
+        //     value: "pages",
+        //     icon: "flag"
+        // },
         {
             label: "Scheduled",
             value: "scheduled",

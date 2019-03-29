@@ -10,9 +10,12 @@ class StreamFeed extends React.Component{
     componentDidMount(){
         const {streamItem} = this.props;
         getStreamFeed(streamItem.type, streamItem.network, streamItem.channel_id, streamItem.search_query).then((response) => {
-            if(!response.length) return;
+            
+            const items = typeof response["data"] !== "undefined" ? response["data"] : response;
+            if(!items.length) return;
+
             this.setState(() => ({
-                items: response
+                items: items
             }));
         });
     }
@@ -21,8 +24,8 @@ class StreamFeed extends React.Component{
         const {streamItem, channel} = this.props;
         return (
             <div className="stream-feed scrollbar">
-                {this.state.items.length ? this.state.items.map(item => (
-                    <StreamFeedItem  feedItem={item} streamItem={streamItem} key={item.id} channel={channel}/>
+                {this.state.items.length ? this.state.items.map((item, index) => (
+                    <StreamFeedItem  feedItem={item} streamItem={streamItem} key={index} channel={channel}/>
                 )) : <div>No data</div>}
             </div>
         );

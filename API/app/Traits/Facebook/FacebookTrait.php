@@ -53,6 +53,64 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
+    public function getTimeline(){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/feed?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+
+        return $response->getDecodedBody();
+    }
+
+    public function getMyPosts(){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+
+        return $response->getDecodedBody();
+    }
+
+    public function getUnpublished(){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/promotable_posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+
+        return $response->getDecodedBody();
+    }
+
+    public function getMentions(){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/tagged?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+
+        return $response->getDecodedBody();
+    }
+
+    public function getConversations(){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/conversations?fields=id,link,updated_time");
+        $response = $response->getDecodedBody();
+
+        if(!isset($response["data"])) return [];        
+
+        $feed = [];
+        foreach($response["data"] as $conversation){
+            $conversation["messages"] = $this->getMessages($conversation["id"]);
+            $feed[] = $conversation;
+        }
+
+        return $feed;
+    }
+
+    public function getMessages($conversation_id){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$conversation_id}/messages?fields=message,attachments,created_time,to,from{id,name,picture},shares{link}");
+
+        return $response->getDecodedBody();
+    }
+
+    public function getActivities(){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/1864596630495909/feed?");
+
+        return $response->getDecodedBody();
+    }
+
     public function pageLikes($period='day', $since=null, $until=null){
         $fb = $this->setAsCurrentUser();
         $response = $fb->get("/{$this->original_id}/insights/page_fans?since={$since}&until={$until}&period={$period}");
