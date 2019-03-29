@@ -25,7 +25,7 @@ const grid = 5;
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: 'none',
-  margin: `0px ${grid}px 10px 5px`,
+  margin: `0px ${grid}px 0px 5px`,
   width: `500px`,
   minWidth: `320px`,
   height: `auto`,

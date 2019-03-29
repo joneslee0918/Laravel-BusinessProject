@@ -1,4 +1,7 @@
 import React from 'react';
+import ReadMoreAndLess from 'react-read-more-less';
+import parse from 'html-react-parser';
+import {linkify} from '../../utils/helpers';
 
 const StreamFeedItem = ({feedItem, streamItem, channel}) => {
     try{
@@ -31,6 +34,7 @@ const StreamFeedItem = ({feedItem, streamItem, channel}) => {
 
 const TwitterDefaultFeed = ({feedItem}) => {
     try{
+        const text = feedItem.text ? feedItem.text : "";
         return (
             <div className="stream-feed-container">
                         <div className="post-info">
@@ -41,7 +45,13 @@ const TwitterDefaultFeed = ({feedItem}) => {
                             </div>
                         </div>
                         <div className="post-content">
-                            {feedItem.text}
+                            <TextRenderer text={text} />                            
+                        </div>
+                        <div className="stream-action-icons">
+                            <i className="fa fa-mail-forward"></i>
+                            <i className="fa fa-retweet"></i>
+                            <i className="fa fa-heart"></i>
+                            <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                         </div>
                     </div>
         );
@@ -53,6 +63,7 @@ const TwitterDefaultFeed = ({feedItem}) => {
 
 const TwitterFollowersFeed = ({feedItem}) => {
     try{
+        const text = typeof feedItem.status["text"] !== "undefined" ? feedItem.status["text"] : "";
         return(
             <div className="stream-feed-container">
                         <div className="post-info">
@@ -63,7 +74,13 @@ const TwitterFollowersFeed = ({feedItem}) => {
                             </div>
                         </div>
                         <div className="post-content">
-                            {feedItem.status["text"]}
+                            <TextRenderer text={text} />
+                        </div>
+                        <div className="stream-action-icons">
+                            <i className="fa fa-mail-forward"></i>
+                            <i className="fa fa-retweet"></i>
+                            <i className="fa fa-heart"></i>
+                            <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                         </div>
                     </div>
         ); 
@@ -76,6 +93,7 @@ const TwitterFollowersFeed = ({feedItem}) => {
 
 const ScheduledFeed = ({feedItem, channel}) => {
     try{
+        const text = feedItem.content ? feedItem.content : "";
         return (
             <div className="stream-feed-container">
                         <div className="post-info">
@@ -86,7 +104,7 @@ const ScheduledFeed = ({feedItem, channel}) => {
                             </div>
                         </div>
                         <div className="post-content">
-                            {feedItem.content}
+                            <TextRenderer text={text} /> 
                         </div>
                     </div>
         )}catch(e){ 
@@ -97,7 +115,8 @@ const ScheduledFeed = ({feedItem, channel}) => {
 
 const FacebookPostsFeed = ({feedItem}) => {
 
-    try{
+    try{    
+        const text = feedItem.message ? feedItem.message : "";
             return (
             <div className="stream-feed-container">
                         <div className="post-info">
@@ -108,7 +127,13 @@ const FacebookPostsFeed = ({feedItem}) => {
                             </div>
                         </div>
                         <div className="post-content">
-                            {feedItem.message}
+                            <TextRenderer text={text} />
+                        </div>
+                        <div className="stream-action-icons">
+                            <i className="fa fa-thumbs-up"></i>
+                            <i className="fa fa-comment"></i>
+                            <i className="fa fa-share"></i>
+                            <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                         </div>
                     </div>
 )
@@ -119,7 +144,8 @@ const FacebookPostsFeed = ({feedItem}) => {
 };
 
 const FacebookMessagesFeed = ({feedItem, channel}) => {
-    try{
+    try{    
+        const text = feedItem.messages.data[0].message ? feedItem.messages.data[0].message : "";
             return (
             <div className="stream-feed-container">
                         <div className="post-info">
@@ -130,7 +156,7 @@ const FacebookMessagesFeed = ({feedItem, channel}) => {
                             </div>
                         </div>
                         <div className="post-content">
-                            {feedItem.messages.data[0].message}
+                            <TextRenderer text={text} />
                         </div>
                     </div>
 )
@@ -139,5 +165,16 @@ const FacebookMessagesFeed = ({feedItem, channel}) => {
         return <div></div>;
     }
 };
+
+const TextRenderer = ({text = ""}) => {
+    return (<ReadMoreAndLess
+        className="read-more-content"
+        charLimit={120}
+        readMoreText=" Read more"
+        readLessText=" Read less"
+    >
+        {text}
+    </ReadMoreAndLess>);
+}
 
 export default StreamFeedItem;
