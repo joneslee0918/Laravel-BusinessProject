@@ -1,7 +1,7 @@
 export function linkify(text) {
     var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
     return text.replace(urlRegex, function(url) {
-        return url.link(url);
+        return '<a href="'+url+'" target="_blank">' + url + '</a>';
     });
 }
 
@@ -33,3 +33,15 @@ export function truncate(string, length){
     else
        return string;
 };
+
+export function hashLink(text){
+    return text.replace(/([@#])([a-z\d_]+)/ig, function(_, marker, tag) {
+        if (marker === "@")
+            return '<a href="javascript:void(0);" onClick={alert("clicked")}>@' + tag + '</a>';
+        return '<a href="javascript:void(0);" onClick={alert("clicked")}>#' + tag+'</a>';
+    });
+}
+
+export function parseTextWithLinks(text){
+    return linkify(hashLink(text));
+}
