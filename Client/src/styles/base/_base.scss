@@ -445,6 +445,13 @@ input {
     background:white !important;
 }
 
+.truncate {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .whiteTxt{
     color: white !important;
 }
@@ -1506,6 +1513,11 @@ input {
 
 .link-inactive a{
     color:#b7b7b7 !important;
+}
+
+.linkify-text{
+    color: #337ab7;
+    cursor: pointer;
 }
 
 .add-btn, .sub-btn {

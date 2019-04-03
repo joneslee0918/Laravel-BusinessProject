@@ -1,6 +1,5 @@
 import React from 'react';
-import ReadMoreAndLess from 'react-read-more-less';
-import parse from 'html-react-parser';
+import ReadMore from '../ReadMore';
 import {linkify} from '../../utils/helpers';
 
 const StreamFeedItem = ({feedItem, streamItem, channel}) => {
@@ -45,7 +44,7 @@ const TwitterDefaultFeed = ({feedItem}) => {
                             </div>
                         </div>
                         <div className="post-content">
-                            <TextRenderer text={text} />                            
+                             <ReadMore>{text}</ReadMore>                            
                         </div>
                         <div className="stream-action-icons">
                             <i className="fa fa-mail-forward"></i>
@@ -74,7 +73,7 @@ const TwitterFollowersFeed = ({feedItem}) => {
                             </div>
                         </div>
                         <div className="post-content">
-                            <TextRenderer text={text} />
+                             <ReadMore>{text}</ReadMore>
                         </div>
                         <div className="stream-action-icons">
                             <i className="fa fa-mail-forward"></i>
@@ -104,7 +103,7 @@ const ScheduledFeed = ({feedItem, channel}) => {
                             </div>
                         </div>
                         <div className="post-content">
-                            <TextRenderer text={text} /> 
+                             <ReadMore>{text}</ReadMore> 
                         </div>
                     </div>
         )}catch(e){ 
@@ -127,7 +126,7 @@ const FacebookPostsFeed = ({feedItem}) => {
                             </div>
                         </div>
                         <div className="post-content">
-                            <TextRenderer text={text} />
+                             <ReadMore>{text}</ReadMore>
                         </div>
                         <div className="stream-action-icons">
                             <i className="fa fa-thumbs-up"></i>
@@ -156,7 +155,7 @@ const FacebookMessagesFeed = ({feedItem, channel}) => {
                             </div>
                         </div>
                         <div className="post-content">
-                            <TextRenderer text={text} />
+                            <ReadMore>{text}</ReadMore>
                         </div>
                     </div>
 )
@@ -166,15 +165,5 @@ const FacebookMessagesFeed = ({feedItem, channel}) => {
     }
 };
 
-const TextRenderer = ({text = ""}) => {
-    return (<ReadMoreAndLess
-        className="read-more-content"
-        charLimit={120}
-        readMoreText=" Read more"
-        readLessText=" Read less"
-    >
-        {text}
-    </ReadMoreAndLess>);
-}
 
 export default StreamFeedItem;

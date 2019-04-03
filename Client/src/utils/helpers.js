@@ -26,3 +26,10 @@ export function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+
+export function truncate(string, length){
+    if (string.length > length)
+       return string.substring(0,length)+'...';
+    else
+       return string;
+};
