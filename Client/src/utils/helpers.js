@@ -37,11 +37,11 @@ export function truncate(string, length){
 export function hashLink(text){
     return text.replace(/([@#])([a-z\d_]+)/ig, function(_, marker, tag) {
         if (marker === "@")
-            return '<a href="javascript:void(0);" onClick={alert("clicked")}>@' + tag + '</a>';
-        return '<a href="javascript:void(0);" onClick={alert("clicked")}>#' + tag+'</a>';
+            return '<a href="https://twitter.com/'+tag+'" target="_blank">@' + tag + '</a>';
+        return '<a href="https://twitter.com/hashtag/'+tag+'" target="_blank">#' + tag+'</a>';
     });
 }
 
 export function parseTextWithLinks(text){
-    return linkify(hashLink(text));
+    return hashLink(linkify(text));
 }
