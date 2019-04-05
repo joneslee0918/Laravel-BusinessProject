@@ -36,7 +36,10 @@ const TwitterDefaultFeed = ({feedItem}) => {
         const text = feedItem.text ? feedItem.text : "";
 
         let media = typeof feedItem.extended_entities !== "undefined" && typeof feedItem.extended_entities.media !== "undefined" ? feedItem.extended_entities.media : [];
-        media = media.map(file => ({src: file.media_url_https, type: file.type}));
+        media = media.map(file => {
+            const source = file.type === "video" && typeof file.video_info.variants !== "undefined" && file.video_info.variants.length ? file.video_info.variants[0].url : "";
+            return {src: file.media_url_https, type: file.type, source}
+        });
 
         return (
             <div className="stream-feed-container">
@@ -73,7 +76,10 @@ const TwitterFollowersFeed = ({feedItem}) => {
         const date = typeof feedItem.status !== "undefined" && typeof feedItem.status["created_at"] !== "undefined" ? feedItem.status["created_at"] : "";
 
         let media = typeof feedItem.status !== "undefined" && typeof feedItem.status.extended_entities !== "undefined" && typeof feedItem.status.extended_entities.media !== "undefined" ? feedItem.status.extended_entities.media : [];
-        media = media.map(file => ({src: file.media_url_https, type: file.type}));
+        media = media.map(file => {
+            const source = file.type === "video" && typeof file.video_info.variants !== "undefined" && file.video_info.variants.length ? file.video_info.variants[0].url : "";
+            return {src: file.media_url_https, type: file.type, source}
+        });
 
         return(
             <div className="stream-feed-container">
