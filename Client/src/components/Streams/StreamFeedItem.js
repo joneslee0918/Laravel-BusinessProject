@@ -1,6 +1,6 @@
 import React from 'react';
 import ReadMore from '../ReadMore';
-import {linkify} from '../../utils/helpers';
+import StreamFeedMedia from './StreamFeedMedia';
 
 const StreamFeedItem = ({feedItem, streamItem, channel}) => {
     try{
@@ -34,6 +34,10 @@ const StreamFeedItem = ({feedItem, streamItem, channel}) => {
 const TwitterDefaultFeed = ({feedItem}) => {
     try{
         const text = feedItem.text ? feedItem.text : "";
+
+        let media = typeof feedItem.extended_entities !== "undefined" && typeof feedItem.extended_entities.media !== "undefined" ? feedItem.extended_entities.media : [];
+        media = media.map(file => ({src: file.media_url_https, type: file.type}));
+
         return (
             <div className="stream-feed-container">
                         <div className="post-info">
@@ -46,6 +50,9 @@ const TwitterDefaultFeed = ({feedItem}) => {
                         <div className="post-content">
                              <ReadMore>{text}</ReadMore>                            
                         </div>
+
+                        <StreamFeedMedia media={media}></StreamFeedMedia>
+
                         <div className="stream-action-icons">
                             <i className="fa fa-mail-forward"></i>
                             <i className="fa fa-retweet"></i>
@@ -62,19 +69,27 @@ const TwitterDefaultFeed = ({feedItem}) => {
 
 const TwitterFollowersFeed = ({feedItem}) => {
     try{
-        const text = typeof feedItem.status["text"] !== "undefined" ? feedItem.status["text"] : "";
+        const text = typeof feedItem.status !== "undefined" && typeof feedItem.status["text"] !== "undefined" ? feedItem.status["text"] : "";
+        const date = typeof feedItem.status !== "undefined" && typeof feedItem.status["created_at"] !== "undefined" ? feedItem.status["created_at"] : "";
+
+        let media = typeof feedItem.status !== "undefined" && typeof feedItem.status.extended_entities !== "undefined" && typeof feedItem.status.extended_entities.media !== "undefined" ? feedItem.status.extended_entities.media : [];
+        media = media.map(file => ({src: file.media_url_https, type: file.type}));
+
         return(
             <div className="stream-feed-container">
                         <div className="post-info">
                             <img src={feedItem.profile_image_url} />
                             <div className="post-info-item">
                                 <a href="#" className="username"><strong>{feedItem.screen_name}</strong></a>
-                                <div className="post-date">{new Date(feedItem.status["created_at"]).toDateString()}</div>
+                                <div className="post-date">{date ? new Date(date).toDateString() : ""}</div>
                             </div>
                         </div>
                         <div className="post-content">
                              <ReadMore>{text}</ReadMore>
                         </div>
+
+                        <StreamFeedMedia media={media}></StreamFeedMedia>
+
                         <div className="stream-action-icons">
                             <i className="fa fa-mail-forward"></i>
                             <i className="fa fa-retweet"></i>
@@ -93,6 +108,10 @@ const TwitterFollowersFeed = ({feedItem}) => {
 const ScheduledFeed = ({feedItem, channel}) => {
     try{
         const text = feedItem.content ? feedItem.content : "";
+        let media = typeof feedItem.payload.images !== "undefined" && feedItem.payload.images.length ? feedItem.payload.images : [];
+
+        media = media.map(file => ({src: file.absolutePath, type: "photo"}));
+
         return (
             <div className="stream-feed-container">
                         <div className="post-info">
@@ -105,6 +124,8 @@ const ScheduledFeed = ({feedItem, channel}) => {
                         <div className="post-content">
                              <ReadMore>{text}</ReadMore> 
                         </div>
+
+                        <StreamFeedMedia media={media}></StreamFeedMedia>
                     </div>
         )}catch(e){ 
             console.log(e);
@@ -116,26 +137,51 @@ const FacebookPostsFeed = ({feedItem}) => {
 
     try{    
         const text = feedItem.message ? feedItem.message : "";
-            return (
+
+        const attachments = typeof feedItem.attachments !== "undefined" ? feedItem.attachments.data : [];
+        const subAttachments = attachments.length && typeof attachments[0].subattachments !== "undefined" ? (typeof attachments[0].subattachments.data !== "undefined" ? attachments[0].subattachments.data : []) : [];
+
+        
+        let mainMedia = attachments.map((item) => {
+            if(typeof item.media !== "undefined"){
+                return item.media;
+            }
+        }).filter(item => typeof item !== "undefined");
+
+        let subMedia = subAttachments.map((item) => {
+            if(typeof item.media !== "undefined"){
+                return item.media;
+            }
+        }).filter(item => typeof item !== "undefined");
+
+        let media = [...mainMedia, ...subMedia];
+
+        media = media.map(file => ({src: file.image.src, type: typeof file.source !== "undefined" ? "video": "photo", source: typeof file.source !== "undefined" ? file.source : ""}));
+
+        return (
             <div className="stream-feed-container">
-                        <div className="post-info">
-                            <img src={feedItem.from.picture.data.url} />
-                            <div className="post-info-item">
-                                <a href="#" className="username"><strong>{feedItem.from.name}</strong></a>
-                                <div className="post-date">{new Date(feedItem.created_time).toDateString()}</div>
-                            </div>
-                        </div>
-                        <div className="post-content">
-                             <ReadMore>{text}</ReadMore>
-                        </div>
-                        <div className="stream-action-icons">
-                            <i className="fa fa-thumbs-up"></i>
-                            <i className="fa fa-comment"></i>
-                            <i className="fa fa-share"></i>
-                            <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </div>
+                <div className="post-info">
+                    <img src={feedItem.from.picture.data.url} />
+                    <div className="post-info-item">
+                        <a href="#" className="username"><strong>{feedItem.from.name}</strong></a>
+                        <div className="post-date">{new Date(feedItem.created_time).toDateString()}</div>
                     </div>
-)
+                </div>
+
+                <div className="post-content">
+                    <ReadMore>{text ? text : (attachments.length ? attachments[0].title : "")}</ReadMore>
+                </div>
+
+                <StreamFeedMedia media={media}></StreamFeedMedia>
+
+                <div className="stream-action-icons">
+                    <i className="fa fa-thumbs-up"></i>
+                    <i className="fa fa-comment"></i>
+                    <i className="fa fa-share"></i>
+                    <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </div>
+            </div>
+        )
     }catch(e){
         console.log(e);
         return <div></div>;
@@ -151,7 +197,7 @@ const FacebookMessagesFeed = ({feedItem, channel}) => {
                             <img src={channel.name === feedItem.messages.data[0].from.name ? channel.avatar : "/images/dummy_profile.png"} />
                             <div className="post-info-item">
                                 <a href="#" className="username"><strong>{feedItem.messages.data[0].from.name}</strong></a>
-                                <div className="post-date">{(new Date(feedItem.updated_time)).toDateString("MMM dd, yyyy hh:mm a")}</div>
+                                <div className="post-date">{(new Date(feedItem.updated_time)).toDateString()}</div>
                             </div>
                         </div>
                         <div className="post-content">
