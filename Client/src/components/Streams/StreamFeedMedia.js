@@ -14,10 +14,11 @@ class StreamFeedMedia extends React.Component{
     }
 
     render(){
-        const {media} = this.props;
+        const {media, setImages} = this.props;
         const {videoClicked} = this.state;
 
         if(!media.length) return <div></div>;
+        let images = media.filter(item => item.type === "photo");
         const thumbnails = chunk(media, 2);
         
         return thumbnails.map((items, index) => {
@@ -37,7 +38,7 @@ class StreamFeedMedia extends React.Component{
                                             </video>
                                         </div>
                                     }
-                                    <div className="hover-overlay">
+                                    <div className="hover-overlay" onClick={() => setImages(images)}>
                                         <div className="overlay-text">{media.length > 4 ? "+"+(media.length - 4): ""}</div>
                                     </div>
                                     {item.type === "video" && !this.state.videoClicked && 

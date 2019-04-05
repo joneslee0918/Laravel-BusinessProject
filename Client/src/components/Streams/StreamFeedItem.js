@@ -2,25 +2,25 @@ import React from 'react';
 import ReadMore from '../ReadMore';
 import StreamFeedMedia from './StreamFeedMedia';
 
-const StreamFeedItem = ({feedItem, streamItem, channel}) => {
+const StreamFeedItem = ({feedItem, streamItem, channel, setImages}) => {
     try{
         if(streamItem.type == "scheduled"){
-            return <ScheduledFeed feedItem={feedItem} channel={channel}/>
+            return <ScheduledFeed feedItem={feedItem} setImages={setImages} channel={channel}/>
         }
 
         if(streamItem.network === "twitter"){
             if(streamItem.type === "followers"){
-                return <TwitterFollowersFeed feedItem={feedItem} />;
+                return <TwitterFollowersFeed feedItem={feedItem} setImages={setImages} />;
             }else{
-                return <TwitterDefaultFeed feedItem={feedItem} />;
+                return <TwitterDefaultFeed feedItem={feedItem} setImages={setImages} />;
             }
         }
         else if(streamItem.network === "facebook"){
 
             if(streamItem.type === "conversations"){
-                return <FacebookMessagesFeed feedItem = {feedItem} channel={channel}/>
+                return <FacebookMessagesFeed feedItem = {feedItem} channel={channel} setImages={setImages} />
             }else{
-                return <FacebookPostsFeed feedItem = {feedItem} />
+                return <FacebookPostsFeed feedItem = {feedItem} setImages={setImages} />
             }
             
         }else{
@@ -31,7 +31,7 @@ const StreamFeedItem = ({feedItem, streamItem, channel}) => {
     }
 };
 
-const TwitterDefaultFeed = ({feedItem}) => {
+const TwitterDefaultFeed = ({feedItem, setImages}) => {
     try{
         const text = feedItem.text ? feedItem.text : "";
 
@@ -43,26 +43,28 @@ const TwitterDefaultFeed = ({feedItem}) => {
 
         return (
             <div className="stream-feed-container">
-                        <div className="post-info">
-                            <img src={feedItem.user.profile_image_url} />
-                            <div className="post-info-item">
-                                <a href="#" className="username"><strong>{feedItem.user.screen_name}</strong></a>
-                                <div className="post-date">{new Date(feedItem.created_at).toDateString()}</div>
-                            </div>
-                        </div>
-                        <div className="post-content">
-                             <ReadMore>{text}</ReadMore>                            
-                        </div>
 
-                        <StreamFeedMedia media={media}></StreamFeedMedia>
-
-                        <div className="stream-action-icons">
-                            <i className="fa fa-mail-forward"></i>
-                            <i className="fa fa-retweet"></i>
-                            <i className="fa fa-heart"></i>
-                            <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </div>
+                <div className="post-info">
+                    <img src={feedItem.user.profile_image_url} />
+                    <div className="post-info-item">
+                        <a href="#" className="username"><strong>{feedItem.user.screen_name}</strong></a>
+                        <div className="post-date">{new Date(feedItem.created_at).toDateString()}</div>
                     </div>
+                </div>
+                
+                <div className="post-content">
+                        <ReadMore>{text}</ReadMore>                            
+                </div>
+
+                <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>
+
+                <div className="stream-action-icons">
+                    <i className="fa fa-mail-forward"></i>
+                    <i className="fa fa-retweet"></i>
+                    <i className="fa fa-heart"></i>
+                    <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </div>
+            </div>
         );
     }catch(e){
         console.log(e);
@@ -70,7 +72,7 @@ const TwitterDefaultFeed = ({feedItem}) => {
     }
 }
 
-const TwitterFollowersFeed = ({feedItem}) => {
+const TwitterFollowersFeed = ({feedItem, setImages}) => {
     try{
         const text = typeof feedItem.status !== "undefined" && typeof feedItem.status["text"] !== "undefined" ? feedItem.status["text"] : "";
         const date = typeof feedItem.status !== "undefined" && typeof feedItem.status["created_at"] !== "undefined" ? feedItem.status["created_at"] : "";
@@ -94,7 +96,7 @@ const TwitterFollowersFeed = ({feedItem}) => {
                              <ReadMore>{text}</ReadMore>
                         </div>
 
-                        <StreamFeedMedia media={media}></StreamFeedMedia>
+                        <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>
 
                         <div className="stream-action-icons">
                             <i className="fa fa-mail-forward"></i>
@@ -111,7 +113,7 @@ const TwitterFollowersFeed = ({feedItem}) => {
 
 }
 
-const ScheduledFeed = ({feedItem, channel}) => {
+const ScheduledFeed = ({feedItem, channel, setImages}) => {
     try{
         const text = feedItem.content ? feedItem.content : "";
         let media = typeof feedItem.payload.images !== "undefined" && feedItem.payload.images.length ? feedItem.payload.images : [];
@@ -131,7 +133,7 @@ const ScheduledFeed = ({feedItem, channel}) => {
                              <ReadMore>{text}</ReadMore> 
                         </div>
 
-                        <StreamFeedMedia media={media}></StreamFeedMedia>
+                        <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>
                     </div>
         )}catch(e){ 
             console.log(e);
@@ -139,7 +141,7 @@ const ScheduledFeed = ({feedItem, channel}) => {
         }
 };
 
-const FacebookPostsFeed = ({feedItem}) => {
+const FacebookPostsFeed = ({feedItem, setImages}) => {
 
     try{    
         const text = feedItem.message ? feedItem.message : "";
@@ -178,7 +180,7 @@ const FacebookPostsFeed = ({feedItem}) => {
                     <ReadMore>{text ? text : (attachments.length ? attachments[0].title : "")}</ReadMore>
                 </div>
 
-                <StreamFeedMedia media={media}></StreamFeedMedia>
+                <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>
 
                 <div className="stream-action-icons">
                     <i className="fa fa-thumbs-up"></i>

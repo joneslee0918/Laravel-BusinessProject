@@ -57,7 +57,7 @@ class StreamItems extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: this.props.streams.length ? this.props.streams : [],
+      items: this.props.streams.length ? this.props.streams : []
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }

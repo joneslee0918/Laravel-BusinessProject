@@ -1524,6 +1524,8 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left:-2px;
+    margin-right:-2px;
 }
 
 .media-box {
@@ -1531,6 +1533,7 @@ input {
     position:relative;
     margin: 0px;
     overflow: hidden;
+    margin:2px;
 }
 
 .photo-media-box:hover .hover-overlay{
