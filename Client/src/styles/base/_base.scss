@@ -1541,6 +1541,15 @@ input {
     display: none !important;
 }
 
+.video-close-btn{
+    position: absolute;
+    color: white;
+    background: none;
+    border: none;
+    padding: 5px;
+    z-index:998;
+}
+
 .media-box video{
     width: 100%;
 }

@@ -30,9 +30,12 @@ class StreamFeedMedia extends React.Component{
                                 <div key={i} className={`media-box ${item.type}-media-box ${media.length > 4 && index > 0 && i > 0 ? 'more-images': ''}`}>
                                     
                                     {item.type !== "video" || !videoClicked? <img src={item.src} /> :
-                                        <video autoPlay controls>
-                                            <source src={item.source} type="video/mp4" />
-                                        </video>
+                                        <div>
+                                            <button onClick={this.handleVideoClick} className="video-close-btn"><i className="fa fa-close"></i></button>
+                                            <video autoPlay controls>
+                                                <source src={item.source} type="video/mp4" />
+                                            </video>
+                                        </div>
                                     }
                                     <div className="hover-overlay">
                                         <div className="overlay-text">{media.length > 4 ? "+"+(media.length - 4): ""}</div>
