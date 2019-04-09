@@ -20,7 +20,7 @@ class StreamFeedMedia extends React.Component{
         if(!media.length) return <div></div>;
         let images = media.filter(item => item.type === "photo");
         const thumbnails = chunk(media, 2);
-        
+
         return thumbnails.map((items, index) => {
             
                     if(index > 1) return;
@@ -28,17 +28,23 @@ class StreamFeedMedia extends React.Component{
                     return (<div key={index} className="post-media">
 
                             {items.map((item, i) => (
+                                
                                 <div key={i} className={`media-box ${item.type}-media-box ${media.length > 4 && index > 0 && i > 0 ? 'more-images': ''}`}>
                                     
                                     {item.type !== "video" || !videoClicked? <img src={item.src} /> :
                                         <div>
+                                            
                                             <button onClick={this.handleVideoClick} className="video-close-btn"><i className="fa fa-close"></i></button>
-                                            <video autoPlay controls>
-                                                <source src={item.source} type="video/mp4" />
-                                            </video>
+                                            {item.source.includes("youtube") ? 
+                                                <iframe allowfullscreen="" src={item.source}></iframe>
+                                                :
+                                                <video autoPlay controls>
+                                                    <source src={item.source} type="video/mp4" />
+                                                </video> 
+                                            }
                                         </div>
                                     }
-                                    <div className="hover-overlay" onClick={() => setImages(images)}>
+                                    <div className="hover-overlay" onClick={() => setImages(images, index > 0 ? 2 + i : i)}>
                                         <div className="overlay-text">{media.length > 4 ? "+"+(media.length - 4): ""}</div>
                                     </div>
                                     {item.type === "video" && !this.state.videoClicked && 
