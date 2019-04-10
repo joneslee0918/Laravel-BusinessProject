@@ -111,7 +111,11 @@ class StreamItems extends Component {
                       <h3 style={getTitleStyle(
                         snapshot.isDragging,
                         provided.draggableProps.style
-                      )} className="stream-title"><i className={`fa fa-${item.network} ${item.network}_color`}></i> {item.title} <span className="stream-user">{item.network == "twitter" ? channel.username : channel.name}</span></h3>
+                      )} className="stream-title">
+                        <i className={`fa fa-${item.network} ${item.network}_color`}></i> {item.title} 
+                        <span className="stream-user">{item.network == "twitter" ? channel.username : channel.name}</span>
+                        <i className={'fa fa-delete'}></i>
+                        </h3>
 
                       <StreamFeed streamItem = {item} channel={channel}/>
                       

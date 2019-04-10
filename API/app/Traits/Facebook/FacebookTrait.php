@@ -54,31 +54,51 @@ trait FacebookTrait
     }
 
     public function getTimeline(){
-        $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/feed?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
 
-        return $response->getDecodedBody();
+        $key = $this->id . "-timeline";
+        $minutes = 1;
+        return Cache::remember($key, $minutes, function () {
+            $fb = $this->setAsCurrentUser();
+            $response = $fb->get("/{$this->original_id}/feed?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+
+            return $response->getDecodedBody();
+        });
     }
 
     public function getMyPosts(){
-        $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
 
-        return $response->getDecodedBody();
+        $key = $this->id . "-myPosts";
+        $minutes = 1;
+        return Cache::remember($key, $minutes, function () {
+            $fb = $this->setAsCurrentUser();
+            $response = $fb->get("/{$this->original_id}/posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+    
+            return $response->getDecodedBody();
+        });
     }
 
     public function getUnpublished(){
-        $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/promotable_posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
-
-        return $response->getDecodedBody();
+        
+        $key = $this->id . "-unpublished";
+        $minutes = 1;
+        return Cache::remember($key, $minutes, function () {
+            $fb = $this->setAsCurrentUser();
+            $response = $fb->get("/{$this->original_id}/promotable_posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+    
+            return $response->getDecodedBody();
+        });
     }
 
     public function getMentions(){
-        $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/tagged?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
 
-        return $response->getDecodedBody();
+        $key = $this->id . "-mentions";
+        $minutes = 1;
+        return Cache::remember($key, $minutes, function () {
+            $fb = $this->setAsCurrentUser();
+            $response = $fb->get("/{$this->original_id}/tagged?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+    
+            return $response->getDecodedBody();
+        });
     }
 
     public function getConversations(){

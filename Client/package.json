@@ -56,7 +56,6 @@
     "react-geosuggest": "^2.8.0",
     "react-images": "^0.5.19",
     "react-images-browse": "^0.2.4",
-    "react-loader-spinner": "^2.3.0",
     "react-loaders": "^3.0.1",
     "react-modal": "^3.6.1",
     "react-redux": "5.0.7",

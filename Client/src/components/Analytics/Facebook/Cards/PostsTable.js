@@ -1,5 +1,4 @@
 import React from 'react';
-import Loader from 'react-loader-spinner';
 import { pageInsightsByType } from "../../../../requests/facebook/channels";
 
 class PostsTable extends React.Component{
@@ -52,7 +51,6 @@ class PostsTable extends React.Component{
                 <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
             </div>
             <div className="card-table">
-                <div className="table-loader-style">{this.state.loading && <Loader type="Bars" color="#46a5d1" height={70} width={70} />}</div>
                 {this.state.posts !=null &&
                 <table className="table anl-posts-table">
                     <thead>

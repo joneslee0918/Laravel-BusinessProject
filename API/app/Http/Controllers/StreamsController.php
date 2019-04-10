@@ -188,4 +188,14 @@ class StreamsController extends Controller
 
         return response()->json("Update successful!", 200);
     }
+
+    public function deleteStream(Request $request){
+        $streamId = $request->input("streamId");
+
+        if(!$streamId) return;
+
+        \DB::table("streams")->where("id", $streamId)->delete();
+
+        return response()->json("Delete successful!", 200);
+    }
 }
