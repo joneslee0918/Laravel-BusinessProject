@@ -64,8 +64,8 @@ export const positionStream = (streamId, data) => {
             });
 };
 
-export const updateStream = (streamId, data) => {
-    return axios.post(`${apiUrl}/streams/add`, {streamId, data})
+export const updateStream = (streamId, title) => {
+    return axios.post(`${apiUrl}/streams/update`, {streamId, title})
             .then((response) => {
                 return response.data;
             });

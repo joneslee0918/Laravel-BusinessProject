@@ -181,11 +181,11 @@ class StreamsController extends Controller
 
     public function updateStream(Request $request){
         $streamId = $request->input("streamId");
-        $data = $request-input("data");
+        $title = $request->input("title");
 
         if(!$streamId) return;
 
-        \DB::table("streams")->where("id", $streamId)->update($data);
+        \DB::table("streams")->where("id", $streamId)->update(['title' => $title]);
 
         return response()->json("Update successful!", 200);
     }

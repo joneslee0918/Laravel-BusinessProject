@@ -576,6 +576,19 @@ input {
     padding:10px;
 }
 
+.stream-title input{
+    width: 190px;
+}
+
+.stream-title .text-cursor{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.text-cursor{
+    cursor: text;
+}
+
 .stream-title .fa-close{
     color: #999;
     font-size: 16px;
