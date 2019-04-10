@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\Stream;
 
 class StreamsController extends Controller
 {
@@ -189,12 +190,54 @@ class StreamsController extends Controller
         return response()->json("Update successful!", 200);
     }
 
+
+    public function positionStream(Request $request){
+        $data = $request->get("data");
+        $streamId = $request->get("streamId");
+
+        if(!$data || !$streamId) return;
+
+        $ids = collect($data)->pluck("id");
+        $data = [];
+        foreach($ids as $index => $id){
+            $data[] = [
+                "index" => $index,
+                "id" => $id
+            ];
+        }
+
+        $newPos = collect($data)->where("id", $streamId)->first();
+        $oldPos = Stream::where("id", $streamId)->first();
+
+        if(!isset($newPos["index"]) || !isset($oldPos->index)) return;
+
+        $newPos = $newPos["index"];
+        $oldPos = $oldPos->index;
+            
+        $query = Stream::whereIn("id", $ids);
+        
+        if($oldPos < $newPos){
+            $query->where("index", ">=", $oldPos)->where("index", "<=", $newPos)->decrement("index"); 
+        }else{
+            $query->where("index", ">=", $newPos)->where("index", "<=", $oldPos)->increment("index");
+        }
+
+        Stream::where("id", $streamId)->update(["index" => $newPos]);
+                
+        return response()->json(["message" => "Successful update"], 200);
+    }
+
     public function deleteStream(Request $request){
         $streamId = $request->input("streamId");
 
         if(!$streamId) return;
 
-        \DB::table("streams")->where("id", $streamId)->delete();
+        $stream = Stream::find($streamId);
+        $streamIndex = $stream->index;
+        $streamTabId = $stream->tab_id;
+        $stream->delete();
+
+        Stream::where("tab_id", $streamTabId)->where("index", ">=", $streamIndex)->decrement("index");
 
         return response()->json("Delete successful!", 200);
     }

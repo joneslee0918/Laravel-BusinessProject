@@ -57,6 +57,13 @@ export const deleteStream = (streamId) => {
             });
 };
 
+export const positionStream = (streamId, data) => {
+    return axios.post(`${apiUrl}/streams/position`, {streamId, data})
+            .then((response) => {
+                return response.data;
+            });
+};
+
 export const updateStream = (streamId, data) => {
     return axios.post(`${apiUrl}/streams/add`, {streamId, data})
             .then((response) => {

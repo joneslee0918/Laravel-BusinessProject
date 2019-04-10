@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import StreamFeed from "./StreamFeed";
 import channelSelector, {channelById} from '../../selectors/channels';
+import {deleteStream, positionStream} from '../../requests/streams';
 
 // fake data generator
 const getItems = streams =>
@@ -76,7 +77,13 @@ class StreamItems extends Component {
 
     this.setState({
       items,
-    });
+    }, () => positionStream(result.draggableId, items));
+  }
+
+  handleStreamClose = (currentItem) => {
+    this.setState(() => ({
+      items: this.state.items.filter(item => item !== currentItem)
+    }), () => deleteStream(currentItem.id));
   }
 
   // Normally you would want to split things out into separate components.
@@ -112,9 +119,8 @@ class StreamItems extends Component {
                         snapshot.isDragging,
                         provided.draggableProps.style
                       )} className="stream-title">
-                        <i className={`fa fa-${item.network} ${item.network}_color`}></i> {item.title} 
-                        <span className="stream-user">{item.network == "twitter" ? channel.username : channel.name}</span>
-                        <i className={'fa fa-delete'}></i>
+                        <i className={`fa fa-${item.network} ${item.network}_color`}></i> {item.title} <span className="stream-user">{item.network == "twitter" ? channel.username : channel.name}</span>
+                        <i className={'fa fa-close pull-right'} onClick={() => this.handleStreamClose(item)}></i>
                         </h3>
 
                       <StreamFeed streamItem = {item} channel={channel}/>

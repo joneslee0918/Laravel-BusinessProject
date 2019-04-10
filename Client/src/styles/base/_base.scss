@@ -576,6 +576,16 @@ input {
     padding:10px;
 }
 
+.stream-title .fa-close{
+    color: #999;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.stream-title .fa-close:hover{
+    color: #555;
+}
+
 .ReactModalPortal .ReactModal__Overlay {
     display: flex;
     justify-content: center;
