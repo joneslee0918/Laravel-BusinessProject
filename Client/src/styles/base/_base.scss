@@ -580,6 +580,31 @@ input {
     width: 190px;
 }
 
+.container-p10{
+    padding: 10px;
+    width: 100%;
+}
+
+.container-nodata{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    width: 100%;
+    height: 100%;
+    font-family: open-sansSemiBold;
+    font-size: 2em;
+    color: #999;
+}
+
+.container-nodata i{
+    font-size:60px;
+}
+
+.container-nodata p{
+    text-align:center;
+}
+
 .stream-title .text-cursor{
     text-overflow: ellipsis;
     white-space: nowrap;

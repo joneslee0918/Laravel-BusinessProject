@@ -93,7 +93,7 @@ class StreamsController extends Controller
 
         $tabs = $this->user->tabs();
 
-        $latestTab = $tabs->latest()->first();
+        $latestTab = $tabs->orderBy("index", "desc")->first();
 
         $tabs->create([
             "key" => $data["key"],
@@ -165,7 +165,7 @@ class StreamsController extends Controller
             $tab = $this->user->tabs()->where("key", $selectedTab)->first();
         }
 
-        $latestStream = $tab->streams()->latest()->first();
+        $latestStream = $tab->streams()->orderBy("index", "desc")->first();
 
         $stream = $tab->streams()->create([
             "index" => ($latestStream ? $latestStream->index + 1 : 0),
