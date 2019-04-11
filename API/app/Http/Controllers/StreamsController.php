@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\Models\Stream;
 
 class StreamsController extends Controller
 {
@@ -93,7 +92,7 @@ class StreamsController extends Controller
 
         $tabs = $this->user->tabs();
 
-        $latestTab = $tabs->orderBy("index", "desc")->first();
+        $latestTab = $tabs->latest()->first();
 
         $tabs->create([
             "key" => $data["key"],
@@ -165,7 +164,7 @@ class StreamsController extends Controller
             $tab = $this->user->tabs()->where("key", $selectedTab)->first();
         }
 
-        $latestStream = $tab->streams()->orderBy("index", "desc")->first();
+        $latestStream = $tab->streams()->latest()->first();
 
         $stream = $tab->streams()->create([
             "index" => ($latestStream ? $latestStream->index + 1 : 0),
@@ -181,64 +180,12 @@ class StreamsController extends Controller
 
     public function updateStream(Request $request){
         $streamId = $request->input("streamId");
-        $title = $request->input("title");
+        $data = $request-input("data");
 
         if(!$streamId) return;
 
-        \DB::table("streams")->where("id", $streamId)->update(['title' => $title]);
+        \DB::table("streams")->where("id", $streamId)->update($data);
 
         return response()->json("Update successful!", 200);
-    }
-
-
-    public function positionStream(Request $request){
-        $data = $request->get("data");
-        $streamId = $request->get("streamId");
-
-        if(!$data || !$streamId) return;
-
-        $ids = collect($data)->pluck("id");
-        $data = [];
-        foreach($ids as $index => $id){
-            $data[] = [
-                "index" => $index,
-                "id" => $id
-            ];
-        }
-
-        $newPos = collect($data)->where("id", $streamId)->first();
-        $oldPos = Stream::where("id", $streamId)->first();
-
-        if(!isset($newPos["index"]) || !isset($oldPos->index)) return;
-
-        $newPos = $newPos["index"];
-        $oldPos = $oldPos->index;
-            
-        $query = Stream::whereIn("id", $ids);
-        
-        if($oldPos < $newPos){
-            $query->where("index", ">=", $oldPos)->where("index", "<=", $newPos)->decrement("index"); 
-        }else{
-            $query->where("index", ">=", $newPos)->where("index", "<=", $oldPos)->increment("index");
-        }
-
-        Stream::where("id", $streamId)->update(["index" => $newPos]);
-                
-        return response()->json(["message" => "Successful update"], 200);
-    }
-
-    public function deleteStream(Request $request){
-        $streamId = $request->input("streamId");
-
-        if(!$streamId) return;
-
-        $stream = Stream::find($streamId);
-        $streamIndex = $stream->index;
-        $streamTabId = $stream->tab_id;
-        $stream->delete();
-
-        Stream::where("tab_id", $streamTabId)->where("index", ">=", $streamIndex)->decrement("index");
-
-        return response()->json("Delete successful!", 200);
     }
 }
