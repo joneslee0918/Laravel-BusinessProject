@@ -36,9 +36,9 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::latest()->first();
+    $channel = \App\Models\Twitter\Channel::first();
 
-    return response()->json($channel->getActivities());
+    return response()->json($channel->unretweetPost("1116322723024838656"));
 
 })->name("test");
 

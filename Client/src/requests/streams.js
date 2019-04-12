@@ -50,8 +50,22 @@ export const addStream = (type, channelId, selectedTab, network, searchTerm = ""
             });
 };
 
-export const updateStream = (streamId, data) => {
-    return axios.post(`${apiUrl}/streams/add`, {streamId, data})
+export const deleteStream = (streamId) => {
+    return axios.post(`${apiUrl}/streams/delete`, {streamId})
+            .then((response) => {
+                return response.data;
+            });
+};
+
+export const positionStream = (streamId, data) => {
+    return axios.post(`${apiUrl}/streams/position`, {streamId, data})
+            .then((response) => {
+                return response.data;
+            });
+};
+
+export const updateStream = (streamId, title) => {
+    return axios.post(`${apiUrl}/streams/update`, {streamId, title})
             .then((response) => {
                 return response.data;
             });
