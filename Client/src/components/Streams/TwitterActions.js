@@ -1,19 +1,19 @@
 import React from 'react';
 import {like, unlike, retweet} from '../../requests/twitter/tweets';
+import {abbrNum} from '../../utils/numberFormatter';
 
 class TwitterActions extends React.Component{
 
     state = {
-        liked: false,
-        retweeted: false
+        liked: this.props.feedItem.favorited,
+        retweeted: this.props.feedItem.retweeted
     }
 
     likePost = () => {
-
-        this.setState(() => ({liked: true}));
         const {feedItem, channel, type, updateItem} = this.props;
-
-        if(feedItem.favorited) return;
+        const {liked} = this.state;
+        if(liked) return;
+        this.setState(() => ({liked: true}));
 
         like(feedItem.id, channel.id).then((response) =>{
             if(typeof response.id !== "undefined"){
@@ -23,10 +23,11 @@ class TwitterActions extends React.Component{
     }
 
     unlikePost = () => {
-        this.setState(() => ({liked: false}));
+        
         const {feedItem, channel, type, updateItem} = this.props;
-
-        if(!feedItem.favorited) return;
+        const {liked} = this.state;
+        if(!liked) return;
+        this.setState(() => ({liked: false}));
         
         unlike(feedItem.id, channel.id).then((response) =>{
             if(typeof response.id !== "undefined"){
@@ -36,10 +37,11 @@ class TwitterActions extends React.Component{
     }
 
     retweetPost = () => {
-        this.setState(() => ({retweeted: true}));
+        
         const {feedItem, channel, type, updateItem} = this.props;
-
-        if(!feedItem.favorited) return;
+        const {retweeted} = this.state;
+        if(retweeted) return;
+        this.setState(() => ({retweeted: true}));
         
         retweet(feedItem.id, channel.id).then((response) =>{
             if(typeof response.id !== "undefined"){
@@ -49,9 +51,9 @@ class TwitterActions extends React.Component{
     }
 
     toggleLike = () => {
-        const {feedItem} = this.props;
+        const {liked} = this.state;
 
-        if(!feedItem.favorited){
+        if(!liked){
             this.likePost();
             return;
         }
@@ -63,12 +65,10 @@ class TwitterActions extends React.Component{
     render(){
         const {feedItem} = this.props;
         const {liked, retweeted} = this.state;
-        feedItem.favorited = liked;
-        feedItem.retweeted = retweeted;
         const likedPost = liked ? 'acted' : '';
         const retweetedPost = retweeted ? 'acted' : '';
-        const likesCount = feedItem.favorite_count > 0 ? feedItem.favorite_count : '';
-        const retweetCount = feedItem.retweet_count > 0 ? feedItem.retweet_count : '';
+        const likesCount = feedItem.favorite_count > 0 ? abbrNum(feedItem.favorite_count) : '';
+        const retweetCount = feedItem.retweet_count > 0 ? abbrNum(feedItem.retweet_count) : '';
 
         return (
             <div className="stream-action-icons">
