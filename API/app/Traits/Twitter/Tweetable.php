@@ -264,6 +264,17 @@ trait Tweetable
             throw $e;
         }
     }
+
+
+    public function uncacheFeeds()
+    {
+        Cache::forget($this->id . "-userTimeline");
+        Cache::forget($this->id . "-homeTimeline");
+        Cache::forget($this->id . "-mentionsTimeline");
+        Cache::forget($this->id . "-rtsTimeline");
+        Cache::forget($this->id . "-followersTimeline");
+        Cache::forget($this->id . "-likesTimeline");
+    }
     
 
     /**
@@ -361,7 +372,7 @@ trait Tweetable
         }
     }
 
-        /**
+    /**
      * @param array $params
      * @return array
      */
@@ -404,6 +415,32 @@ trait Tweetable
             throw $e;
         }
     }
+
+
+    public function likePost($id)
+    {
+        $this->setAsCurrentUser();
+        $result = Twitter::postFavorite(["id" => $id]);
+        $this->uncacheFeeds();
+        return $result;
+    }
+
+    public function unlikePost($id)
+    {
+        $this->setAsCurrentUser();
+        $result = Twitter::destroyFavorite(["id" => $id]);
+        $this->uncacheFeeds();
+        return $result;
+    }
+
+    public function retweetPost($id)
+    {
+        $this->setAsCurrentUser();
+        $result = Twitter::postRt($id);
+        $this->uncacheFeeds();
+        return $result;
+    }
+
 
     /**
      * @param array $params

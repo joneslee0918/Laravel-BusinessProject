@@ -1,5 +1,4 @@
 import React from 'react';
-import Loader from 'react-loader-spinner';
 import { pageInsightsByType } from "../../../../requests/facebook/channels";
 
 class EngagementCard extends React.Component{
@@ -53,21 +52,15 @@ class EngagementCard extends React.Component{
             </div>
             <div className="eng-card-section">
                 <span className="anl-desc card-description">Reactions</span>
-                <span className="anl-count">
-                    {this.state.loading ? <Loader type="Bars" color="#ffffff" height={15} width={15} /> : this.state.data !=null && this.state.data.reactions}                
-                </span>         
+                <span className="anl-count">{this.state.data !=null && this.state.data.reactions}</span>         
             </div>
             <div className="eng-card-section eng-card-section-middle">
                 <span className="anl-desc card-description">Comments</span>
-                <span className="anl-count">
-                    {this.state.loading ? <Loader type="Bars" color="#ffffff" height={15} width={15} /> : this.state.data !=null && this.state.data.comments}
-                </span>
+                <span className="anl-count">{this.state.data !=null && this.state.data.comments}</span>
             </div>
             <div className="eng-card-section">
                 <span className="anl-desc card-description">Shares</span>
-                <span className="anl-count">
-                    {this.state.loading ? <Loader type="Bars" color="#ffffff" height={15} width={15} /> : this.state.data !=null && this.state.data.shares}
-                </span>
+                <span className="anl-count">{this.state.data !=null && this.state.data.shares}</span>
             </div>
         </div>
             );

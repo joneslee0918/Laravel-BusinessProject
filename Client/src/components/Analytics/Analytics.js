@@ -17,11 +17,6 @@ const menuItems = [
         uri: "/analytics/facebook-overview" 
     },
     {   
-        id: "twitter_overview",
-        displayName: "Twitter Overview",
-        uri: "/analytics/twitter-overview" 
-    },
-    {   
         id: "advanced",
         displayName: "Advanced",
         uri: "/analytics/advanced" 

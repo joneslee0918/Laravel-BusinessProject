@@ -1,10 +1,9 @@
 import React from 'react';
-import Loader from 'react-loader-spinner';
 import { pageInsightsByType } from "../../../../requests/facebook/channels";
 
 class PageOverviewCard extends React.Component{
     state = {
-        count: null,
+        count: 0,
         loading: false
     };
 
@@ -52,9 +51,7 @@ class PageOverviewCard extends React.Component{
                     <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
                 </div>
                 <div className="card-analytics-body anl-post-page">
-                    <span className="anl-desc card-description">{description}</span><span className="anl-count">
-                        {this.state.loading ? <Loader type="Bars" color="#ffffff" height={15} width={15} /> : this.state.count !=null && this.state.count}
-                    </span>
+                    <span className="anl-desc card-description">{description}</span><span className="anl-count">{this.state.count}</span>
                 </div>
             </div>
             );

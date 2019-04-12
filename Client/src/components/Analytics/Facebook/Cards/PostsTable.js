@@ -1,7 +1,5 @@
 import React from 'react';
-import Loader from 'react-loader-spinner';
 import { pageInsightsByType } from "../../../../requests/facebook/channels";
-import ReadMore from "../../../ReadMore";
 
 class PostsTable extends React.Component{
     state = {
@@ -53,7 +51,6 @@ class PostsTable extends React.Component{
                 <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
             </div>
             <div className="card-table">
-                <div className="table-loader-style">{this.state.loading && <Loader type="Bars" color="#46a5d1" height={70} width={70} />}</div>
                 {this.state.posts !=null &&
                 <table className="table anl-posts-table">
                     <thead>
@@ -78,7 +75,7 @@ class PostsTable extends React.Component{
                                         <p className="pt-post-date">{post.date}</p>
                                     </div>
                                 </th>
-                                <td className="anl-posts-table-th-second"><ReadMore characters={400}>{post.message ? post.message : ''}</ReadMore></td>
+                                <td className="anl-posts-table-th-second">{post.message}</td>
                                 <td>{post.reactions}</td>
                                 <td>{post.comments}</td>
                                 <td>{post.shares}</td>                            
