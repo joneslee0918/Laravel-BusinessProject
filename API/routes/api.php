@@ -33,7 +33,6 @@ Route::middleware('auth:api')->group(function(){
     Route::post('/streams/add', 'StreamsController@addStream');
     Route::post('/streams/update', 'StreamsController@updateStream');
     Route::post('/streams/position', 'StreamsController@positionStream');
-    Route::post('/streams/delete', 'StreamsController@deleteStream');
     Route::post('/streams/tabs/select', 'StreamsController@selectTab');
     Route::post('/streams/tabs/position', 'StreamsController@positionTab');
     Route::post('/streams/tabs/add', 'StreamsController@addTab');
@@ -74,11 +73,6 @@ Route::prefix("twitter")->group(function(){
 
         Route::patch('follow/{userId}', 'Twitter\Actions\FollowController@follow');
         Route::patch('unfollow/{userId}', 'Twitter\Actions\UnfollowController@unfollow');
-
-        Route::patch('like/post', 'Twitter\Actions\LikeController@likePost');
-        Route::patch('unlike/post', 'Twitter\Actions\LikeController@unlikePost');
-
-        Route::patch('retweet/post', 'Twitter\Actions\RetweetController@retweetPost');
 
         Route::post('tweet', 'Twitter\Actions\StatusController@tweet');
 

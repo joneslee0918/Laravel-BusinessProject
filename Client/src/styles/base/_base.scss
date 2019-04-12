@@ -505,18 +505,6 @@ input {
     cursor: pointer;
 }
 
-.stream-action-icons .acted{
-    color: #25a2f0;
-}
-
-.stream-action-icons .status-counter{
-    font-size:12px;
-}
-
-.stream-action-icons .acted:hover{
-    color: #337ab7;
-}
-
 .stream-action-icons i:hover{
     color: #666;
 }
@@ -586,54 +574,6 @@ input {
     border-bottom:1px solid #ccc;
     margin:0;
     padding:10px;
-}
-
-.stream-title input{
-    width: 190px;
-}
-
-.container-p10{
-    padding: 10px;
-    width: 100%;
-}
-
-.container-nodata{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: white;
-    width: 100%;
-    height: 100%;
-    font-family: open-sansSemiBold;
-    font-size: 2em;
-    color: #999;
-}
-
-.container-nodata i{
-    font-size:60px;
-}
-
-.container-nodata p{
-    text-align:center;
-}
-
-.stream-title .text-cursor{
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.text-cursor{
-    cursor: text;
-}
-
-.stream-title .fa-close{
-    color: #999;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.stream-title .fa-close:hover{
-    color: #555;
 }
 
 .ReactModalPortal .ReactModal__Overlay {

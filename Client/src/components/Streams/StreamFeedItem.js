@@ -1,9 +1,8 @@
 import React from 'react';
 import ReadMore from '../ReadMore';
 import StreamFeedMedia from './StreamFeedMedia';
-import TwitterActions from './TwitterActions';
 
-const StreamFeedItem = ({feedItem, streamItem, channel, setImages, updateItem}) => {
+const StreamFeedItem = ({feedItem, streamItem, channel, setImages}) => {
     try{
         if(streamItem.type == "scheduled"){
             return <ScheduledFeed feedItem={feedItem} setImages={setImages} channel={channel}/>
@@ -11,9 +10,9 @@ const StreamFeedItem = ({feedItem, streamItem, channel, setImages, updateItem}) 
 
         if(streamItem.network === "twitter"){
             if(streamItem.type === "followers"){
-                return <TwitterFollowersFeed feedItem={feedItem} setImages={setImages} channel={channel} updateItem={updateItem}/>;
+                return <TwitterFollowersFeed feedItem={feedItem} setImages={setImages} />;
             }else{
-                return <TwitterDefaultFeed feedItem={feedItem} setImages={setImages} channel={channel} updateItem={updateItem}/>;
+                return <TwitterDefaultFeed feedItem={feedItem} setImages={setImages} />;
             }
         }
         else if(streamItem.network === "facebook"){
@@ -32,7 +31,7 @@ const StreamFeedItem = ({feedItem, streamItem, channel, setImages, updateItem}) 
     }
 };
 
-const TwitterDefaultFeed = ({feedItem, setImages, channel, updateItem}) => {
+const TwitterDefaultFeed = ({feedItem, setImages}) => {
     try{
         const text = feedItem.text ? feedItem.text : "";
 
@@ -59,12 +58,12 @@ const TwitterDefaultFeed = ({feedItem, setImages, channel, updateItem}) => {
 
                 <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>
 
-                <TwitterActions 
-                    updateItem={updateItem} 
-                    channel={channel} 
-                    feedItem={feedItem}
-                    type="twitterDefault"
-                />
+                <div className="stream-action-icons">
+                    <i className="fa fa-mail-forward"></i>
+                    <i className="fa fa-retweet"></i>
+                    <i className="fa fa-heart"></i>
+                    <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </div>
             </div>
         );
     }catch(e){
@@ -73,7 +72,7 @@ const TwitterDefaultFeed = ({feedItem, setImages, channel, updateItem}) => {
     }
 }
 
-const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem}) => {
+const TwitterFollowersFeed = ({feedItem, setImages}) => {
     try{
         const text = typeof feedItem.status !== "undefined" && typeof feedItem.status["text"] !== "undefined" ? feedItem.status["text"] : "";
         const date = typeof feedItem.status !== "undefined" && typeof feedItem.status["created_at"] !== "undefined" ? feedItem.status["created_at"] : "";
@@ -85,8 +84,6 @@ const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem}) => {
         });
 
         return(
-            <div>
-            {typeof feedItem.status != "undefined" && 
             <div className="stream-feed-container">
                         <div className="post-info">
                             <img src={feedItem.profile_image_url} />
@@ -101,14 +98,13 @@ const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem}) => {
 
                         <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>
 
-                        <TwitterActions 
-                        updateItem={updateItem} 
-                        channel={channel} 
-                        feedItem={feedItem.status}
-                        type="twitterFollowers"
-                        />
-                    </div>}
-                </div>
+                        <div className="stream-action-icons">
+                            <i className="fa fa-mail-forward"></i>
+                            <i className="fa fa-retweet"></i>
+                            <i className="fa fa-heart"></i>
+                            <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </div>
+                    </div>
         ); 
     }catch(e){
         console.log(e);

@@ -185,45 +185,92 @@ class Channel extends Model
     }
     private function postsCount($sDate, $eDate)
     {
-        $posts = $this->getPosts($sDate, $eDate);
+        try {
+            $key = $this->id . "-postsCount-$sDate-$eDate";
+            $minutes = 15;
+            $startDate = Carbon::now(); 
 
-        if(!isset($posts['data'])) return 0;
+            return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
-        return count($posts['data']);
+                $posts = $this->getPosts($sDate, $eDate);
+
+                if(!isset($posts['data'])) return 0;
+
+                return count($posts['data']);
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
     private function fansCount($sDate, $eDate)
     {
-        $fans = collect($this->pageLikes('day', $sDate, $eDate)['data'][0]['values'])->last()['value'];
+        try {
+            $key = $this->id . "-fansCount-$sDate-$eDate";
+            $minutes = 15;
+            $startDate = Carbon::now(); 
 
-        return $fans;
+            return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
+
+                $fans = collect($this->pageLikes('day', $sDate, $eDate)['data'][0]['values'])->last()['value'];
+
+                return $fans;
+
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
     private function engagementsCount($sDate, $eDate)
     {
-        $postsData = $this->postsData($sDate, $eDate);
+        try {
+            $key = $this->id . "-engagementsCount-$sDate-$eDate";
+            $minutes = 15;
+            $startDate = Carbon::now(); 
 
-        $reactions = $postsData->sum('reactions');
-        $comments = $postsData->sum('comments');
-        $shares = $postsData->sum('shares');
+            return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
-        return $reactions+$comments+$shares;
+                $postsData = $this->postsData($sDate, $eDate);
+
+                $reactions = $postsData->sum('reactions');
+                $comments = $postsData->sum('comments');
+                $shares = $postsData->sum('shares');
+        
+                return $reactions+$comments+$shares;
+                
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
     private function engagementsByType($sDate, $eDate)
     {
-        $postsData = $this->postsData($sDate, $eDate);
+        try {
+            $key = $this->id . "-engagementsByType-$sDate-$eDate";
+            $minutes = 15;
+            $startDate = Carbon::now(); 
 
-        $reactions = $postsData->sum('reactions');
-        $comments = $postsData->sum('comments');
-        $shares = $postsData->sum('shares');
+            return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
-        $data = [                    
-            'reactions' => $reactions,
-            'comments' => $comments,
-            'shares' => $shares
-        ];
+                $postsData = $this->postsData($sDate, $eDate);
 
-        return $data;
+                $reactions = $postsData->sum('reactions');
+                $comments = $postsData->sum('comments');
+                $shares = $postsData->sum('shares');
+        
+                $data = [                    
+                    'reactions' => $reactions,
+                    'comments' => $comments,
+                    'shares' => $shares
+                ];
+        
+                return $data;
+                
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
     /**
      * 
@@ -231,20 +278,33 @@ class Channel extends Model
      */
     private function postsChartData($sDate, $eDate)
     {
-        $posts = $this->getPosts($sDate, $eDate)['data'];
+        try {
+            $key = $this->id . "-postsChartData-$sDate-$eDate";
+            $minutes = 15;
+            $startDate = Carbon::now(); 
 
-        $grouped_posts = collect($posts)->sortBy('created_time')->groupBy(function($post) {
-            return Carbon::parse($post['created_time'])->format('Y-m-d');
-        });
+            return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
-        $data = [];
+                $posts = $this->getPosts($sDate, $eDate)['data'];
 
-        foreach($grouped_posts as $key=>$value)
-        {
-            $data[] = [Carbon::parse($key)->timestamp*1000, count($value)];
+                $grouped_posts = collect($posts)->sortBy('created_time')->groupBy(function($post) {
+                    return Carbon::parse($post['created_time'])->format('Y-m-d');
+                });
+
+                $data = [];
+
+                foreach($grouped_posts as $key=>$value)
+                {
+                    $data[] = [Carbon::parse($key)->timestamp*1000, count($value)];
+                }
+
+                return $data;
+                
+            });
+        } catch (\Exception $e) {
+            throw $e;
         }
-
-        return $data;
+        
     }
 
     /**
@@ -252,20 +312,32 @@ class Channel extends Model
      */
     public function fansChartData($sDate, $eDate)
     {
-        $data = [];
+        try {
+            $key = $this->id . "-postsChartData-$sDate-$eDate";
+            $minutes = 15;
+            $startDate = Carbon::now(); 
 
-        $fans = $this->pageLikes('day', $sDate, $eDate);
+            return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
-        $values = $fans['data'][0]['values'];
+                $data = [];
 
-
-        foreach($values as $value)
-        {
-
-            $data[] = [Carbon::parse($value['end_time'])->timestamp*1000, $value['value']];
+                $fans = $this->pageLikes('day', $sDate, $eDate);
+        
+                $values = $fans['data'][0]['values'];
+        
+        
+                foreach($values as $value)
+                {
+        
+                    $data[] = [Carbon::parse($value['end_time'])->timestamp*1000, $value['value']];
+                }
+        
+                return $data;
+                
+            });
+        } catch (\Exception $e) {
+            throw $e;
         }
-
-        return $data;
     }
 
     /**
@@ -273,67 +345,85 @@ class Channel extends Model
      */
     public function postsData($sDate, $eDate)
     {        
-        $posts = $this->getPosts($sDate, $eDate)['data']; 
+        try {
+            $key = $this->id . "-postsData-$sDate-$eDate";
+            $minutes = 15;
+            $startDate = Carbon::now(); 
 
-        $preparePosts = collect();
+            return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
-        foreach($posts as $post)
-        {
-            $post = collect($post);
-            $post->put('date', Carbon::parse($post['created_time'])->format('M d, H:i'));
-            $post->put('reactions', count($this->postReactions($post['id'])['data']));
-            $post->put('comments', count($this->postComments($post['id'])['data']));
-            $post->put('shares', count($this->postShares($post['id'])['data']));
-            $post->put('timestamp', Carbon::parse($post['created_time'])->timestamp);
-            
-            $preparePosts->push($post);
+                $posts = $this->getPosts($sDate, $eDate)['data']; 
+
+                $preparePosts = collect();
+        
+                foreach($posts as $post)
+                {
+                    $post = collect($post);
+                    $post->put('date', Carbon::parse($post['created_time'])->format('M d, H:i'));
+                    $post->put('reactions', $post['reactions']['summary']['total_count']);
+                    $post->put('comments', $post['comments']['summary']['total_count']);
+                    $post->put('shares', 0);
+                    $post->put('timestamp', Carbon::parse($post['created_time'])->timestamp);
+                    
+                    $preparePosts->push($post);
+                }
+        
+                return $preparePosts;
+                
+            });
+        } catch (\Exception $e) {
+            throw $e;
         }
-
-        return $preparePosts;
     }
 
     /**
      * Prepare data for Posts Table
      */
     public function engagementByTypeData($startDate, $endDate)
-    {   
-        $likes = collect($this->pageLikeReactions('day', $startDate, $endDate)['data'][0]['values']);
-        $love = collect($this->pageLoveReactions('day', $startDate, $endDate)['data'][0]['values']);
-        $wow = collect($this->pageWowReactions('day', $startDate, $endDate)['data'][0]['values']);
-        $haha = collect($this->pageHahaReactions('day', $startDate, $endDate)['data'][0]['values']);
-        $sorry = collect($this->pageSorryReactions('day', $startDate, $endDate)['data'][0]['values']);
-        $anger = collect($this->pageAngerReactions('day', $startDate, $endDate)['data'][0]['values']);
-
-        $merged = $likes->merge($love)->merge($wow)->merge($haha)->merge($sorry)->merge($anger);
-
-        $keyed = $merged->mapWithKeys(function ($item) {
-            return [$item['end_time'] => $item['value'] + $item['value']];
-        });
-        
+    { 
+        $posts = $this->getPosts($startDate, $endDate)['data'];
 
         $dataReactions = collect();
-        $comments = collect();
-        $shares = collect();
+        $dataComments = collect();
+        $dataShares = collect();
 
         $dataReactions->put('name', 'Reactions');
-        $comments->put('name', 'Comments');
-        $shares->put('name', 'Shares');
+        $dataComments->put('name', 'Comments');
+        $dataShares->put('name', 'Shares');
+
+        $grouped_posts = collect($posts)->groupBy('created_time');
 
         $reactions = [];
-        foreach($keyed->toArray() as $key => $value)
-        {
-            $reactions[] = [Carbon::parse($key)->timestamp*1000, $value];
-        }
-        $dataReactions->put('data', $reactions);
-        $comments->put('data',[]);
-        $shares->put('data',[]);
+        $comments = [];
+        $shares = [];
 
-        $dataArray = [];
+        foreach($grouped_posts as $key=>$grouped)
+        {
+            $reaction=0;
+            $comment=0;
+            $share=0;
+            foreach($grouped as $post)
+            {
+                $reaction = $reaction+$post['reactions']['summary']['total_count'];
+                $comment = $comment+$post['comments']['summary']['total_count'];
+                $share = 0;
+            }
+            $reactions[] = [Carbon::parse($key)->timestamp*1000, $reaction];
+            $comments[] = [Carbon::parse($key)->timestamp*1000, $comment];
+            $shares[] = [Carbon::parse($key)->timestamp*1000, $share];
+        }
+
+        $dataReactions->put('data', $reactions);
+        $dataComments->put('data', $comments);
+        $dataShares->put('data', $shares);
+        
+        $dataArray=[];
 
         $dataArray[] = $dataReactions;
-        $dataArray[] = $comments;
-        $dataArray[] = $shares;
+        $dataArray[] = $dataComments;
+        $dataArray[] = $dataShares;
 
         return $dataArray;
+                
     }
 }

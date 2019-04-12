@@ -1,4 +1,4 @@
-export function abbrNum(number, decPlaces = 1) {
+export function abbrNum(number, decPlaces) {
     // 2 decimal places => 100, 3 => 1000, etc
     decPlaces = Math.pow(10,decPlaces);
 
