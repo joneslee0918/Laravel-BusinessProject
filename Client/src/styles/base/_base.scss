@@ -1596,6 +1596,11 @@ input {
     margin:2px;
 }
 
+.media-box iframe{
+    width:100%;
+    border: none;
+}
+
 .photo-media-box:hover .hover-overlay{
     opacity: 0.5;
 }
