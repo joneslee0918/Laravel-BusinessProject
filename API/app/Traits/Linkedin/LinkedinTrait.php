@@ -15,11 +15,17 @@ trait LinkedinTrait
      */
     public function publish($post)
     {
-        LinkedIn::setAccessToken($this->access_token);
-        
-        $result = LinkedIn::post('v1/people/~/shares', ['json'=>$post]);
+        $client =new \GuzzleHttp\Client();
 
-        return $result;
+        $result = $client->request('POST', "https://api.linkedin.com/v2/shares", [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->access_token,
+                'Accept' => 'application/json'
+            ],
+            'json' => $post
+        ]);
+        
+        return json_decode($result->getBody()->getContents());
     }
 
     
@@ -36,37 +42,25 @@ trait LinkedinTrait
             $appUrl = config("app.url");
 
             $imageUrl = "";
+
+            $mediaIds = [];
+
             foreach($images as $image){
-                $relativePath = $image['relativePath'];
-                $fullPath = $appUrl."/".$relativePath;
-                $imageUrl = $fullPath;
-                break;
+                $relativePath = str_replace('storage', 'public', $image['relativePath']);
+                $uploadResponse = $this->uploadMedia($relativePath);
+                if(!$uploadResponse) continue;
+                $mediaIds[] = ["entity" => $uploadResponse->location];
             }
             
             $text = $scheduledPost->content;
             $link = findUrlInText($text);
 
-            $post["visibility"]["code"] = "anyone";
-
-            if($link){
-                $text = str_replace($link, "", $text);
-                $post["content"]["submitted-url"] = $link;
-            }
-
-            if($imageUrl){
-                $post["content"]["title"] = "test";
-                if(!$link){
-                    $post["content"]["submitted-url"] = $imageUrl;
-                }else{
-                    $post["content"]["submitted-image-url"] = $imageUrl;  
-                }
-            }
-
+            $post["content"]["contentEntities"] = $mediaIds;
+            $payload = unserialize($this->payload);
+            $post["owner"] = "urn:li:person:$payload->id";
             if($text){
-                $post["comment"] = $text;
+                $post["text"] = ["text" => $text];
             }
-
-            //return $post;
             
             $result = $this->publish($post);
 
@@ -75,13 +69,11 @@ trait LinkedinTrait
             $scheduledPost->posted = 1;
             $scheduledPost->status = null;
             
-            if(isset($result["status"])){
-                if($result["status"] != 200){
-                    $scheduledPost->posted = 0;
-                    $scheduledPost->status = -1;
-
-                    throw new \Exception('Something is wrong with the token');
-                }
+            if(!isset($result->activity)){
+                $scheduledPost->posted = 0;
+                $scheduledPost->status = -1;
+                $scheduledPost->save();
+                throw new \Exception('Something is wrong with the token');
             }
 
             $scheduledPost->scheduled_at = $now;
@@ -98,12 +90,44 @@ trait LinkedinTrait
                 $scheduledPost->save();
             }
 
-
             throw $e;
         }
     }
 
-    public function getAvatar(){
+
+    public function uploadMedia($relativePath)
+    {   
+        try {
+            if(!$relativePath) return;
+
+            $content = \Storage::get($relativePath);
+            $url="https://api.linkedin.com/media/upload";
+            $client =new \GuzzleHttp\Client();
+            $fileName = basename($relativePath);
+
+            $result = $client->request('POST', $url, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->access_token,
+                    'Accept' => 'application/json'
+                ],
+                'multipart' => [
+                    [
+                        'name' => 'fileupload',
+                        'contents' => $content,
+                        'filename' => $fileName,
+                    ],
+                ]
+            ]);
+            
+            return json_decode($result->getBody()->getContents());
+        }catch(\Exception $e){}
+
+        return false;
+    }   
+
+
+    public function getAvatar()
+    {
 
         try{
             $key = $this->id . "-linkedinAvatar";
