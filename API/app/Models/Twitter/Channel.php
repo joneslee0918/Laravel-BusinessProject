@@ -160,4 +160,89 @@ class Channel extends Model
         }
     }
 
+    public function pageInsightsByType($type, $startDate, $endDate)
+    {
+        $sDate = intval($startDate/1000);
+        $eDate = intval($endDate/1000);
+
+        try {
+            $key = $this->id . "-$type-$startDate-$endDate";
+            $minutes = 15;
+            $startDate = Carbon::now(); 
+
+            return Cache::remember($key, $minutes, function () use ($sDate, $eDate, $type) {
+                $startDate = Carbon::now(); 
+
+                $data = []; 
+                $startDate = Carbon::now();   
+
+                $data = $this->{$type}($sDate, $eDate);
+
+                return $data;
+
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function tweetsCount($sDate, $eDate)
+    {
+        $data = $this->getTweets();
+
+        return count($data);
+    }
+
+    public function followersCount($sDate, $eDate)
+    {
+        $data = $this->getFollowers();
+
+        return count($data);
+    }
+
+    public function tweetsChartData($sDate, $eDate)
+    {
+        $tweets = $this->getTweets();
+
+        $groupedTweets = collect($tweets)->groupBy(function($tweets) {
+            return Carbon::parse($tweets->created_at)->format('Y-m-d');
+        });
+
+        $data = [];
+
+        foreach($groupedTweets as $date => $tweets)
+        {
+            $data[] = [Carbon::parse($date)->timestamp*1000, count($tweets)];
+        }
+
+        return $data;
+    }
+
+    public function followersChartData($sDate, $eDate)
+    {
+        $followers = $this->getFollowers();
+
+        return $followers;
+
+        $groupedFollowers = collect($followers)->groupBy(function($followers) {
+            return Carbon::parse($followers->created_at)->format('Y-m-d');
+        })->sortKeysDesc();
+
+        return $groupedFollowers;
+
+        $data = [];
+
+        foreach($groupedFollowers as $date => $followers)
+        {
+            $data[] = [Carbon::parse($date)->timestamp*1000, count($followers)];
+        }
+
+        return $data;
+    }
+
+    public function tweetsTableData($sDate, $eDate)
+    {
+        return collect($this->getTweets());
+    }
+
 }

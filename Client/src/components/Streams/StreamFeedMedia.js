@@ -36,7 +36,7 @@ class StreamFeedMedia extends React.Component{
                                             
                                             <button onClick={this.handleVideoClick} className="video-close-btn"><i className="fa fa-close"></i></button>
                                             {item.source.includes("youtube") ? 
-                                                <iframe allowFullScreen src={item.source}></iframe>
+                                                <iframe allowfullscreen="" src={item.source}></iframe>
                                                 :
                                                 <video autoPlay controls>
                                                     <source src={item.source} type="video/mp4" />

@@ -1,5 +1,6 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
+import { pageInsightsByType } from "../../../../requests/twitter/channels";
 
 class TwitterOverviewCard extends React.Component{
     state = {
@@ -8,12 +9,37 @@ class TwitterOverviewCard extends React.Component{
     };
 
     componentDidMount(){
-
+        this.fetchAnalytics();
     };
 
     componentDidUpdate(prevProps){
-        
+        if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
+        {
+            this.fetchAnalytics();
+        }
     }
+
+    fetchAnalytics = () => {
+        this.setState(() => ({
+            loading: true
+        }));
+        try {
+            pageInsightsByType(32, this.props.startDate, this.props.endDate, this.props.type)            
+            .then((response) => {
+                this.setState(() => ({
+                    count: response,
+                    loading: false
+                }));
+            }).catch(error => {
+                this.setState(() => ({
+                    loading: false
+                }));
+                return Promise.reject(error);
+            }); 
+        } catch (error) {
+            
+        }        
+    };
 
     render(){
         const {name, description} = this.props;

@@ -1,11 +1,11 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
-import { pageInsightsByType } from "../../../../requests/facebook/channels";
+import { pageInsightsByType } from "../../../../requests/twitter/channels";
 import ReadMore from "../../../ReadMore";
 
-class PostsTable extends React.Component{
+class TweetsTable extends React.Component{
     state = {
-        posts: null,
+        tweets: null,
         loading: false
     };
 
@@ -17,8 +17,7 @@ class PostsTable extends React.Component{
         if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
         {
             this.fetchAnalytics();
-        }
-        
+        }  
     }
 
     fetchAnalytics = () => {
@@ -26,10 +25,10 @@ class PostsTable extends React.Component{
             loading: true
         }));
         try {
-            pageInsightsByType(this.props.selectedAccount, this.props.startDate, this.props.endDate, this.props.type)            
+            pageInsightsByType(32, this.props.startDate, this.props.endDate, this.props.type)            
             .then((response) => {
                 this.setState(() => ({
-                    posts: response,
+                    tweets: response,
                     loading: false
                 }));
             }).catch(error => {
@@ -49,39 +48,39 @@ class PostsTable extends React.Component{
         return (
         <div className="overview-card">
             <div className="card-header">
-                <img className="card-img" src="/images/facebook.png"></img> {name}
+                <img className="card-img" src="/images/twitter.png"></img> {name}
                 <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
             </div>
             <div className="card-table">
                 <div className="table-loader-style">{this.state.loading && <Loader type="Bars" color="#46a5d1" height={70} width={70} />}</div>
-                {this.state.posts !=null &&
+                {this.state.tweets !=null &&
                 <table className="table anl-posts-table">
                     <thead>
                         <tr>
                             <th className="anl-posts-table-th-first">Date</th>
                             <th className="anl-posts-table-th-second">Message</th>
-                            <th>Reactions</th>
-                            <th>Comments</th>
-                            <th>Shares</th>
+                            <th>Retweets</th>
+                            <th>Replies</th>
+                            <th>Likes</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.posts.map((post, index)=> (
+                        {this.state.tweets.map((tweet, index)=> (
                             <tr key={index}>
-                                <td className="anl-posts-table-th-first" scope="row">
+                                <td className="anl-posts-table-th-first">
                                     <div className="post-table-images">
                                         <img className="pt-page-img" src="/images/uniclix.png" />
                                         <img className="pt-page-facebook" src="/images/facebook.png"></img>
                                     </div>
                                     <div className="post-table-page-date">
                                         <p className="pt-page-name">UniClix</p>
-                                        <p className="pt-post-date">{post.date}</p>
+                                        <p className="pt-post-date">{tweet.created_at}</p>
                                     </div>
                                 </td>
-                                <td className="anl-posts-table-th-second"><ReadMore characters={400}>{post.message ? post.message : ''}</ReadMore></td>
-                                <td>{post.reactions}</td>
-                                <td>{post.comments}</td>
-                                <td>{post.shares}</td>                            
+                                <td className="anl-posts-table-th-second"><ReadMore characters={400}>{tweet.text ? tweet.text : ''}</ReadMore></td>
+                                <td>{tweet.retweet_count}</td>
+                                <td>0</td>
+                                <td>{tweet.favorite_count}</td>                            
                             </tr>
                         ))}
                     </tbody>
@@ -92,4 +91,4 @@ class PostsTable extends React.Component{
     }
 }
 
-export default PostsTable;
+export default TweetsTable;

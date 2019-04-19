@@ -483,6 +483,25 @@ trait Tweetable
         }
     }
 
+        /**
+     * @param array $params
+     * @return array
+     */
+    public function getEngagement($params = [], $limit = 200)
+    {  
+        return 23; 
+        try {
+            $key = $this->id . "-getEngagement";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($limit, $params){
+                $this->setAsCurrentUser();
+                return Twitter::get('insights/engagement/totals');
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
     /**
      * @param int $cursor
      * @param int $perPage

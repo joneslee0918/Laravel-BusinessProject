@@ -1,9 +1,9 @@
 import React from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import { pageInsightsByType } from "../../../../requests/facebook/channels";
+import { pageInsightsByType } from "../../../../requests/twitter/channels"
 
-class PostsChart extends React.Component{
+class TweetsChart extends React.Component{
     state = {
         data: null,
         loading: false
@@ -17,7 +17,7 @@ class PostsChart extends React.Component{
         if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
         {
             this.fetchAnalytics();
-        }        
+        }
     }
 
     fetchAnalytics = () => {
@@ -25,12 +25,13 @@ class PostsChart extends React.Component{
             loading: true
         }));
         try {
-            pageInsightsByType(this.props.selectedAccount, this.props.startDate, this.props.endDate, this.props.type)            
+            pageInsightsByType(32, this.props.startDate, this.props.endDate, this.props.type)            
             .then((response) => {
                 this.setState(() => ({
                     data: response,
                     loading: false
                 }));
+                console.log(response);
             }).catch(error => {
                 this.setState(() => ({
                     loading: false
@@ -38,14 +39,13 @@ class PostsChart extends React.Component{
                 return Promise.reject(error);
             }); 
         } catch (error) {
-            
+            console.log(error);
         }
         
     };
 
     render(){
         const {name} = this.props;
-
         const options = {
             chart: {
                 type: 'spline',
@@ -93,7 +93,7 @@ class PostsChart extends React.Component{
         return (
             <div className="overview-card analytics-card">
                 <div className="card-header">
-                    <img className="card-img" src="/images/facebook.png"></img> {name}
+                    <img className="card-img" src="/images/twitter.png"></img> {name}
                     <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
                 </div>
                 <div>
@@ -108,4 +108,4 @@ class PostsChart extends React.Component{
     }
 }
 
-export default PostsChart;
+export default TweetsChart;

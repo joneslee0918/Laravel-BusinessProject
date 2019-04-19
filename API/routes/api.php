@@ -84,6 +84,7 @@ Route::prefix("twitter")->group(function(){
 
         Route::post('streams/scheduled', 'Twitter\StreamsFeedController@scheduled');
         Route::post('streams/{type}', 'Twitter\StreamsFeedController@index');
+        Route::get('insights/{type}', 'Twitter\AnalyticsController@pageInsightsByType');
     });
 });
 

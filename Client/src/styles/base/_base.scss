@@ -556,7 +556,7 @@ input {
     float:left;
 }
 
-.stream-feed-container .post-info .post-info-item{
+.stream-feed-container .post-info img, .stream-feed-container .post-info .post-info-item{
     margin-left:10px;
 }
 
@@ -566,7 +566,6 @@ input {
 
 .stream-feed-container .post-info img{
     width: 55px;
-    border-radius: 100px;
 }
 
 .stream-feed-container .post-content{
@@ -1597,12 +1596,6 @@ input {
     margin:2px;
 }
 
-.media-box iframe{
-    width:100%;
-    height:250px;
-    border: none;
-}
-
 .photo-media-box:hover .hover-overlay{
     opacity: 0.5;
 }
@@ -1709,89 +1702,6 @@ input {
 
 .ptb20{
     padding:20px 0 !important;
-}
-
-.t-reply-modal{
-    width: 600px !important;
-    margin: 10px;
-    background: #edfafe;
-    outline: none;
-    overflow:auto;
-    max-height:95vh;
-}
-
-.t-reply-heading {
-    background: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    font-size: 20px;
-    color: #555;
-    border-bottom: 1px solid #e4e4e4;
-}
-
-.t-reply-heading h3 {
-    margin: 0;
-}
-
-.t-reply-footer{
-    background: #edfafe;
-    padding: 15px;
-}
-
-.t-reply-footer .DraftEditor-root{
-    height:100px;
-}
-
-.t-reply-footer .draft_editor_container{
-    background:white;
-}
-
-.t-reply-actions button {
-    margin: 10px 0 0 10px;
-    outline:none;
-}
-
-.t-reply-actions {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.t-reply-profile {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    color: #999;
-}
-
-.t-reply-profile img{
-    border-radius: 100px;
-    width:30px;
-}
-
-.t-reply-profile * {
-    margin: 0 10px 10px 0;
-}
-
-button.cancelBtn {
-    background: none;
-    border: none;
-    font-weight: bold;
-    color: #5a94c5;
-    padding: 10px 20px;
-    font-size: 16px;
-    outline:none;
-}
-
-button.doneBtn {
-    border: none;
-    background: #337ab7;
-    color: white;
-    border-radius: 5px;
-    font-weight: bold;
-    padding: 10px 20px;
-    outline: none;
 }
 
 .keyword-item{
