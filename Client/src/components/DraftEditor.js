@@ -119,7 +119,7 @@ class DraftEditor extends React.Component{
         const {scheduledLabel, inclusive, toggle, network} = this.props;
 
         return(
-            <div>
+            <div className="draft_editor_container">
 
                 {inclusive &&
                     <div className="modal-header">

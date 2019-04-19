@@ -39,9 +39,9 @@ Route::get('/test', function(){
     $channel = \App\Models\Linkedin\Channel::first();
     // $channel->payload = unserialize($channel->payload);
     // return $channel;
-    $post = $channel->global->scheduledPosts()->first();
+    //$post = $channel->global->scheduledPosts()->first();
 
-    return response()->json($channel->publishScheduledPost($post));
+    return response()->json($channel->getTimeline());
 
 })->name("test");
 

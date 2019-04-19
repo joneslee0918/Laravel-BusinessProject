@@ -8,7 +8,7 @@ export default class LinkedInButton extends React.Component{
         const clientId = this.props.clientId;
         const onSuccess = this.props.onSuccess;
         const onError = this.props.onError;
-        const scope = `r_basicprofile,r_liteprofile,r_emailaddress,w_share,w_organization_social,w_member_social,r_organization_social,rw_organization_admin,rw_ads,r_ads,r_ads_reporting`;
+        const scope = `r_liteprofile,r_emailaddress,w_organization_social,w_member_social,r_organization_social,rw_organization_admin,rw_ads,r_ads,r_ads_reporting`;
         var oauthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&scope=${scope}&state=123456&redirect_uri=${redirectUri}`;
         var width = 450,
           height = 730,

@@ -20,7 +20,8 @@ trait LinkedinTrait
         $result = $client->request('POST', "https://api.linkedin.com/v2/shares", [
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->access_token,
-                'Accept' => 'application/json'
+                'Accept' => 'application/json',
+                'X-Restli-Protocol-Version' => '2.0.0'
             ],
             'json' => $post
         ]);
@@ -108,7 +109,8 @@ trait LinkedinTrait
             $result = $client->request('POST', $url, [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $this->access_token,
-                    'Accept' => 'application/json'
+                    'Accept' => 'application/json',
+                    'X-Restli-Protocol-Version' => '2.0.0'
                 ],
                 'multipart' => [
                     [
@@ -145,5 +147,29 @@ trait LinkedinTrait
             getErrorResponse($e, $this->global);
             return false;
         }
+    }
+
+    public function getTimeline()
+    {
+       // LinkedIn::setAccessToken($this->access_token);
+
+       // $result = LinkedIn::get('v2/shares?q=owners&owners={URN}&sharesPerOwner=100');
+
+        $client =new \GuzzleHttp\Client();
+
+        $payload = unserialize($this->payload);
+
+        $result = $client->request('GET', "https://api.linkedin.com/v2/shares", [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->access_token,
+                'Accept' => 'application/json',
+                'X-Restli-Protocol-Version' => '2.0.0'
+            ],
+            'query' => ""
+        ]);
+        
+        return json_decode($result->getBody()->getContents());
+
+        return $result;
     }
 }

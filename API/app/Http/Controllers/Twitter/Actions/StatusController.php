@@ -32,7 +32,10 @@ class StatusController extends Controller
      */
     public function tweet(Request $request)
     {   
-        $tweet = ["status" => $request->input('tweet')];
+        $content = $request->input('tweet');
+        $images = $request->input('media');
+        $reply = $request->input('status_id');
+        $tweet = ["status" => $content];
 
         try{
             if($tweet){
@@ -45,4 +48,6 @@ class StatusController extends Controller
 
         return response()->json(["success" => false, "message" => "Tweet cannot be empty"], 304);
     }
+
+
 }
