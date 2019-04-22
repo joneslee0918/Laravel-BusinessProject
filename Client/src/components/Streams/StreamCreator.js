@@ -2,10 +2,12 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Select from 'react-select';
 import Modal from 'react-modal';
+import { NavLink } from 'react-router-dom';
 import channelSelector, {streamChannels} from '../../selectors/channels';
 import streamTypes from './StreamTypesFixture';
 import {addStream} from '../../requests/streams';
 import Loader from '../Loader';
+import {isEmptyObject} from '../../utils/helpers';
 
 class StreamCreator extends React.Component{
 
@@ -71,7 +73,16 @@ class StreamCreator extends React.Component{
 
 
     render(){
-        return (this.state.loading ? <Loader /> : <div className="streams-default-container">
+        return (this.state.loading ? <Loader /> : 
+                isEmptyObject(this.state.selectedAccount) || typeof(this.state.selectedAccount) === "undefined" ? 
+                    <div className="streams-default-container">
+                        <div className="no-account-message">
+                            <div>You need to connect a public social network account or page in order to track streams.</div>
+                            <div><NavLink to="/accounts">Add Social Network</NavLink></div>
+                        </div>
+                    </div>
+                    :
+                    <div className="streams-default-container">
 
                     <Modal isOpen={!!this.state.searchModal} ariaHideApp={false} className="stream-type-modal search-modal">
                         <div>
@@ -103,7 +114,8 @@ class StreamCreator extends React.Component{
                     <div className="txt-center p10">
                             <p onClick={this.props.close} className="link-cursor">Cancel</p>
                     </div>}
-                </div>);
+                </div>
+            );
     }
 }
 

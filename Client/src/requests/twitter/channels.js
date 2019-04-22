@@ -152,3 +152,10 @@ export const tweet = (tweet, images = [], statusId = "", channelId = "") => {
         return response.data;
     });
 };
+
+export const pageInsightsByType = (id, startDate, endDate, type) => {
+    return axios.get(`${apiUrl}/twitter/insights/${type}?id=${id}&startDate=${startDate}&endDate=${endDate}`)
+        .then((response) => {
+            return response.data;
+        });
+};

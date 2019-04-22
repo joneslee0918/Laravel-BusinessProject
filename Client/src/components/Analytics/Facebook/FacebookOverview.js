@@ -8,7 +8,6 @@ import PostsChart from './Cards/PostsChart';
 import EngagementCard from './Cards/EngagementCard';
 import EngagementChart from './Cards/EngagementChart';
 import PostsTable from './Cards/PostsTable';
-import { pageInsights } from "../../../requests/facebook/channels";
 import { DateRangePicker } from 'react-dates';
 import { isInclusivelyBeforeDay } from 'react-dates';
 import channelSelector from '../../../selectors/channels';
@@ -185,7 +184,8 @@ const mapStateToProps = (state) => {
 
     const facebookChannelsFilter = {selected: undefined, provider: "facebook", publishable: true};
     const channels = channelSelector(state.channels.list, facebookChannelsFilter);
-    const selectedChannel = channelSelector(state.channels.list, {selected: 1, provider: "facebook", publishable: true});
+    let selectedChannel = channelSelector(state.channels.list, {selected: 1, provider: "facebook", publishable: true});
+    selectedChannel = selectedChannel.lenght ? selectedChannel[0] : {};
 
     return {
         channels,

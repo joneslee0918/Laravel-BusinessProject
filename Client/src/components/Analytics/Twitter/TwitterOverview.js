@@ -7,6 +7,11 @@ import { isInclusivelyBeforeDay } from 'react-dates';
 import channelSelector from '../../../selectors/channels';
 import Select from 'react-select';
 import TwitterOverviewCard from '../Twitter/Cards/TwitterOverviewCard';
+import TwiterPageOverviewCard from '../Twitter/Cards/TwitterPageOverviewCard';
+import TweetsChart from '../Twitter/Cards/TweetsChart';
+import TwitterEngagementCard from '../Twitter/Cards/TwitterEngagementCard';
+import TwitterEngagementChart from '../Twitter/Cards/TwitterEngagementChart';
+import TweetsTable from '../Twitter/Cards/TweetsTable';
 
 class TwitterOverview extends React.Component {
 
@@ -81,60 +86,83 @@ class TwitterOverview extends React.Component {
                     <div className="col-md-3 col-xs-12">
                         <TwitterOverviewCard 
                             name='Tweets' 
-                            type="postsCount" 
+                            type="tweetsCount" 
                             description='tweets' 
                             {...propData}/>               
                     </div>
                     <div className="col-md-3 col-xs-12">
                         <TwitterOverviewCard 
                             name='Followers' 
-                            type="postsCount" 
+                            type="followersCount" 
                             description='followers' 
                             {...propData}/>
                     </div>
                     <div className="col-md-3 col-xs-12">
                         <TwitterOverviewCard 
                             name='Engagement' 
-                            type="postsCount" 
+                            type="tweetsCount" 
                             description='engagement' 
                             {...propData}/>
                     </div>
                     <div className="col-md-3 col-xs-12">
                         <TwitterOverviewCard 
                             name='Traffic' 
-                            type="postsCount" 
+                            type="tweetsCount" 
                             description='click' 
                             {...propData}/>
                     </div>
                 </div>
                 <div className="row mb20">
                     <div className="col-md-3 col-xs-12">
-
+                        <TwiterPageOverviewCard 
+                            name="Tweets by Account"  
+                            type='tweetsCount'
+                            description="Uniclix"
+                            {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
-
+                        <TweetsChart 
+                            name="Tweets" 
+                            type='tweetsChartData'
+                            {...propData}/>
                     </div>
                 </div>
                 <div className="row mb20">
                     <div className="col-md-3 col-xs-12">
-  
+                        <TwiterPageOverviewCard 
+                            name="Followers by Account"  
+                            type='followersCount'
+                            description="Uniclix"
+                            {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
-
+                        <TweetsChart 
+                            name="Followers" 
+                            type='followersChartData'
+                            {...propData}/>
                     </div>
                 </div>
                 <div className="row mb20">
                     <div className="col-md-3 col-xs-12">
-
+                        <TwitterEngagementCard 
+                            name="Engagement by Type" 
+                            type='engagementsByType'
+                            {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
-
+                        <TwitterEngagementChart 
+                            name="Engagement by Type" 
+                            type='engagementByTypeData'
+                            {...propData}/>
                     </div>
                 </div>
                 <div className="row mb20">
                     <div className="col-xs-12">
-
-                        </div>
+                        <TweetsTable 
+                            name="Tweets Table" 
+                            type='tweetsTableData'
+                            {...propData}/>
+                    </div>
                 </div>
             </div> 
             </div>
@@ -158,9 +186,10 @@ const ProfileChannel = ({channel}) => (
 
 const mapStateToProps = (state) => {
 
-    const facebookChannelsFilter = {selected: undefined, provider: "facebook", publishable: true};
-    const channels = channelSelector(state.channels.list, facebookChannelsFilter);
-    const selectedChannel = channelSelector(state.channels.list, {selected: 1, provider: "facebook", publishable: true});
+    const twitterChannelsFilter = {selected: undefined, provider: "twitter", publishable: true};
+    const channels = channelSelector(state.channels.list, twitterChannelsFilter);
+    let selectedChannel = channelSelector(state.channels.list, {selected: 1, provider: "twitter", publishable: true});
+    selectedChannel = selectedChannel.lenght ? selectedChannel[0] : {};
 
     return {
         channels,

@@ -54,3 +54,11 @@ export function chunk(array, size) {
     }
     return [firstChunk].concat(chunk(array.slice(size, array.length), size)); 
 }
+
+export function isEmptyObject(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}

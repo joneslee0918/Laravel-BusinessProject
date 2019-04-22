@@ -627,6 +627,20 @@ input {
     cursor: text;
 }
 
+.no-account-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    font-size: 25px;
+    text-align: center;
+    font-family: open-sans;
+    color: #777;
+    width: 60%;
+    margin: 0 auto;
+}
+
 .stream-title .fa-close{
     color: #999;
     font-size: 16px;
