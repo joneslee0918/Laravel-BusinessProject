@@ -44,3 +44,21 @@ export const pageInsightsByType = (id, startDate, endDate, type) => {
             return response.data;
         });
 };
+
+export const like = (objectId, channelId) => {
+    return axios.post(`${apiUrl}/facebook/post/like`, {
+        objectId,
+        channelId
+    }).then((response) => {
+        return response.data;
+    });
+}
+
+export const unlike = (objectId, channelId) => {
+    return axios.post(`${apiUrl}/facebook/post/unlike`, {
+        objectId,
+        channelId
+    }).then((response) => {
+        return response.data;
+    });
+}

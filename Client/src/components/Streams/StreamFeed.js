@@ -19,12 +19,13 @@ class StreamFeed extends React.Component{
         getStreamFeed(streamItem.type, streamItem.network, streamItem.channel_id, streamItem.search_query).then((response) => {
             
             const items = typeof response["data"] !== "undefined" ? response["data"] : response;
-            if(!items.length) return;
 
             this.setState(() => ({
                 items: items,
                 loading: false
             }));
+            
+            if(!items.length) return;
         }).catch(e => {
             this.setState(() => ({loading: false}));
         });
@@ -48,6 +49,18 @@ class StreamFeed extends React.Component{
 
                 if(type == "twitterFollowers" && typeof item.status !== "undefined" && item.id == currentItem.id){
                     item.status = currentItem;
+                    return item;
+                }
+
+                if(type == "facebookLike" && typeof item.id !== "undefined" && item.id == currentItem.id){
+                    item.likes.summary.has_liked = true;
+                    item.likes.summary.total_count += 1;
+                    return item;
+                }
+
+                if(type == "facebookUnlike" && typeof item.id !== "undefined" && item.id == currentItem.id){
+                    item.likes.summary.has_liked = false;
+                    item.likes.summary.total_count -= 1;
                     return item;
                 }
 

@@ -84,7 +84,6 @@ Route::prefix("twitter")->group(function(){
 
         Route::post('streams/scheduled', 'Twitter\StreamsFeedController@scheduled');
         Route::post('streams/{type}', 'Twitter\StreamsFeedController@index');
-        Route::get('insights/{type}', 'Twitter\AnalyticsController@pageInsightsByType');
     });
 });
 
@@ -98,8 +97,11 @@ Route::prefix("facebook")->group(function(){
         Route::get('insights/page', 'Facebook\AnalyticsController@pageInsights');
         Route::get('insights/page/{type}', 'Facebook\AnalyticsController@pageInsightsByType');
 
-        Route::post('streams/scheduled', 'Twitter\StreamsFeedController@scheduled');
-        Route::post('streams/{type}', 'Twitter\StreamsFeedController@index');
+        Route::post('streams/scheduled', 'Facebook\StreamsFeedController@scheduled');
+        Route::post('streams/{type}', 'Facebook\StreamsFeedController@index');
+        
+        Route::post('post/like', 'Facebook\Actions\LikeController@like');
+        Route::post('post/unlike', 'Facebook\Actions\LikeController@unlike');
     });
 });
 

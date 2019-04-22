@@ -53,25 +53,27 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
-    public function getTimeline(){
+    public function getTimeline($pageId = false){
 
-        $key = $this->id . "-timeline";
+        $pageId = $pageId ? $pageId : $this->original_id;
+        $key = $pageId . "-timeline";
         $minutes = 1;
-        return Cache::remember($key, $minutes, function () {
+        return Cache::remember($key, $minutes, function () use ($pageId){
             $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/{$this->original_id}/feed?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+            $response = $fb->get("/{$pageId}/feed?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
 
             return $response->getDecodedBody();
         });
     }
 
-    public function getMyPosts(){
+    public function getMyPosts($pageId = false){
 
-        $key = $this->id . "-myPosts";
+        $pageId = $pageId ? $pageId : $this->original_id;
+        $key = $pageId . "-myPosts";
         $minutes = 1;
-        return Cache::remember($key, $minutes, function () {
+        return Cache::remember($key, $minutes, function () use ($pageId) {
             $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/{$this->original_id}/posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+            $response = $fb->get("/{$pageId}/posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
     
             return $response->getDecodedBody();
         });
@@ -89,13 +91,15 @@ trait FacebookTrait
         });
     }
 
-    public function getMentions(){
-
-        $key = $this->id . "-mentions";
+    public function getMentions($pageId = false){
+        
+        $pageId = $pageId ? $pageId : $this->original_id;
+        $key = $pageId . "-mentions";
         $minutes = 1;
-        return Cache::remember($key, $minutes, function () {
+        
+        return Cache::remember($key, $minutes, function () use ($pageId) {
             $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/{$this->original_id}/tagged?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+            $response = $fb->get("/{$pageId}/tagged?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
     
             return $response->getDecodedBody();
         });
@@ -267,6 +271,22 @@ trait FacebookTrait
         } 
         
         return "";
+    }
+
+    public function likePost($postId)
+    {
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->post("$postId/likes");
+
+        return $response->getDecodedBody();
+    }
+
+    public function unlikePost($postId)
+    {
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->delete("$postId/likes");
+
+        return $response->getDecodedBody();
     }
 
     public function getAvatar(){
