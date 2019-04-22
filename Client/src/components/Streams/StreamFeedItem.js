@@ -1,7 +1,7 @@
 import React from 'react';
 import ReadMore from '../ReadMore';
+import StreamFeedMedia from './StreamFeedMedia';
 import TwitterActions from './TwitterActions';
-import StreamPost from './StreamPost';
 
 const StreamFeedItem = ({feedItem, streamItem, channel, setImages, updateItem}) => {
     try{
@@ -35,28 +35,37 @@ const StreamFeedItem = ({feedItem, streamItem, channel, setImages, updateItem}) 
 const TwitterDefaultFeed = ({feedItem, setImages, channel, updateItem}) => {
     try{
         const text = feedItem.text ? feedItem.text : "";
-        const profileImg = feedItem.user.profile_image_url;
-        const username = feedItem.user.screen_name;
-        const date = feedItem.created_at;
-        const statusId = feedItem.id_str;
+
         let media = typeof feedItem.extended_entities !== "undefined" && typeof feedItem.extended_entities.media !== "undefined" ? feedItem.extended_entities.media : [];
         media = media.map(file => {
             const source = file.type === "video" && typeof file.video_info.variants !== "undefined" && file.video_info.variants.length ? file.video_info.variants[0].url : "";
             return {src: file.media_url_https, type: file.type, source}
         });
 
-        const postData = {profileImg, username, text, date, media, setImages, statusId};
-
         return (
-            <StreamPost {...postData} >
+            <div className="stream-feed-container">
+
+                <div className="post-info">
+                    <img src={feedItem.user.profile_image_url} />
+                    <div className="post-info-item">
+                        <a href="#" className="username"><strong>{feedItem.user.screen_name}</strong></a>
+                        <div className="post-date">{new Date(feedItem.created_at).toDateString()}</div>
+                    </div>
+                </div>
+                
+                <div className="post-content">
+                        <ReadMore>{text}</ReadMore>                            
+                </div>
+
+                <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>
+
                 <TwitterActions 
                     updateItem={updateItem} 
                     channel={channel} 
                     feedItem={feedItem}
                     type="twitterDefault"
-                    postData={postData}
                 />
-            </StreamPost>
+            </div>
         );
     }catch(e){
         console.log(e);
@@ -68,30 +77,38 @@ const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem}) => {
     try{
         const text = typeof feedItem.status !== "undefined" && typeof feedItem.status["text"] !== "undefined" ? feedItem.status["text"] : "";
         const date = typeof feedItem.status !== "undefined" && typeof feedItem.status["created_at"] !== "undefined" ? feedItem.status["created_at"] : "";
-        const username = feedItem.screen_name;
-        const profileImg = feedItem.profile_image_url;
-        const statusId = typeof feedItem.status !== "undefined" ? feedItem.status.id_str: "";
+
         let media = typeof feedItem.status !== "undefined" && typeof feedItem.status.extended_entities !== "undefined" && typeof feedItem.status.extended_entities.media !== "undefined" ? feedItem.status.extended_entities.media : [];
         media = media.map(file => {
             const source = file.type === "video" && typeof file.video_info.variants !== "undefined" && file.video_info.variants.length ? file.video_info.variants[0].url : "";
             return {src: file.media_url_https, type: file.type, source}
         });
 
-        const postData = {profileImg, username, text, date, media, setImages, statusId};
-
         return(
             <div>
             {typeof feedItem.status != "undefined" && 
-                <StreamPost {...postData} >
-                    <TwitterActions 
+            <div className="stream-feed-container">
+                        <div className="post-info">
+                            <img src={feedItem.profile_image_url} />
+                            <div className="post-info-item">
+                                <a href="#" className="username"><strong>{feedItem.screen_name}</strong></a>
+                                <div className="post-date">{date ? new Date(date).toDateString() : ""}</div>
+                            </div>
+                        </div>
+                        <div className="post-content">
+                             <ReadMore>{text}</ReadMore>
+                        </div>
+
+                        <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>
+
+                        <TwitterActions 
                         updateItem={updateItem} 
                         channel={channel} 
                         feedItem={feedItem.status}
                         type="twitterFollowers"
-                        postData={postData}
                         />
-                </StreamPost>}
-            </div>
+                    </div>}
+                </div>
         ); 
     }catch(e){
         console.log(e);
@@ -103,15 +120,25 @@ const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem}) => {
 const ScheduledFeed = ({feedItem, channel, setImages}) => {
     try{
         const text = feedItem.content ? feedItem.content : "";
-        const profileImg = channel.avatar;
-        const username = channel.username;
-        const date = feedItem.scheduled_at_original;
         let media = typeof feedItem.payload.images !== "undefined" && feedItem.payload.images.length ? feedItem.payload.images : [];
 
         media = media.map(file => ({src: file.absolutePath, type: "photo"}));
 
         return (
-            <StreamPost {...{profileImg, username, text, date, media, setImages}} />
+            <div className="stream-feed-container">
+                        <div className="post-info">
+                            <img src={channel.avatar} />
+                            <div className="post-info-item">
+                                <a href="#" className="username"><strong>{channel.username}</strong></a>
+                                <div className="post-date">{new Date(feedItem.scheduled_at_original).toDateString()}</div>
+                            </div>
+                        </div>
+                        <div className="post-content">
+                             <ReadMore>{text}</ReadMore> 
+                        </div>
+
+                        <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>
+                    </div>
         )}catch(e){ 
             console.log(e);
             return <div></div>
@@ -121,10 +148,7 @@ const ScheduledFeed = ({feedItem, channel, setImages}) => {
 const FacebookPostsFeed = ({feedItem, setImages}) => {
 
     try{    
-        let text = feedItem.message ? feedItem.message : "";
-        const profileImg = feedItem.from.picture.data.url;
-        const username = feedItem.from.name;
-        const date = feedItem.created_time;
+        const text = feedItem.message ? feedItem.message : "";
 
         const attachments = typeof feedItem.attachments !== "undefined" ? feedItem.attachments.data : [];
         const subAttachments = attachments.length && typeof attachments[0].subattachments !== "undefined" ? (typeof attachments[0].subattachments.data !== "undefined" ? attachments[0].subattachments.data : []) : [];
@@ -144,19 +168,31 @@ const FacebookPostsFeed = ({feedItem, setImages}) => {
 
         let media = [...mainMedia, ...subMedia];
 
-        text = text ? text : (attachments.length ? attachments[0].title : "");
-
         media = media.map(file => ({src: file.image.src, type: typeof file.source !== "undefined" ? "video": "photo", source: typeof file.source !== "undefined" ? file.source : ""}));
 
         return (
-            <StreamPost {...{profileImg, username, text, date, media, setImages}} >
+            <div className="stream-feed-container">
+                <div className="post-info">
+                    <img src={feedItem.from.picture.data.url} />
+                    <div className="post-info-item">
+                        <a href="#" className="username"><strong>{feedItem.from.name}</strong></a>
+                        <div className="post-date">{new Date(feedItem.created_time).toDateString()}</div>
+                    </div>
+                </div>
+
+                <div className="post-content">
+                    <ReadMore>{text ? text : (attachments.length ? attachments[0].title : "")}</ReadMore>
+                </div>
+
+                <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>
+
                 <div className="stream-action-icons">
                     <i className="fa fa-thumbs-up"></i>
                     <i className="fa fa-comment"></i>
                     <i className="fa fa-share"></i>
                     <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                 </div>
-            </StreamPost>
+            </div>
         )
     }catch(e){
         console.log(e);

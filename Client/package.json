@@ -63,7 +63,6 @@
     "react-router-dom": "4.3.1",
     "react-select": "^2.4.2",
     "react-svg-loader": "2.1.0",
-    "react-toastr": "^3.0.0",
     "react-twitter-auth": "0.0.12",
     "reactjs-popup": "1.2.0",
     "redux": "4.0.0",

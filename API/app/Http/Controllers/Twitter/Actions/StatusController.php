@@ -31,40 +31,12 @@ class StatusController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function tweet(Request $request)
-    {   try{
-            $content = $request->input('tweet');
-            $images = $request->input('images');
-            $reply = $request->input('statusId');
+    {   
+        $tweet = ["status" => $request->input('tweet')];
 
-            
-            $channelId = $request->input('channelId');
-            $channel = $this->selectedChannel;
-
-            if($channelId){
-                $channel = $this->user->channels()->find($channelId);
-                $channel = $channel->details;
-            }
-
-            $mediaIds = [];
-            foreach($images as $image){
-                $imageData = explode(',', $image);
-                $imageBase64 = $imageData[1];
-                $imageInfo = explode(';', $imageData[0]);
-                $imageOriginalName = explode('.',$imageInfo[1]);
-                $imageExtension = $imageOriginalName[1];
-                $contents = base64_decode($imageBase64);
-
-                $imageName = str_random(35).'.'.$imageExtension;
-
-                $uploadResponse = $channel->uploadMedia(["media" => $contents]);
-                $mediaIds[] = $uploadResponse->media_id;
-            }
-
-            
-            $tweet = ["status" => $content, 'in_reply_to_status_id' => $reply, 'media_ids' => $mediaIds];
-            
+        try{
             if($tweet){
-                $channel->publish($tweet);
+                $this->selectedChannel->publish($tweet);
                 return response()->json(["success" => true, "message" => "Tweet posted successfully"]);
             }
         }catch(\Exception $e){
@@ -73,6 +45,4 @@ class StatusController extends Controller
 
         return response()->json(["success" => false, "message" => "Tweet cannot be empty"], 304);
     }
-
-
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
-import { pageInsightsByType } from "../../../../requests/facebook/channels";
+import { pageInsightsByType } from "../../../../requests/twitter/channels";
 
-class OverviewCard extends React.Component{
+class TwitterPageOverviewCard extends React.Component{
     state = {
         count: null,
         loading: false
@@ -16,7 +16,7 @@ class OverviewCard extends React.Component{
         if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
         {
             this.fetchAnalytics();
-        }        
+        }
     }
 
     fetchAnalytics = () => {
@@ -47,20 +47,17 @@ class OverviewCard extends React.Component{
         return (
             <div className="overview-card analytics-card">
                 <div className="card-header">
-                    <img className="card-img" src="/images/facebook.png"></img> {name}
+                    <img className="card-img" src="/images/twitter.png"></img> {name}
                     <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
                 </div>
-                <div className="card-analytics-body">
-                    <div className="card-number">
-                        {this.state.loading ?  <Loader type="Bars" color="#46a5d1" height={60} width={60} /> : this.state.count !=null && this.state.count}
-                    </div>
-                    <div className="card-description">{description}</div>
-                </div>
-                <div className="card-footer">
+                <div className="card-analytics-body anl-post-page">
+                    <span className="anl-desc card-description">{description}</span><span className="anl-count">
+                        {this.state.loading ? <Loader type="Bars" color="#ffffff" height={15} width={15} /> : this.state.count !=null && this.state.count}
+                    </span>
                 </div>
             </div>
             );
     }
 }
 
-export default OverviewCard;
+export default TwitterPageOverviewCard;
