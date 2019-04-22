@@ -33,12 +33,14 @@ class AuthController extends Controller
             $body = json_decode($body);
 
             $token = @$body->access_token;
+            
+            return redirect("$clientUrl/redirect?accessToken=$token");
         }catch(\Exception $e){
             return response()->json(["error" => "Something went wrong"], 400);
         }
 
 
-        return redirect("$clientUrl/redirect?accessToken=$body->access_token");
+        
     }
 
 }

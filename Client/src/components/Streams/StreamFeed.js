@@ -19,12 +19,13 @@ class StreamFeed extends React.Component{
         getStreamFeed(streamItem.type, streamItem.network, streamItem.channel_id, streamItem.search_query).then((response) => {
             
             const items = typeof response["data"] !== "undefined" ? response["data"] : response;
-            if(!items.length) return;
 
             this.setState(() => ({
                 items: items,
                 loading: false
             }));
+            
+            if(!items.length) return;
         }).catch(e => {
             this.setState(() => ({loading: false}));
         });

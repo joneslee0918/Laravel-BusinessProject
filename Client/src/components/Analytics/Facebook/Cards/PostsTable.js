@@ -68,7 +68,7 @@ class PostsTable extends React.Component{
                     <tbody>
                         {this.state.posts.map((post, index)=> (
                             <tr key={index}>
-                                <td className="anl-posts-table-th-first" scope="row">
+                                <th scope="row">
                                     <div className="post-table-images">
                                         <img className="pt-page-img" src="/images/uniclix.png" />
                                         <img className="pt-page-facebook" src="/images/facebook.png"></img>
@@ -77,7 +77,7 @@ class PostsTable extends React.Component{
                                         <p className="pt-page-name">UniClix</p>
                                         <p className="pt-post-date">{post.date}</p>
                                     </div>
-                                </td>
+                                </th>
                                 <td className="anl-posts-table-th-second"><ReadMore characters={400}>{post.message ? post.message : ''}</ReadMore></td>
                                 <td>{post.reactions}</td>
                                 <td>{post.comments}</td>

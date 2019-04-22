@@ -8,6 +8,7 @@ import PostsChart from './Cards/PostsChart';
 import EngagementCard from './Cards/EngagementCard';
 import EngagementChart from './Cards/EngagementChart';
 import PostsTable from './Cards/PostsTable';
+import { pageInsights } from "../../../requests/facebook/channels";
 import { DateRangePicker } from 'react-dates';
 import { isInclusivelyBeforeDay } from 'react-dates';
 import channelSelector from '../../../selectors/channels';
