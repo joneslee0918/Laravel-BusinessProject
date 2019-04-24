@@ -375,7 +375,7 @@ trait FacebookTrait
                 'absolutePath' => \URL::to('/').'/'.$relativePublicPath
             ];
 
-            $response = $this->uploadMedia(["source" => $uploadedImage["absolutePath"], "published" => false]);
+            $response = $this->uploadMedia(["url" => $uploadedImage["absolutePath"], "published" => false]);
 
             \Storage::delete($uploadPath);
 
