@@ -1,9 +1,11 @@
 import React from 'react';
 import { ToastContainer } from "react-toastr";
+import Modal from 'react-modal';
 import Loader from 'react-loader-spinner';
 import DraftEditor from '../DraftEditor';
 import {abbrNum} from '../../utils/numberFormatter';
 import {like, unlike, comment} from '../../requests/facebook/channels';
+import FacebookPost from './FacebookPost';
 
 
 let toastContainer;
@@ -15,7 +17,8 @@ class FacebookActions extends React.Component{
         content: "",
         pictures: [],
         comment: false,
-        loading: false
+        loading: false,
+        postBox: false
     }
 
     componentDidMount(){
@@ -126,13 +129,28 @@ class FacebookActions extends React.Component{
         }));
     };
 
+    togglePostBox = (message = "") => {
+        this.setState(() => ({
+            postBox: !this.state.postBox
+        }),  () => {
+            
+            if(message == "success"){
+                toastContainer.success("Message posted.", "Success", {closeButton: true});
+            }
+
+            if(message == "error"){
+                toastContainer.error("Something went wrong.", "Error", {closeButton: true});
+            }
+        });
+    };
+
     onEnterKey = () => {
         this.commentPost();
     };
 
     render(){
         const {liked, comment} = this.state;
-        const {feedItem} = this.props;
+        const {feedItem, postData, channel} = this.props;
         const likedPost = liked ? 'acted' : '';
         const commentPost = comment ? 'acted' : '';
         const likesCount = feedItem.likes.summary.total_count > 0 ? abbrNum(feedItem.likes.summary.total_count) : '';
@@ -144,6 +162,17 @@ class FacebookActions extends React.Component{
                     ref={ref => toastContainer = ref}
                     className="toast-top-right"
                 />
+
+                {this.state.postBox &&
+                    <Modal
+                        ariaHideApp={false}
+                        className="t-reply-modal"
+                        isOpen={this.state.postBox}
+                    >   
+                        <FacebookPost close={this.togglePostBox} postData={postData} channel={channel}/>
+                    </Modal>
+                }
+
                 <div className="stream-action-icons">
                     <span>
                         <i onClick={() => this.toggleLike()} className={`fa fa-thumbs-up ${likedPost}`}></i>
@@ -154,7 +183,7 @@ class FacebookActions extends React.Component{
                         <span className={`status-counter ${commentPost}`}> {commentsCount}</span>
                     </span>
                 
-                    <i className="fa fa-share"></i>
+                    <i onClick={this.togglePostBox} className="fa fa-share"></i>
                     <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                 </div>
                 <div>

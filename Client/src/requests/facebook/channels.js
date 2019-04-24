@@ -73,3 +73,13 @@ export const comment = (objectId, channelId, message, image = "") => {
         return response.data;
     });
 }
+
+export const post = (channelId, message = "", objectId = "") => {
+    return axios.post(`${apiUrl}/facebook/post`, {
+        objectId,
+        channelId,
+        message
+    }).then((response) => {
+        return response.data;
+    });
+}
