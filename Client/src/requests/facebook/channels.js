@@ -62,3 +62,14 @@ export const unlike = (objectId, channelId) => {
         return response.data;
     });
 }
+
+export const comment = (objectId, channelId, message, image = "") => {
+    return axios.post(`${apiUrl}/facebook/post/comment`, {
+        objectId,
+        channelId,
+        message,
+        image
+    }).then((response) => {
+        return response.data;
+    });
+}

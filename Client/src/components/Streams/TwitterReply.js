@@ -36,7 +36,6 @@ class TwitterReply extends React.Component{
         
         tweet(replyTweet, pictures, statusId, channelId).then((response) => {
             this.setState(() => ({loading: false}));
-            console.log(response);
             close("success");
             
         }).catch(e => {

@@ -121,9 +121,23 @@ trait FacebookTrait
         return $feed;
     }
 
-    public function getMessages($conversation_id){
+    public function getMessages($conversationId){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$conversation_id}/messages?fields=message,attachments,created_time,to,from{id,name,picture},shares{link}");
+        $response = $fb->get("/{$conversationId}/messages?fields=message,attachments,created_time,to,from{id,name,picture},shares{link}");
+
+        return $response->getDecodedBody();
+    }
+
+    public function getComments($postId){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$postId}/comments?summary=1&filter=toplevel");
+
+        return $response->getDecodedBody();
+    }
+
+    public function postComment($postId, $comment){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->post("/{$postId}/comments", $comment);
 
         return $response->getDecodedBody();
     }
@@ -289,6 +303,7 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
+
     public function getAvatar(){
         try{
             $key = $this->id . "-facebookAvatar";
@@ -322,6 +337,52 @@ trait FacebookTrait
         $fb = $this->setAsCurrentUser($this->access_token);
         $response = $fb->post("/{$this->original_id}/photos", $media);
         return $response->getDecodedBody();
+    }
+
+        /**
+     * @param string $image base64 encoded
+     * @return mixed
+     */
+    public function uploadFile($image)
+    {   
+        try{
+            $imageData = explode(',', $image);
+            
+            if(count($imageData) > 1){
+                $imageBase64 = $imageData[1];
+                $imageInfo = explode(';', $imageData[0]);            
+                $imageOriginalName = explode('.',$imageInfo[1]);
+                $imageExtension = $imageOriginalName[1];
+                $contents = base64_decode($imageBase64);
+                $imageName = str_random(35).'.'.$imageExtension;
+            }else{
+                $contents = base64_decode($image);
+                $f = finfo_open();
+                $mimeType = finfo_buffer($f, $contents, FILEINFO_MIME_TYPE);
+                $imageExtension = explode("/", $mimeType)[1];
+                $imageName = str_random(35).'.'.$imageExtension;
+            }
+
+            $today = Carbon::today();
+            $uploadPath = "public/$today->year/$today->month/$today->day/$imageName";
+
+            \Storage::put($uploadPath, $contents);
+
+            $relativePublicPath = str_replace("public", "storage", $uploadPath);
+
+            $uploadedImage = [
+                'relativePath' => $relativePublicPath,
+                'absolutePath' => \URL::to('/').'/'.$relativePublicPath
+            ];
+
+            $response = $this->uploadMedia(["source" => $uploadedImage["absolutePath"], "published" => false]);
+
+            \Storage::delete($uploadPath);
+
+            return $response;
+        }catch(\Exception $e){
+            return false;
+        }
     }
 
         /**

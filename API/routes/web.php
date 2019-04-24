@@ -36,12 +36,17 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::find(4);
+    $channel = \App\Models\Facebook\Channel::find(6);
+    //$channel->getComments('484752311605825_829275380486848');
     // $channel->payload = unserialize($channel->payload);
     // return $channel;
+    $image = \Storage::get('public/2019/4/23/9jMdjiIqRwiQnFoUcH5xRnCZxw8YJhFF1T7.jpg');
+    $uploadedMedia = $channel->uploadFile(base64_encode($image));
+    return response()->json($uploadedMedia);
+    $response = $channel->postComment('370909476300237_1682040001853838', ["message" => "Test comment 230457", "attachment_url" => "https://yt3.ggpht.com/a-/AN66SAyy-ZXYEHyvDYafEbyH2n1a6TtrM8qMvjSj-g=s900-mo-c-c0xffffffff-rj-k-no"]);
     //$post = $channel->global->scheduledPosts()->first();
 
-    return response()->json($channel->getTimeline('243063499773793'));
+    return response()->json($response);
 
 })->name("test");
 
