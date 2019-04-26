@@ -36,9 +36,9 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::find(6);
+    $channel = \App\Models\Twitter\Channel::first();
 
-    $response = $channel->publish(["message" => "Test comment 230457", "link" => "https://facebook.com/370909476300237_1682040001853838"]);
+    $response = $channel->getHome(["count" => 2, "max_id" => 1121323541025128400]);
 
     return response()->json($response);
 

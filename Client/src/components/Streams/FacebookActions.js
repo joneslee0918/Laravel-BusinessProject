@@ -205,7 +205,7 @@ class FacebookActions extends React.Component{
                     }
                     {this.state.loading && 
                         <div className="flex-center-h full-width">
-                            <Loader type="Bars" color="#46a5d1" height={60} width={60} />
+                            <Loader type="Bars" color="#46a5d1" height={30} width={30} />
                         </div>
                     }
                 </div>
