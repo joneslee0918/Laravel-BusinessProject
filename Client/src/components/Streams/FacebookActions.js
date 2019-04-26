@@ -1,11 +1,24 @@
 import React from 'react';
+import { ToastContainer } from "react-toastr";
+import Modal from 'react-modal';
+import Loader from 'react-loader-spinner';
+import DraftEditor from '../DraftEditor';
 import {abbrNum} from '../../utils/numberFormatter';
-import {like, unlike} from '../../requests/facebook/channels';
+import {like, unlike, comment} from '../../requests/facebook/channels';
+import FacebookPost from './FacebookPost';
+
+
+let toastContainer;
 
 class FacebookActions extends React.Component{
 
     state = {
-        liked: false
+        liked: false,
+        content: "",
+        pictures: [],
+        comment: false,
+        loading: false,
+        postBox: false
     }
 
     componentDidMount(){
@@ -32,7 +45,7 @@ class FacebookActions extends React.Component{
                 updateItem(feedItem, "facebookLike");
             }
         }).catch(e => {this.setState(() => ({liked: false}))});
-    }
+    };
 
     unlikePost = () => {
         const {feedItem, channel, updateItem} = this.props;
@@ -45,7 +58,58 @@ class FacebookActions extends React.Component{
                 updateItem(feedItem, "facebookUnlike");
             }
         }).catch(e => {this.setState(() => ({liked: true}))});
-    }
+    };
+
+    commentPost = () => {
+
+        this.setState(() => ({
+            comment: false,
+            loading: true
+        }));
+
+        const {feedItem, channel} = this.props;
+        const {content, pictures} = this.state;
+
+        let image = pictures.length ? pictures[0] : "";
+
+        comment(feedItem.id, channel.id, content, image).then((response) => {
+            if(typeof(response.success) !== "undefined") {
+                
+                toastContainer.success("Message posted.", "Success", {closeButton: true});            
+                this.setState(() => ({
+                    content: "",
+                    pictures: [],
+                    loading: false
+                }));
+            }else{
+                this.setState(() => ({
+                    comment: true,
+                    loading: false
+                }));
+                toastContainer.error("Something went wrong.", "Error", {closeButton: true});
+            }
+
+
+        }).catch(e => {
+            toastContainer.error("Something went wrong.", "Error", {closeButton: true});
+            this.setState(() => ({
+                comment: true,
+                loading: false
+            }));
+        });
+    };
+
+    updateContent = (content = "") => {
+        this.setState(() => ({
+            content
+        }));
+    };
+
+    updatePictures = (pictures = []) => {
+        this.setState(() => ({
+            pictures
+        }));
+    };
 
     toggleLike = () => {
         const {liked} = this.state;
@@ -57,26 +121,95 @@ class FacebookActions extends React.Component{
 
         this.unlikePost();
         return
-    }
+    };
+
+    toggleComment = () => {
+        this.setState(() => ({
+            comment: !this.state.comment
+        }));
+    };
+
+    togglePostBox = (message = "") => {
+        this.setState(() => ({
+            postBox: !this.state.postBox
+        }),  () => {
+            
+            if(message == "success"){
+                toastContainer.success("Message posted.", "Success", {closeButton: true});
+            }
+
+            if(message == "error"){
+                toastContainer.error("Something went wrong.", "Error", {closeButton: true});
+            }
+        });
+    };
+
+    onEnterKey = () => {
+        this.commentPost();
+    };
 
     render(){
-        const {liked} = this.state;
-        const {feedItem} = this.props;
+        const {liked, comment} = this.state;
+        const {feedItem, postData, channel} = this.props;
         const likedPost = liked ? 'acted' : '';
+        const commentPost = comment ? 'acted' : '';
         const likesCount = feedItem.likes.summary.total_count > 0 ? abbrNum(feedItem.likes.summary.total_count) : '';
+        const commentsCount = feedItem.comments.summary.total_count > 0 ? abbrNum(feedItem.comments.summary.total_count) : '';
 
         return (
             <div className="fb-actions-container">
+                <ToastContainer
+                    ref={ref => toastContainer = ref}
+                    className="toast-top-right"
+                />
+
+                {this.state.postBox &&
+                    <Modal
+                        ariaHideApp={false}
+                        className="t-reply-modal"
+                        isOpen={this.state.postBox}
+                    >   
+                        <FacebookPost close={this.togglePostBox} postData={postData} channel={channel}/>
+                    </Modal>
+                }
+
                 <div className="stream-action-icons">
                     <span>
                         <i onClick={() => this.toggleLike()} className={`fa fa-thumbs-up ${likedPost}`}></i>
-                        <span className={`status-counter ${likedPost} `}>{likesCount}</span>
+                        <span className={`status-counter ${likedPost} `}> {likesCount}</span>
                     </span>
-                    
-                    <i className="fa fa-comment"></i>
-                    <i className="fa fa-share"></i>
+                    <span>
+                    <i onClick={() => this.toggleComment()} className={`fa fa fa-comment ${commentPost}`}></i>
+                        <span className={`status-counter ${commentPost}`}> {commentsCount}</span>
+                    </span>
+                
+                    <i onClick={this.togglePostBox} className="fa fa-share"></i>
                     <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                 </div>
+                <div>
+                    {   comment &&
+                        <div>
+                            <DraftEditor 
+                                content={this.state.content}
+                                pictures={this.state.pictures}
+                                onChange={this.updateContent}
+                                onImagesChange={this.updatePictures}
+                                showEmojiIcon={false}
+                                placeholderText="Write a comment..."
+                                imageLimit={1}
+                                onEnterKey={this.onEnterKey}
+                                network="facebook"
+                            /> 
+                            <div className="under-txt">Press ENTER to submit</div>
+                        </div>
+                    }
+                    {this.state.loading && 
+                        <div className="flex-center-h full-width">
+                            <Loader type="Bars" color="#46a5d1" height={30} width={30} />
+                        </div>
+                    }
+                </div>
+
             </div>
         );
     }

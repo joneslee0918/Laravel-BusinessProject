@@ -101,8 +101,11 @@ Route::prefix("facebook")->group(function(){
         Route::post('streams/scheduled', 'Facebook\StreamsFeedController@scheduled');
         Route::post('streams/{type}', 'Facebook\StreamsFeedController@index');
         
+        Route::post('post', 'Facebook\Actions\PostController@post');
         Route::post('post/like', 'Facebook\Actions\LikeController@like');
         Route::post('post/unlike', 'Facebook\Actions\LikeController@unlike');
+
+        Route::post('post/comment', 'Facebook\Actions\CommentController@comment');
     });
 });
 

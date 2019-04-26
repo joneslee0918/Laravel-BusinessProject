@@ -37,6 +37,7 @@ Route::get('/privacy-policy', function(){
 
 Route::get('/test', 'Linkedin\ChannelController@test');
 
+
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
 Route::post('twitter/callback', ['as' => 'twitter.callback', 'uses' => 'Twitter\ChannelController@callback']);
 Route::get('twitter/error', ['as' => 'twitter.error', 'Twitter\ChannelController@error']);

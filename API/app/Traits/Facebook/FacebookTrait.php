@@ -53,59 +53,65 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
-    public function getTimeline($pageId = false){
+    public function getTimeline($params = []){
 
-        $pageId = $pageId ? $pageId : $this->original_id;
-        $key = $pageId . "-timeline";
+        $pageId = $this->original_id;
+        $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
+        $key = $pageId . "-timeline-$maxId";
+        $after = $maxId ? "&after=$maxId" : "";
         $minutes = 1;
-        return Cache::remember($key, $minutes, function () use ($pageId){
+        return Cache::remember($key, $minutes, function () use ($pageId, $after){
             $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/{$pageId}/feed?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+            $response = $fb->get("/{$pageId}/feed?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
 
             return $response->getDecodedBody();
         });
     }
 
-    public function getMyPosts($pageId = false){
+    public function getMyPosts($params = []){
 
-        $pageId = $pageId ? $pageId : $this->original_id;
-        $key = $pageId . "-myPosts";
+        $pageId = $this->original_id;
+        $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
+        $key = $pageId . "-myPosts-$maxId";
+        $after = $maxId ? "&after=$maxId" : "";
         $minutes = 1;
-        return Cache::remember($key, $minutes, function () use ($pageId) {
+        return Cache::remember($key, $minutes, function () use ($pageId, $after) {
             $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/{$pageId}/posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+            $response = $fb->get("/{$pageId}/posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
     
             return $response->getDecodedBody();
         });
     }
 
-    public function getUnpublished(){
-        
-        $key = $this->id . "-unpublished";
+    public function getUnpublished($params = []){
+        $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
+        $key = $this->id . "-unpublished-$maxId";
+        $after = $maxId ? "&after=$maxId" : "";
         $minutes = 1;
-        return Cache::remember($key, $minutes, function () {
+        return Cache::remember($key, $minutes, function () use ($after) {
             $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/{$this->original_id}/promotable_posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+            $response = $fb->get("/{$this->original_id}/promotable_posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
     
             return $response->getDecodedBody();
         });
     }
 
-    public function getMentions($pageId = false){
-        
-        $pageId = $pageId ? $pageId : $this->original_id;
-        $key = $pageId . "-mentions";
+    public function getMentions($params = []){
+        $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
+        $pageId = $this->original_id;
+        $key = $pageId . "-mentions-$maxId";
+        $after = $maxId ? "&after=$maxId" : "";
         $minutes = 1;
         
-        return Cache::remember($key, $minutes, function () use ($pageId) {
+        return Cache::remember($key, $minutes, function () use ($pageId, $after) {
             $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/{$pageId}/tagged?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+            $response = $fb->get("/{$pageId}/tagged?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
     
             return $response->getDecodedBody();
         });
     }
 
-    public function getConversations(){
+    public function getConversations($params = []){
         $fb = $this->setAsCurrentUser();
         $response = $fb->get("/{$this->original_id}/conversations?fields=id,link,updated_time");
         $response = $response->getDecodedBody();
@@ -121,9 +127,23 @@ trait FacebookTrait
         return $feed;
     }
 
-    public function getMessages($conversation_id){
+    public function getMessages($conversationId){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$conversation_id}/messages?fields=message,attachments,created_time,to,from{id,name,picture},shares{link}");
+        $response = $fb->get("/{$conversationId}/messages?fields=message,attachments,created_time,to,from{id,name,picture},shares{link}");
+
+        return $response->getDecodedBody();
+    }
+
+    public function getComments($postId){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$postId}/comments?summary=1&filter=toplevel");
+
+        return $response->getDecodedBody();
+    }
+
+    public function postComment($postId, $comment){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->post("/{$postId}/comments", $comment);
 
         return $response->getDecodedBody();
     }
@@ -289,6 +309,7 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
+
     public function getAvatar(){
         try{
             $key = $this->id . "-facebookAvatar";
@@ -322,6 +343,52 @@ trait FacebookTrait
         $fb = $this->setAsCurrentUser($this->access_token);
         $response = $fb->post("/{$this->original_id}/photos", $media);
         return $response->getDecodedBody();
+    }
+
+        /**
+     * @param string $image base64 encoded
+     * @return mixed
+     */
+    public function uploadFile($image)
+    {   
+        try{
+            $imageData = explode(',', $image);
+            
+            if(count($imageData) > 1){
+                $imageBase64 = $imageData[1];
+                $imageInfo = explode(';', $imageData[0]);            
+                $imageOriginalName = explode('.',$imageInfo[1]);
+                $imageExtension = $imageOriginalName[1];
+                $contents = base64_decode($imageBase64);
+                $imageName = str_random(35).'.'.$imageExtension;
+            }else{
+                $contents = base64_decode($image);
+                $f = finfo_open();
+                $mimeType = finfo_buffer($f, $contents, FILEINFO_MIME_TYPE);
+                $imageExtension = explode("/", $mimeType)[1];
+                $imageName = str_random(35).'.'.$imageExtension;
+            }
+
+            $today = Carbon::today();
+            $uploadPath = "public/$today->year/$today->month/$today->day/$imageName";
+
+            \Storage::put($uploadPath, $contents);
+
+            $relativePublicPath = str_replace("public", "storage", $uploadPath);
+
+            $uploadedImage = [
+                'relativePath' => $relativePublicPath,
+                'absolutePath' => \URL::to('/').'/'.$relativePublicPath
+            ];
+
+            $response = $this->uploadMedia(["url" => $uploadedImage["absolutePath"], "published" => false]);
+
+            \Storage::delete($uploadPath);
+
+            return $response;
+        }catch(\Exception $e){
+            return false;
+        }
     }
 
         /**

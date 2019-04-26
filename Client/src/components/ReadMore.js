@@ -13,8 +13,13 @@ class ReadMore extends Component {
         const { expanded } = this.state;
         const {children, characters} = this.props;
         const length = characters ? characters : 200;
-        const text = expanded ? parseTextWithLinks(children) : parseTextWithLinks(truncate(children, length));
 
+        let text = "";
+
+        if(typeof(children) !== "undefined"){
+            text = expanded ? parseTextWithLinks(children) : parseTextWithLinks(truncate(children, length));
+        }
+        
         this.setState(() => ({
             text,
             length
@@ -49,7 +54,7 @@ class ReadMore extends Component {
         return (
             <div>            
                 {this.prepareHtml()}
-                {children.length > length ?
+                {typeof(children) !== "undefined" && children.length > length ?
                     <p className="linkify-text" onClick={this.toggleExpand}>{!expanded ? "Read more" : "Read less"}</p> : ""
                 }
                 

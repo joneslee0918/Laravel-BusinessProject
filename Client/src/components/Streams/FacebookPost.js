@@ -1,9 +1,9 @@
 import React from 'react';
 import StreamPost from './StreamPost';
 import DraftEditor from '../DraftEditor';
-import {tweet} from '../../requests/twitter/channels';
+import {post} from '../../requests/facebook/channels';
 
-class TwitterReply extends React.Component{
+class FacebookPost extends React.Component{
 
     state = {
         content: "",
@@ -32,9 +32,8 @@ class TwitterReply extends React.Component{
         const {postData, channel, close} = this.props;
         const {statusId} = postData;
         const channelId = channel.id;
-        const replyTweet = `@${postData.username} ${content}`;
         
-        tweet(replyTweet, pictures, statusId, channelId).then((response) => {
+        post(channelId, content, statusId).then((response) => {
             this.setState(() => ({loading: false}));
             close("success");
             
@@ -48,34 +47,36 @@ class TwitterReply extends React.Component{
     render(){
         const {close, postData, channel} = this.props;
         return (
-            <div className="t-reply-container">
+            <div className="t-reply-container f-post-container">
                 <div className="t-reply-heading">
-                    <h3>Twitter Reply</h3>
+                    <h3>Share</h3>
                     <i onClick={close} className="fa fa-close link-cursor"></i>
                 </div>
                 <div className="t-reply-body">
-                    <StreamPost {...postData} />
-                </div>
-                <div className="t-reply-footer">
                     <div className="t-reply-profile">
                         <img src={channel.avatar} />
-                        <p>@{channel.username} replying to @{postData.username}</p>
+                        <p>{channel.name} sharing {postData.username}'s post</p>
                     </div>
                     <DraftEditor 
                         content={this.state.content}
                         pictures={this.state.pictures}
                         onChange={this.updateContent}
+                        placeholderText="Add a few words..."
                         onImagesChange={this.updatePictures}
+                        showImagesIcon={false}
+                        showEmojiIcon={false}
+                        showHashtagsIcon={false}
                         network="twitter"
                     />
-                    <p className={`letter-count pull-left ${this.state.letterCount > 280 ? 'red-txt' : ''}`}>{this.state.letterCount}</p>
+                    <StreamPost {...postData} />
+                </div>
+                <div className="t-reply-footer">
                     <div className="t-reply-actions">
                         <button onClick={close} className="cancelBtn" >Cancel</button>
-                        {this.state.letterCount < 1 || this.state.letterCount > 280 ?
-                            <button className="doneBtn disabled-btn" >Send</button> :
+                        {
                             !this.state.loading ? 
-                            <button onClick={this.send} className="doneBtn" >Send</button> :
-                            <button className="doneBtn" ><i className="fa fa-circle-o-notch fa-spin"></i> Send</button>
+                            <button onClick={this.send} className="doneBtn" >Share</button> :
+                            <button className="doneBtn" ><i className="fa fa-circle-o-notch fa-spin"></i> Share</button>
                         }
                     </div>
                 </div>
@@ -84,4 +85,4 @@ class TwitterReply extends React.Component{
     }
 }
 
-export default TwitterReply;
+export default FacebookPost;
