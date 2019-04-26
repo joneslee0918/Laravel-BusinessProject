@@ -35,14 +35,7 @@ Route::get('/privacy-policy', function(){
     return view("privacy-policy");
 });
 
-Route::get('/test', function(){
-    $channel = \App\Models\Twitter\Channel::first();
-
-    $response = $channel->getHome(["count" => 2, "max_id" => 1121323541025128400]);
-
-    return response()->json($response);
-
-})->name("test");
+Route::get('/test', 'Linkedin\ChannelController@test');
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
 Route::post('twitter/callback', ['as' => 'twitter.callback', 'uses' => 'Twitter\ChannelController@callback']);

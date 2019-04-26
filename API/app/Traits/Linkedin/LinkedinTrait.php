@@ -172,4 +172,57 @@ trait LinkedinTrait
 
         return $result;
     }
+
+    public function getPages()
+    {
+        $string = rawurlencode(utf8_encode("urn:li:organization:19135829"));
+
+        $encoded_string = str_replace("-","%3A", $string);
+       // LinkedIn::setAccessToken($this->access_token);
+
+       // $result = LinkedIn::get('v2/shares?q=owners&owners={URN}&sharesPerOwner=100');
+
+        $client =new \GuzzleHttp\Client();
+
+        $payload = unserialize($this->payload);
+
+        $result = $client->request('GET', "https://api.linkedin.com/v2/organizationalEntityAcls", [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->access_token,
+                'Accept' => 'application/json',
+                'X-Restli-Protocol-Version' => '2.0.0'
+            ],
+            'query' => "q=roleAssignee&role=ADMINISTRATOR&state=APPROVED"
+        ]);
+        
+        return $result;
+    }
+
+    public function getPageStatistics()
+    {
+        $string = rawurlencode(utf8_encode("urn:li:organization:19135829"));
+
+        $encoded_string = str_replace("-","%3A", $string);
+       // LinkedIn::setAccessToken($this->access_token);
+
+       // $result = LinkedIn::get('v2/shares?q=owners&owners={URN}&sharesPerOwner=100');
+
+        $client =new \GuzzleHttp\Client();
+
+        $payload = unserialize($this->payload);
+
+        $result = $client->request('GET', "https://api.linkedin.com/v2/organizationPageStatistics", [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->access_token,
+                'Accept' => 'application/json',
+                'Accept-Encoding' => 'gzip',
+                'X-Restli-Protocol-Version' => '2.0.0'
+            ],
+            'query' => "q=organization&organization=urn:li:organization:19135829"
+        ]);
+        
+        return $result;
+
+        return $result;
+    }
 }

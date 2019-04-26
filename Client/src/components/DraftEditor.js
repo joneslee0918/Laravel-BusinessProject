@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modifier, EditorState, getDefaultKeyBinding, KeyBindingUtil} from 'draft-js';
+import {Modifier, EditorState} from 'draft-js';
 import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import 'draft-js-mention-plugin/lib/plugin.css';
@@ -8,7 +8,6 @@ import ImageUploader from 'react-images-browse/src/component/compiled';
 import moment from "moment";
 import hashtagSuggestionList from '../fixtures/hashtagSuggestions';
 
-const {hasCommandModifier} = KeyBindingUtil;
 
 class DraftEditor extends React.Component{
 
@@ -38,13 +37,7 @@ class DraftEditor extends React.Component{
         editorState: createEditorStateWithText(this.props.content),
         hashtagSuggestions: hashtagSuggestionList,
         letterCount: 0,
-        pictures: this.props.pictures,
-        showEmojiIcon: typeof(this.props.showEmojiIcon) !== "undefined" ? this.props.showEmojiIcon : true,
-        showImagesIcon: typeof(this.props.showImagesIcon) !== "undefined" ? this.props.showImagesIcon : true,
-        showHashtagsIcon: typeof(this.props.showHashtagsIcon) !== "undefined" ? this.props.showHashtagsIcon : true,
-        placeholderText: typeof(this.props.placeholderText) !== "undefined" ? this.props.placeholderText : "What's on your mind?",
-        singleImage: typeof(this.props.singleImage) !== "undefined" ? this.props.singleImage : true,
-        imageLimit:  typeof(this.props.imageLimit) !== "undefined" ? this.props.imageLimit : 4
+        pictures: this.props.pictures
     };
 
 
@@ -115,19 +108,6 @@ class DraftEditor extends React.Component{
         //console.log('mention', mention)
     };
 
-    myKeyBindingFn = (e) => {
-        const {onEnterKey} = this.props;
-        if (e.key === "Enter" && !e.shiftKey) {
-
-            if(typeof(onEnterKey) !== "undefined"){
-                onEnterKey(); 
-            }
-            //return 'myeditor-save';
-        }
-
-        return getDefaultKeyBinding(e);
-    }
-
     render(){
 
         const emojiPlugin = this.emojiPlugin;
@@ -158,10 +138,8 @@ class DraftEditor extends React.Component{
                                 <Editor
                                     editorState={this.state.editorState}
                                     onChange={this.onChange}
-                                    handleKeyCommand={this.props.handleKeyCommand}
-                                    keyBindingFn={this.myKeyBindingFn}
                                     plugins={plugins}
-                                    placeholder={this.state.placeholderText}
+                                    placeholder="What's on your mind?"
                                     ref={(element) => { this.editor = element; }}
                                 />
                                 <ImageUploader
@@ -175,7 +153,6 @@ class DraftEditor extends React.Component{
                                     buttonClassName='dnone'
                                     ref={this.imageIcon}
                                     defaultImages={this.state.pictures}
-                                    singleImage={this.state.singleImage}
                                 />
 
                                 <EmojiSuggestions />
@@ -190,16 +167,10 @@ class DraftEditor extends React.Component{
                     </form>
                 </div>
                 <div className="editor-icons">
-                    {this.state.showImagesIcon && 
-                        (   this.state.imageLimit <= this.state.pictures.length ?
-                            <i className="fa fa-image upload-images disabled-btn"></i>
-                            :
-                            <i onClick={this.onImageIconClick} className="fa fa-image upload-images"></i>
-                        )
-                    }
+                    <i onClick={this.onImageIconClick} className="fa fa-image upload-images"></i>
                     {/* <i className="fa fa-map-marker add-location"></i> */}
-                    {this.state.showEmojiIcon && <EmojiSelect />}
-                    {this.state.showHashtagsIcon && <i onClick={this.onHashIconClick} className="fa fa-hashtag add-hashtag"></i>}
+                    <EmojiSelect />
+                    <i onClick={this.onHashIconClick} className="fa fa-hashtag add-hashtag"></i>
                 </div>
 
                 {inclusive && 

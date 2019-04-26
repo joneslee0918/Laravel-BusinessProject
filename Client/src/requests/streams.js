@@ -71,8 +71,8 @@ export const updateStream = (streamId, title) => {
             });
 };
 
-export const getStreamFeed = (type, network, channelId, query = "", nextPage = "") => {
-    return axios.post(`${apiUrl}/${network}/streams/${type}`, {channelId, query, nextPage})
+export const getStreamFeed = (type, network, channelId, query = "") => {
+    return axios.post(`${apiUrl}/${network}/streams/${type}`, {channelId, query})
         .then((response) => {
             return response.data;
         });

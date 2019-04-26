@@ -651,21 +651,6 @@ input {
     color: #555;
 }
 
-.fb-actions-container .draft_editor_container{
-    border:1px solid #ccc;
-    border-radius: 10px;
-}
-
-.fb-actions-container .DraftEditor-root{
-    height: auto;
-    cursor: text;
-}
-
-.under-txt{
-    font-size: 0.9em;
-    color:#ccc;
-}
-
 .ReactModalPortal .ReactModal__Overlay {
     display: flex;
     justify-content: center;
@@ -748,10 +733,6 @@ input {
 
 .overlaySocialIcon{
     font-size: 40px;
-}
-
-.full-width{
-    width:100%;
 }
 
 .flex-center-h{
@@ -2509,14 +2490,6 @@ aside .btn-group {
 
 .round{
     border-radius: 50%;
-}
-
-.t-reply-container.f-post-container{
-    background: white;
-}
-
-.f-post-container .DraftEditor-root {
-    height: auto;
 }
 
 .bg-heading{

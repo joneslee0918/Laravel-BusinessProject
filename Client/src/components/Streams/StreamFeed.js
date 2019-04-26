@@ -1,6 +1,4 @@
 import React from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
-import Loader from 'react-loader-spinner';
 import StreamFeedItem from './StreamFeedItem';
 import {getStreamFeed} from '../../requests/streams';
 import Lightbox from 'react-images';
@@ -12,31 +10,19 @@ class StreamFeed extends React.Component{
         images: [],
         imageViewer: false,
         imageIndex: 0,
-        loading: false,
-        loadMore: false,
-        hasMore: false,
-        nextPage: ""
+        loading: false
     };
 
     componentDidMount(){
         const {streamItem} = this.props;
         this.setState(() => ({loading: true}));
-        getStreamFeed(streamItem.type, streamItem.network, streamItem.channel_id, streamItem.search_query, this.state.nextPage).then((response) => {
+        getStreamFeed(streamItem.type, streamItem.network, streamItem.channel_id, streamItem.search_query).then((response) => {
             
             const items = typeof response["data"] !== "undefined" ? response["data"] : response;
-            let data = items.length ? items[items.length - 1] : "";
-            let nextPage = data && typeof(data.id) !== "undefined" ? data.id : "";
-            if(typeof(response["paging"]) !== "undefined" 
-            && typeof(response["paging"]["cursors"]) !== "undefined" 
-            && typeof(response["paging"]["cursors"]["after"]) !== "undefined"){
-                nextPage = response["paging"]["cursors"]["after"];
-            }
 
             this.setState(() => ({
                 items: items,
-                loading: false,
-                hasMore: !!items,
-                nextPage
+                loading: false
             }));
             
             if(!items.length) return;
@@ -83,48 +69,11 @@ class StreamFeed extends React.Component{
         }));
     }
 
-    loadMore = () => {
-        const {streamItem} = this.props;
-        
-        if(!this.state.items.length) return;
-
-        this.setState(() => ({loadMore: true, hasMore: false}));
-        getStreamFeed(streamItem.type, streamItem.network, streamItem.channel_id, streamItem.search_query, this.state.nextPage).then((response) => {
-        
-            let items = typeof response["data"] !== "undefined" ? response["data"] : response;
-            let nextPage = this.state.nextPage;
-            if(typeof(response["paging"]) !== "undefined" 
-            && typeof(response["paging"]["cursors"]) !== "undefined" 
-            && typeof(response["paging"]["cursors"]["after"]) !== "undefined"){
-                nextPage = response["paging"]["cursors"]["after"];
-            }else{
-                items = items.filter(item => item.id != nextPage);
-                let data = items.length ? items[items.length - 1] : "";
-                nextPage = data && typeof(data.id) !== "undefined" ? data.id : "";
-            }
-
-            if(items.length && this.state.items.length && items[0].id === this.state.items[0].id){
-                items = [];
-            }
-
-            this.setState((prevState) => ({
-                items: prevState.items.concat(items),
-                loadMore: false,
-                hasMore: !!items.length,
-                nextPage
-            }));
-            
-            if(!items.length) return;
-        }).catch(e => {
-            this.setState(() => ({loadMore: false, hasMore: false}));
-        });
-    };
-
     render(){
         const {streamItem, channel} = this.props;
         const {imageViewer, imageIndex, images} = this.state;
         return (
-            <div ref={(ref) => this.scrollParentRef = ref} className="stream-feed scrollbar">
+            <div className="stream-feed scrollbar">
                 {imageViewer && (
                     <Lightbox
                         currentImage={imageIndex}
@@ -140,43 +89,26 @@ class StreamFeed extends React.Component{
                             })}
                         onClose={() => this.setState({ imageViewer: false })}
                         />
-                )}                    
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={this.loadMore}
-                    useWindow={false}
-                    hasMore={this.state.hasMore && !!this.state.items.length}
-                    getScrollParent={() => this.scrollParentRef}
-                >
-                    {this.state.items.length ? this.state.items.map((item, index) => (               
+                )}
+                {this.state.items.length ? this.state.items.map((item, index) => (
+                    <StreamFeedItem  
+                        feedItem={item} 
+                        streamItem={streamItem} 
+                        key={index} 
+                        setImages={this.setImages} 
+                        updateItem={this.updateItem} 
+                        channel={channel}/>
 
-                            <StreamFeedItem  
-                                feedItem={item} 
-                                streamItem={streamItem} 
-                                key={index} 
-                                setImages={this.setImages} 
-                                updateItem={this.updateItem} 
-                                channel={channel}
-                            />
-
-                    )) : this.state.loading ? 
-                            <div className="container-p10">
-                                <PostLoader /><PostLoader />
-                            </div> : 
-                            <div className="container-nodata">
-                                <div>
-                                    <p><i className="fa fa-folder-open"></i> </p>
-                                    <span>No data found.</span>
-                                </div>
+                )) : this.state.loading ? 
+                        <div className="container-p10">
+                            <PostLoader /><PostLoader />
+                        </div> : 
+                        <div className="container-nodata">
+                            <div>
+                                <p><i className="fa fa-folder-open"></i> </p>
+                                <span>No data found.</span>
                             </div>
-                    }
-                </InfiniteScroll>
-
-
-                {this.state.loadMore &&                         
-                <div className="flex-center-h full-width">
-                    <Loader type="Bars" color="#46a5d1" height={30} width={30} />
-                </div>
+                        </div>
                 }
             </div>
         );

@@ -4,6 +4,7 @@ import Overview from '../components/Analytics/Sections/Overview';
 import Advanced from '../components/Analytics/Sections/Advanced';
 import FacebookOverview from '../components/Analytics/Facebook/FacebookOverview';
 import TwitterOverview from '../components/Analytics/Twitter/TwitterOverview';
+import LinkedinOverview from '../components/Analytics/Linkedin/LinkedinOverview';
 
 
 const ManageRouter = () => (
@@ -14,6 +15,7 @@ const ManageRouter = () => (
             <Route path={`/analytics/advanced`} component={Advanced} />
             <Route path={`/analytics/facebook-overview`} component={FacebookOverview} />
             <Route path={`/analytics/twitter-overview`} component={TwitterOverview} />
+            <Route path={`/analytics/linkedin-overview`} component={LinkedinOverview} />
         </Switch>
     </div>
 );

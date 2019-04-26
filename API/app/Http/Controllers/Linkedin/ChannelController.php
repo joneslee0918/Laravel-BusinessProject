@@ -53,4 +53,11 @@ class ChannelController extends Controller
 
         return response()->json(['error' => 'Channel could not be authenticated with linkedin'], 403);
     }
+
+    public function test()
+    {
+        $channel = Channel::first();
+
+        return $channel->getPages();
+    }
 }

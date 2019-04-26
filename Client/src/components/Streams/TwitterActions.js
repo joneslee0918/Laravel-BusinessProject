@@ -113,11 +113,11 @@ class TwitterActions extends React.Component{
                     <i onClick={this.toggleReplyBox} className="fa fa-mail-forward"></i>
                     <span>
                         <i onClick={() => this.retweetPost()} className={`fa fa-retweet ${retweetedPost}`}></i>
-                        <span className={`status-counter ${retweetedPost} `}> {retweetCount}</span>
+                        <span className={`status-counter ${retweetedPost} `}>{retweetCount}</span>
                     </span>
                     <span>
                         <i onClick={() => this.toggleLike()} className={`fa fa-heart ${likedPost}`}></i>
-                        <span className={`status-counter ${likedPost} `}> {likesCount}</span>
+                        <span className={`status-counter ${likedPost} `}>{likesCount}</span>
                     </span>
                     <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                 </div>
