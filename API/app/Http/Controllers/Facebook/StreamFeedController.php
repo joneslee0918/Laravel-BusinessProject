@@ -23,7 +23,7 @@ class StreamsFeedController extends Controller{
         $channelId = $request->get("channelId");
         $params = $request->get("query") ? ["q" => $request->get("query")] : [];
         
-       // if($request->get("nextPage")) $params["max_id"] = $request->get("nextPage");
+        if($request->get("nextPage")) $params["max_id"] = $request->get("nextPage");
 
         if(!$channelId) return;
 

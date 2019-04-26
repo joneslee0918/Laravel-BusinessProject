@@ -53,59 +53,65 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
-    public function getTimeline($pageId = false){
+    public function getTimeline($params = []){
 
-        $pageId = $pageId ? $pageId : $this->original_id;
-        $key = $pageId . "-timeline";
+        $pageId = $this->original_id;
+        $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
+        $key = $pageId . "-timeline-$maxId";
+        $after = $maxId ? "&after=$maxId" : "";
         $minutes = 1;
-        return Cache::remember($key, $minutes, function () use ($pageId){
+        return Cache::remember($key, $minutes, function () use ($pageId, $after){
             $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/{$pageId}/feed?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+            $response = $fb->get("/{$pageId}/feed?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
 
             return $response->getDecodedBody();
         });
     }
 
-    public function getMyPosts($pageId = false){
+    public function getMyPosts($params = []){
 
-        $pageId = $pageId ? $pageId : $this->original_id;
-        $key = $pageId . "-myPosts";
+        $pageId = $this->original_id;
+        $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
+        $key = $pageId . "-myPosts-$maxId";
+        $after = $maxId ? "&after=$maxId" : "";
         $minutes = 1;
-        return Cache::remember($key, $minutes, function () use ($pageId) {
+        return Cache::remember($key, $minutes, function () use ($pageId, $after) {
             $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/{$pageId}/posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+            $response = $fb->get("/{$pageId}/posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
     
             return $response->getDecodedBody();
         });
     }
 
-    public function getUnpublished(){
-        
-        $key = $this->id . "-unpublished";
+    public function getUnpublished($params = []){
+        $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
+        $key = $this->id . "-unpublished-$maxId";
+        $after = $maxId ? "&after=$maxId" : "";
         $minutes = 1;
-        return Cache::remember($key, $minutes, function () {
+        return Cache::remember($key, $minutes, function () use ($after) {
             $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/{$this->original_id}/promotable_posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+            $response = $fb->get("/{$this->original_id}/promotable_posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
     
             return $response->getDecodedBody();
         });
     }
 
-    public function getMentions($pageId = false){
-        
-        $pageId = $pageId ? $pageId : $this->original_id;
-        $key = $pageId . "-mentions";
+    public function getMentions($params = []){
+        $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
+        $pageId = $this->original_id;
+        $key = $pageId . "-mentions-$maxId";
+        $after = $maxId ? "&after=$maxId" : "";
         $minutes = 1;
         
-        return Cache::remember($key, $minutes, function () use ($pageId) {
+        return Cache::remember($key, $minutes, function () use ($pageId, $after) {
             $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/{$pageId}/tagged?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)");
+            $response = $fb->get("/{$pageId}/tagged?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
     
             return $response->getDecodedBody();
         });
     }
 
-    public function getConversations(){
+    public function getConversations($params = []){
         $fb = $this->setAsCurrentUser();
         $response = $fb->get("/{$this->original_id}/conversations?fields=id,link,updated_time");
         $response = $response->getDecodedBody();
