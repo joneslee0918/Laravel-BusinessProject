@@ -81,7 +81,7 @@ class Twitter extends React.Component {
                         }else{
                             console.log('something went wrong');
                         }
-                        this.setAction();
+                        //this.setAction();
                     }}
                 />
 
