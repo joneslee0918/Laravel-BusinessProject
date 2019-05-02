@@ -47,7 +47,7 @@ class Linkedin extends React.Component {
             this.props.startAddLinkedinChannel(response.accessToken)
             .then(() => {
             }).catch(error => {
-                this.setError("This Linkedin profile is already associated with another Uniclix account.");
+                this.setError("Something went wrong!");
             });
         }
     };

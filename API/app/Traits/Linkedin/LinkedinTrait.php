@@ -175,16 +175,7 @@ trait LinkedinTrait
 
     public function getPages()
     {
-        $string = rawurlencode(utf8_encode("urn:li:organization:19135829"));
-
-        $encoded_string = str_replace("-","%3A", $string);
-       // LinkedIn::setAccessToken($this->access_token);
-
-       // $result = LinkedIn::get('v2/shares?q=owners&owners={URN}&sharesPerOwner=100');
-
         $client =new \GuzzleHttp\Client();
-
-        $payload = unserialize($this->payload);
 
         $result = $client->request('GET', "https://api.linkedin.com/v2/organizationalEntityAcls", [
             'headers' => [
@@ -192,10 +183,43 @@ trait LinkedinTrait
                 'Accept' => 'application/json',
                 'X-Restli-Protocol-Version' => '2.0.0'
             ],
-            'query' => "q=roleAssignee&role=ADMINISTRATOR&state=APPROVED"
+            'query' => "q=roleAssignee&role=ADMINISTRATOR&state=APPROVED&projection=(elements*(organizationalTarget~(id, name, vanityName, logoV2(original~:playableStreams))))"
         ]);
         
+        $result = $result->getBody()->getContents();
+        
+        $result = json_decode($result);
+
+        if(is_object($result) && property_exists($result, "elements")){
+            foreach($result->elements as $item){
+                $organizationalTarget = "organizationalTarget~";
+                $original = "original~";
+                $item->avatar = $item->$organizationalTarget->logoV2->$original->elements[0]->identifiers[0]->identifier;
+                $item->id = $item->$organizationalTarget->id;
+                $item->vanityName = $item->$organizationalTarget->vanityName;
+                $item->name = $item->$organizationalTarget->name->localized->en_US;
+            }
+
+            $result = $result->elements;
+        }
+        
         return $result;
+    }
+
+    public function getPageDetails($pageId)
+    {   
+        $client =new \GuzzleHttp\Client();
+
+        $result = $client->request('GET', "https://api.linkedin.com/v2/organizations/$pageId", [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->access_token,
+                'Accept' => 'application/json',
+                'X-Restli-Protocol-Version' => '2.0.0'
+            ],
+            'query' => ""
+        ]);
+        
+        return json_decode($result->getBody()->getContents());
     }
 
     public function getPageStatistics()

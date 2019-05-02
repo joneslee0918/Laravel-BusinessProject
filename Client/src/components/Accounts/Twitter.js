@@ -44,7 +44,7 @@ class Twitter extends React.Component {
     onSuccess = (response) => {
         response.json().then(body => {
             this.props.startAddTwitterChannel(body.oauth_token, body.oauth_token_secret).catch(error => {
-                this.setError("This Twitter profile is already associated with another Uniclix account.");
+                this.setError("Something went wrong!");
             });
         });
     };
