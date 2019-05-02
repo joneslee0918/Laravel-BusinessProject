@@ -36,11 +36,13 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Linkedin\Channel::find(3);
+    $channel = \App\Models\Linkedin\Channel::find(5);
     // $organizationalTarget = "organizationalTarget~";
     // $original = "original~";
+    $post = $channel->global->scheduledPosts()->first();
 
-    return response()->json($channel->getPages());
+
+    return response()->json($channel->publishScheduledPost($post));
 });
 
 

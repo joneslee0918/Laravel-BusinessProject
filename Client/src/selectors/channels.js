@@ -16,6 +16,8 @@ export default (channels = [], {selected, provider, publishable}) => {
             try{
                 if(typeof(channel.details.account_type) !== "undefined" && channel.type == "facebook"){
                     filter = filter && channel.details.account_type !== "profile";
+                }else if(channel.type == "linkedin"){
+                    filter = filter && channel.details.account_type !== "page";
                 }
             }catch(e){}
 

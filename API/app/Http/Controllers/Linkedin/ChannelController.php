@@ -58,70 +58,46 @@ class ChannelController extends Controller
     public function getPages(){
         $user = auth()->user();
         $channel = $user->selectedLinkedinChannel();
-        $response = collect($channel->getPages());
-
-        $pages = [];
-        if(isset($response["data"])){
-            $pages = collect($response["data"])->map(function($page){
-                $page["token"] = @$page["access_token"];
-                $page["avatar"] = @$page["picture"]["data"]["url"];
-
-                return $page;
-            });
-        }
-
-        $response = collect($channel->getGroups());
-        $groups = [];
-        if(isset($response["data"])){
-            $groups = collect($response["data"])->map(function($group) use ($channel){
-                $group["token"] = @$channel->access_token;
-                $group["avatar"] = @$group["picture"]["data"]["url"];
-
-                return $group;
-            });
-        }
-
-        $results = collect($pages)->merge(collect($groups));
-
-        return $results;
+        $pages = collect($channel->getPages());
+        return $pages;
     }
 
     public function savePages(Request $request){
 
         try{
-            $accounts = $request->get("accounts");
+            $pages = $request->get("pages");
             $user = auth()->user();
-            $channel = $user->selectedFacebookChannel();
+            $channel = $user->selectedLinkedinChannel();
     
-            if(!$accounts) return;
+            if(!$pages) return;
     
             $accountData = [];
-            foreach($accounts as $account){
+            foreach($pages as $account){
 
-                $existingChannel = $user->facebookChannels()->where("original_id", $account["id"])->where("parent_id", $channel->id)->first();
+                $existingChannel = $user->linkedinChannels()->where("original_id", $account["id"])->where("parent_id", $channel->id)->first();
 
                 if(!$existingChannel){
 
-                    $newChannel = $user->channels()->create(["type" => "facebook"]);
+                    $newChannel = $user->channels()->create(["type" => "linkedin"]);
 
                     $newChannel->details()->create([
                         "user_id" => $user->id,
                         "name" => $account["name"],
                         "original_id" => $account["id"],
-                        "access_token" => $account["token"],
+                        "access_token" => $channel->access_token,
                         "parent_id" => $channel->id,
                         "payload" => serialize((object) $account),
-                        "account_type" => $account["token"] == "group" ? "group" : "page"
+                        "account_type" => "page"
                     ]);
 
-                    $newChannel->select();
+                    //$newChannel->select();
 
                 }else{
-                    $existingChannel->access_token = $account["token"];
+                    $existingChannel->access_token = $channel->access_token;
                     $existingChannel->save();
                     $global = $existingChannel->global;
                     $global->active = 1;
-                    $global->selected = 1;
+                    //$global->selected = 1;
                     $global->save();
                 }
             }
@@ -131,11 +107,5 @@ class ChannelController extends Controller
         }
 
         return response()->json(["message" => "Account added successfully."]);
-    }
-    public function test()
-    {
-        $channel = Channel::first();
-
-        return $channel->getPages();
     }
 }

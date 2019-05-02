@@ -58,7 +58,10 @@ trait LinkedinTrait
 
             $post["content"]["contentEntities"] = $mediaIds;
             $payload = unserialize($this->payload);
-            $post["owner"] = "urn:li:person:$payload->id";
+            $urnType = $this->account_type == "page" ? "organization" : "person";
+            
+            $post["owner"] = "urn:li:$urnType:$payload->id";
+
             if($text){
                 $post["text"] = ["text" => $text];
             }
