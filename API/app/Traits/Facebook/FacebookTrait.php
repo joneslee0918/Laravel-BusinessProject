@@ -104,8 +104,6 @@ trait FacebookTrait
         $after = $maxId ? "&after=$maxId" : "";
 
         $fb = $this->setAsCurrentUser();
-        // $fb = app(Facebook::class);
-        // $fb->setDefaultAccessToken("256286968360427|5d2182648d1f5a58a6b2d95e42c1ee0a");
         $response = $fb->get("/pages/search?q=$query$after");
     }
 
@@ -139,7 +137,7 @@ trait FacebookTrait
 
     public function getConversations($params = []){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/me/conversations?fields=id,link,updated_time");
+        $response = $fb->get("/{$this->original_id}/conversations?fields=id,link,updated_time");
         $response = $response->getDecodedBody();
 
         if(!isset($response["data"])) return [];        
@@ -159,8 +157,6 @@ trait FacebookTrait
 
         return $response->getDecodedBody();
     }
-
-
 
     public function getComments($postId){
         $fb = $this->setAsCurrentUser();

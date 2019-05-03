@@ -50,13 +50,13 @@ class Channel extends Model
         try {
             $key = $this->id . "-$type-$startDate-$endDate";
             $minutes = 15;
-            $startDate = Carbon::now(); 
+            $startDate = Carbon::now();
 
             return Cache::remember($key, $minutes, function () use ($period, $sDate, $eDate, $type) {
-                $startDate = Carbon::now(); 
+                $startDate = Carbon::now();
 
-                $data = []; 
-                $startDate = Carbon::now();   
+                $data = [];
+                $startDate = Carbon::now();
 
                 $data = $this->{$type}($sDate, $eDate);
 
@@ -73,18 +73,37 @@ class Channel extends Model
         try {
             $key = $this->id . "-postsCount-$sDate-$eDate";
             $minutes = 15;
-            $startDate = Carbon::now(); 
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
                 $posts = $this->getPosts($sDate, $eDate);
 
-                if(!isset($posts['data'])) return 0;
+                if(is_object($posts) && property_exists($posts, 'elements')) return count($posts->elements);
 
-                return count($posts['elements']);
+                return [];
+
             });
         } catch (\Exception $e) {
-            throw $e;
+            return reponse()->json(['error'=>$e->getMessage()], 400);
+        }
+    }
+
+    private function followersCount($sDate, $eDate)
+    {
+        try {
+            $key = $this->id . "-followersCount-$sDate-$eDate";
+            $minutes = 15;
+            $startDate = Carbon::now();
+
+            return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
+
+                $followers = $this->getFollowers($sDate, $eDate);
+
+                return $followers->firstDegreeSize;
+
+            });
+        } catch (\Exception $e) {
+            return reponse()->json(['error' => $e->getMessage()], 400);
         }
     }
 }
