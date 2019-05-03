@@ -47,7 +47,7 @@ class Pinterest extends React.Component {
             this.props.startAddPinterestChannel(response.accessToken)
             .then(() => {
             }).catch(error => {
-                this.setError("This Pinterest profile is already associated with another Uniclix account.");
+                this.setError("Something went wrong!");
             });
         }
     };
@@ -84,7 +84,7 @@ class Pinterest extends React.Component {
                         }else{
                             console.log('something went wrong');
                         }
-                        this.setAction();
+                        // this.setAction();
                     }}
                 />
 

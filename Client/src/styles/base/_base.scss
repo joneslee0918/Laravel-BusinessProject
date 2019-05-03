@@ -2374,6 +2374,7 @@ aside .btn-group {
     font-family: open-sans, sans-serif;
     font-size: 20px;
     color: #666;
+    margin: 10px 0;
 }
 
 .accounts-container__logo, .accounts-container__content{
@@ -2381,6 +2382,9 @@ aside .btn-group {
 }
 
 .accounts-container__logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius:100%;
     width:130px;
     height:130px;
@@ -2460,6 +2464,8 @@ aside .btn-group {
 .accounts-container__content__wrapper__footer{
     margin-top:20px;
     padding:10px 20px;
+    display: flex;
+    align-items: center;
 }
 
 .account_box{

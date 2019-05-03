@@ -44,7 +44,9 @@ class User extends Authenticatable
                     $channel->details = @$channel->details;
 
                     if($channel->details){
-                        $avatar = @$channel->details->getAvatar();
+                        if($channel->details->account_type != "page" && $channel->type != "linkedin"){
+                            $avatar = @$channel->details->getAvatar();
+                        }
                         $channel->details->payload = @unserialize($channel->details->payload);
                         $channel->avatar = @$avatar ? @$avatar : @$channel->details->payload->avatar;
                         $channel->name = @$channel->details->payload->name;

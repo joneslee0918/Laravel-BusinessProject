@@ -114,7 +114,8 @@ Route::prefix("linkedin")->group(function(){
 
     Route::middleware('auth:api')->group(function(){
         Route::post('channels/add', 'Linkedin\ChannelController@add');
-        Route::get('insights/page/{type}', 'Linkedin\AnalyticsController@pageInsightsByType');
+        Route::get('channels/pages', 'Linkedin\ChannelController@getPages');
+        Route::post('channels/pages/save', 'Linkedin\ChannelController@savePages');
     });
 });
 

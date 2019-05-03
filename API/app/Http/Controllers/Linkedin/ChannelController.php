@@ -30,7 +30,8 @@ class ChannelController extends Controller
                 "name" => $credentials->name,
                 "email" => $credentials->email, 
                 "payload" => serialize($credentials), 
-                "access_token" => json_encode($token)]);
+                "account_type" => "profile",
+                "access_token" => $token]);
     
                 $channel->select();
                 $linkedinChannel->select();
@@ -42,6 +43,8 @@ class ChannelController extends Controller
                     $global->save();
                     $linkedinChannel = $existingChannel;
                     $linkedinChannel->access_token = $token;
+                    $global->select();
+                    $linkedinChannel->select();
                     $linkedinChannel->save();
                 }else{
                     return response()->json(['error' => 'Channel already exists with some other account'], 400);
@@ -54,10 +57,57 @@ class ChannelController extends Controller
         return response()->json(['error' => 'Channel could not be authenticated with linkedin'], 403);
     }
 
-    public function test()
-    {
-        $channel = Channel::first();
+    public function getPages(){
+        $user = auth()->user();
+        $channel = $user->selectedLinkedinChannel();
+        $pages = collect($channel->getPages());
+        return $pages;
+    }
 
-        return $channel->getPageStatistics();
+    public function savePages(Request $request){
+
+        try{
+            $pages = $request->get("pages");
+            $user = auth()->user();
+            $channel = $user->selectedLinkedinChannel();
+    
+            if(!$pages) return;
+    
+            $accountData = [];
+            foreach($pages as $account){
+
+                $existingChannel = $user->linkedinChannels()->where("original_id", $account["id"])->where("parent_id", $channel->id)->first();
+
+                if(!$existingChannel){
+
+                    $newChannel = $user->channels()->create(["type" => "linkedin"]);
+
+                    $newChannel->details()->create([
+                        "user_id" => $user->id,
+                        "name" => $account["name"],
+                        "original_id" => $account["id"],
+                        "access_token" => $channel->access_token,
+                        "parent_id" => $channel->id,
+                        "payload" => serialize((object) $account),
+                        "account_type" => "page"
+                    ]);
+
+                    //$newChannel->select();
+
+                }else{
+                    $existingChannel->access_token = $channel->access_token;
+                    $existingChannel->save();
+                    $global = $existingChannel->global;
+                    $global->active = 1;
+                    //$global->selected = 1;
+                    $global->save();
+                }
+            }
+    
+        }catch(\Exception $e){
+            return response()->json(["error" => $e->getMessage()], 400);
+        }
+
+        return response()->json(["message" => "Account added successfully."]);
     }
 }
