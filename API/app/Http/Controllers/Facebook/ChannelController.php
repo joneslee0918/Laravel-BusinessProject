@@ -45,6 +45,8 @@ class ChannelController extends Controller
                     $global->save();
                     $facebookChannel = $existingChannel;
                     $facebookChannel->access_token = $credentials->token;
+                    $global->select();
+                    $facebookChannel->select();
                     $facebookChannel->save(); 
                 }else{
                     return response()->json(['error' => 'Channel already exists with some other account'], 400);

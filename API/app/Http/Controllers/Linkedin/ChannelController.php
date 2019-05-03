@@ -43,6 +43,8 @@ class ChannelController extends Controller
                     $global->save();
                     $linkedinChannel = $existingChannel;
                     $linkedinChannel->access_token = $token;
+                    $global->select();
+                    $linkedinChannel->select();
                     $linkedinChannel->save();
                 }else{
                     return response()->json(['error' => 'Channel already exists with some other account'], 400);
