@@ -4,7 +4,7 @@ import 'react-dates/initialize';
 import moment from 'moment';
 import { DateRangePicker } from 'react-dates';
 import { isInclusivelyBeforeDay } from 'react-dates';
-import channelSelector, {linkedinPages} from '../../../selectors/channels';
+import channelSelector from '../../../selectors/channels';
 import Select from 'react-select';
 import LinkedinOverviewCard from '../Linkedin/Cards/LinkedinOverviewCard';
 import LinkedinPageOverviewCard from '../Linkedin/Cards/LinkedinPageOverviewCard';
@@ -93,7 +93,7 @@ class LinkedinOverview extends React.Component {
                     <div className="col-md-3 col-xs-12">
                         <LinkedinOverviewCard 
                             name='Followers' 
-                            type="followersCount" 
+                            type="" 
                             description='followers' 
                             {...propData}/>
                     </div>
@@ -186,8 +186,9 @@ const ProfileChannel = ({channel}) => (
 
 const mapStateToProps = (state) => {
 
-    const channels = linkedinPages(state.channels.list);
-    let selectedChannel = channelSelector(channels, {selected: 1, provider: "linkedin", publishable: true});
+    const linkedinChannelsFilter = {selected: undefined, provider: "linkedin", publishable: true};
+    const channels = channelSelector(state.channels.list, linkedinChannelsFilter);
+    let selectedChannel = channelSelector(state.channels.list, {selected: 1, provider: "linkedin", publishable: true});
     selectedChannel = selectedChannel.lenght ? selectedChannel[0] : {};
 
     return {

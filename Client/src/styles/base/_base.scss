@@ -493,7 +493,8 @@ input {
 
 .stream-feed{
     height: 73.7vh;
-    overflow:auto;
+    overflow: auto;
+    overflow-x: hidden;
 }
 
 .stream-action-icons{
@@ -575,6 +576,13 @@ input {
     word-break: break-word;
     white-space: pre-wrap;
     cursor: text;
+}
+
+.stream-feed-container.fb-conversations:hover {
+    background: #d7f3ff;
+    transition: background, border-width 0.2s;
+    cursor: pointer;
+    border-top: 5px solid #4fa8d3;
 }
 
 .stream-user{
@@ -1805,6 +1813,11 @@ input {
 
 .t-reply-profile * {
     margin: 0 10px 10px 0;
+}
+
+.fb-conversation-body{
+    overflow: auto;
+    max-height: 45vh;
 }
 
 button.cancelBtn {

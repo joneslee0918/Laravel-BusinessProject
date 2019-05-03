@@ -65,6 +65,7 @@ class TwitterReply extends React.Component{
                         content={this.state.content}
                         pictures={this.state.pictures}
                         onChange={this.updateContent}
+                        placeholderText="Write a reply..."
                         onImagesChange={this.updatePictures}
                         network="twitter"
                     />

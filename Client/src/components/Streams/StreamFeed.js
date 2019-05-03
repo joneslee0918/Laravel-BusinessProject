@@ -78,6 +78,10 @@ class StreamFeed extends React.Component{
                     return item;
                 }
 
+                if(type == "facebookMessage" && typeof item.id !== "undefined" && item.id == currentItem.id){
+                    return currentItem;
+                }
+
                 return item;
             })
         }));
