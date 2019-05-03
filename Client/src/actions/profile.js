@@ -1,6 +1,4 @@
 import {getProfile} from "../requests/profile";
-import setAuthorizationHeader from "../utils/setAuthorizationHeader";
-import {logout} from "./auth";
 
 export const setProfile = (profile) => ({
     type: "SET_PROFILE",
@@ -15,9 +13,6 @@ export const startSetProfile = () => {
                 return Promise.resolve(response);
             }).catch((error) => {
                 console.log(error);
-                localStorage.setItem("token", undefined);
-                dispatch(logout());
-                setAuthorizationHeader(undefined);
                 return Promise.reject(error);
             });
     };

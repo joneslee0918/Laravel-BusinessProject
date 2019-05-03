@@ -52,7 +52,7 @@ class LinkedinOverview extends React.Component {
                     <div className="col-xs-12">
                         <div className="analytics-head">
                             <div className="analytics-head-left">
-                                Facebook Overview
+                                Linkedin Overview
                             </div>
                             <div className="streams-default-container">
                                 <div className="account-selection">
@@ -86,28 +86,28 @@ class LinkedinOverview extends React.Component {
                     <div className="col-md-3 col-xs-12">
                         <LinkedinOverviewCard 
                             name='Posts' 
-                            type="tweetsCount" 
+                            type="postsCount" 
                             description='posts' 
                             {...propData}/>               
                     </div>
                     <div className="col-md-3 col-xs-12">
                         <LinkedinOverviewCard 
                             name='Followers' 
-                            type="followersCount" 
+                            type="" 
                             description='followers' 
                             {...propData}/>
                     </div>
                     <div className="col-md-3 col-xs-12">
                         <LinkedinOverviewCard 
                             name='Engagement' 
-                            type="tweetsCount" 
+                            type="" 
                             description='engagement' 
                             {...propData}/>
                     </div>
                     <div className="col-md-3 col-xs-12">
                         <LinkedinOverviewCard 
                             name='Traffic' 
-                            type="tweetsCount" 
+                            type="" 
                             description='click' 
                             {...propData}/>
                     </div>
@@ -116,14 +116,14 @@ class LinkedinOverview extends React.Component {
                     <div className="col-md-3 col-xs-12">
                         <LinkedinPageOverviewCard 
                             name="Posts by Page"  
-                            type='tweetsCount'
+                            type=''
                             description="Uniclix"
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <PostsChart 
                             name="Posts" 
-                            type='tweetsChartData'
+                            type=''
                             {...propData}/>
                     </div>
                 </div>
@@ -131,14 +131,14 @@ class LinkedinOverview extends React.Component {
                     <div className="col-md-3 col-xs-12">
                         <LinkedinPageOverviewCard 
                             name="Followers by Page"  
-                            type='followersCount'
+                            type=''
                             description="Uniclix"
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <PostsChart 
                             name="Followers" 
-                            type='followersChartData'
+                            type=''
                             {...propData}/>
                     </div>
                 </div>
@@ -146,13 +146,13 @@ class LinkedinOverview extends React.Component {
                     <div className="col-md-3 col-xs-12">
                         <EngagementCard 
                             name="Engagement by Type" 
-                            type='engagementsByType'
+                            type=''
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <EngagementChart 
                             name="Engagement by Type" 
-                            type='engagementByTypeData'
+                            type=''
                             {...propData}/>
                     </div>
                 </div>
@@ -160,7 +160,7 @@ class LinkedinOverview extends React.Component {
                     <div className="col-xs-12">
                         <PostsTable 
                             name="Posts Table" 
-                            type='postsData'
+                            type=''
                             {...propData}/>
                     </div>
                 </div>

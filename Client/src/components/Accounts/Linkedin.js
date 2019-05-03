@@ -2,11 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import SweetAlert from "sweetalert2-react";
 import {linkedinAppId} from "../../config/api";
-import SelectAccountsModal from './SelectAccountsModal';
 import {startAddLinkedinChannel, startSetChannels} from "../../actions/channels";
 import channelSelector from "../../selectors/channels";
 import {destroyChannel} from "../../requests/channels";
-import {getPages, savePages} from "../../requests/linkedin/channels";
 import {logout} from "../../actions/auth";
 import Loader from "../../components/Loader";
 import ChannelItems from "./ChannelItems";
@@ -25,8 +23,6 @@ class Linkedin extends React.Component {
 
     state = {
         action: this.defaultAction,
-        pages: [],
-        pagesModal: false,
         error: ""
     }
 
@@ -47,45 +43,14 @@ class Linkedin extends React.Component {
     };
 
     onSuccess = (response) => {
-        
         if(response){
             this.props.startAddLinkedinChannel(response.accessToken)
             .then(() => {
-                getPages().then((response) =>{
-                    if(response.length){
-                        this.setState(() => ({
-                            pages: response,
-                            pagesModal: true
-                        }));
-                    }
-                });
             }).catch(error => {
-                this.setError("Something went wrong!");
+                this.setError("This Linkedin profile is already associated with another Uniclix account.");
             });
         }
     };
-
-    onSave = (pages) => {
-        this.setState(() => ({
-            error: ""
-        }));
-        savePages(pages)
-        .then(() => {
-            this.props.startSetChannels();
-            this.togglePagesModal();
-        }).catch( error => {
-            console.log(error);
-            this.setState(() => ({
-                error: "Something went wrong!"
-            }));
-        });
-    };
-
-    togglePagesModal = () => {
-        this.setState(() => ({
-            pagesModal: !this.state.pagesModal
-        }));
-    }
 
     remove = (id) => {
         return destroyChannel(id)
@@ -104,13 +69,6 @@ class Linkedin extends React.Component {
     render(){
         return (
             <div className="accounts-container">
-                
-                <SelectAccountsModal 
-                    isOpen={this.state.pagesModal} 
-                    accounts={this.state.pages}
-                    onSave={this.onSave}
-                    error={this.state.error}
-                />
 
                 <SweetAlert
                     show={!!this.state.action.id}
@@ -126,7 +84,7 @@ class Linkedin extends React.Component {
                         }else{
                             console.log('something went wrong');
                         }
-                        // this.setAction();
+                        this.setAction();
                     }}
                 />
 

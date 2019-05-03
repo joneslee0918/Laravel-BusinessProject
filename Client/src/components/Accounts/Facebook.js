@@ -59,7 +59,7 @@ class Facebook extends React.Component {
                     }
                 });
             }).catch(error => {
-                this.setError("Something went wrong!");
+                this.setError("You are logged in with a facebook account that is already connected with another Uniclix account.");
             });
         }
     };
@@ -124,7 +124,7 @@ class Facebook extends React.Component {
                         }else{
                             console.log('something went wrong');
                         }
-                       // this.setAction();
+                        this.setAction();
                     }}
                 />
 

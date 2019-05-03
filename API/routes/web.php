@@ -35,15 +35,7 @@ Route::get('/privacy-policy', function(){
     return view("privacy-policy");
 });
 
-Route::get('/test', function(){
-    $channel = \App\Models\Linkedin\Channel::find(5);
-    // $organizationalTarget = "organizationalTarget~";
-    // $original = "original~";
-    $post = $channel->global->scheduledPosts()->first();
-
-
-    return response()->json($channel->publishScheduledPost($post));
-});
+Route::get('/test', 'Linkedin\ChannelController@test');
 
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);

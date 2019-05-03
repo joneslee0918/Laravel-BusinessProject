@@ -183,6 +183,7 @@ class Channel extends Model
             throw $e;
         }
     }
+    
     private function postsCount($sDate, $eDate)
     {
         try {
