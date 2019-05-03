@@ -67,11 +67,11 @@ const streamTypes = {
             value: "unpublished",
             icon: "calendar"
         },
-        // {
-        //     label: "Pages",
-        //     value: "pages",
-        //     icon: "flag"
-        // },
+        {
+            label: "Pages",
+            value: "myPosts",
+            icon: "flag"
+        },
         {
             label: "Scheduled",
             value: "scheduled",

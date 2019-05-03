@@ -116,6 +116,7 @@ Route::prefix("linkedin")->group(function(){
         Route::post('channels/add', 'Linkedin\ChannelController@add');
         Route::get('channels/pages', 'Linkedin\ChannelController@getPages');
         Route::post('channels/pages/save', 'Linkedin\ChannelController@savePages');
+        Route::get('insights/page/{type}', 'Linkedin\AnalyticsController@pageInsightsByType');
     });
 });
 

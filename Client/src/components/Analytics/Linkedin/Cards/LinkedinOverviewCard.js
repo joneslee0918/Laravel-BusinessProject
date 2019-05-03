@@ -1,6 +1,6 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
-import { pageInsightsByType } from "../../../../requests/twitter/channels";
+import { pageInsightsByType } from "../../../../requests/linkedin/channels";
 
 class LinkedinOverviewCard extends React.Component{
     state = {
@@ -9,7 +9,7 @@ class LinkedinOverviewCard extends React.Component{
     };
 
     componentDidMount(){
-        // this.fetchAnalytics();
+        this.fetchAnalytics();
     };
 
     componentDidUpdate(prevProps){
@@ -24,7 +24,7 @@ class LinkedinOverviewCard extends React.Component{
             loading: true
         }));
         try {
-            pageInsightsByType(this.props.selectedAccount, this.props.startDate, this.props.endDate, this.props.type)            
+            pageInsightsByType(19135829, this.props.startDate, this.props.endDate, this.props.type)            
             .then((response) => {
                 this.setState(() => ({
                     count: response,

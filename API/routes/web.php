@@ -36,13 +36,13 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::find(5);
+    $channel = \App\Models\Facebook\Channel::find(8);
     // $organizationalTarget = "organizationalTarget~";
     // $original = "original~";
     //$post = $channel->global->scheduledPosts()->first();
 
-
-    return response()->json($channel->searchPages(["q" => "Anim"]));
+    //I need to search for the pages but don't have public page access permission :()
+    return response()->json($channel->getConversations());
 });
 
 
