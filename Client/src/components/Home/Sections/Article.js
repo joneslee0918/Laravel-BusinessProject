@@ -16,7 +16,7 @@ const Article = ({article, postedArticle, toggleTailoredPostModal}) => {
     return (<div className="card-display col-sm-12 col-md-6 col-lg-4 col-xl-3">
             <div className="card-content">
                 <a target="_blank" href={article.url}>
-                    <img className="card-img-top" onError={(e) => e.target.src='/images/no-image-box.png'} src={article.image_url ? article.image_url : '/images/no-image-box.png'} />
+                    <img className="card-img-top" onError={(e) => e.target.src='/images/uniclix.png'} src={article.image_url ? article.image_url : '/images/uniclix.png'} />
                 </a>
                 <div className="card-body">
                     <a target="_blank" href={article.url}>
