@@ -1934,6 +1934,7 @@ button.doneBtn {
 }
 
 .card-display{
+    position:relative;
     display:flex;
     justify-content: center;
     margin-bottom:50px;
@@ -1977,6 +1978,17 @@ button.doneBtn {
     border: 1px solid #dfdfdf;
     border-top: none;
     padding: 20px;
+    overflow: hidden;
+    height: 225px;
+}
+
+.article-share{
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .geosuggest {
