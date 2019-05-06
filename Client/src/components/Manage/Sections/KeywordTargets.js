@@ -73,6 +73,7 @@ class KeywordTargets extends React.Component{
         this.setLoading(true);
         getKeywordTargets()
             .then((response) => {
+                if(typeof(response.items) === "undefined") return;
                 this.setState(() => ({
                     userItems: response.items,
                     actions: response.actions,
@@ -99,6 +100,7 @@ class KeywordTargets extends React.Component{
         let page = this.state.page + 1;
         getKeywordTargets(page)
             .then((response) => {
+                if(typeof(response.items) === "undefined") return;
                 this.setState((prevState) => ({
                     userItems: prevState.userItems.concat(response.items),
                     actions: response.actions,

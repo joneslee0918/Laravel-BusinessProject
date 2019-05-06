@@ -36,13 +36,13 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Facebook\Channel::find(10);
+    $channel = \App\Models\Twitter\Channel::find(2);
     // $organizationalTarget = "organizationalTarget~";
     // $original = "original~";
     //$post = $channel->global->scheduledPosts()->first();
 
     //I need to search for the pages but don't have public page access permission :()
-    return response()->json($channel->sendMessage("t_10150062638252089", ["message" => "Test reply from app"]));
+    return response()->json($channel->keywordTargets()->get());
 });
 
 
