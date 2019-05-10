@@ -19,6 +19,7 @@ class StreamsController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $this->user = auth()->user();
+            if(!$this->user->hasPermission("streams")) return response()->json(["error" => "You need to upgrade to unlock this feature."], 403);
             return $next($request);
         });
     }

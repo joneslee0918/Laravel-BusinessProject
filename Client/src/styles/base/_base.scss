@@ -493,7 +493,8 @@ input {
 
 .stream-feed{
     height: 73.7vh;
-    overflow:auto;
+    overflow: auto;
+    overflow-x: hidden;
 }
 
 .stream-action-icons{
@@ -575,6 +576,13 @@ input {
     word-break: break-word;
     white-space: pre-wrap;
     cursor: text;
+}
+
+.stream-feed-container.fb-conversations:hover {
+    background: #d7f3ff;
+    transition: background, border-width 0.2s;
+    cursor: pointer;
+    border-top: 5px solid #4fa8d3;
 }
 
 .stream-user{
@@ -1807,6 +1815,11 @@ input {
     margin: 0 10px 10px 0;
 }
 
+.fb-conversation-body{
+    overflow: auto;
+    max-height: 45vh;
+}
+
 button.cancelBtn {
     background: none;
     border: none;
@@ -1921,6 +1934,7 @@ button.doneBtn {
 }
 
 .card-display{
+    position:relative;
     display:flex;
     justify-content: center;
     margin-bottom:50px;
@@ -1964,10 +1978,123 @@ button.doneBtn {
     border: 1px solid #dfdfdf;
     border-top: none;
     padding: 20px;
+    overflow: hidden;
+    height: 225px;
 }
 
-.geosuggest {
+.article-share{
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.flex-container {
+    display: flex;
+}
+.flex-space-between {
+    justify-content: space-between;
+}
+
+/*Pricing table css*/
+
+.pricing-table .table-striped>tbody>tr:nth-of-type(even) {
+    background-color: #F2F2F2;
+}
+
+.pricing-table .table-striped>tbody>tr:nth-of-type(odd) {
+    background-color:#F9F9F9;
+}
+
+.pricing-table .empty-td{
+    background-color: white !important;
+}
+
+.pricing-table .table>tbody>tr>th, .pricing-table .table>tbody>tr>td{
+    border:none;
+    text-align:center;
+    height:70px;
+    vertical-align: middle;
+    font-size:1.2em;
+}
+
+.pricing-table .table>tbody>tr>th.plan{
+    background: lightslategray;
+    color: white;
+    width:170px;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    font-family: open-sansSemiBold;
+    font-size: 1.1em;
+}
+
+.pricing-table .table>tbody>tr>th.plan-free{
+    background: #F1C232;
+}
+
+.pricing-table .table>tbody>tr>th.plan-basic{
+    background: #4EC2C1;
+}
+
+.pricing-table .table>tbody>tr>th.plan-plus{
+    background: #44546A;
+}
+
+.pricing-table .table>tbody>tr>th.plan-premium{
+    background: #A64D79;
+}
+
+.pricing-table .table>tbody>tr>th.plan-pro{
+    background: #5B9BD5;
+}
+
+.pricing-table .table>tbody>tr>th.plan-agency{
+    background: #A5A5A5;
+}
+
+.pricing-table .table>tbody>tr>th.plan-twitter-growth{
+    background: #0CA750;
+}
+
+.green-check{
+    color: #53C4C3;
+}
+
+.pink-cross{
+    color: #A64D79;
+}
+
+.pricing-table td.feature-category{
+    text-align:left !important;
+}
+
+.pricing-table .feature-category .fa-angle-right{
+    font-weight:bold;
+    color:#ccc;
+    padding:0 10px;
+}
+
+.pricing-table button.plan-btn {
+    background: #53c4c3;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 5px 10px;
+    height: 100%;
+    width: 100%;
+    font-size: 0.8em;
+    font-family: open-sans;
+}
+
+/*End pricing table css*/
   .geosuggest__input {
     width: 100%;
     padding: .5em 1em;

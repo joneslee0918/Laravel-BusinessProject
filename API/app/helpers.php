@@ -34,15 +34,15 @@ function formatBigNums($input){
 }
 
 function getErrorResponse($e, $channel = false){
-    $error = $e->getMessage();
+    $error = strtolower($e->getMessage());
     if(str_contains($error, "log in") 
     || str_contains($error, "token") 
     || str_contains($error, "session") 
     || str_contains($error, "denied") 
     || str_contains($error, "permission")
-    || str_contains($error, "Authorization")
+    || str_contains($error, "authorization")
     || str_contains($error, "invalid")
-    || str_contains($error, "Authentication")){
+    || str_contains($error, "authentication")){
 
         if($channel){
             $channel->active = 0;

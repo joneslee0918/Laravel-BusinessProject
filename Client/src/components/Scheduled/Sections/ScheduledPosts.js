@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
+import UpgradeModal from '../../UpgradeModal';
 import channelSelector from '../../../selectors/channels';
 import {scheduledPosts, destroyPost, postNow} from '../../../requests/channels';
 import PostList from '../../PostList';
@@ -18,6 +19,7 @@ export class ScheduledPosts extends React.Component{
         page: 1,
         loading: this.props.channelsLoading,
         action: this.defaultAction,
+        forbidden: false,
         error: false
     }
 
@@ -49,6 +51,12 @@ export class ScheduledPosts extends React.Component{
     setError = (error = true) => {
         this.setState(() => ({
             error
+        }));
+    };
+
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
         }));
     };
 
@@ -95,6 +103,7 @@ export class ScheduledPosts extends React.Component{
                 this.setState(() => ({
                     posts: response.items,
                     loading: false,
+                    forbidden: false,
                     page: 1
                 }));
             }).catch((error) => {
@@ -103,6 +112,10 @@ export class ScheduledPosts extends React.Component{
                     this.setState(() => ({
                         error: error.response.data.message
                     }));
+                }
+
+                if(error.response.status === 403){
+                    this.setForbidden(true);
                 }
 
                 this.setLoading(false);
@@ -136,7 +149,7 @@ export class ScheduledPosts extends React.Component{
     render(){
         return(
             <div>
-
+            <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
                 <PostList 
                     action={this.state.action}
                     setAction={this.setAction}

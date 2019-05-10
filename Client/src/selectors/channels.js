@@ -57,7 +57,7 @@ export const streamChannels = (channels = []) => {
     return channels.filter((channel) => {
         let filter = true;
 
-        filter = (channel.type == "facebook" || channel.type == "twitter" || channel.type == "linkedin");
+        filter = (channel.type == "facebook" || channel.type == "twitter");
 
         
         try{
@@ -93,14 +93,5 @@ export const findAccounts = (accounts = [], {prop}) => {
 
     return accounts.filter((account) => {
         return account.id == prop;
-    });
-};
-
-export const linkedinPages = (channels = []) => {
-
-    if (!channels.length) return channels;
-
-    return channels.filter((channel) => {
-        return channel.type == "linkedin" && channel.details.account_type == 'page';
     });
 };

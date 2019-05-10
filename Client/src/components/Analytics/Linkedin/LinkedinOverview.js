@@ -4,7 +4,7 @@ import 'react-dates/initialize';
 import moment from 'moment';
 import { DateRangePicker } from 'react-dates';
 import { isInclusivelyBeforeDay } from 'react-dates';
-import channelSelector, {linkedinPages} from '../../../selectors/channels';
+import channelSelector from '../../../selectors/channels';
 import Select from 'react-select';
 import LinkedinOverviewCard from '../Linkedin/Cards/LinkedinOverviewCard';
 import LinkedinPageOverviewCard from '../Linkedin/Cards/LinkedinPageOverviewCard';
@@ -93,21 +93,21 @@ class LinkedinOverview extends React.Component {
                     <div className="col-md-3 col-xs-12">
                         <LinkedinOverviewCard 
                             name='Followers' 
-                            type="followersCount" 
+                            type="" 
                             description='followers' 
                             {...propData}/>
                     </div>
                     <div className="col-md-3 col-xs-12">
                         <LinkedinOverviewCard 
                             name='Engagement' 
-                            type="engagementsCount" 
+                            type="" 
                             description='engagement' 
                             {...propData}/>
                     </div>
                     <div className="col-md-3 col-xs-12">
                         <LinkedinOverviewCard 
                             name='Traffic' 
-                            type="clickCount" 
+                            type="" 
                             description='click' 
                             {...propData}/>
                     </div>
@@ -116,14 +116,14 @@ class LinkedinOverview extends React.Component {
                     <div className="col-md-3 col-xs-12">
                         <LinkedinPageOverviewCard 
                             name="Posts by Page"  
-                            type='postsCount'
+                            type=''
                             description="Uniclix"
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <PostsChart 
                             name="Posts" 
-                            type='postsChartData'
+                            type=''
                             {...propData}/>
                     </div>
                 </div>
@@ -131,14 +131,14 @@ class LinkedinOverview extends React.Component {
                     <div className="col-md-3 col-xs-12">
                         <LinkedinPageOverviewCard 
                             name="Followers by Page"  
-                            type='followersCount'
+                            type=''
                             description="Uniclix"
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <PostsChart 
                             name="Followers" 
-                            type='followersChartData'
+                            type=''
                             {...propData}/>
                     </div>
                 </div>
@@ -146,13 +146,13 @@ class LinkedinOverview extends React.Component {
                     <div className="col-md-3 col-xs-12">
                         <EngagementCard 
                             name="Engagement by Type" 
-                            type='engagementTotalData'
+                            type=''
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <EngagementChart 
                             name="Engagement by Type" 
-                            type='engagementsChartData'
+                            type=''
                             {...propData}/>
                     </div>
                 </div>
@@ -160,7 +160,7 @@ class LinkedinOverview extends React.Component {
                     <div className="col-xs-12">
                         <PostsTable 
                             name="Posts Table" 
-                            type='postsData'
+                            type=''
                             {...propData}/>
                     </div>
                 </div>
@@ -186,8 +186,9 @@ const ProfileChannel = ({channel}) => (
 
 const mapStateToProps = (state) => {
 
-    const channels = linkedinPages(state.channels.list);
-    let selectedChannel = channelSelector(channels, {selected: 1, provider: "linkedin", publishable: true});
+    const linkedinChannelsFilter = {selected: undefined, provider: "linkedin", publishable: true};
+    const channels = channelSelector(state.channels.list, linkedinChannelsFilter);
+    let selectedChannel = channelSelector(state.channels.list, {selected: 1, provider: "linkedin", publishable: true});
     selectedChannel = selectedChannel.lenght ? selectedChannel[0] : {};
 
     return {

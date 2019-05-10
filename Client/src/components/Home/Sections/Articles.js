@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Modal from "react-modal";
+import UpgradeModal from '../../UpgradeModal';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import Article from './Article';
 import {updateProfile} from "../../../requests/profile";
@@ -15,6 +16,7 @@ class Articles extends React.Component {
     state = {
         articles: [],
         loading: false,
+        forbidden: false,
         topics: [],
         topic: "",
         isTopicsModalOpen: false,
@@ -53,6 +55,7 @@ class Articles extends React.Component {
                 this.setState(() => ({
                     articles: [...response.data],
                     loading: false,
+                    forbidden: false,
                     page
                 }));
             }else{
@@ -63,6 +66,9 @@ class Articles extends React.Component {
                 }));
             }
         }).catch((error) => {
+            if(error.response.status === 403){
+                this.setForbidden(true);
+            }
             this.setState(() => ({
                 loading: false
             }));
@@ -139,10 +145,16 @@ class Articles extends React.Component {
         }));
     };
 
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
+        }));
+    };
+
     render(){   
         return(
             <div>
-
+            <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
                 <TailoredPostModal 
                     isOpen={this.state.isTailoredPostOpen}
                     postId={this.state.openedPostId}
@@ -185,12 +197,21 @@ class Articles extends React.Component {
                 </Modal>
                 
                 {!(!!this.state.articles.length) && this.state.loading && 
-                    <div><ArticleLoader /><ArticleLoader /></div>}
+                    <div>
+                        <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3"><ArticleLoader /></div>
+                        <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3"><ArticleLoader /></div>
+                        <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3"><ArticleLoader /></div>
+                    </div>
+                }
                 { !!this.state.articles.length ?                 
                     <div>
 
                         <h4 className="center-inline">Articles based on your choice of <a onClick={this.toggleTopicsModal} className="link-cursor">topics</a></h4>
-                        {this.state.loading && <ArticleLoader />}
+                        {this.state.loading &&  <div>
+                            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3"><ArticleLoader /></div>
+                            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3"><ArticleLoader /></div>
+                            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3"><ArticleLoader /></div>
+                        </div>}
                         <br/>
 
                         {!!this.state.articles.length &&
@@ -203,13 +224,21 @@ class Articles extends React.Component {
                                 );
                             })
                         }
-                        {this.state.loading && <ArticleLoader />}
+                        {this.state.loading &&  <div>
+                            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3"><ArticleLoader /></div>
+                            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3"><ArticleLoader /></div>
+                            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3"><ArticleLoader /></div>
+                        </div>}
                         <BottomScrollListener onBottom={this.loadArticles} /> 
                     </div>
                 :   
                     
                     <div className="initial-topics">
-                    {this.state.loading && <ArticleLoader />}
+                    {this.state.loading &&  <div>
+                        <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3"><ArticleLoader /></div>
+                        <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3"><ArticleLoader /></div>
+                        <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3"><ArticleLoader /></div>
+                    </div>}
                         {!this.state.loading &&
                             <div>
                                 <p>Please set your topics to view articles of your interest.</p>

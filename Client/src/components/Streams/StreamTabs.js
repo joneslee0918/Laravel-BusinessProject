@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import _ from 'lodash';
 import Modal from 'react-modal';
+import UpgradeModal from '../UpgradeModal';
 import PropTypes from 'prop-types';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {Dialog, FlatButton, Menu, MenuItem, TextField} from 'material-ui';
@@ -41,6 +42,7 @@ class StreamTabs extends Component {
       dialogOpen: false,
       selectedTab: "tab0",
       loading: false,
+      forbidden: false,
       addStream: false
     };
 
@@ -198,6 +200,12 @@ class StreamTabs extends Component {
         }));
     }
     
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
+        }));
+    };
+
     fetchStreamTabs = () => {
         this.setState(() => ({
             loading: true
@@ -229,8 +237,16 @@ class StreamTabs extends Component {
             }
 
             this.setState(() => ({
+                loading: false,
+                forbidden: false
+            }));
+        }).catch(error => {
+            this.setState(() => ({
                 loading: false
             }));
+            if(error.response.status === 403){
+                this.setForbidden(true);
+            }
         });
     }
 
@@ -259,9 +275,10 @@ class StreamTabs extends Component {
           };
           
         return (
-
-            <div>{this.state.loading ? <Loader /> :
-             
+            <div>
+            <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
+            {this.state.loading ? <Loader /> :
+                    
                     this.state.tabs.length > 0 ?            
                         <div>
                             <Modal isOpen={!!this.state.addStream} ariaHideApp={false} className="stream-type-modal">

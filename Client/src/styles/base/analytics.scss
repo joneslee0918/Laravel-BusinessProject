@@ -184,12 +184,11 @@
 .table-loader-style {
     text-align: center;
 }
-.anl-posts-table thead {
-    display: table-caption;
+.anl-posts-table thead, tbody {
+    display: block;
 }
 .anl-posts-table tbody {
     height: 500px;
     overflow-y: auto;
     overflow-x: hidden;
-    display: contents!important;
 }

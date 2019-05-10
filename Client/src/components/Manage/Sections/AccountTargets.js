@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
+import UpgradeModal from '../../UpgradeModal';
 import { getAccountTargets, follow } from '../../../requests/twitter/channels';
 import {startSetChannels} from "../../../actions/channels";
 import channelSelector from '../../../selectors/channels';
@@ -14,7 +15,8 @@ class AccountTargets extends React.Component{
         targets: [],
         loading: this.props.channelsLoading,
         searchView: false,
-        page: 1
+        page: 1,
+        forbidden: false
     }
 
     componentDidMount() {
@@ -69,6 +71,12 @@ class AccountTargets extends React.Component{
         }));
     };
 
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
+        }));
+    };
+
     fetchTargets = () => {
         this.setLoading(true);
         getAccountTargets()
@@ -78,6 +86,7 @@ class AccountTargets extends React.Component{
                     actions: response.actions,
                     targets: response.targets,
                     loading: false,
+                    forbidden: false,
                     page: 1
                 }));
             }).catch((error) => {
@@ -88,6 +97,10 @@ class AccountTargets extends React.Component{
                     if(this.props.selectedChannel.active){
                        this.props.startSetChannels();
                     }
+                }
+
+                if(error.response.status === 403){
+                    this.setForbidden(true);
                 }
 
                 return Promise.reject(error);
@@ -129,6 +142,7 @@ class AccountTargets extends React.Component{
         return (
             <div>
                 <h2>ACCOUNT TARGETS</h2>
+                <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
                 <UserList 
                     userItems={ this.state.userItems }
                     actionType="follow"

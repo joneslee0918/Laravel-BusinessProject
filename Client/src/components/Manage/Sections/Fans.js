@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
+import UpgradeModal from '../../UpgradeModal';
 import UserList from "../../UserList";
 import {startSetChannels} from "../../../actions/channels";
 import { getFans, follow } from '../../../requests/twitter/channels';
@@ -13,6 +14,7 @@ class Fans extends React.Component{
         actions: 0,
         page: 1,
         order: "desc",
+        forbidden: false,
         loading: this.props.channelsLoading
     }
 
@@ -32,6 +34,12 @@ class Fans extends React.Component{
     setLoading = (loading = false) => {
         this.setState(() => ({
             loading
+        }));
+    };
+
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
         }));
     };
 
@@ -65,6 +73,7 @@ class Fans extends React.Component{
                 this.setState(() => ({
                     userItems: response.items,
                     actions: response.actions,
+                    forbidden: false,
                     page: 1,
                     order,
                     loading: false
@@ -77,6 +86,10 @@ class Fans extends React.Component{
                     if(this.props.selectedChannel.active){
                        this.props.startSetChannels();
                     }
+                }
+
+                if(error.response.status === 403){
+                    this.setForbidden(true);
                 }
 
                 return Promise.reject(error);
@@ -112,6 +125,8 @@ class Fans extends React.Component{
         return (
             <div>
                 <h2>FANS</h2>
+                <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
+
                 <UserList 
                     userItems={ this.state.userItems }
                     actionType="follow"

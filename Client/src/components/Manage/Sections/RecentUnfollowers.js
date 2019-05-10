@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
+import UpgradeModal from '../../UpgradeModal';
 import {startSetChannels} from "../../../actions/channels";
 import { getRecentUnfollowers, unfollow } from '../../../requests/twitter/channels';
 import channelSelector from '../../../selectors/channels';
@@ -11,6 +12,7 @@ class RecentUnfollowers extends React.Component{
     state = {
         userItems: [],
         actions: 0,
+        forbidden: false,
         loading: this.props.channelsLoading,
         page: 1,
         order: "desc"
@@ -32,6 +34,12 @@ class RecentUnfollowers extends React.Component{
     setLoading = (loading = false) => {
         this.setState(() => ({
             loading
+        }));
+    };
+
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
         }));
     };
 
@@ -66,6 +74,7 @@ class RecentUnfollowers extends React.Component{
                     userItems: response.items,
                     actions: response.actions,
                     loading: false,
+                    forbidden: false,
                     page: 1,
                     order
                 }));
@@ -77,6 +86,10 @@ class RecentUnfollowers extends React.Component{
                     if(this.props.selectedChannel.active){
                        this.props.startSetChannels();
                     }
+                }
+
+                if(error.response.status === 403){
+                    this.setForbidden(true);
                 }
 
                 return Promise.reject(error);
@@ -113,6 +126,9 @@ class RecentUnfollowers extends React.Component{
         return (
             <div>
                 <h2>RECENT UNFOLLOWERS</h2>
+
+                <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
+
                 <UserList 
                     userItems={ this.state.userItems }
                     actionType="unfollow"

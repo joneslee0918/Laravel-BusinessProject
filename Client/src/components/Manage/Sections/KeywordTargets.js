@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
+import UpgradeModal from '../../UpgradeModal';
 import { getKeywordTargets, follow } from '../../../requests/twitter/channels';
 import {startSetChannels} from "../../../actions/channels";
 import channelSelector from '../../../selectors/channels';
@@ -14,6 +15,7 @@ class KeywordTargets extends React.Component{
         targets: [],
         loading: this.props.channelsLoading,
         searchView: false,
+        forbidden: false,
         page: 1
     }
 
@@ -46,6 +48,12 @@ class KeywordTargets extends React.Component{
         }));
     };
 
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
+        }));
+    };
+
     perform = (userId) => {
         this.setState((prevState) => ({
             actions: prevState.actions + 1
@@ -73,11 +81,13 @@ class KeywordTargets extends React.Component{
         this.setLoading(true);
         getKeywordTargets()
             .then((response) => {
+                if(typeof(response.items) === "undefined") return;
                 this.setState(() => ({
                     userItems: response.items,
                     actions: response.actions,
                     targets: response.targets,
                     loading: false,
+                    forbidden: false,
                     page: 1
                 }));
             }).catch(error => {
@@ -90,6 +100,10 @@ class KeywordTargets extends React.Component{
                     }
                 }
 
+                if(error.response.status === 403){
+                    this.setForbidden(true);
+                }
+
                 return Promise.reject(error);
             });
     };
@@ -99,6 +113,7 @@ class KeywordTargets extends React.Component{
         let page = this.state.page + 1;
         getKeywordTargets(page)
             .then((response) => {
+                if(typeof(response.items) === "undefined") return;
                 this.setState((prevState) => ({
                     userItems: prevState.userItems.concat(response.items),
                     actions: response.actions,
@@ -129,6 +144,8 @@ class KeywordTargets extends React.Component{
         return (
             <div>
                 <h2>KEYWORD TARGETS</h2>
+
+                <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
                 <UserList 
                     userItems={ this.state.userItems }
                     actionType="follow"

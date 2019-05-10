@@ -15,6 +15,8 @@ class InactiveFollowingController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $this->user = auth()->user();
+
+            if(!$this->user->hasPermission("manage-inactive-following")) return response()->json(["error" => "You need to upgrade to unlock this feature."], 403);
             $this->selectedChannel = $this->user->selectedTwitterChannel();
             return $next($request);
         });

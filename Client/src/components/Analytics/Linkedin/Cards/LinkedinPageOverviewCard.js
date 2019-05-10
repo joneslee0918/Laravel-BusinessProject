@@ -1,6 +1,6 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
-import { pageInsightsByType } from "../../../../requests/linkedin/channels";
+import { pageInsightsByType } from "../../../../requests/twitter/channels";
 
 class LinkedinPageOverviewCard extends React.Component{
     state = {
@@ -9,13 +9,13 @@ class LinkedinPageOverviewCard extends React.Component{
     };
 
     componentDidMount(){
-        this.fetchAnalytics();
+        // this.fetchAnalytics();
     };
 
     componentDidUpdate(prevProps){
         if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
         {
-            this.fetchAnalytics();
+            // this.fetchAnalytics();
         }
     }
 

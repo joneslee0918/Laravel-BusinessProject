@@ -10,13 +10,13 @@ class PostsChart extends React.Component{
     };
 
     componentDidMount(){
-        this.fetchAnalytics();
+        // this.fetchAnalytics();
     };
 
     componentDidUpdate(prevProps){
         if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
         {
-            this.fetchAnalytics();
+            // this.fetchAnalytics();
         }
     }
 
@@ -31,6 +31,7 @@ class PostsChart extends React.Component{
                     data: response,
                     loading: false
                 }));
+                console.log(response);
             }).catch(error => {
                 this.setState(() => ({
                     loading: false

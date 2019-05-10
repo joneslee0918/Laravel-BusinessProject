@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
+import UpgradeModal from '../../UpgradeModal';
 import channelSelector from "../../../selectors/channels";
 import {startSetChannels} from "../../../actions/channels";
 import { getDashboard } from "../../../requests/twitter/channels";
@@ -13,7 +14,9 @@ class Dashboard extends React.Component {
     }
 
     state = {
-        data: false
+        data: false,
+        loading: false,
+        forbidden: false
     }
     
     componentDidMount() {
@@ -30,19 +33,40 @@ class Dashboard extends React.Component {
         }
     }
 
+    setLoading = (loading = false) => {
+        this.setState(() => ({
+            loading
+        }));
+    };
+
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
+        }));
+    };
+    
     fetchDashboard = () => {
+        this.setLoading(true);
         getDashboard()
         .then((response) => {
             this.setState(() => ({
-                data: response
+                data: response,
+                loading: false,
+                forbidden: false
             }));
         }).catch(error => {
+            this.setLoading(false);
             if(error.response.status === 401){
                     
                 if(this.props.selectedChannel.active){
                    this.props.startSetChannels();
                 }
             }
+
+            if(error.response.status === 403){
+                this.setForbidden(true);
+            }
+
             return Promise.reject(error);
         });
     };
@@ -52,6 +76,8 @@ class Dashboard extends React.Component {
         return (
             <div>
                 <h2>DASHBOARD</h2>
+
+                <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
 
                 {this.state.data ? 
                 <div>
@@ -94,7 +120,7 @@ class Dashboard extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>: <Loader />}
+                </div>: this.state.loading && <Loader />}
                 
             </div>
         );

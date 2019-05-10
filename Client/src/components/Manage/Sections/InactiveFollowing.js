@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
+import UpgradeModal from '../../UpgradeModal';
 import UserList from "../../UserList";
 import {startSetChannels} from "../../../actions/channels";
 import { getInactiveFollowing, unfollow } from '../../../requests/twitter/channels';
@@ -12,6 +13,7 @@ class InactiveFollowing extends React.Component{
         userItems: [],
         actions: 0,
         loading: this.props.channelsLoading,
+        forbidden: false,
         page: 1,
         order: "desc"
     }
@@ -32,6 +34,12 @@ class InactiveFollowing extends React.Component{
     setLoading = (loading = false) => {
         this.setState(() => ({
             loading
+        }));
+    };
+
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
         }));
     };
 
@@ -67,6 +75,7 @@ class InactiveFollowing extends React.Component{
                     userItems: response.items,
                     actions: response.actions,
                     loading: false,
+                    forbidden: false,
                     page: 1,
                     order
                 }));
@@ -79,6 +88,10 @@ class InactiveFollowing extends React.Component{
                     if(this.props.selectedChannel.active){
                        this.props.startSetChannels();
                     }
+                }
+
+                if(error.response.status === 403){
+                    this.setForbidden(true);
                 }
                 
                 return Promise.reject(error);
@@ -114,6 +127,7 @@ class InactiveFollowing extends React.Component{
         return (
             <div>
                 <h2>INACTIVE FOLLOWING</h2>
+                <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
                 <UserList 
                     userItems={ this.state.userItems }
                     actionType="unfollow"

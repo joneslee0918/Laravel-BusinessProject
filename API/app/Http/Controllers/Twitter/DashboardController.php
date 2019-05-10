@@ -5,12 +5,25 @@ namespace App\Http\Controllers\Twitter;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
-{
+{   
+    private $user;
+    private $selectedChannel;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->user = auth()->user();
+
+            if(!$this->user->hasPermission("manage-dashboard")) return response()->json(["error" => "You need to upgrade to unlock this feature."], 403);
+            $this->selectedChannel = $this->user->selectedTwitterChannel();
+            return $next($request);
+        });
+    }
 
     public function index()
     {
-        $user = auth()->user();
-        $channel = $user->selectedTwitterChannel();
+        $user = $this->user;
+        $channel = $this->selectedChannel;
 
         try{
             if($channel){

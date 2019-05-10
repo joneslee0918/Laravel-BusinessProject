@@ -18,7 +18,7 @@ const TopMenu = ({setComposerModal}) => (
         </ul>
 
         <ul className="nav-buttons">
-            <li><a href="#" className="upgrade-btn">Upgrade for more features</a></li> 
+            <li><NavLink to="/settings/billing" className="upgrade-btn">Upgrade for more features</NavLink></li> 
             <li><NavLink to="/settings" activeClassName="active" className="top-icons"><i className="fa fa-gear"></i></NavLink></li>
             <li>
                 <a onClick={() => setComposerModal(true)} className="compose-btn">Compose</a>

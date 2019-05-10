@@ -17,6 +17,7 @@ class KeywordTargetsController extends Controller
         $this->middleware(function ($request, $next) {
             $this->user = auth()->user();
             $this->title = "KEYWORD TARGETS";
+            if(!$this->user->hasPermission("manage-keyword-targets")) return response()->json(["error" => "You need to upgrade to unlock this feature."], 403);
             $this->selectedChannel = $this->user->selectedTwitterChannel();
             return $next($request);
         });
@@ -40,6 +41,7 @@ class KeywordTargetsController extends Controller
                     $tweets = $this->selectedChannel->getSearch(["q" => $target->keyword, "geocode" => "$location->lat,$location->lng,50mi", "count" => 100]);
                 }
 
+                // return response()->json($tweets);
                 $feedIds = $this->getUsersFromTweetList($tweets);
                 $data = [];
 
@@ -146,7 +148,7 @@ class KeywordTargetsController extends Controller
         $users = [];
 
         if($tweets){
-            foreach($tweets->statuses as $tweet){
+            foreach($tweets as $tweet){
                 $users[] = $tweet->user->id;
             }
         }

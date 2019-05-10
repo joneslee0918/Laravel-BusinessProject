@@ -1,6 +1,6 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
-import { pageInsightsByType } from "../../../../requests/linkedin/channels";
+import { pageInsightsByType } from "../../../../requests/facebook/channels";
 
 class EngagementCard extends React.Component{
     state = {
@@ -9,14 +9,15 @@ class EngagementCard extends React.Component{
     };
 
     componentDidMount(){        
-        this.fetchAnalytics();
+        // this.fetchAnalytics();
     };
 
     componentDidUpdate(prevProps){
         if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
         {
-            this.fetchAnalytics();
+            // this.fetchAnalytics();
         }
+        
     }
 
     fetchAnalytics = () => {
@@ -51,9 +52,9 @@ class EngagementCard extends React.Component{
                 <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
             </div>
             <div className="eng-card-section">
-                <span className="anl-desc card-description">Shares</span>
+                <span className="anl-desc card-description">Reactions</span>
                 <span className="anl-count">
-                    {this.state.loading ? <Loader type="Bars" color="#ffffff" height={15} width={15} /> : this.state.data !=null && this.state.data.shares}                
+                    {this.state.loading ? <Loader type="Bars" color="#ffffff" height={15} width={15} /> : this.state.data !=null && this.state.data.reactions}                
                 </span>         
             </div>
             <div className="eng-card-section eng-card-section-middle">
@@ -63,9 +64,9 @@ class EngagementCard extends React.Component{
                 </span>
             </div>
             <div className="eng-card-section">
-                <span className="anl-desc card-description">Likes</span>
+                <span className="anl-desc card-description">Shares</span>
                 <span className="anl-count">
-                    {this.state.loading ? <Loader type="Bars" color="#ffffff" height={15} width={15} /> : this.state.data !=null && this.state.data.likes}
+                    {this.state.loading ? <Loader type="Bars" color="#ffffff" height={15} width={15} /> : this.state.data !=null && this.state.data.shares}
                 </span>
             </div>
         </div>

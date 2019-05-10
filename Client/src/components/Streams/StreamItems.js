@@ -215,6 +215,7 @@ class StreamItems extends Component {
 
 const mapStateToProps = (state) => {
   const channels = channelSelector(state.channels.list, {selected: undefined, provider: undefined, publishable: true});
+
   return {
       channels
   }
