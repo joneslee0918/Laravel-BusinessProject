@@ -42,7 +42,7 @@ class PagesController extends Controller
      */
     public function pricing()
     {
-    	return view('frontend.tableprices');
+    	return view('frontend.pricing');
     }
 
      /**

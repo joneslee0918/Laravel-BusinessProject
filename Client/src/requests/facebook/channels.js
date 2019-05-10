@@ -83,13 +83,3 @@ export const post = (channelId, message = "", objectId = "") => {
         return response.data;
     });
 }
-
-export const sendMessage = (message, conversationId, channelId) => {
-    return axios.post(`${apiUrl}/facebook/message/send`, {
-        conversationId,
-        channelId,
-        message
-    }).then((response) => {
-        return response.data;
-    });
-}

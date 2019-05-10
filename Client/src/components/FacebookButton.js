@@ -6,7 +6,7 @@ const FacebookButton = ({appId, onSuccess, icon=undefined, cssClass=undefined, t
         appId={appId}
         autoLoad={false}
         fields="name,email,picture"
-        scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,public_profile,email,read_insights,user_likes,pages_messaging"
+        scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,public_profile,email,read_insights,user_likes,read_page_mailboxes"
         callback={onSuccess}
         icon={icon}
         cssClass={cssClass}

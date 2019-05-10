@@ -1,8 +1,8 @@
 import React from 'react';
+import ReadMore from '../ReadMore';
 import TwitterActions from './TwitterActions';
 import StreamPost from './StreamPost';
 import FacebookActions from './FacebookActions';
-import FacebookMessagesFeed from './FacebookMessagesFeed';
 
 const StreamFeedItem = ({feedItem, streamItem, channel, setImages, updateItem}) => {
     try{
@@ -20,7 +20,7 @@ const StreamFeedItem = ({feedItem, streamItem, channel, setImages, updateItem}) 
         else if(streamItem.network === "facebook"){
 
             if(streamItem.type === "conversations"){
-                return <FacebookMessagesFeed feedItem = {feedItem} channel={channel} setImages={setImages} updateItem={updateItem}/>
+                return <FacebookMessagesFeed feedItem = {feedItem} channel={channel} setImages={setImages} />
             }else{
                 return <FacebookPostsFeed feedItem = {feedItem} setImages={setImages} channel={channel} updateItem={updateItem}/>
             }
@@ -167,5 +167,29 @@ const FacebookPostsFeed = ({feedItem, setImages, channel, updateItem}) => {
         return <div></div>;
     }
 };
+
+const FacebookMessagesFeed = ({feedItem, channel}) => {
+    try{    
+        const text = feedItem.messages.data[0].message ? feedItem.messages.data[0].message : "";
+            return (
+            <div className="stream-feed-container">
+                        <div className="post-info">
+                            <img src={channel.name === feedItem.messages.data[0].from.name ? channel.avatar : "/images/dummy_profile.png"} />
+                            <div className="post-info-item">
+                                <a href="#" className="username"><strong>{feedItem.messages.data[0].from.name}</strong></a>
+                                <div className="post-date">{(new Date(feedItem.updated_time)).toDateString()}</div>
+                            </div>
+                        </div>
+                        <div className="post-content">
+                            <ReadMore>{text}</ReadMore>
+                        </div>
+                    </div>
+)
+    }catch(e){
+        console.log(e);
+        return <div></div>;
+    }
+};
+
 
 export default StreamFeedItem;

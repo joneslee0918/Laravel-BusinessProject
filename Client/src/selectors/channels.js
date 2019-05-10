@@ -95,3 +95,12 @@ export const findAccounts = (accounts = [], {prop}) => {
         return account.id == prop;
     });
 };
+
+export const linkedinPages = (channels = []) => {
+
+    if (!channels.length) return channels;
+
+    return channels.filter((channel) => {
+        return channel.type == "linkedin" && channel.details.account_type == 'page';
+    });
+};

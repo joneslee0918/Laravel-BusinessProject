@@ -8,11 +8,11 @@ const menuItems = [
         displayName: "Profile",
         uri: "/settings/profile" 
     },
-    // {   
-    //     id: "team_support",
-    //     displayName: "Team Support",
-    //     uri: "/settings/support" 
-    // },
+    {   
+        id: "team_support",
+        displayName: "Team Support",
+        uri: "/settings/support" 
+    },
     {   
         id: "billing",
         displayName: "Billing",

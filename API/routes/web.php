@@ -1,4 +1,6 @@
 <?php
+use function GuzzleHttp\json_decode;
+
 set_time_limit (200);
 /*
 |--------------------------------------------------------------------------
@@ -36,13 +38,10 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $channel = \App\Models\Twitter\Channel::find(2);
-    // $organizationalTarget = "organizationalTarget~";
-    // $original = "original~";
-    //$post = $channel->global->scheduledPosts()->first();
+    $channel = \App\Models\Linkedin\Channel::find(2);
+    $posts = $channel->getPosts();
+    var_dump(count($posts->elements));
 
-    //I need to search for the pages but don't have public page access permission :()
-    return response()->json($channel->keywordTargets()->get());
 });
 
 

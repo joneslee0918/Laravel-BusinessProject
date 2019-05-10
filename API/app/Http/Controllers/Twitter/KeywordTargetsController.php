@@ -40,7 +40,6 @@ class KeywordTargetsController extends Controller
                     $tweets = $this->selectedChannel->getSearch(["q" => $target->keyword, "geocode" => "$location->lat,$location->lng,50mi", "count" => 100]);
                 }
 
-                // return response()->json($tweets);
                 $feedIds = $this->getUsersFromTweetList($tweets);
                 $data = [];
 
@@ -147,7 +146,7 @@ class KeywordTargetsController extends Controller
         $users = [];
 
         if($tweets){
-            foreach($tweets as $tweet){
+            foreach($tweets->statuses as $tweet){
                 $users[] = $tweet->user->id;
             }
         }

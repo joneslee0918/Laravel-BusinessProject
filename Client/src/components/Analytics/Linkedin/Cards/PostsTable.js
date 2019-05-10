@@ -1,6 +1,6 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
-import { pageInsightsByType } from "../../../../requests/facebook/channels";
+import { pageInsightsByType } from "../../../../requests/linkedin/channels";
 import ReadMore from "../../../ReadMore";
 
 class PostsTable extends React.Component{
@@ -59,7 +59,7 @@ class PostsTable extends React.Component{
                         <tr>
                             <th className="anl-posts-table-th-first">Date</th>
                             <th className="anl-posts-table-th-second">Message</th>
-                            <th>Reactions</th>
+                            <th>Likes</th>
                             <th>Comments</th>
                             <th>Shares</th>
                         </tr>
@@ -70,7 +70,7 @@ class PostsTable extends React.Component{
                                 <td className="anl-posts-table-th-first" scope="row">
                                     <div className="post-table-images">
                                         <img className="pt-page-img" src="/images/uniclix.png" />
-                                        <img className="pt-page-facebook" src="/images/facebook.png"></img>
+                                        <img className="pt-page-facebook" src="/images/linkedin-logo.png"></img>
                                     </div>
                                     <div className="post-table-page-date">
                                         <p className="pt-page-name">UniClix</p>
@@ -78,7 +78,7 @@ class PostsTable extends React.Component{
                                     </div>
                                 </td>
                                 <td className="anl-posts-table-th-second"><ReadMore characters={400}>{post.message ? post.message : ''}</ReadMore></td>
-                                <td>{post.reactions}</td>
+                                <td>{post.likes}</td>
                                 <td>{post.comments}</td>
                                 <td>{post.shares}</td>                            
                             </tr>

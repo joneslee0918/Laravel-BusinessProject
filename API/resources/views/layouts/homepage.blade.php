@@ -20,7 +20,6 @@
     @stack('styles')
     <link href="{{ asset('css/frontend.css') }}" rel="stylesheet">
     <link href="{{ asset('css/helper.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 </head>
 <body>
 <!-- <div id="top-image"><img  class="img-responsive" src="{{ asset('images/top-office.png') }}" /></div> -->
@@ -48,7 +47,7 @@
                             <!-- <li class="{{ Request::is('upgrade') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('upgrade') }}">Upgrade</a></li> -->
                             <li class="{{ Request::is('education') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('education') }}">How it works</a></li>
                             <li class="{{ Request::is('pricing') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('pricing') }}">Pricing</a></li>
-                            <li class="{{ Request::is('blog') ? 'active' : ''}}"><a class="page-scroll" href="https://blog.uniclixapp.com">Blog</a></li>
+                            <li class="{{ Request::is('blog') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('blog') }}">Blog</a></li>
                         </ul>
                     </nav>
                 </div>

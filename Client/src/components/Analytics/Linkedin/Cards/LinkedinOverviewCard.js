@@ -15,7 +15,7 @@ class LinkedinOverviewCard extends React.Component{
     componentDidUpdate(prevProps){
         if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
         {
-            // this.fetchAnalytics();
+            this.fetchAnalytics();
         }
     }
 
@@ -24,7 +24,7 @@ class LinkedinOverviewCard extends React.Component{
             loading: true
         }));
         try {
-            pageInsightsByType(19135829, this.props.startDate, this.props.endDate, this.props.type)            
+            pageInsightsByType(this.props.selectedAccount, this.props.startDate, this.props.endDate, this.props.type)            
             .then((response) => {
                 this.setState(() => ({
                     count: response,
