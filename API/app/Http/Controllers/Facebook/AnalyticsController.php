@@ -6,10 +6,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class AnalyticsController extends Controller
-{
+{   
+    private $user;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->user = auth()->user();
+
+            if(!$this->user->hasPermission("analytics")) return response()->json(["error" => "You need to upgrade to unlock this feature."], 403);
+            return $next($request);
+        });
+    }
+
     public function index(Request $request)
     {
-        $user = auth()->user();
+        $user = $this->user;
         $channel = $user->channels()->find($request->id);
 
         try{
@@ -29,7 +41,7 @@ class AnalyticsController extends Controller
      */
     public function pageInsights(Request $request)
     {
-        $user = auth()->user();
+        $user = $this->user;
         $channel = $user->channels()->find($request->id);
 
         try{
@@ -50,7 +62,7 @@ class AnalyticsController extends Controller
      */
     public function pagePostsInsights(Request $request)
     {
-        $user = auth()->user();
+        $user = $this->user;
         $channel = $user->channels()->find($request->id);
 
         try{
@@ -71,7 +83,7 @@ class AnalyticsController extends Controller
      */
     public function pageInsightsByType($type, Request $request)
     {
-        $user = auth()->user();
+        $user = $this->user;
         $channel = $user->channels()->find($request->id);
 
         try{

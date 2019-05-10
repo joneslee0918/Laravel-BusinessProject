@@ -1,4 +1,6 @@
 <?php
+use function GuzzleHttp\json_decode;
+
 set_time_limit (200);
 /*
 |--------------------------------------------------------------------------
@@ -36,8 +38,10 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $user = \App\Models\User::first();
-    return response()->json($user->hasRole("twitter_growth"));
+    $channel = \App\Models\Linkedin\Channel::find(2);
+    $posts = $channel->getPosts();
+    var_dump(count($posts->elements));
+
 });
 
 
