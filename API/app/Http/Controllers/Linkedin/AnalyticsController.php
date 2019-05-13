@@ -25,7 +25,8 @@ class AnalyticsController extends Controller
      * Get insights of Linkedin pages
      */
     public function pageInsightsByType($type, Request $request)
-    {
+    {   
+        if(!$this->user->hasPermission("advanced-analytics")) return response()->json(["error" => "You need to upgrade to unlock this feature."], 403);
         $user = $this->user;
         $channel = $user->channels()->find($request->id);
 

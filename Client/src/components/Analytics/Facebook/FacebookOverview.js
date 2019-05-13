@@ -10,6 +10,7 @@ import EngagementChart from './Cards/EngagementChart';
 import PostsTable from './Cards/PostsTable';
 import { DateRangePicker } from 'react-dates';
 import { isInclusivelyBeforeDay } from 'react-dates';
+import UpgradeModal from '../../UpgradeModal';
 import channelSelector from '../../../selectors/channels';
 import Select from 'react-select';
 
@@ -23,6 +24,7 @@ class FacebookOverview extends React.Component {
         (this.props.channels.length ? 
           {label: <ProfileChannel channel={this.props.channels[0]} />, value: this.props.channels[0].id, type: this.props.channels[0].type} : {}),
         loading: false,
+        forbidden: false,
         calendarChange: false
     }
 
@@ -38,16 +40,24 @@ class FacebookOverview extends React.Component {
         }));
     }
 
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
+        }));
+    };
+
     render(){
         const propData = {
             startDate: this.state.startDate,
             endDate: this.state.endDate, 
             selectedAccount: this.state.selectedAccount.value,
             calendarChange: this.state.calendarChange,
+            setForbidden: this.setForbidden
         }
         return (
             <div>
-            <div>
+            <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
+            {!this.state.forbidden && <div>
                 <div className="row">            
                     <div className="col-xs-12">
                         <div className="analytics-head">
@@ -160,7 +170,7 @@ class FacebookOverview extends React.Component {
                             {...propData}/>
                         </div>
                 </div>
-            </div> 
+            </div> }
             </div>
         );
     }

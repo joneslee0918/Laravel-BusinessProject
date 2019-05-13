@@ -12,6 +12,7 @@ import PostsChart from '../Linkedin/Cards/PostsChart';
 import EngagementCard from '../Linkedin/Cards/EngagementCard';
 import EngagementChart from '../Linkedin/Cards/EngagementChart';
 import PostsTable from '../Linkedin/Cards/PostsTable';
+import UpgradeModal from '../../UpgradeModal';
 
 class LinkedinOverview extends React.Component {
 
@@ -23,6 +24,7 @@ class LinkedinOverview extends React.Component {
         (this.props.channels.length ? 
           {label: <ProfileChannel channel={this.props.channels[0]} />, value: this.props.channels[0].id, type: this.props.channels[0].type} : {}),
         loading: false,
+        forbidden: false,
         calendarChange: false
     }
 
@@ -38,16 +40,24 @@ class LinkedinOverview extends React.Component {
         }));
     }
 
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
+        }));
+    }
+
     render(){
         const propData = {
             startDate: this.state.startDate,
             endDate: this.state.endDate, 
             selectedAccount: this.state.selectedAccount.value,
             calendarChange: this.state.calendarChange,
+            setForbidden: this.setForbidden
         }
         return (
             <div>
-            <div>
+            <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
+            {!this.state.forbidden && <div>
                 <div className="row">            
                     <div className="col-xs-12">
                         <div className="analytics-head">
@@ -164,7 +174,7 @@ class LinkedinOverview extends React.Component {
                             {...propData}/>
                     </div>
                 </div>
-            </div> 
+            </div> }
             </div>
         );
     }

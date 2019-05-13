@@ -41,6 +41,12 @@ class TwitterAnalytics extends React.Component {
                 this.setState(() => ({
                     loading: false
                 }));
+
+                
+                if(error.response.status === 403){
+                    this.props.setForbidden(true);
+                }
+
                 return Promise.reject(error);
             }); 
         } catch (error) {
