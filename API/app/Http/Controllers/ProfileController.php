@@ -28,20 +28,18 @@ class ProfileController extends Controller
     {
         $topics = $this->user->topics;
         $locations = $this->user->locations;
+        $role = $this->user->role()->with("permissions")->first();
+        $roleAddons = $this->user->roleAddons()->with("permissions")->get();
 
         return response()->json([
             "user" => $this->user,
             "topics" => $topics,
-            "locations" => $locations
+            "locations" => $locations,
+            "role" => $role,
+            "roleAddons" => $roleAddons
         ]);
     }
 
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {   
         try{

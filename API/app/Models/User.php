@@ -120,6 +120,11 @@ class User extends Authenticatable
         return $this->hasMany(Location::class);
     }
 
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
     public function roleAddons()
     {
         return $this->belongsToMany(RoleAddon::class, "user_role_addons", "user_id", "addon_id");
