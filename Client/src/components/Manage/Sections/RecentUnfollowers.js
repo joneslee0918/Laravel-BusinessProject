@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
-import UpgradeModal from '../../UpgradeModal';
+import UpgradeAlert from '../../UpgradeAlert';
 import {startSetChannels} from "../../../actions/channels";
 import { getRecentUnfollowers, unfollow } from '../../../requests/twitter/channels';
 import channelSelector from '../../../selectors/channels';
@@ -127,7 +127,7 @@ class RecentUnfollowers extends React.Component{
             <div>
                 <h2>RECENT UNFOLLOWERS</h2>
 
-                <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
+                <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
 
                 <UserList 
                     userItems={ this.state.userItems }

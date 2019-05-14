@@ -13,7 +13,10 @@ class ChannelController extends Controller
 
     public function add(Request $request){
         
+        $user = auth()->user();
+        if($user->channels()->count() >= $user->getLimit("account_limit")) return response()->json(["error" => "You have exceeded the account limit for this plan."], 403);
         $accessToken = $request->input("access_token");
+       
 
         $pinterest = new Pinterest(config("services.pinterest.client_id"), config("services.pinterest.client_secret"));
         $pinterest->auth->setOAuthToken($accessToken);
@@ -32,12 +35,12 @@ class ChannelController extends Controller
         if(is_object($credentials) && !isset($credentials->error)){
 
             $token = $credentials->token;
-
-            $user = auth()->user();
             $existingChannel = Channel::where("username", $credentials->nickname)->first();
     
-            if(!$existingChannel){
+            if(!$existingChannel){ 
+                $user = auth()->user();
                 $channel = $user->channels()->create(["type" => "pinterest"]);
+                
                 $pinterestChannel = $channel->details()->create([
                     "user_id" => $user->id, 
                     "name" => $credentials->name,

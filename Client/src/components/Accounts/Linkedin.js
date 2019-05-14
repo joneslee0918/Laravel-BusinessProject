@@ -12,6 +12,7 @@ import Loader from "../../components/Loader";
 import ChannelItems from "./ChannelItems";
 import LinkedInButton from "../LinkedInButton";
 import {apiUrl} from "../../config/api";
+import UpgradeAlert from "../UpgradeAlert";
 
 class Linkedin extends React.Component {
     constructor(props) {
@@ -27,7 +28,8 @@ class Linkedin extends React.Component {
         action: this.defaultAction,
         pages: [],
         pagesModal: false,
-        error: ""
+        error: "",
+        forbidden: false
     }
 
     setAction = (action = this.defaultAction) => {
@@ -46,6 +48,12 @@ class Linkedin extends React.Component {
         }));
     };
 
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
+        }));
+    };
+
     onSuccess = (response) => {
         
         if(response){
@@ -60,7 +68,11 @@ class Linkedin extends React.Component {
                     }
                 });
             }).catch(error => {
-                this.setError("Something went wrong!");
+                if(error.response.status === 403){
+                    this.setForbidden(true);
+                }else{
+                    this.setError("Something went wrong!");
+                }
             });
         }
     };
@@ -74,10 +86,11 @@ class Linkedin extends React.Component {
             this.props.startSetChannels();
             this.togglePagesModal();
         }).catch( error => {
-            console.log(error);
-            this.setState(() => ({
-                error: "Something went wrong!"
-            }));
+            if(error.response.status === 403){
+                this.setForbidden(true);
+            }else{
+                this.setError("Something went wrong!");
+            }
         });
     };
 
@@ -104,7 +117,7 @@ class Linkedin extends React.Component {
     render(){
         return (
             <div className="accounts-container">
-                
+            <UpgradeAlert isOpen={this.state.forbidden} text={"Your current plan does not support more accounts."} setForbidden={this.setForbidden}/>
                 <SelectAccountsModal 
                     isOpen={this.state.pagesModal} 
                     accounts={this.state.pages}

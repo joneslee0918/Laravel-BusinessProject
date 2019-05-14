@@ -1,7 +1,7 @@
 import React from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import { pageInsightsByType } from "../../../../requests/linkedin/channels"
+import { pageInsightsByType } from "../../../../requests/twitter/channels"
 
 class PostsChart extends React.Component{
     state = {

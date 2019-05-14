@@ -16,6 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->group(function(){
     Route::post('/profile', 'ProfileController@update');
     Route::get('/profile', 'ProfileController@profile');
+
+    Route::post('/billing/change/plan', 'BillingController@changePlan');
+    Route::post('/billing/activate/addon', 'BillingController@activateAddon');
+    Route::post('/billing/cancel/addon', 'BillingController@cancelAddon');
+
     Route::get('/channels', 'ChannelController@channels');
     Route::patch('/channels/select/{id}', 'ChannelController@select');
     Route::delete('channels/delete/{id}', 'ChannelController@destroy');

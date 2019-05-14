@@ -53,7 +53,7 @@ class PostsTable extends React.Component{
             </div>
             <div className="card-table">
                 <div className="table-loader-style">{this.state.loading && <Loader type="Bars" color="#46a5d1" height={70} width={70} />}</div>
-                {this.state.posts != null &&
+                {this.state.posts !=null &&
                 <table className="table anl-posts-table">
                     <thead>
                         <tr>

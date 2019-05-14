@@ -160,6 +160,8 @@ class SocialUserResolver implements SocialUserResolverInterface
                     ]
                 );
 
+                if($user->channels()->count() >= $user->getLimit("account_limit")) return $user;
+
                 $channel = $user->channels()->create(["type" => "facebook"]);
                 $facebookChannel = $channel->details()->create(
                     [
@@ -215,6 +217,8 @@ class SocialUserResolver implements SocialUserResolverInterface
                         "role_id" => Role::first()->id
                     ]
                 );
+
+                if($user->channels()->count() >= $user->getLimit("account_limit")) return $user;
 
                 $channel = $user->channels()->create(["type" => "twitter"]);
                 $twitterChannel = $channel->details()->create(
@@ -272,6 +276,8 @@ class SocialUserResolver implements SocialUserResolverInterface
                     ]
                 );
 
+                if($user->channels()->count() >= $user->getLimit("account_limit")) return $user;
+
                 $channel = $user->channels()->create(["type" => "linkedin"]);
                 $linkedinChannel = $channel->details()->create(
                     [
@@ -323,6 +329,8 @@ class SocialUserResolver implements SocialUserResolverInterface
                         "role_id" => Role::first()->id
                     ]
                 );
+
+                if($user->channels()->count() >= $user->getLimit("account_limit")) return $user;
 
                 $channel = $user->channels()->create(["type" => "pinterest"]);
                 $pinterestChannel = $channel->details()->create(

@@ -10,6 +10,7 @@ import Loader from "../../components/Loader";
 import ChannelItems from "./ChannelItems";
 import PinterestButton from "../PinterestButton";
 import {apiUrl} from "../../config/api";
+import UpgradeAlert from "../UpgradeAlert";
 
 class Pinterest extends React.Component {
     constructor(props) {
@@ -23,7 +24,8 @@ class Pinterest extends React.Component {
 
     state = {
         action: this.defaultAction,
-        error: ""
+        error: "",
+        forbidden: false
     }
 
     setAction = (action = this.defaultAction) => {
@@ -42,12 +44,22 @@ class Pinterest extends React.Component {
         console.log(response);
     };
 
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
+        }));
+    };
+
     onSuccess = (response) => {
         if(response){
             this.props.startAddPinterestChannel(response.accessToken)
             .then(() => {
             }).catch(error => {
-                this.setError("Something went wrong!");
+                if(error.response.status === 403){
+                    this.setForbidden(true);
+                }else{
+                    this.setError("Something went wrong!");
+                }
             });
         }
     };
@@ -69,7 +81,7 @@ class Pinterest extends React.Component {
     render(){
         return (
             <div className="accounts-container">
-
+            <UpgradeAlert isOpen={this.state.forbidden} text={"Your current plan does not support more accounts."} setForbidden={this.setForbidden}/>
                 <SweetAlert
                     show={!!this.state.action.id}
                     title={`Do you wish to ${this.state.action.type} this item?`}

@@ -11,6 +11,8 @@ class ChannelController extends Controller
 {
 
     public function add(Request $request){
+        $user = auth()->user();
+        if($user->channels()->count() >= $user->getLimit("account_limit")) return response()->json(["error" => "You have exceeded the account limit for this plan."], 403);
         
         $accessToken = $request->input("oauth_token");
         $accessTokenSecret = $request->input("oauth_token_secret");
@@ -24,7 +26,6 @@ class ChannelController extends Controller
                 "oauth_token_secret" => $credentials->tokenSecret
             ];
 
-            $user = auth()->user();
             $existingChannel = Channel::where("username", $credentials->nickname)->first();
     
             if(!$existingChannel){

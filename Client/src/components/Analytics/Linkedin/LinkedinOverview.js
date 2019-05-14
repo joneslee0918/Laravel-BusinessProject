@@ -12,7 +12,7 @@ import PostsChart from '../Linkedin/Cards/PostsChart';
 import EngagementCard from '../Linkedin/Cards/EngagementCard';
 import EngagementChart from '../Linkedin/Cards/EngagementChart';
 import PostsTable from '../Linkedin/Cards/PostsTable';
-import UpgradeModal from '../../UpgradeModal';
+import UpgradeAlert from '../../UpgradeAlert';
 
 class LinkedinOverview extends React.Component {
 
@@ -56,7 +56,7 @@ class LinkedinOverview extends React.Component {
         }
         return (
             <div>
-            <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
+            <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
             {!this.state.forbidden && <div>
                 <div className="row">            
                     <div className="col-xs-12">

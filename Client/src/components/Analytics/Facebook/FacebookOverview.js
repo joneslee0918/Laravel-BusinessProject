@@ -10,7 +10,7 @@ import EngagementChart from './Cards/EngagementChart';
 import PostsTable from './Cards/PostsTable';
 import { DateRangePicker } from 'react-dates';
 import { isInclusivelyBeforeDay } from 'react-dates';
-import UpgradeModal from '../../UpgradeModal';
+import UpgradeAlert from '../../UpgradeAlert';
 import channelSelector from '../../../selectors/channels';
 import Select from 'react-select';
 
@@ -56,7 +56,7 @@ class FacebookOverview extends React.Component {
         }
         return (
             <div>
-            <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
+            <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
             {!this.state.forbidden && <div>
                 <div className="row">            
                     <div className="col-xs-12">
