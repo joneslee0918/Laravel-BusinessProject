@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
-import UpgradeModal from '../../UpgradeModal';
+import UpgradeAlert from '../../UpgradeAlert';
 import UserList from "../../UserList";
 import {startSetChannels} from "../../../actions/channels";
 import { getFollowing, unfollow } from '../../../requests/twitter/channels';
@@ -124,7 +124,7 @@ class Following extends React.Component{
         return (
             <div>
                 <h2>FOLLOWING</h2>
-                <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
+                <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
 
                 <UserList 
                     userItems={ this.state.userItems }

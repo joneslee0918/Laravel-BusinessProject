@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
-import UpgradeModal from '../../UpgradeModal';
+import UpgradeAlert from '../../UpgradeAlert';
 import UserList from "../../UserList";
 import {startSetChannels} from "../../../actions/channels";
 import { getFans, follow } from '../../../requests/twitter/channels';
@@ -125,7 +125,7 @@ class Fans extends React.Component{
         return (
             <div>
                 <h2>FANS</h2>
-                <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
+                <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
 
                 <UserList 
                     userItems={ this.state.userItems }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
-import UpgradeModal from '../../UpgradeModal';
+import UpgradeAlert from '../../UpgradeAlert';
 import channelSelector from '../../../selectors/channels';
 import {scheduledPosts, destroyPost, postNow} from '../../../requests/channels';
 import PostList from '../../PostList';
@@ -149,7 +149,7 @@ export class ScheduledPosts extends React.Component{
     render(){
         return(
             <div>
-            <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
+            <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
                 <PostList 
                     action={this.state.action}
                     setAction={this.setAction}

@@ -9,6 +9,7 @@ import {destroyChannel} from "../../requests/channels";
 import {logout} from "../../actions/auth";
 import Loader from "../../components/Loader";
 import ChannelItems from "./ChannelItems";
+import UpgradeAlert from "../UpgradeAlert";
 
 class Twitter extends React.Component {
     constructor(props) {
@@ -22,7 +23,8 @@ class Twitter extends React.Component {
 
     state = {
         action: this.defaultAction,
-        error: ""
+        error: "",
+        forbidden: false
     }
 
     setAction = (action = this.defaultAction) => {
@@ -41,10 +43,21 @@ class Twitter extends React.Component {
         }));
     };
 
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
+        }));
+    };
+
     onSuccess = (response) => {
         response.json().then(body => {
-            this.props.startAddTwitterChannel(body.oauth_token, body.oauth_token_secret).catch(error => {
-                this.setError("Something went wrong!");
+            this.props.startAddTwitterChannel(body.oauth_token, body.oauth_token_secret)
+            .catch(error => {
+                if(error.response.status === 403){
+                    this.setForbidden(true);
+                }else{
+                    this.setError("Something went wrong!");
+                }
             });
         });
     };
@@ -66,7 +79,7 @@ class Twitter extends React.Component {
     render(){
         return (
             <div className="accounts-container">
-
+            <UpgradeAlert isOpen={this.state.forbidden} text={"Your current plan does not support more accounts."} setForbidden={this.setForbidden}/>
                 <SweetAlert
                     show={!!this.state.action.id}
                     title={`Do you wish to ${this.state.action.type} this item?`}

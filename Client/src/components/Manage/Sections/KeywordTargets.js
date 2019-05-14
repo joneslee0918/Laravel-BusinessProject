@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
-import UpgradeModal from '../../UpgradeModal';
+import UpgradeAlert from '../../UpgradeAlert';
 import { getKeywordTargets, follow } from '../../../requests/twitter/channels';
 import {startSetChannels} from "../../../actions/channels";
 import channelSelector from '../../../selectors/channels';
@@ -145,7 +145,7 @@ class KeywordTargets extends React.Component{
             <div>
                 <h2>KEYWORD TARGETS</h2>
 
-                <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
+                <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
                 <UserList 
                     userItems={ this.state.userItems }
                     actionType="follow"

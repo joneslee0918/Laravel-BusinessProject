@@ -12,7 +12,7 @@ import TweetsChart from '../Twitter/Cards/TweetsChart';
 import TwitterEngagementCard from '../Twitter/Cards/TwitterEngagementCard';
 import TwitterEngagementChart from '../Twitter/Cards/TwitterEngagementChart';
 import TweetsTable from '../Twitter/Cards/TweetsTable';
-import UpgradeModal from '../../UpgradeModal';
+import UpgradeAlert from '../../UpgradeAlert';
 
 class TwitterOverview extends React.Component {
 
@@ -56,7 +56,7 @@ class TwitterOverview extends React.Component {
         }
         return (
             <div>
-            <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
+            <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
             {!this.state.forbidden && <div>
                 <div className="row">            
                     <div className="col-xs-12">
