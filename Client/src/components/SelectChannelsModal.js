@@ -1,6 +1,5 @@
 import React from 'react';
 import channelSelector from '../selectors/channels';
-import { withRouter } from 'react-router';
 
 class SelectChannelsModal extends React.Component{
 
@@ -36,9 +35,7 @@ class SelectChannelsModal extends React.Component{
     };
 
     onAddAccountsClick = () => {
-        this.props.toggleComposer();
-        this.props.toggle();
-        return this.props.history.push(`/accounts`);
+        window.location.href = "/accounts";
     };
 
     render(){
@@ -134,4 +131,4 @@ class SelectChannelsModal extends React.Component{
     }
 }
 
-export default withRouter(SelectChannelsModal);
+export default SelectChannelsModal;

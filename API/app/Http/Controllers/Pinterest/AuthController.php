@@ -41,7 +41,7 @@ class AuthController extends Controller
             return response()->json(["error" => "Something went wrong"], 400);
         }
 
-        if(!property_exists($body, "access_token")) return response()->json(["error" => "Something went wrong"], 400);
+
         return redirect("$clientUrl/redirect?accessToken=$body->access_token");
     }
 

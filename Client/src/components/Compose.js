@@ -296,7 +296,6 @@ class Compose extends React.Component{
                     channels={this.state.publishChannels} 
                     onChange={this.onChannelSelectionChange}
                     toggle={this.toggleSelectChannelsModal}
-                    toggleComposer={this.toggleModal}
                     />
 
                     :

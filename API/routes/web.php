@@ -38,8 +38,9 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $user = \App\Models\User::first();
-    return response()->json($user->roleAddons()->with("permissions")->get());
+    $channel = \App\Models\Linkedin\Channel::find(2);
+    $posts = $channel->getPosts();
+    var_dump(count($posts->elements));
 
 });
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TwitterAnalytics from '../TwitterAnalytics';
 import FacebookAnalytics from '../FacebookAnalytics';
-import UpgradeAlert from '../../UpgradeAlert';
+import UpgradeModal from '../../UpgradeModal';
 import channelSelector from '../../../selectors/channels';
 
 class Overview extends React.Component {
@@ -45,7 +45,7 @@ class Overview extends React.Component {
         return (
             <div>
                 <h2>ANALYTICS OVERVIEW</h2>  
-                <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
+                <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
                 {!this.state.forbidden && <div>
                     <ul className="analytics-filter">
                         <li className="analytics-filter-li" onClick={() => this.onDaysChange(1)}><a>Today</a></li>

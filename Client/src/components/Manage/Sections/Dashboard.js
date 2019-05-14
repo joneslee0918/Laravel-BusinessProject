@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import UpgradeAlert from '../../UpgradeAlert';
+import UpgradeModal from '../../UpgradeModal';
 import channelSelector from "../../../selectors/channels";
 import {startSetChannels} from "../../../actions/channels";
 import { getDashboard } from "../../../requests/twitter/channels";
@@ -77,7 +77,7 @@ class Dashboard extends React.Component {
             <div>
                 <h2>DASHBOARD</h2>
 
-                <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
+                <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
 
                 {this.state.data ? 
                 <div>

@@ -70,9 +70,17 @@ class Channel extends Model
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
-                $posts = $this->getPosts($sDate, $eDate);
+                $preparePosts = [];
 
-                return count($posts);
+                $posts = collect($this->getPosts());
+
+                foreach($posts as $post) {
+                    if($post->created->time >= $sDate && $post->created->time <= $eDate) {
+                        $preparePosts[] = $post;
+                    }
+                }
+
+                return count($preparePosts);
 
             });
         } catch (\Exception $e) {
@@ -172,7 +180,10 @@ class Channel extends Model
                 $data = [];
 
                 foreach ($grouped_posts as $key => $value) {
-                    $data[] = [Carbon::createFromFormat("Y m d", $key)->timestamp * 1000, count($value)];
+                    $date = Carbon::createFromFormat("Y m d", $key)->timestamp * 1000;
+                    if ($date >= $sDate && $date <= $eDate) {
+                        $data[] = [$date, count($value)];
+                    }
                 }
 
                 return $data;
@@ -223,16 +234,17 @@ class Channel extends Model
                 $preparePosts = collect();
 
                 foreach ($posts as $post) {
-                    $shareContent = "com.linkedin.ugc.ShareContent";
-                    $newPost = collect();
-                    $postSocialActions = $this->socialActions($post->id);
-                    $newPost->put('date', Carbon::createFromTimestampMs($post->created->time)->format('M d, H:i'));
-                    $newPost->put('message', $post->specificContent->$shareContent->shareCommentary->text);
-                    $newPost->put('comments', $postSocialActions->commentsSummary->totalFirstLevelComments);
-                    $newPost->put('likes', $postSocialActions->likesSummary->totalLikes);
-                    $newPost->put('shares', 0);
-                    $preparePosts->push($newPost);
-
+                    if ($post->created->time >= $sDate && $post->created->time <= $eDate) {
+                        $shareContent = "com.linkedin.ugc.ShareContent";
+                        $newPost = collect();
+                        $postSocialActions = $this->socialActions($post->id);
+                        $newPost->put('date', Carbon::createFromTimestampMs($post->created->time)->format('M d, H:i'));
+                        $newPost->put('message', $post->specificContent->$shareContent->shareCommentary->text);
+                        $newPost->put('comments', $postSocialActions->commentsSummary->totalFirstLevelComments);
+                        $newPost->put('likes', $postSocialActions->likesSummary->totalLikes);
+                        $newPost->put('shares', 0);
+                        $preparePosts->push($newPost);
+                    }
                 }
 
                 return $preparePosts;

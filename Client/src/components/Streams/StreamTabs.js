@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import _ from 'lodash';
 import Modal from 'react-modal';
-import UpgradeAlert from '../UpgradeAlert';
+import UpgradeModal from '../UpgradeModal';
 import PropTypes from 'prop-types';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {Dialog, FlatButton, Menu, MenuItem, TextField} from 'material-ui';
@@ -276,7 +276,7 @@ class StreamTabs extends Component {
           
         return (
             <div>
-            <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
+            <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
             {this.state.loading ? <Loader /> :
                     
                     this.state.tabs.length > 0 ?            

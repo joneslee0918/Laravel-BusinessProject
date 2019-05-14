@@ -11,7 +11,6 @@ import {getAccounts, saveAccounts} from "../../requests/facebook/channels";
 import {logout} from "../../actions/auth";
 import Loader from "../../components/Loader";
 import ChannelItems from "./ChannelItems";
-import UpgradeAlert from "../UpgradeAlert";
 
 class Facebook extends React.Component {
     constructor(props) {
@@ -27,8 +26,7 @@ class Facebook extends React.Component {
         action: this.defaultAction,
         accountsModal: false,
         accounts: [],
-        error: "",
-        forbidden: false
+        error: ""
     }
 
     setAction = (action = this.defaultAction) => {
@@ -47,12 +45,6 @@ class Facebook extends React.Component {
         }));
     };
 
-    setForbidden = (forbidden = false) => {
-        this.setState(() => ({
-            forbidden
-        }));
-    };
-
     onSuccess = (response) => {
         if(response){
             this.props.startAddFacebookChannel(response.accessToken)
@@ -67,11 +59,7 @@ class Facebook extends React.Component {
                     }
                 });
             }).catch(error => {
-                if(error.response.status === 403){
-                    this.setForbidden(true);
-                }else{
-                    this.setError("Something went wrong!");
-                }
+                this.setError("Something went wrong!");
             });
         }
     };
@@ -85,11 +73,10 @@ class Facebook extends React.Component {
             this.props.startSetChannels();
             this.toggleAccountsModal();
         }).catch( error => {
-            if(error.response.status === 403){
-                this.setForbidden(true);
-            }else{
-                this.setError("Something went wrong!");
-            }
+            console.log(error);
+            this.setState(() => ({
+                error: "Something went wrong!"
+            }));
         });
     };
 
@@ -116,7 +103,6 @@ class Facebook extends React.Component {
     render(){
         return (
             <div className="accounts-container">
-                <UpgradeAlert isOpen={this.state.forbidden} text={"Your current plan does not support more accounts."} setForbidden={this.setForbidden}/>
                 <SelectAccountsModal 
                     isOpen={this.state.accountsModal} 
                     accounts={this.state.accounts}

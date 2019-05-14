@@ -1,31 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import {startSetProfile} from "../../../actions/profile";
-import { changePlan, activateAddon, cancelAddon } from '../../../requests/billing';
 
 class Billing extends React.Component{
 
-    onPlanClick = (plan) => {
-        changePlan(plan).then(response => {
-            this.props.startSetProfile();
-        });
-    };
-
-    onAddonClick = (addon) => {
-        activateAddon(addon).then(response => {
-            this.props.startSetProfile();
-        });
-    };
-
-    onAddonCancel = (addon) => {
-        cancelAddon(addon).then(response => {
-            this.props.startSetProfile();
-        });
-    };
-
     render(){
-        const {profile} = this.props;
-
         return(
             <div className="flex-container flex-space-between pricing-table">
                 <table className="table table-striped flex-center">
@@ -123,64 +100,13 @@ class Billing extends React.Component{
                         </tr>
                         <tr>
                             <td className="empty-td"></td>
-                            <td>
-                                {profile.role !== null && profile.role.name === 'free' ?
-                                    <button disabled className="plan-btn free-plan disabled-btn">Current Plan</button>
-                                    :
-                                    <button onClick={() => this.onPlanClick('free')} className="plan-btn free-plan">Change</button>
-                                }    
-                                
-                            </td>
-                            <td>
-                                {profile.role !== null && profile.role.name === 'basic' ?
-                                    <button disabled className="plan-btn basic-plan disabled-btn">Current Plan</button>
-                                    :
-                                    <button onClick={() => this.onPlanClick('basic')} className="plan-btn basic-plan">Free 30 Days Trial</button>
-                                }    
-                                
-                            </td>
-                            <td>
-                                {profile.role !== null && profile.role.name === 'plus' ?
-                                    <button disabled className="plan-btn plus-plan disabled-btn">Current Plan</button>
-                                    :
-                                    <button onClick={() => this.onPlanClick('plus')} className="plan-btn plus-plan">Free 30 Days Trial</button>
-                                }    
-                                
-                            </td>
-                            <td>
-                                {profile.role !== null && profile.role.name === 'premium' ?
-                                    <button disabled className="plan-btn premium-plan disabled-btn">Current Plan</button>
-                                    :
-                                    <button onClick={() => this.onPlanClick('premium')} className="plan-btn premium-plan">Free 30 Days Trial</button>
-                                }    
-                                
-                            </td>
-
-                            <td>
-                                {profile.role !== null && profile.role.name === 'pro' ?
-                                    <button disabled className="plan-btn pro-plan disabled-btn">Current Plan</button>
-                                    :
-                                    <button onClick={() => this.onPlanClick('pro')} className="plan-btn pro-plan">Buy Now</button>
-                                }    
-                            </td>
-
-                            <td>
-                                {profile.role !== null && profile.role.name === 'agency' ?
-                                    <button disabled className="plan-btn agency-plan disabled-btn">Current Plan</button>
-                                    :
-                                    <button onClick={() => this.onPlanClick('agency')} className="plan-btn agency-plan">Buy Now</button>
-                                }    
-                                
-                            </td>
-
-                            <td>
-                                {profile.roleAddons.length && profile.roleAddons[0].name === 'twitter_growth' ?
-                                    <button onClick={() => this.onAddonCancel('twitter_growth')} className="plan-btn twitter-growth-addon">Cancel Addon</button>
-                                    :
-                                    <button onClick={() => this.onAddonClick('twitter_growth')} className="plan-btn twitter-growth-addon">Free 30 Days Trial</button>
-                                }                                    
-                            </td>
-
+                            <td><button className="plan-btn">Sign up</button></td>
+                            <td><button className="plan-btn">Free 30 Days Trial</button></td>
+                            <td><button className="plan-btn">Free 30 Days Trial</button></td>
+                            <td><button className="plan-btn">Free 30 Days Trial</button></td>
+                            <td><button className="plan-btn">Buy Now</button></td>
+                            <td><button className="plan-btn">Buy Now</button></td>
+                            <td><button className="plan-btn">Free 30 Days Trial</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -189,14 +115,4 @@ class Billing extends React.Component{
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        profile: state.profile
-    };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-    startSetProfile: () => dispatch(startSetProfile())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Billing);
+export default Billing;

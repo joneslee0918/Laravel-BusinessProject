@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import UserList from "../../UserList";
-import UpgradeAlert from '../../UpgradeAlert';
+import UpgradeModal from '../../UpgradeModal';
 import { getAccountTargets, follow } from '../../../requests/twitter/channels';
 import {startSetChannels} from "../../../actions/channels";
 import channelSelector from '../../../selectors/channels';
@@ -142,7 +142,7 @@ class AccountTargets extends React.Component{
         return (
             <div>
                 <h2>ACCOUNT TARGETS</h2>
-                <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
+                <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
                 <UserList 
                     userItems={ this.state.userItems }
                     actionType="follow"

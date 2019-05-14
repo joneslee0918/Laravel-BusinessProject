@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Modal from "react-modal";
-import UpgradeAlert from '../../UpgradeAlert';
+import UpgradeModal from '../../UpgradeModal';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import Article from './Article';
 import {updateProfile} from "../../../requests/profile";
@@ -154,7 +154,7 @@ class Articles extends React.Component {
     render(){   
         return(
             <div>
-            <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
+            <UpgradeModal isOpen={this.state.forbidden && !this.state.loading} />
                 <TailoredPostModal 
                     isOpen={this.state.isTailoredPostOpen}
                     postId={this.state.openedPostId}

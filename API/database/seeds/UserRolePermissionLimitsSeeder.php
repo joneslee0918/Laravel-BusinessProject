@@ -192,7 +192,6 @@ class UserRolePermissionLimitsSeeder extends Seeder
         $twitterGrowth->permissions()->attach($twitterGrowthPerm);
 
         $free->roleLimit()->create([
-            "account_limit" => 1,
             "accounts_per_platform" => 1,
             "posts_per_account" => 10,
             "twitter_daily_follows" => 100,
@@ -200,7 +199,6 @@ class UserRolePermissionLimitsSeeder extends Seeder
         ]);
 
         $basic->roleLimit()->create([
-            "account_limit" => 6,
             "accounts_per_platform" => 6,
             "posts_per_account" => 99999,
             "twitter_daily_follows" => 500,
@@ -208,7 +206,6 @@ class UserRolePermissionLimitsSeeder extends Seeder
         ]);
 
         $plus->roleLimit()->create([
-            "account_limit" => 10,
             "accounts_per_platform" => 10,
             "posts_per_account" => 99999,
             "twitter_daily_follows" => 500,
@@ -216,7 +213,6 @@ class UserRolePermissionLimitsSeeder extends Seeder
         ]);
 
         $premium->roleLimit()->create([
-            "account_limit" => 25,
             "accounts_per_platform" => 25,
             "posts_per_account" => 99999,
             "twitter_daily_follows" => 500,
@@ -224,7 +220,6 @@ class UserRolePermissionLimitsSeeder extends Seeder
         ]);
 
         $pro->roleLimit()->create([
-            "account_limit" => 50,
             "accounts_per_platform" => 50,
             "posts_per_account" => 99999,
             "twitter_daily_follows" => 500,
@@ -232,7 +227,6 @@ class UserRolePermissionLimitsSeeder extends Seeder
         ]);
 
         $agency->roleLimit()->create([
-            "account_limit" => 100,
             "accounts_per_platform" => 100,
             "posts_per_account" => 99999,
             "twitter_daily_follows" => 500,
