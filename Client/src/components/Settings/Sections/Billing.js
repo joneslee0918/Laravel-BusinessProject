@@ -2,13 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {startSetProfile} from "../../../actions/profile";
 import { changePlan, activateAddon, cancelAddon } from '../../../requests/billing';
+import UpgradeAlert from '../../UpgradeAlert';
 
 class Billing extends React.Component{
+
+    state = {
+        forbidden: false
+    }
 
     onPlanClick = (plan) => {
         changePlan(plan).then(response => {
             this.props.startSetProfile();
-        });
+        }).then()
+         .catch(error => {
+            if(error.response.status === 403){
+                this.setForbidden(true);
+            }else{
+                this.setError("Something went wrong!");
+            }
+         });
     };
 
     onAddonClick = (addon) => {
@@ -23,11 +35,25 @@ class Billing extends React.Component{
         });
     };
 
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
+        }));
+    };
+
     render(){
         const {profile} = this.props;
-
         return(
             <div className="flex-container flex-space-between pricing-table">
+                <UpgradeAlert 
+                    isOpen={this.state.forbidden} 
+                    setForbidden={this.setForbidden} 
+                    title="Change required"
+                    confirmBtn="Accounts"
+                    text="Please remove some accounts to correspond to the limits of the new plan"
+                    type="info"
+                    redirectUri = "/accounts"
+                />
                 <table className="table table-striped flex-center">
                     <tbody>
                         <tr>
