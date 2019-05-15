@@ -1,6 +1,7 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
 import { pageInsightsByType } from "../../../../requests/linkedin/channels";
+import AnalyticsTooltip from '../../AnalyticsTooltip';
 
 class LinkedinOverviewCard extends React.Component{
     state = {
@@ -48,12 +49,12 @@ class LinkedinOverviewCard extends React.Component{
     };
 
     render(){
-        const {name, description} = this.props;
+        const {name, description, tooltipDesc} = this.props;
         return (
             <div className="overview-card analytics-card">
                 <div className="card-header">
                     <img className="card-img" src="/images/linkedin-logo.png"></img> {name}
-                    <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
+                    <AnalyticsTooltip tooltipDesc={tooltipDesc}/>
                 </div>
                 <div className="card-analytics-body">
                     <div className="card-number">

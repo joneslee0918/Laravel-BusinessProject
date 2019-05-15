@@ -98,6 +98,7 @@ class LinkedinOverview extends React.Component {
                             name='Posts' 
                             type="postsCount" 
                             description='posts' 
+                            tooltipDesc='The total number of posts that have been published on your Pages'
                             {...propData}/>               
                     </div>
                     <div className="col-md-3 col-xs-12">
@@ -105,6 +106,7 @@ class LinkedinOverview extends React.Component {
                             name='Followers' 
                             type="followersCount" 
                             description='followers' 
+                            tooltipDesc='The number of followers for your Pages'
                             {...propData}/>
                     </div>
                     <div className="col-md-3 col-xs-12">
@@ -112,6 +114,7 @@ class LinkedinOverview extends React.Component {
                             name='Engagement' 
                             type="engagementsCount" 
                             description='engagement' 
+                            tooltipDesc='The sum of likes, comments and shares received by content associated with your Pages'
                             {...propData}/>
                     </div>
                     <div className="col-md-3 col-xs-12">
@@ -119,6 +122,7 @@ class LinkedinOverview extends React.Component {
                             name='Traffic' 
                             type="clickCount" 
                             description='click' 
+                            tooltipDesc='The total number of clicks received by your Page posts'
                             {...propData}/>
                     </div>
                 </div>
@@ -128,12 +132,14 @@ class LinkedinOverview extends React.Component {
                             name="Posts by Page"  
                             type='postsCount'
                             description="Uniclix"
+                            tooltipDesc='Number of posts on selected timeframe'
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <PostsChart 
                             name="Posts" 
                             type='postsChartData'
+                            tooltipDesc='The total number of posts that have been published on your Pages'
                             {...propData}/>
                     </div>
                 </div>
@@ -143,12 +149,14 @@ class LinkedinOverview extends React.Component {
                             name="Followers by Page"  
                             type='followersCount'
                             description="Uniclix"
+                            tooltipDesc='Number of followers on selected timeframe'
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <PostsChart 
                             name="Followers" 
                             type='followersChartData'
+                            tooltipDesc='The number of followers for your Page'
                             {...propData}/>
                     </div>
                 </div>
@@ -157,12 +165,14 @@ class LinkedinOverview extends React.Component {
                         <EngagementCard 
                             name="Engagement by Type" 
                             type='engagementTotalData'
+                            tooltipDesc='The number of interactions received for content associated with your Page, broken down by likes, comments and shares'
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <EngagementChart 
                             name="Engagement by Type" 
                             type='engagementsChartData'
+                            tooltipDesc='The number of interactions received for content associated with your Page, broken down by likes, comments and shares'
                             {...propData}/>
                     </div>
                 </div>
@@ -171,6 +181,7 @@ class LinkedinOverview extends React.Component {
                         <PostsTable 
                             name="Posts Table" 
                             type='postsData'
+                            tooltipDesc='The list of posts published by your Page, with their engagement stats'
                             {...propData}/>
                     </div>
                 </div>

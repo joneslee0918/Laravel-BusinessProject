@@ -4,8 +4,8 @@ import { withRouter } from 'react-router';
 
 class UpgradeAlert extends React.Component {
 
-    redirectTo = (uri) => {
-        return this.props.history.push(uri);
+    redirectToBilling = () => {
+        return this.props.history.push(`/settings/billing`);
     };
 
     redirectBack = () => {
@@ -13,26 +13,19 @@ class UpgradeAlert extends React.Component {
     };
 
     render(){
-        const {isOpen, 
-            title="Upgrade required", 
-            text = "You need to upgrade to use this feature.", 
-            goBack, 
-            setForbidden, 
-            redirectUri = "/settings/billing",
-            confirmBtn = "Upgrade",
-            type="info"} = this.props;
+        const {isOpen, text = "You need to upgrade to use this feature.", goBack, setForbidden} = this.props;
         return (
             <SweetAlert
                 show={isOpen}
-                title={title}
+                title={`Upgrade required`}
                 text={text}
                 showCancelButton
-                type={type}
-                confirmButtonText={confirmBtn}
+                type="info"
+                confirmButtonText="Upgrade"
                 cancelButtonText="No thanks"
                 onConfirm={() => {
                     setForbidden(false);
-                    return this.redirectTo(redirectUri);
+                    return this.redirectToBilling();
                 }}
                 onCancel={() => {
                     setForbidden(false);

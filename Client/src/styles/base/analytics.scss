@@ -165,7 +165,7 @@
     font-size: 13px;
 }
 .analytics-head-left {
-    flex: 2;
+    flex: 1;
     font-size: 18px;
     padding: 11px;
     font-weight: bold;
@@ -192,4 +192,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     display: contents!important;
+}
+.MuiTooltip-tooltip-3 {
+    font-size: 1.5rem!important;
 }

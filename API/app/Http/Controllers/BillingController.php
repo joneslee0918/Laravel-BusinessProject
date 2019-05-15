@@ -29,11 +29,9 @@ class BillingController extends Controller
     {
         $plan = $request->input('plan');
         $role = Role::where("name", $plan)->first();
-        if(!$role) return response()->json(["error" => "Plan not found"], 404);
+        if(!$role) return response()->json(["error" => "Plan not found"], 404);;
 
         $user = $this->user;
-        if($user->channels()->count() > $role->roleLimit->account_limit)return response()->json(["error" => "Delete some accounts first."], 403);
-
         $user->role_id = $role->id;
         $user->save();
 
