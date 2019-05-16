@@ -1,6 +1,7 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
 import { pageInsightsByType } from "../../../../requests/facebook/channels";
+import AnalyticsTooltip from '../../AnalyticsTooltip'
 
 class PageOverviewCard extends React.Component{
     state = {
@@ -49,7 +50,7 @@ class PageOverviewCard extends React.Component{
             <div className="overview-card analytics-card">
                 <div className="card-header">
                     <img className="card-img" src="/images/facebook.png"></img> {name}
-                    <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
+                    <AnalyticsTooltip tooltipDesc={this.props.tooltipDesc} />
                 </div>
                 <div className="card-analytics-body anl-post-page">
                     <span className="anl-desc card-description">{description}</span><span className="anl-count">

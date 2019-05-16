@@ -1,4 +1,5 @@
 import React from 'react';
+import Popup from "reactjs-popup";
 import SweetAlert from 'sweetalert2-react';
 import Loader from '../components/Loader';
 import AccountTargetSearchList from './Manage/AccountTargetSearchList';
@@ -15,7 +16,8 @@ class UserList extends React.Component{
             error: {
                 statusText: "",
                 message: ""
-            }
+            },
+            userItems: props.userItem
         };
     }
 
@@ -132,7 +134,8 @@ class UserList extends React.Component{
                                         </div>
     
                                         {userItems.map((item, index) => (
-                                            <UserItem key={index} 
+                                            <UserItem key={item.id} 
+                                            index={index}
                                             userItem={ item } 
                                             perform={this.perform}
                                             reply={this.reply}
@@ -262,7 +265,8 @@ class UserItem extends React.Component{
     };
 
     render(){
-        const { userItem } = this.props;
+        const { index, userItem } = this.props;
+
         return (
             
             <div>    
@@ -312,14 +316,33 @@ class UserItem extends React.Component{
 const UserActionButtons = ({actionButton, perform, replyState, setReplyState, userItem }) => (
         <div className="item-actions pull-right">
             <ul className="v-center-align">
-                <li className="text-links">
-                    <a onClick={() => setReplyState({disabled: !replyState.disabled, content: `@${userItem.screen_name} `})} className="link-cursor">Reply</a>
-                </li>
+
+                {!replyState.disabled &&
+                    <li className="text-links">
+                        <a onClick={() => setReplyState({disabled: !replyState.disabled, content: `@${userItem.screen_name} `})} className="link-cursor">Reply</a>
+                    </li>
+                }
                 <li className="btn-links">
-                    {!!actionButton && 
-                    <div onClick={perform} className={`${actionButton.action}-btn action-btn`}>
-                        <i className={`fa ${actionButton.actionSymbol} ${actionButton.disabled ? 'grey-txt' : ''}`}></i>
-                    </div>}
+
+                <Popup
+                    trigger={<i className="fa fa-ellipsis-v"></i>}
+                    on="click"
+                    position="left"
+                    arrow={true}
+                    closeOnDocumentClick={true}
+                >
+                {
+                close => ( 
+                    <div className="t-action-menu">
+                        {!!actionButton && <button  onClick={perform} className={`${actionButton.disabled ? 'disabled-btn' : ''}`}>
+                            <i className={`fa ${actionButton.actionSymbol}`}></i>{actionButton.action == "add" ? "Follow" : "Unfollow"}
+                        </button>}
+                        <button>DM</button>
+                        <button onClick={() => setReplyState({disabled: !replyState.disabled, content: `@${userItem.screen_name} `})}>Reply</button>
+                    </div>
+                )}
+                </Popup>
+                    
                 </li>
             </ul>
         </div>

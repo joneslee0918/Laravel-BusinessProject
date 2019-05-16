@@ -2,6 +2,7 @@ import React from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { pageInsightsByType } from "../../../../requests/facebook/channels";
+import AnalyticsTooltip from '../../AnalyticsTooltip'
 
 class EngagementChart extends React.Component{
     state = {
@@ -77,7 +78,7 @@ class EngagementChart extends React.Component{
             <div className="overview-card analytics-card">
                 <div className="card-header">
                     <img className="card-img" src="/images/facebook.png"></img> {name}
-                    <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
+                    <AnalyticsTooltip tooltipDesc={this.props.tooltipDesc} />
                 </div>
                 <div>
                     <HighchartsReact
