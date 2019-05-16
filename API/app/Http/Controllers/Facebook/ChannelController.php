@@ -51,14 +51,14 @@ class ChannelController extends Controller
                     $facebookChannel->select();
                     $facebookChannel->save(); 
                 }else{
-                    return response()->json(['error' => 'Channel already exists with some other account'], 409);
+                    return response()->json(['error' => 'Channel already exists with some other account'], 400);
                 }
             }
 
             return $user->formattedChannels();
         }
 
-        return response()->json(['error' => 'Channel could not be authenticated with facebook'], 401);
+        return response()->json(['error' => 'Channel could not be authenticated with facebook'], 403);
     }
 
 

@@ -61,14 +61,14 @@ class ChannelController extends Controller
                     $pinterestChannel->access_token = $token;
                     $pinterestChannel->save();
                 }else{
-                    return response()->json(['error' => 'Channel already exists with some other account'], 409);
+                    return response()->json(['error' => 'Channel already exists with some other account'], 400);
                 }
             }
 
             return $user->formattedChannels();
         }
 
-        return response()->json(['error' => 'Channel could not be authenticated with pinterest'], 401);
+        return response()->json(['error' => 'Channel could not be authenticated with pinterest'], 403);
     }
 
     public function getBoards(Request $request)

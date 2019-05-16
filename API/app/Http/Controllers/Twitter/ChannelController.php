@@ -54,7 +54,7 @@ class ChannelController extends Controller
                     $twitterChannel->access_token = json_encode($token);
                     $twitterChannel->save();
                 }else{
-                    return response()->json(['error' => 'Channel already exists with some other account'], 409);
+                    return response()->json(['error' => 'Channel already exists with some other account'], 400);
                 }
 
             }
@@ -62,7 +62,7 @@ class ChannelController extends Controller
             return $user->formattedChannels();
         }
 
-        return response()->json(['error' => 'Channel could not be authenticated with twitter'], 401);
+        return response()->json(['error' => 'Channel could not be authenticated with twitter'], 403);
     }
 
     public function select($id)

@@ -70,13 +70,7 @@ class Linkedin extends React.Component {
             }).catch(error => {
                 if(error.response.status === 403){
                     this.setForbidden(true);
-                    return;
-                }
-                
-                if(error.response.status === 409){
-                    this.setError("This linkedin account is already registered from another uniclix account.");
-                }
-                else{
+                }else{
                     this.setError("Something went wrong!");
                 }
             });

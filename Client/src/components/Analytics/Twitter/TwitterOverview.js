@@ -62,7 +62,7 @@ class TwitterOverview extends React.Component {
                     <div className="col-xs-12">
                         <div className="analytics-head">
                             <div className="analytics-head-left">
-                                Facebook Overview
+                                Twitter Overview
                             </div>
                             <div className="streams-default-container">
                                 <div className="account-selection">

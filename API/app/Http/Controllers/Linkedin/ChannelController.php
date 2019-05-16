@@ -49,14 +49,14 @@ class ChannelController extends Controller
                     $linkedinChannel->select();
                     $linkedinChannel->save();
                 }else{
-                    return response()->json(['error' => 'Channel already exists with some other account'], 409);
+                    return response()->json(['error' => 'Channel already exists with some other account'], 400);
                 }
             }
 
             return $user->formattedChannels();
         }
 
-        return response()->json(['error' => 'Channel could not be authenticated with linkedin'], 401);
+        return response()->json(['error' => 'Channel could not be authenticated with linkedin'], 403);
     }
 
     public function getPages(){

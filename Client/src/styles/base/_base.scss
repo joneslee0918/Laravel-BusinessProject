@@ -1723,42 +1723,6 @@ input {
     vertical-align: middle;
 }
 
-.btn-links > .fa-ellipsis-v{
-    font-size: 1.5em;
-    color: #999;
-    cursor: pointer;
-    padding: 10px;
-}
-
-.btn-links > .fa-ellipsis-v:hover{
-    color: #777;
-}
-
-.t-action-menu {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.t-action-menu > button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 5px;
-    border: none;
-    padding: 5px 15px;
-    outline: none;
-    background: #47b9ba;
-    color: white;
-    border-radius: 5px;
-    font-family: open-sansSemiBold, Arial;
-}
-
-.t-action-menu > button > i {
-    margin-right:5px;
-}
-
 .default-button {
     color: white;
     border: none;
