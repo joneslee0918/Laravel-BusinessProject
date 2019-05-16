@@ -1,7 +1,6 @@
 import React from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import AnalyticsTooltip from '../../AnalyticsTooltip'
 import { pageInsightsByType } from "../../../../requests/linkedin/channels";
 
 class EngagementChart extends React.Component{
@@ -77,7 +76,7 @@ class EngagementChart extends React.Component{
             <div className="overview-card analytics-card">
                 <div className="card-header">
                     <img className="card-img" src="/images/linkedin-logo.png"></img> {name}
-                    <AnalyticsTooltip tooltipDesc={this.props.tooltipDesc} />
+                    <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
                 </div>
                 <div>
                     <HighchartsReact

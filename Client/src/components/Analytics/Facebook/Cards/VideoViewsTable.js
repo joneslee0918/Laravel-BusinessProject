@@ -1,5 +1,4 @@
 import React from 'react';
-import AnalyticsTooltip from '../../AnalyticsTooltip'
 
 const VideoViewsTable = ({name}) => 
 
@@ -7,7 +6,7 @@ const VideoViewsTable = ({name}) =>
         <div className="overview-card analytics-card">
             <div className="card-header">
                 <img className="card-img" src="/images/facebook.png"></img> {name}
-                <AnalyticsTooltip tooltipDesc={this.props.tooltipDesc} />
+                <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
             </div>
             <div className="card-table">
                 <table className="table anl-posts-table">

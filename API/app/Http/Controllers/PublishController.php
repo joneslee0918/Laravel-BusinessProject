@@ -51,6 +51,9 @@ class PublishController extends Controller
 
             $bestTime = false;
 
+            $postLimit = $this->user->getLimit("posts_per_account");
+
+            $failedChannels = [];
             foreach($channels as $channel){
                 $boards = false;
 
@@ -63,6 +66,19 @@ class PublishController extends Controller
                 }
 
                 $channel = Channel::find($channel['id']);
+
+                if($postLimit < 10000){
+                    $scheduledPosts = $channel->scheduledPosts()->latest()->take($postLimit)->get()->reverse();
+                    if($firstOfThisMonth = $scheduledPosts->first()){
+                        if(Carbon::parse($firstOfThisMonth->created_at)->addDays(30) >= Carbon::now() && $scheduledPosts->count() >= $postLimit){
+                            return response()->json(['error' => 'You have exceeded the post limit for this month'], 403);
+                            // $channel->details = $channel->details;
+                            // $failedChannels[] = $channel;
+                            // continue;
+                        }
+                    }
+                }
+
                 $currentChannel = $channel;
                 $networkContent = strtolower($channel->type)."Content";
                 $networkPictures = strtolower($channel->type)."Pictures";
@@ -149,7 +165,7 @@ class PublishController extends Controller
             return getErrorResponse($e, $currentChannel);
         }
 
-        return response()->json(['message' => 'Your post was successfuly stored!']);
+        return response()->json(['message' => 'Your post was successfuly stored!', 'failedChannels' => $failedChannels]);
     }
 
 

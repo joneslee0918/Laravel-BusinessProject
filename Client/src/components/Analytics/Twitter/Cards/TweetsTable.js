@@ -2,7 +2,6 @@ import React from 'react';
 import Loader from 'react-loader-spinner';
 import { pageInsightsByType } from "../../../../requests/twitter/channels";
 import ReadMore from "../../../ReadMore";
-import AnalyticsTooltip from '../../AnalyticsTooltip'
 
 class TweetsTable extends React.Component{
     state = {
@@ -51,7 +50,7 @@ class TweetsTable extends React.Component{
         <div className="overview-card">
             <div className="card-header">
                 <img className="card-img" src="/images/twitter.png"></img> {name}
-                    <AnalyticsTooltip tooltipDesc={this.props.tooltipDesc} />
+                <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
             </div>
             <div className="card-table">
                 <div className="table-loader-style">{this.state.loading && <Loader type="Bars" color="#46a5d1" height={70} width={70} />}</div>

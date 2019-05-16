@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import { Redirect } from 'react-router-dom';
 import moment from "moment";
 import DraftEditor from './DraftEditor';
+import UpgradeAlert from './UpgradeAlert';
 import channelSelector, {publishChannels as publishableChannels} from '../selectors/channels';
 import boardsSelector from '../selectors/boards';
 import {publish} from '../requests/channels';
@@ -44,7 +45,8 @@ class Compose extends React.Component{
         twitterRestricted: false,
         pinterestRestricted: false,
         scheduledLabel: "",
-        error: false
+        error: false,
+        forbidden: false
     };
 
     state = this.defaultState;
@@ -225,6 +227,13 @@ class Compose extends React.Component{
         this.setState(() => ({optionsMenu: !this.state.optionsMenu}));
     };
 
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden,
+            loading: false
+        }));
+    };
+
     publish = (scheduled, publishType) => {
         const content = this.state.content;
         const type = this.state.type;
@@ -260,6 +269,11 @@ class Compose extends React.Component{
                 }
             });
         }).catch((error) => {
+            if(error.response.status === 403){
+                this.setForbidden(true);
+                return;
+            }
+
             let errorMessage = "Something went wrong";
             if(error.response.status === 401){
                 errorMessage = error.response.data.message;
@@ -278,6 +292,12 @@ class Compose extends React.Component{
 
         return (
             <Modal isOpen={this.state.openModal} closeTimeoutMS={300} ariaHideApp={false} className="flex-center modal-no-radius no-outline">
+                <UpgradeAlert 
+                isOpen={this.state.forbidden && !this.state.loading} 
+                text={`You exceeded the post limit for this month.`} 
+                setForbidden={this.setForbidden}
+                toggle={this.toggleModal}/>
+                
                 <div>
                 {(this.state.stored && this.state.refresh) && <Redirect to={location.pathname} />}
                 {this.state.loading && <LoaderWithOverlay/>}

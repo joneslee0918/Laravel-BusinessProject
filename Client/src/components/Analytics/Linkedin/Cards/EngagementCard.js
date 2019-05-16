@@ -1,6 +1,5 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
-import AnalyticsTooltip from '../../AnalyticsTooltip';
 import { pageInsightsByType } from "../../../../requests/linkedin/channels";
 
 class EngagementCard extends React.Component{
@@ -44,17 +43,17 @@ class EngagementCard extends React.Component{
     };
 
     render(){
-        const {name, tooltipDesc} = this.props;
+        const {name} = this.props;
         return (
             <div className="overview-card analytics-card">
             <div className="card-header">
                 <img className="card-img" src="/images/linkedin-logo.png"></img> {name}
-                <AnalyticsTooltip tooltipDesc={tooltipDesc}/>
+                <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
             </div>
             <div className="eng-card-section">
                 <span className="anl-desc card-description">Shares</span>
                 <span className="anl-count">
-                    {this.state.loading ? <Loader type="Bars" color="#ffffff" height={15} width={15} /> : this.state.data !=null && this.state.data.shares}              
+                    {this.state.loading ? <Loader type="Bars" color="#ffffff" height={15} width={15} /> : this.state.data !=null && this.state.data.shares}                
                 </span>         
             </div>
             <div className="eng-card-section eng-card-section-middle">

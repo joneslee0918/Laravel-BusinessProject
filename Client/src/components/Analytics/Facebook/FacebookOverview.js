@@ -98,7 +98,6 @@ class FacebookOverview extends React.Component {
                             name='Posts' 
                             type="postsCount" 
                             description='posts' 
-                            tooltipDesc='The total number of posts that have been published on your Page'
                             {...propData}/>
                     </div>
                     <div className="col-md-3 col-xs-12">
@@ -106,7 +105,6 @@ class FacebookOverview extends React.Component {
                             name='Fans' 
                             type="fansCount"
                             description='fans'
-                            tooltipDesc='The total number of fans(people who liked the Page) for your Page'
                             {...propData} />
                     </div>
                     <div className="col-md-3 col-xs-12">
@@ -114,14 +112,10 @@ class FacebookOverview extends React.Component {
                             name='Engagement'
                             type='engagementsCount' 
                             description='engagements'
-                            tooltipDesc='The sum of reactions, comments and shares recieved by content associated with your Pages(for the selected timeframe). Includes comments from the author of the post'
                             {...propData} />
                     </div>
                     <div className="col-md-3 col-xs-12">
-                        <OverviewCard 
-                            name='Traffic' 
-                            tooltipDesc='Clicks'
-                            description='clicks' />
+                        <OverviewCard name='Traffic' description='clicks' />
                     </div>
                 </div>
                 <div className="row mb20">
@@ -130,14 +124,12 @@ class FacebookOverview extends React.Component {
                             name="Posts by Page"  
                             type='postsCount'
                             description="Uniclix"
-                            tooltipDesc='Number of posts and Page'
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <PostsChart 
                             name="Posts" 
                             type='postsChartData'
-                            tooltipDesc='The total number of posts that have been published on your Page'
                             {...propData}/>
                     </div>
                 </div>
@@ -147,14 +139,12 @@ class FacebookOverview extends React.Component {
                             name="Fans by Page" 
                             type='fansCount'
                             description="Uniclix"
-                            tooltipDesc='Number of fans on selected timeframe'
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <PostsChart 
                             name="Fans" 
                             type='fansChartData'
-                            tooltipDesc='The total number of fans(people who liked the Page) for your Page'
                             {...propData}/>
                     </div>
                 </div>
@@ -163,14 +153,12 @@ class FacebookOverview extends React.Component {
                         <EngagementCard 
                             name="Engagement by Type" 
                             type='engagementsByType'
-                            tooltipDesc='The number of interactions received for content associated with your Page, broken down by reactions, comments and shares.'
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <EngagementChart 
                             name="Engagement by Type" 
                             type='engagementByTypeData'
-                            tooltipDesc='The number of interactions received for content associated with your Page, broken down by reactions, comments and shares.'
                             {...propData}/>
                     </div>
                 </div>
@@ -179,7 +167,6 @@ class FacebookOverview extends React.Component {
                         <PostsTable 
                             name="Posts Table" 
                             type='postsData'
-                            tooltipDesc='The list of posts published by your Page, with their engagement stats: reactions, comments and shares'
                             {...propData}/>
                         </div>
                 </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
+import UpgradeAlert from './UpgradeAlert';
 import channelSelector, {publishChannels as publishableChannels} from '../selectors/channels';
 import boardsSelector from '../selectors/boards';
 import {publish} from '../requests/channels';
@@ -34,7 +35,8 @@ class TailoredPostModal extends React.Component{
         error: false,
         type: "store",
         network: "",
-        loading: false
+        loading: false,
+        forbidden: false
     };
 
 
@@ -167,6 +169,13 @@ class TailoredPostModal extends React.Component{
         }));
     };
 
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden,
+            loading: false
+        }));
+    };
+
     publish = (scheduled, publishType) => {
         const content = this.state.content;
         const defaultContent = `${this.props.title} ${this.props.source}`;
@@ -223,12 +232,20 @@ class TailoredPostModal extends React.Component{
 
                 this.props.toggleTailoredPostModal({});
             });
-        }).catch((error) => {
+        }).catch((error) => {            
+            
+            if(error.response.status === 403){
+                this.setForbidden(true);
+                return;
+            }
+
             let errorMessage = "Something went wrong";
+
             if(error.response.status === 401){
                 errorMessage = error.response.data.message;
                 window.location.reload();
             }
+
             this.setState(() => ({
                 loading: false,
                 error: errorMessage
@@ -262,6 +279,11 @@ class TailoredPostModal extends React.Component{
                     className="tailored-post-wrapper modal-animated-dd"
                     closeTimeoutMS={300}
                     >   
+                    <UpgradeAlert 
+                    isOpen={this.state.forbidden && !this.state.loading} 
+                    text={`You exceeded the post limit for this month.`} 
+                    setForbidden={this.setForbidden}/>
+
                     {this.state.loading && <LoaderWithOverlay/>}
 
                         <Modal isOpen={this.state.selectChannelsModal} ariaHideApp={false} className="modal-no-bg">
@@ -368,7 +390,7 @@ class TailoredPostModal extends React.Component{
                                     <PublishButton 
                                         action={this.publish} 
                                         onChange={this.updateScheduledLabel}
-                                        restricted={this.state.restricted}
+                                        restricted={this.state.restricted || selectedChannels.length < 1}
                                     />
 
                                 </div>

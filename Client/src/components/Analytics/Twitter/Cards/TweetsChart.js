@@ -2,7 +2,6 @@ import React from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { pageInsightsByType } from "../../../../requests/twitter/channels"
-import AnalyticsTooltip from '../../AnalyticsTooltip'
 
 class TweetsChart extends React.Component{
     state = {
@@ -95,7 +94,7 @@ class TweetsChart extends React.Component{
             <div className="overview-card analytics-card">
                 <div className="card-header">
                     <img className="card-img" src="/images/twitter.png"></img> {name}
-                    <AnalyticsTooltip tooltipDesc={this.props.tooltipDesc} />
+                    <i className="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
                 </div>
                 <div>
                     <HighchartsReact

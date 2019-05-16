@@ -98,15 +98,13 @@ class TwitterOverview extends React.Component {
                             name='Tweets' 
                             type="tweetsCount" 
                             description='tweets' 
-                            tooltipDesc='The number of tweets published from your Twitter account'
                             {...propData}/>               
                     </div>
                     <div className="col-md-3 col-xs-12">
                         <TwitterOverviewCard 
                             name='Followers' 
                             type="followersCount" 
-                            description='followers'
-                            tooltipDesc='The number of people who are following your Twitter account'
+                            description='followers' 
                             {...propData}/>
                     </div>
                     <div className="col-md-3 col-xs-12">
@@ -114,7 +112,6 @@ class TwitterOverview extends React.Component {
                             name='Engagement' 
                             type="tweetsCount" 
                             description='engagement' 
-                            tooltipDesc='The sum of interactions received for the tweets published in the selected timeframe: retweets, replies and likes'
                             {...propData}/>
                     </div>
                     <div className="col-md-3 col-xs-12">
@@ -122,7 +119,6 @@ class TwitterOverview extends React.Component {
                             name='Traffic' 
                             type="tweetsCount" 
                             description='click' 
-                            tooltipDesc='Clicks'
                             {...propData}/>
                     </div>
                 </div>
@@ -132,14 +128,12 @@ class TwitterOverview extends React.Component {
                             name="Tweets by Account"  
                             type='tweetsCount'
                             description="Uniclix"
-                            tooltipDesc='Number of your posts on your Twitter account'
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <TweetsChart 
                             name="Tweets" 
                             type='tweetsChartData'
-                            tooltipDesc='The number of tweets published from your Twitter accounts'
                             {...propData}/>
                     </div>
                 </div>
@@ -149,14 +143,12 @@ class TwitterOverview extends React.Component {
                             name="Followers by Account"  
                             type='followersCount'
                             description="Uniclix"
-                            tooltipDesc='Number of followers on your Twitter account'
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <TweetsChart 
                             name="Followers" 
                             type='followersChartData'
-                            tooltipDesc='The number of people who are following your Twitter accounts'
                             {...propData}/>
                     </div>
                 </div>
@@ -165,14 +157,12 @@ class TwitterOverview extends React.Component {
                         <TwitterEngagementCard 
                             name="Engagement by Type" 
                             type='engagementsByType'
-                            tooltipDesc='The number of interactions received for the tweets published in the selected timeframe, broken down by retweets, replies and likes'
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">
                         <TwitterEngagementChart 
                             name="Engagement by Type" 
                             type='engagementByTypeData'
-                            tooltipDesc='The sum of interactions received for the tweets published in the selected timeframe: retweets, replies and likes'
                             {...propData}/>
                     </div>
                 </div>
@@ -181,7 +171,6 @@ class TwitterOverview extends React.Component {
                         <TweetsTable 
                             name="Tweets Table" 
                             type='tweetsTableData'
-                            tooltipDesc='The list of tweets published by your Twitter account, with their engagement stats: retweets, replies and likes'
                             {...propData}/>
                     </div>
                 </div>
