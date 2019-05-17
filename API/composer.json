@@ -12,6 +12,7 @@
         "dirkgroenen/Pinterest-API-PHP": "^0.2.11",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/oauth-subscriber": "^0.3.0",
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.0",
         "laravel/socialite": "^4.1",

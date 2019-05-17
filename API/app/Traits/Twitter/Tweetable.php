@@ -5,6 +5,9 @@ namespace App\Traits\Twitter;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Thujohn\Twitter\Facades\Twitter;
+use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
 set_time_limit(0);
 
@@ -166,6 +169,13 @@ trait Tweetable
      */
     public function DMById($userId, $text)
     {   
+        $this->setAsCurrentUser();
+        return Twitter::postDm(["user_id" => $userId, "text" => $text, "screen_name"=>"animemasters89"]);
+    }
+
+
+    public function DM($userId, $text)
+    {   
         $dm = [
             "event" => [
                 "type" => "message_create", 
@@ -176,8 +186,28 @@ trait Tweetable
             ]
         ];
 
-        $this->setAsCurrentUser();
-        return Twitter::post("direct_messages/events/new", $dm);
+        $stack = HandlerStack::create();
+        $tokens = $this->getTokens();
+
+        $middleware = new Oauth1([
+            'consumer_key'    => config('ttwitter.CONSUMER_KEY'),
+            'consumer_secret' => config('ttwitter.CONSUMER_SECRET'),
+            'token'           => $tokens->oauth_token,
+            'token_secret'    => $tokens->oauth_token_secret
+        ]);
+
+        $stack->push($middleware);
+        $baseUrl = config('ttwitter.API_URL');
+        $version = config('ttwitter.API_VERSION');
+        $client = new Client([
+            'base_uri' => "https://$baseUrl/$version/",
+            'handler' => $stack
+        ]);
+        
+        // Set the "auth" request option to "oauth" to sign using oauth
+        $res = $client->post('direct_messages/events/new.json', ['auth' => 'oauth', 'json' => $dm]);
+
+        return json_decode($res->getBody()->getContents());
     }
 
     /**

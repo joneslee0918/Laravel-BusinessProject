@@ -45,13 +45,13 @@ class DMController extends Controller
             }
             
             if($content && $userId){
-                $channel->DMById($userId, $content);
+                $channel->DM($userId, $content);
                 return response()->json(["success" => true, "message" => "DM posted successfully"]);
             }
 
             return response()->json(["success" => false, "message" => "No text or screen_name provided"], 400);
         }catch(\Exception $e){
-            return response()->json(["success" => false, "message" => $e->getMessage()], 400);
+            return response()->json(["success" => false, "message" => "You can not DM this user."], 400);
         }
 
         return response()->json(["success" => false, "message" => "Tweet cannot be empty"], 304);
