@@ -132,8 +132,8 @@ class Dashboard extends React.Component {
                         </div>
                     </div>  */}
 
-                    
-                    <div className="row">
+                     
+                    {/* <div className="row">
                         <div className="col-xs-12">
                             <div className="analytics-head">
                                 <div className="analytics-head-left">
@@ -166,7 +166,7 @@ class Dashboard extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="row overview-cards-container mb20">
                         <div className="col-md-3 col-xs-12">

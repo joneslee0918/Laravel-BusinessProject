@@ -13,6 +13,7 @@ import TwitterEngagementCard from '../Twitter/Cards/TwitterEngagementCard';
 import TwitterEngagementChart from '../Twitter/Cards/TwitterEngagementChart';
 import TweetsTable from '../Twitter/Cards/TweetsTable';
 import UpgradeAlert from '../../UpgradeAlert';
+import { isEmptyObject } from '../../../utils/helpers';
 
 class TwitterOverview extends React.Component {
 
@@ -92,6 +93,7 @@ class TwitterOverview extends React.Component {
                         </div>                        
                     </div>
                 </div>
+                {!isEmptyObject(this.state.selectedAccount) ? <div>
                 <div className="row overview-cards-container mb20">
                     <div className="col-md-3 col-xs-12">
                         <TwitterOverviewCard 
@@ -185,6 +187,7 @@ class TwitterOverview extends React.Component {
                             {...propData}/>
                     </div>
                 </div>
+                </div> : <div><div class="no-data">There is no Twitter account<div><a href="/accounts">Connect to Twitter</a></div></div></div>}
             </div> }
             </div>
         );
