@@ -13,7 +13,6 @@ import EngagementCard from '../Linkedin/Cards/EngagementCard';
 import EngagementChart from '../Linkedin/Cards/EngagementChart';
 import PostsTable from '../Linkedin/Cards/PostsTable';
 import UpgradeAlert from '../../UpgradeAlert';
-import { isEmptyObject } from '../../../utils/helpers';
 
 class LinkedinOverview extends React.Component {
 
@@ -93,7 +92,6 @@ class LinkedinOverview extends React.Component {
                         </div>                        
                     </div>
                 </div>
-                {!isEmptyObject(this.state.selectedAccount) ? <div>
                 <div className="row overview-cards-container mb20">
                     <div className="col-md-3 col-xs-12">
                         <LinkedinOverviewCard 
@@ -187,7 +185,6 @@ class LinkedinOverview extends React.Component {
                             {...propData}/>
                     </div>
                 </div>
-                </div> : <div><div className="no-data">There is no Linkedin page!<div><a href="/accounts">Add a Linkedin page</a></div></div></div>}
             </div> }
             </div>
         );

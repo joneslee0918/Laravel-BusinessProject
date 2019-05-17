@@ -160,6 +160,27 @@ trait Tweetable
     }
 
     /**
+     * @param $userId
+     * @param $text
+     * @return mixed
+     */
+    public function DMById($userId, $text)
+    {   
+        $dm = [
+            "event" => [
+                "type" => "message_create", 
+                "message_create" => [
+                    "target" => ["recipient_id" => $userId], 
+                    "message_data" => ["text" => $text]
+                ]
+            ]
+        ];
+
+        $this->setAsCurrentUser();
+        return Twitter::post("direct_messages/events/new", $dm);
+    }
+
+    /**
      * @param $username
      * @return mixed
      */
@@ -177,6 +198,17 @@ trait Tweetable
     {
         $this->setAsCurrentUser();
         return Twitter::postUnfollow(["screen_name" => $username]);
+    }
+
+    /**
+     * @param $screenName
+     * @param $text
+     * @return mixed
+     */
+    public function DMByName($screenName, $text)
+    {
+        $this->setAsCurrentUser();
+        return Twitter::postDm(["screen_name" => $screenName, "text" => $text]);
     }
 
     /**

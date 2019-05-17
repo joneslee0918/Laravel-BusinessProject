@@ -1,10 +1,14 @@
 import React from 'react';
+import Popup from "reactjs-popup";
 import SweetAlert from 'sweetalert2-react';
+import { ToastContainer } from "react-toastr";
 import Loader from '../components/Loader';
 import AccountTargetSearchList from './Manage/AccountTargetSearchList';
 import KeywordTargetSearchList from './Manage/KeywordTargetSearchList';
 import {abbrNum} from "../utils/numberFormatter";
-import {tweet} from "../requests/twitter/channels";
+import {tweet, dm} from "../requests/twitter/channels";
+
+let toastContainer;
 
 class UserList extends React.Component{
 
@@ -15,7 +19,8 @@ class UserList extends React.Component{
             error: {
                 statusText: "",
                 message: ""
-            }
+            },
+            userItems: props.userItem
         };
     }
 
@@ -39,6 +44,30 @@ class UserList extends React.Component{
     reply = (content) => {
         return tweet(content)
         .then((response) => {
+            toastContainer.success("Reply posted successfully.", "Success", {closeButton: true});
+           return Promise.resolve(response)
+        })
+        .catch((error) => {
+
+            if(typeof error.response.statusText == "undefined"){
+                console.log(error);
+                return;
+            }
+            
+            this.setState(() => ({
+                error: {
+                    statusText:error.response.statusText,
+                    message: error.response.data.message
+                }
+            }));
+            Promise.reject(error);
+        });
+    };
+
+    dm = (content, userId) => {
+        return dm(content, userId)
+        .then((response) => {
+           toastContainer.success("DM posted successfully.", "Success", {closeButton: true});
            return Promise.resolve(response)
         })
         .catch((error) => {
@@ -95,6 +124,11 @@ class UserList extends React.Component{
             
             <div> 
 
+            <ToastContainer
+                ref={ref => toastContainer = ref}
+                className="toast-top-right"
+            />
+
             <SweetAlert
                 show={!!this.state.error.message}
                 title={this.state.error.statusText}
@@ -132,10 +166,12 @@ class UserList extends React.Component{
                                         </div>
     
                                         {userItems.map((item, index) => (
-                                            <UserItem key={index} 
+                                            <UserItem key={item.id} 
+                                            index={index}
                                             userItem={ item } 
                                             perform={this.perform}
                                             reply={this.reply}
+                                            dm={this.dm}
                                             actionType={this.props.actionType}
                                          />
                                         ))}
@@ -197,6 +233,12 @@ class UserItem extends React.Component{
             disabled: true,
             letterCount: 280 - (this.props.userItem.screen_name.length + 2),
             loading: false
+        },
+        DMState: {
+            content: '',
+            disabled: true,
+            letterCount: 10000,
+            loading: false
         }
     }
 
@@ -250,6 +292,19 @@ class UserItem extends React.Component{
         });
     };
 
+    dm = (screenName) => {
+        this.setDMState({loading: true});
+        this.props.dm(this.state.DMState.content, screenName)
+        .then((response) => {
+            this.setDMState({disabled: true, loading:false});
+            return Promise.resolve(response);
+        })
+        .catch((error) => {
+            this.setDMState({loading: false});
+            return Promise.reject(error);
+        });
+    };
+
     setReplyState = (replyState) => {
         this.setState((prevState) => ({
             ...this.state,
@@ -257,12 +312,33 @@ class UserItem extends React.Component{
                 ...this.state.replyState,
                 letterCount: prevState.replyState.disabled ? 280 - (this.props.userItem.screen_name.length + 2) : replyState.letterCount,
                 ...replyState
+            },
+            DMState: {
+                ...this.state.DMState,
+                disabled: true
+            }
+        }));
+    };
+
+    setDMState = (DMState) => {
+        
+        this.setState((prevState) => ({
+            ...this.state,
+            DMState: {
+                ...this.state.DMState,
+                letterCount: DMState.letterCount,
+                ...DMState
+            },
+            replyState: {
+                ...this.state.replyState,
+                disabled: true
             }
         }));
     };
 
     render(){
         const { userItem } = this.props;
+
         return (
             
             <div>    
@@ -282,7 +358,15 @@ class UserItem extends React.Component{
                             </div>
                         </div>
         
-                        <UserActionButtons actionButton={ this.state.buttonState } perform={this.perform} userItem={userItem} replyState={this.state.replyState} setReplyState={this.setReplyState}/>
+                        <UserActionButtons 
+                        actionButton={ this.state.buttonState } 
+                        perform={this.perform} 
+                        userItem={userItem} 
+                        replyState={this.state.replyState} 
+                        setReplyState={this.setReplyState}
+                        DMState={this.state.DMState}
+                        setDMState={this.setDMState}
+                        />
                     </div>
                     
                     { !this.state.replyState.disabled && 
@@ -302,6 +386,24 @@ class UserItem extends React.Component{
                             }
                         </div>
                     }
+
+                    { !this.state.DMState.disabled && 
+                        <div className="reply-box">
+                            <span className="reply__arrow"></span>
+                            <textarea spellCheck="false" value={this.state.DMState.content} onChange={(e) => this.setDMState({letterCount: 10000 - e.target.value.length, content: e.target.value})}></textarea>
+                            <span className="grey-txt">{this.state.DMState.letterCount}</span>
+                            {   
+                                this.state.DMState.letterCount >= 0 && this.state.DMState.letterCount < 10000 ?
+                                <button onClick={() => this.dm(userItem.id_str)} className="btn compose-btn pull-right mg10"> 
+                                { this.state.DMState.loading && <i className="fa fa-circle-o-notch fa-spin"></i> }   
+                                DM</button>
+                                :
+                                <button className="btn compose-btn pull-right mg10 disabled" disabled>
+                                { this.state.DMState.loading && <i className="fa fa-circle-o-notch fa-spin"></i> }
+                                DM</button>
+                            }
+                        </div>
+                    }
                 </div>
             </div>
         
@@ -309,17 +411,43 @@ class UserItem extends React.Component{
     }
 }
 
-const UserActionButtons = ({actionButton, perform, replyState, setReplyState, userItem }) => (
+const UserActionButtons = ({actionButton, perform, replyState, setReplyState, setDMState, DMState, userItem }) => (
         <div className="item-actions pull-right">
             <ul className="v-center-align">
-                <li className="text-links">
-                    <a onClick={() => setReplyState({disabled: !replyState.disabled, content: `@${userItem.screen_name} `})} className="link-cursor">Reply</a>
-                </li>
+
+                {!replyState.disabled &&
+                    <li className="text-links">
+                        <a onClick={() => setReplyState({disabled: !replyState.disabled, content: `@${userItem.screen_name} `})} className="link-cursor">Reply</a>
+                    </li>
+                }
+
+                {!DMState.disabled &&
+                    <li className="text-links">
+                        <a onClick={() => setDMState({disabled: !DMState.disabled, content: `@${userItem.screen_name} `})} className="link-cursor">Direct Message</a>
+                    </li>
+                }
+
                 <li className="btn-links">
-                    {!!actionButton && 
-                    <div onClick={perform} className={`${actionButton.action}-btn action-btn`}>
-                        <i className={`fa ${actionButton.actionSymbol} ${actionButton.disabled ? 'grey-txt' : ''}`}></i>
-                    </div>}
+
+                <Popup
+                    trigger={<i className="fa fa-ellipsis-v"></i>}
+                    on="hover"
+                    position="left"
+                    arrow={true}
+                    closeOnDocumentClick={true}
+                >
+                {
+                close => ( 
+                    <div className="t-action-menu">
+                        {!!actionButton && <button  onClick={perform} className={`${actionButton.disabled ? 'disabled-btn' : ''}`}>
+                            <i className={`fa ${actionButton.actionSymbol}`}></i>{actionButton.action == "add" ? "Follow" : "Unfollow"}
+                        </button>}
+                        <button onClick={() => setDMState({disabled: !DMState.disabled, content: ``})}>DM</button>
+                        <button onClick={() => setReplyState({disabled: !replyState.disabled, content: `@${userItem.screen_name} `})}>Reply</button>
+                    </div>
+                )}
+                </Popup>
+                    
                 </li>
             </ul>
         </div>

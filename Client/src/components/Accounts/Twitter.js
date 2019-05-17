@@ -55,7 +55,13 @@ class Twitter extends React.Component {
             .catch(error => {
                 if(error.response.status === 403){
                     this.setForbidden(true);
-                }else{
+                    return;
+                }
+
+                if(error.response.status === 409){
+                    this.setError("This twitter account is already registered from another uniclix account.");
+                }
+                else{
                     this.setError("Something went wrong!");
                 }
             });

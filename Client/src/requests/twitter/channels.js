@@ -153,6 +153,16 @@ export const tweet = (tweet, images = [], statusId = "", channelId = "") => {
     });
 };
 
+export const dm = (content, userId) => {
+    return axios.post(`${apiUrl}/twitter/dm`, {
+        content,
+        userId
+    })
+    .then((response) => {
+        return response.data;
+    });
+};
+
 export const pageInsightsByType = (id, startDate, endDate, type) => {
     return axios.get(`${apiUrl}/twitter/insights/${type}?id=${id}&startDate=${startDate}&endDate=${endDate}`)
         .then((response) => {

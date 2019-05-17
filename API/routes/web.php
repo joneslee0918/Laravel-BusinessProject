@@ -38,8 +38,8 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $user = \App\Models\User::first();
-    return response()->json($user->roleAddons()->with("permissions")->get());
+    $user = \App\Models\Twitter\Channel::first();
+    return response()->json($user->DMById("974286749739421696", "testing DM"));
 
 });
 

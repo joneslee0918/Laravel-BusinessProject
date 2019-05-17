@@ -86,6 +86,7 @@ Route::prefix("twitter")->group(function(){
         Route::patch('retweet/post', 'Twitter\Actions\RetweetController@retweetPost');
 
         Route::post('tweet', 'Twitter\Actions\StatusController@tweet');
+        Route::post('dm', 'Twitter\Actions\DMController@DM');
 
         Route::post('streams/scheduled', 'Twitter\StreamsFeedController@scheduled');
         Route::post('streams/{type}', 'Twitter\StreamsFeedController@index');

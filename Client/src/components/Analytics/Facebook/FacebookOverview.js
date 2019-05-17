@@ -13,7 +13,6 @@ import { isInclusivelyBeforeDay } from 'react-dates';
 import UpgradeAlert from '../../UpgradeAlert';
 import channelSelector from '../../../selectors/channels';
 import Select from 'react-select';
-import { isEmptyObject } from '../../../utils/helpers';
 
 class FacebookOverview extends React.Component {
 
@@ -33,10 +32,6 @@ class FacebookOverview extends React.Component {
         this.setState(() => ({
             selectedAccount
         }));
-    };
-
-    componentDidMount() {
-        console.log(this.state.selectedAccount);
     };
 
     onCalendarClose() {
@@ -97,7 +92,6 @@ class FacebookOverview extends React.Component {
                         </div>                        
                     </div>
                 </div>
-                {!isEmptyObject(this.state.selectedAccount) ? <div>
                 <div className="row overview-cards-container mb20">
                     <div className="col-md-3 col-xs-12">
                         <OverviewCard 
@@ -189,7 +183,6 @@ class FacebookOverview extends React.Component {
                             {...propData}/>
                         </div>
                 </div>
-                </div> : <div><div className="no-data">There is no Facebook page!<div><a href="/accounts">Add a Facebook page</a></div></div></div>}
             </div> }
             </div>
         );
