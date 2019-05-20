@@ -114,6 +114,8 @@ Route::prefix("facebook")->group(function(){
         Route::post('post/comment', 'Facebook\Actions\CommentController@comment');
 
         Route::post('message/send', 'Facebook\Actions\MessageController@send');
+
+        Route::post('webhook/messages', 'Facebook\WebhookController@messages');
     });
 });
 
