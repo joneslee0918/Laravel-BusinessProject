@@ -53,7 +53,8 @@ class TwitterOverview extends React.Component {
             endDate: this.state.endDate, 
             selectedAccount: this.state.selectedAccount.value,
             calendarChange: this.state.calendarChange,
-            setForbidden: this.setForbidden
+            setForbidden: this.setForbidden,
+            selectedChannel: this.props.selectedChannel
         }
         return (
             <div>
@@ -212,12 +213,11 @@ const mapStateToProps = (state) => {
 
     const twitterChannelsFilter = {selected: undefined, provider: "twitter", publishable: true};
     const channels = channelSelector(state.channels.list, twitterChannelsFilter);
-    let selectedChannel = channelSelector(state.channels.list, {selected: 1, provider: "twitter", publishable: true});
-    selectedChannel = selectedChannel.lenght ? selectedChannel[0] : {};
+    const selectedChannel = channelSelector(state.channels.list, { selected: 1, provider: "twitter" });
 
     return {
         channels,
-        selectedChannel
+        selectedChannel: selectedChannel.length ? selectedChannel[0] : {}
     };
 };
 

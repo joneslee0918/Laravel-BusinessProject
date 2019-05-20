@@ -137,13 +137,13 @@ class Channel extends Model
             return Cache::remember($key, $minutes, function () use ($days) {
                 $data = [];
                 $startDate = Carbon::now();
-        
+
                 $followers = $this->followerIds()->whereNull('unfollowed_you_at')->whereBetween('created_at', [$startDate->subDays($days), Carbon::now()])->whereNotBetween('created_at', [$this->created_at , $this->created_at->addMinutes(5)])->get();
                 $unfollowers = $this->followerIds()->whereNotNull('unfollowed_you_at')->whereBetween('unfollowed_you_at', [$startDate->subDays($days), Carbon::now()])->get();
                 $tweets = $this->tweets()->whereBetween('original_created_at', [$startDate->subDays($days), Carbon::now()])->get();
                 $retweets = $this->retweets()->whereBetween('original_created_at', [$startDate->subDays($days), Carbon::now()])->get();
                 $likes = $this->likes()->whereBetween('original_created_at', [$startDate->subDays($days), Carbon::now()])->get();
-        
+
                 $data = [
                     'followers' => $followers->count(),
                     'unfollowers' => $unfollowers->count(),
@@ -152,7 +152,7 @@ class Channel extends Model
                     'likes' => $likes->count(),
                     'profile' => $this->getData()
                 ];
-        
+
                 return $data;
             });
         } catch (\Exception $e) {
@@ -160,21 +160,21 @@ class Channel extends Model
         }
     }
 
-    public function pageInsightsByType($type, $startDate, $endDate)
+    public function pageInsightsByType($type, $startDate=null, $endDate=null)
     {
-        $sDate = intval($startDate/1000);
-        $eDate = intval($endDate/1000);
+        $sDate = is_integer($startDate) ? intval($startDate/1000) : null;
+        $eDate = is_integer($endDate) ? intval($endDate/1000) : null;
 
         try {
             $key = $this->id . "-$type-$startDate-$endDate";
             $minutes = 15;
-            $startDate = Carbon::now(); 
+            $startDate = Carbon::now();
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate, $type) {
-                $startDate = Carbon::now(); 
+                $startDate = Carbon::now();
 
-                $data = []; 
-                $startDate = Carbon::now();   
+                $data = [];
+                $startDate = Carbon::now();
 
                 $data = $this->{$type}($sDate, $eDate);
 

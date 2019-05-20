@@ -32,7 +32,6 @@ class TweetsChart extends React.Component{
                     data: response,
                     loading: false
                 }));
-                console.log(response);
             }).catch(error => {
                 this.setState(() => ({
                     loading: false

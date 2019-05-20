@@ -1,7 +1,6 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
 import { pageInsightsByType } from "../../../../requests/twitter/channels";
-import ReadMore from "../../../ReadMore";
 import AnalyticsTooltip from '../../AnalyticsTooltip'
 
 class TweetsTable extends React.Component{
@@ -18,7 +17,6 @@ class TweetsTable extends React.Component{
         if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
         {
             this.fetchAnalytics();
-            console.log(this.props.selectedAccount);
         }  
     }
 
@@ -71,11 +69,11 @@ class TweetsTable extends React.Component{
                             <tr key={index}>
                                 <td className="anl-posts-table-th-first">
                                     <div className="post-table-images">
-                                        <img className="pt-page-img" src="/images/uniclix.png" />
+                                        <img className="pt-page-img" src={this.props.selectedChannel.avatar} />
                                         <img className="pt-page-facebook" src="/images/twitter.png"></img>
                                     </div>
                                     <div className="post-table-page-date">
-                                        <p className="pt-page-name">UniClix</p>
+                                        <p className="pt-page-name">{this.props.selectedChannel.name}</p>
                                         <p className="pt-post-date">{tweet.date}</p>
                                     </div>
                                 </td>
