@@ -53,6 +53,7 @@ Route::get('facebook/callback', function(Request $request){
     return $request->all();
 });
 
+Route::get('facebook/chatbot', 'Facebook\ChatBot\ChatbotController@index');
 Route::post('facebook/chatbot', 'Facebook\ChatBot\ChatbotController@index');
 
 Route::get('linkedin/callback', function(Request $request){
