@@ -12,6 +12,7 @@
         "dirkgroenen/Pinterest-API-PHP": "^0.2.11",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/oauth-subscriber": "^0.3.0",
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.0",
         "laravel/socialite": "^4.1",
@@ -19,7 +20,9 @@
         "laravelcollective/html": "^5.4.0",
         "sammyk/laravel-facebook-sdk": "^3.5",
         "socialiteproviders/pinterest": "^3.0",
-        "thujohn/twitter": "^2.2"
+        "thujohn/twitter": "^2.2",
+        "iboldurev/dialogflow": "^0.3.0",
+        "monolog/monolog": "^1.23"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

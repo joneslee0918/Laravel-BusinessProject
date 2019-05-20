@@ -14,6 +14,7 @@ import EngagementChart from '../Linkedin/Cards/EngagementChart';
 import PostsTable from '../Linkedin/Cards/PostsTable';
 import UpgradeAlert from '../../UpgradeAlert';
 import { isEmptyObject } from '../../../utils/helpers';
+import { NavLink } from 'react-router-dom';
 
 class LinkedinOverview extends React.Component {
 
@@ -42,10 +43,12 @@ class LinkedinOverview extends React.Component {
     }
 
     setForbidden = (forbidden = false) => {
-        this.setState(() => ({
-            forbidden
-        }));
-    }
+        if (forbidden != this.state.forbidden) {
+            this.setState(() => ({
+                forbidden
+            }));
+        }
+    };
 
     render(){
         const propData = {
@@ -58,7 +61,7 @@ class LinkedinOverview extends React.Component {
         return (
             <div>
             <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
-            {!this.state.forbidden && <div>
+                {!this.state.forbidden && !isEmptyObject(this.state.selectedAccount) ? <div>
                 <div className="row">            
                     <div className="col-xs-12">
                         <div className="analytics-head">
@@ -93,7 +96,6 @@ class LinkedinOverview extends React.Component {
                         </div>                        
                     </div>
                 </div>
-                {!isEmptyObject(this.state.selectedAccount) ? <div>
                 <div className="row overview-cards-container mb20">
                     <div className="col-md-3 col-xs-12">
                         <LinkedinOverviewCard 
@@ -187,8 +189,7 @@ class LinkedinOverview extends React.Component {
                             {...propData}/>
                     </div>
                 </div>
-                </div> : <div><div className="no-data">There is no Linkedin page!<div><a href="/accounts">Add a Linkedin page</a></div></div></div>}
-            </div> }
+                </div> : <div><div className="no-data">There is no Linkedin page!<div><NavLink to="/accounts">Connect to Linkedin</NavLink></div></div></div>}
             </div>
         );
     }

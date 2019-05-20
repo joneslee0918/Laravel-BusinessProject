@@ -14,6 +14,7 @@ import TwitterEngagementChart from '../Twitter/Cards/TwitterEngagementChart';
 import TweetsTable from '../Twitter/Cards/TweetsTable';
 import UpgradeAlert from '../../UpgradeAlert';
 import { isEmptyObject } from '../../../utils/helpers';
+import { NavLink } from 'react-router-dom';
 
 class TwitterOverview extends React.Component {
 
@@ -42,10 +43,12 @@ class TwitterOverview extends React.Component {
     }
 
     setForbidden = (forbidden = false) => {
-        this.setState(() => ({
-            forbidden
-        }));
-    }
+        if (forbidden != this.state.forbidden) {
+            this.setState(() => ({
+                forbidden
+            }));
+        }
+    };
 
     render(){
         const propData = {
@@ -59,7 +62,7 @@ class TwitterOverview extends React.Component {
         return (
             <div>
             <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
-            {!this.state.forbidden && <div>
+                {!this.state.forbidden && !isEmptyObject(this.state.selectedAccount) ? <div>
                 <div className="row">            
                     <div className="col-xs-12">
                         <div className="analytics-head">
@@ -94,7 +97,6 @@ class TwitterOverview extends React.Component {
                         </div>                        
                     </div>
                 </div>
-                {!isEmptyObject(this.state.selectedAccount) ? <div>
                 <div className="row overview-cards-container mb20">
                     <div className="col-md-3 col-xs-12">
                         <TwitterOverviewCard 
@@ -188,8 +190,7 @@ class TwitterOverview extends React.Component {
                             {...propData}/>
                     </div>
                 </div>
-                </div> : <div><div class="no-data">There is no Twitter account<div><a href="/accounts">Connect to Twitter</a></div></div></div>}
-            </div> }
+                </div> : <div><div class="no-data">There is no Twitter account<div><NavLink to="/accounts">Connect to Twitter</NavLink></div></div></div>}
             </div>
         );
     }

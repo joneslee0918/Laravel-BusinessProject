@@ -39,7 +39,7 @@ Route::get('/privacy-policy', function(){
 
 Route::get('/test', function(){
     $user = \App\Models\Twitter\Channel::first();
-    return response()->json($user->DMById("974286749739421696", "testing DM"));
+    return response()->json($user->DM("974286749739421696", "testing DM"));
 
 });
 
@@ -52,6 +52,9 @@ Route::get('twitter/logout', ['as' => 'twitter.logout', 'uses' => 'Twitter\Chann
 Route::get('facebook/callback', function(Request $request){
     return $request->all();
 });
+
+Route::get('facebook/chatbot', 'Facebook\ChatBot\ChatbotController@index');
+Route::post('facebook/chatbot', 'Facebook\ChatBot\ChatbotController@index');
 
 Route::get('linkedin/callback', function(Request $request){
     return $request->all();
