@@ -53,6 +53,8 @@ Route::get('facebook/callback', function(Request $request){
     return $request->all();
 });
 
+Route::get('facebook/webhook/messages', 'Facebook\WebhookController@messages');
+
 Route::get('linkedin/callback', function(Request $request){
     return $request->all();
 });
