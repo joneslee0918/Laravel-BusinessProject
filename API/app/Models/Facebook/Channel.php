@@ -325,9 +325,9 @@ class Channel extends Model
                 $data = [];
 
                 $fans = $this->pageLikes('day', $sDate, $eDate);
+                if(!isset($fans['data']) || count($fans['data']) < 1) return 0;
         
                 $values = $fans['data'][0]['values'];
-        
         
                 foreach($values as $value)
                 {
