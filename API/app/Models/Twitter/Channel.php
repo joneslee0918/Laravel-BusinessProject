@@ -248,4 +248,11 @@ class Channel extends Model
         return $tweets;
     }
 
+    public function likesCount($sDate, $eDate)
+    {
+        $data = $this->getLikes();
+
+        return count($data);
+    }
+
 }

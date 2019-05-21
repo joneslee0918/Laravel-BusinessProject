@@ -54,37 +54,39 @@ class TweetsTable extends React.Component{
             <div className="card-table">
                 <div className="table-loader-style">{this.state.loading && <Loader type="Bars" color="#46a5d1" height={70} width={70} />}</div>
                 {this.state.tweets !=null &&
-                <table className="table anl-posts-table">
-                    <thead>
-                        <tr>
-                            <th className="anl-posts-table-th-first">Date</th>
-                            <th className="anl-posts-table-th-second">Message</th>
-                            <th>Retweets</th>
-                            <th>Replies</th>
-                            <th>Likes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.tweets.map((tweet, index)=> (
-                            <tr key={index}>
-                                <td className="anl-posts-table-th-first">
-                                    <div className="post-table-images">
-                                        <img className="pt-page-img" src={this.props.selectedChannel.avatar} />
-                                        <img className="pt-page-facebook" src="/images/twitter.png"></img>
-                                    </div>
-                                    <div className="post-table-page-date">
-                                        <p className="pt-page-name">{this.props.selectedChannel.name}</p>
-                                        <p className="pt-post-date">{tweet.date}</p>
-                                    </div>
-                                </td>
-                                <td className="anl-posts-table-th-second">{tweet.text}</td>
-                                <td>{tweet.retweet_count}</td>
-                                <td>0</td>
-                                <td>{tweet.favorite_count}</td>                            
+                <div className="table-wrapper-scroll-y table-scrollbar">
+                    <table className="table table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col" className="anl-posts-table-th-first">Date</th>
+                                <th scope="col" className="anl-posts-table-th-second">Message</th>
+                                <th scope="col">Retweets</th>
+                                <th scope="col">Replies</th>
+                                <th scope="col">Likes</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>}
+                        </thead>
+                        <tbody>
+                            {this.state.tweets.map((tweet, index)=> (
+                                <tr key={index}>
+                                    <td scope="row" className="anl-posts-table-th-first">
+                                        <div className="post-table-images">
+                                            <img className="pt-page-img" src={this.props.selectedChannel.avatar} />
+                                            <img className="pt-page-facebook" src="/images/twitter.png"></img>
+                                        </div>
+                                        <div className="post-table-page-date">
+                                            <p className="pt-page-name">{this.props.selectedChannel.name}</p>
+                                            <p className="pt-post-date">{tweet.date}</p>
+                                        </div>
+                                    </td>
+                                    <td className="anl-posts-table-th-second">{tweet.text}</td>
+                                    <td>{tweet.retweet_count}</td>
+                                    <td>0</td>
+                                    <td>{tweet.favorite_count}</td>                            
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>}
             </div>
         </div>
         );

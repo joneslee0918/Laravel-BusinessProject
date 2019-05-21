@@ -128,10 +128,10 @@
     width:100%;
 }
 .anl-posts-table-th-first {
-    width:10%;
+    width:15%;
 }
 .anl-posts-table-th-second {
-    width:70%;
+    width:65%;
 }
 .pt-page-img {
     width: 50px;
@@ -199,4 +199,12 @@
 }
 .text-center {
     text-align: center;
+}
+.table-scrollbar {
+    position: relative;
+    height: 500px;
+    overflow: auto;
+}
+.table-wrapper-scroll-y {
+    display: block;
 }
