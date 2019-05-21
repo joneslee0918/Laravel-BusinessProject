@@ -66,7 +66,7 @@ trait Tweetable
                 if($data){
                     return $data->profile_image_url;
                 }
-
+                
                 return public_path()."/images/dummy_profile.png";
             });
         } catch (\Exception $e) {
@@ -117,12 +117,12 @@ trait Tweetable
                 $uploadResponse = $this->uploadMedia($media);
                 $mediaIds[] = $uploadResponse->media_id;
             }
-
+            
             $post = [
                 'status' => $scheduledPost->content,
                 'media_ids' => $mediaIds
-            ];
-
+            ]; 
+            
             $this->publish($post);
 
             $now = Carbon::now();
@@ -133,7 +133,7 @@ trait Tweetable
             $scheduledPost->save();
 
         }catch(\Exception $e){
-
+            
             $scheduledPost->posted = 0;
             $scheduledPost->status = -1;
             $scheduledPost->save();
@@ -168,19 +168,19 @@ trait Tweetable
      * @return mixed
      */
     public function DMById($userId, $text)
-    {
+    {   
         $this->setAsCurrentUser();
         return Twitter::postDm(["user_id" => $userId, "text" => $text, "screen_name"=>"animemasters89"]);
     }
 
 
     public function DM($userId, $text)
-    {
+    {   
         $dm = [
             "event" => [
-                "type" => "message_create",
+                "type" => "message_create", 
                 "message_create" => [
-                    "target" => ["recipient_id" => $userId],
+                    "target" => ["recipient_id" => $userId], 
                     "message_data" => ["text" => $text]
                 ]
             ]
@@ -203,7 +203,7 @@ trait Tweetable
             'base_uri' => "https://$baseUrl/$version/",
             'handler' => $stack
         ]);
-
+        
         // Set the "auth" request option to "oauth" to sign using oauth
         $res = $client->post('direct_messages/events/new.json', ['auth' => 'oauth', 'json' => $dm]);
 
@@ -337,14 +337,14 @@ trait Tweetable
         Cache::forget($this->id . "-followersTimeline");
         Cache::forget($this->id . "-likesTimeline");
     }
-
+    
 
     /**
      * @param array $params
      * @return array
      */
     public function getTweets($params = [])
-    {
+    {   
         $params = array_merge(["screen_name" => $this->username, "count" => 200], $params);
         $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
         try {
@@ -365,7 +365,7 @@ trait Tweetable
      * @return array
      */
     public function getHome($params = [])
-    {
+    {   
         $params = array_merge(["screen_name" => $this->username, "count" => 200], $params);
         $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
         try {
@@ -385,7 +385,7 @@ trait Tweetable
      * @return array
      */
     public function getMentions($params = [])
-    {
+    {   
         $params = array_merge(["screen_name" => $this->username, "count" => 200], $params);
         $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
         try {
@@ -405,7 +405,7 @@ trait Tweetable
      * @return array
      */
     public function getRetweets($params = [])
-    {
+    {   
         $params = array_merge(["screen_name" => $this->username, "count" => 200], $params);
         $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
         try {
@@ -425,7 +425,7 @@ trait Tweetable
      * @return array
      */
     public function getFollowers($params = [])
-    {
+    {   
         $params = array_merge(["screen_name" => $this->username, "count" => 200], $params);
         $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
         try {
@@ -449,7 +449,7 @@ trait Tweetable
      * @return array
      */
     public function getLikes($params = [])
-    {
+    {   
         $params = array_merge(["screen_name" => $this->username, "count" => 3], $params);
         $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
         try {
@@ -479,9 +479,9 @@ trait Tweetable
             return Cache::remember($key, $minutes, function () use ($params){
                 $this->setAsCurrentUser();
                 $result = Twitter::getSearch($params);
-
+    
                 if(!property_exists($result, "statuses")) return [];
-
+    
                 return $result->statuses;
             });
 
@@ -545,7 +545,7 @@ trait Tweetable
     }
 
     /**
-     *
+     * 
      */
     public function tweetLookup($ids)
     {
@@ -937,7 +937,7 @@ trait Tweetable
 
     /**
      * Synchronize tweets from API
-     *
+     * 
      * @param int $sleep
      * @param bool $logCursor
      */
@@ -949,7 +949,7 @@ trait Tweetable
 
         foreach (array_chunk($lookUpTweets, 100) as $chunk) {
             $results = $this->tweetLookup(["id" => $chunk]);
-
+            
             if(!$results) continue;
 
             $lookUpIds = collect($results)->pluck('id')->toArray();
@@ -957,7 +957,7 @@ trait Tweetable
             $diffIds = array_diff($chunk, $lookUpIds);
 
             $deletedIds = array_merge($deletedIds, $diffIds);
-        }
+        }        
 
         if($deletedIds)
         {
@@ -992,12 +992,12 @@ trait Tweetable
         {
             \DB::table('twitter_tweets')->insert($data);
         }
-
+        
     }
 
     /**
      * Synchronize rettweets from API
-     *
+     * 
      * @param int $sleep
      * @param bool $logCursor
      */
@@ -1009,7 +1009,7 @@ trait Tweetable
 
         foreach (array_chunk($lookUpTweets, 100) as $chunk) {
             $results = $this->tweetLookup(["id" => $chunk]);
-
+            
             if(!$results) continue;
 
             $lookUpIds = collect($results)->pluck('id')->toArray();
@@ -1017,7 +1017,7 @@ trait Tweetable
             $diffIds = array_diff($chunk, $lookUpIds);
 
             $deletedIds = array_merge($deletedIds, $diffIds);
-        }
+        }        
 
         if($deletedIds)
         {
@@ -1052,12 +1052,12 @@ trait Tweetable
         {
             \DB::table('twitter_retweets')->insert($data);
         }
-
+        
     }
 
     /**
      * Synchronize rettweets from API
-     *
+     * 
      * @param int $sleep
      * @param bool $logCursor
      */
@@ -1069,7 +1069,7 @@ trait Tweetable
 
         foreach (array_chunk($lookUpTweets, 100) as $chunk) {
             $results = $this->tweetLookup(["id" => $chunk]);
-
+            
             if(!$results) continue;
 
             $lookUpIds = collect($results)->where('favorited',true)->pluck('id')->toArray();
@@ -1078,7 +1078,7 @@ trait Tweetable
 
             $deletedIds = array_merge($deletedIds, $diffIds);
 
-        }
+        }        
 
         if($deletedIds)
         {
@@ -1113,6 +1113,6 @@ trait Tweetable
         {
             \DB::table('twitter_likes')->insert($data);
         }
-
+        
     }
 }

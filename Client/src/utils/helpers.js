@@ -1,4 +1,5 @@
 export function linkify(text) {
+    if(typeof(text) === "undefined") return;
     var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
     return text.replace(urlRegex, function(url) {
         return '<a href="'+url+'" target="_blank">' + url + '</a>';
@@ -28,6 +29,7 @@ export function getParameterByName(name, url) {
 }
 
 export function truncate(string, length){
+    if(typeof(string) === "undefined") return;
     if (string.length > length)
        return string.substring(0,length)+'...';
     else
@@ -35,6 +37,7 @@ export function truncate(string, length){
 };
 
 export function hashLink(text){
+    if(typeof(text) === "undefined") return;
     return text.replace(/([@#])([a-z\d_]+)/ig, function(_, marker, tag) {
         if (marker === "@")
             return '<a href="https://twitter.com/'+tag+'" target="_blank">@' + tag + '</a>';

@@ -28,6 +28,7 @@ class FacebookMessagesFeed extends React.Component{
     };
 
     render(){
+        
         try{    
             const {feedItem, channel, updateItem} = this.props;
             const text = feedItem.messages.data[0].message ? feedItem.messages.data[0].message : "";
