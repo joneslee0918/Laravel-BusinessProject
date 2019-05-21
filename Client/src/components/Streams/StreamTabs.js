@@ -35,7 +35,8 @@ const tabsClassNames = {
 class StreamTabs extends Component {
 
     state = {
-      tabs:[],                                                                                                                                                                                                                                                                  
+      tabs: [],
+      tabData: [],                                                                                                                                                                                                                                                                 
       badgeCount: 0,
       menuPosition: {},
       showMenu: false,
@@ -51,7 +52,6 @@ class StreamTabs extends Component {
     }
     
     componentDidUpdate(prevProps, prevState){
-
     }
 
     getChildContext(){
@@ -232,6 +232,7 @@ class StreamTabs extends Component {
                              </Tab>
                          )
                        ),
+                    tabData: response,
                     selectedTab: selectedTab
                  }));
             }
@@ -277,9 +278,9 @@ class StreamTabs extends Component {
         return (
             <div>
             <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
-            {this.state.loading ? <Loader /> :
-                    
-                    this.state.tabs.length > 0 ?            
+            {this.state.loading && <Loader />}
+            
+            {this.state.tabs.length > 0 ?            
                         <div>
                             <Modal isOpen={!!this.state.addStream} ariaHideApp={false} className="stream-type-modal">
                                 <StreamCreator selectedTab = {this.state.selectedTab} reload = {this.fetchStreamTabs} close={this.handleAddStream} />
@@ -323,7 +324,7 @@ class StreamTabs extends Component {
                             <TextField
                                 ref='input' id="rename-input" style={{width: '90%'}}/>
                             </Dialog>
-                    </div> : <StreamCreator selectedTab = {this.state.selectedTab} reload = {this.fetchStreamTabs}/>  
+                    </div> : !this.state.loading && <StreamCreator selectedTab = {this.state.selectedTab} reload = {this.fetchStreamTabs}/>  
                 }
             </div>
         );

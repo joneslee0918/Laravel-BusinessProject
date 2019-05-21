@@ -69,6 +69,14 @@ class StreamItems extends Component {
   componentDidMount(){
   }
 
+  componentDidUpdate(prevProps){
+    if(this.props.streams !== prevProps.streams){
+      this.setState(() => ({
+        items: this.props.streams.length ? this.props.streams : []
+      }));
+    }
+  }
+
   onDragEnd(result) {
     // dropped outside the list
     if (!result.destination) {
