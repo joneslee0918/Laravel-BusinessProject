@@ -18,6 +18,7 @@ class PostsTable extends React.Component{
         if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
         {
             this.fetchAnalytics();
+            console.log(this.props.selectedChannel);
         }  
     }
 
@@ -53,8 +54,7 @@ class PostsTable extends React.Component{
                 <AnalyticsTooltip tooltipDesc={this.props.tooltipDesc} />
             </div>
             <div className="card-table">
-                <div className="table-loader-style">{this.state.loading && <Loader type="Bars" color="#46a5d1" height={70} width={70} />}</div>
-                {this.state.posts !=null &&
+                {this.state.posts !=null && !this.state.loading ?
                 <div className="table-wrapper-scroll-y table-scrollbar">
                         <table className="table table-striped mb-0">
                         <thead>
@@ -87,7 +87,7 @@ class PostsTable extends React.Component{
                             ))}
                         </tbody>
                     </table>
-                </div>}
+                </div> : <div className="table-loader-style">{this.state.loading && <Loader type="Bars" color="#46a5d1" height={70} width={70} />}</div>}
             </div>
         </div>
         );

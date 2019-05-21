@@ -11,7 +11,7 @@ import PostsTable from './Cards/PostsTable';
 import { DateRangePicker } from 'react-dates';
 import { isInclusivelyBeforeDay } from 'react-dates';
 import UpgradeAlert from '../../UpgradeAlert';
-import channelSelector from '../../../selectors/channels';
+import channelSelector, {channelById} from '../../../selectors/channels';
 import Select from 'react-select';
 import { isEmptyObject } from '../../../utils/helpers';
 import { NavLink } from 'react-router-dom';
@@ -27,17 +27,13 @@ class FacebookOverview extends React.Component {
           {label: <ProfileChannel channel={this.props.channels[0]} />, value: this.props.channels[0].id, type: this.props.channels[0].type} : {}),
         loading: false,
         forbidden: false,
-        calendarChange: false
+        calendarChange: false,
     }
 
     handleAccountChange = (selectedAccount) => {
         this.setState(() => ({
             selectedAccount
         }));
-    };
-
-    componentDidMount() {
-        console.log(this.props.selectedChannel);
     };
 
     onCalendarClose() {
@@ -61,7 +57,7 @@ class FacebookOverview extends React.Component {
             selectedAccount: this.state.selectedAccount.value,
             calendarChange: this.state.calendarChange,
             setForbidden: this.setForbidden,
-            selectedChannel: this.props.selectedChannel
+            selectedChannel: channelById(this.props.channels, { id: this.state.selectedAccount.value })
         }
         return (
             <div>
@@ -128,9 +124,9 @@ class FacebookOverview extends React.Component {
                     </div>
                     <div className="col-md-3 col-xs-12">
                         <OverviewCard 
-                            name='Traffic' 
-                            tooltipDesc='Clicks'
-                            description='clicks' />
+                            name='Impressions' 
+                            tooltipDesc="The number of times any content from your Page or about your Page entered a person' s screen. This includes posts, check-ins, ads, social information from people who interact with your Page and more. (Total Count)"
+                            description='impressions' />
                     </div>
                 </div>
                 <div className="row mb20">

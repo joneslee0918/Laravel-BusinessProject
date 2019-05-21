@@ -27,7 +27,7 @@ class ReadMore extends Component {
     }
 
     componentDidUpdate(prevProps, prevState){
-        if(prevState.expanded !== this.state.expanded){
+        if(prevState.expanded !== this.state.expanded || prevProps.children !== this.props.children){
             const { expanded, length } = this.state;
             const {children} = this.props;
             const text = expanded ? parseTextWithLinks(children) : parseTextWithLinks(truncate(children, length));

@@ -4,7 +4,7 @@ import 'react-dates/initialize';
 import moment from 'moment';
 import { DateRangePicker } from 'react-dates';
 import { isInclusivelyBeforeDay } from 'react-dates';
-import channelSelector from '../../../selectors/channels';
+import channelSelector, { channelById } from '../../../selectors/channels';
 import Select from 'react-select';
 import TwitterOverviewCard from '../Twitter/Cards/TwitterOverviewCard';
 import TwiterPageOverviewCard from '../Twitter/Cards/TwitterPageOverviewCard';
@@ -57,7 +57,7 @@ class TwitterOverview extends React.Component {
             selectedAccount: this.state.selectedAccount.value,
             calendarChange: this.state.calendarChange,
             setForbidden: this.setForbidden,
-            selectedChannel: this.props.selectedChannel
+            selectedChannel: channelById(this.props.channels, { id: this.state.selectedAccount.value })
         }
         return (
             <div>

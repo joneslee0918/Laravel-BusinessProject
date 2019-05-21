@@ -15,10 +15,19 @@ class StreamFeed extends React.Component{
         loading: false,
         loadMore: false,
         hasMore: false,
-        nextPage: ""
+        nextPage: "",
+        error: ""
     };
 
     componentDidMount(){
+        this.fetchFeed();
+        setInterval(() => {
+            console.log("refreshing");
+            this.fetchFeed();  
+           }, 120000);
+    }
+
+    fetchFeed = () => {
         const {streamItem} = this.props;
         this.setState(() => ({loading: true}));
         getStreamFeed(streamItem.type, streamItem.network, streamItem.channel_id, streamItem.search_query, this.state.nextPage).then((response) => {
@@ -33,7 +42,7 @@ class StreamFeed extends React.Component{
             }
 
             this.setState(() => ({
-                items: items,
+                items: items.length ? items : this.state.items,
                 loading: false,
                 hasMore: !!items,
                 nextPage
@@ -43,7 +52,7 @@ class StreamFeed extends React.Component{
         }).catch(e => {
             this.setState(() => ({loading: false}));
         });
-    }
+    };
 
     setImages = (images, index = 0) => {
         this.setState(() => ({

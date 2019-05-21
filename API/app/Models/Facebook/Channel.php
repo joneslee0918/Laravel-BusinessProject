@@ -242,6 +242,25 @@ class Channel extends Model
             throw $e;
         }
     }
+
+    private function impressionsCount($sDate, $eDate)
+    {
+        try {
+            $key = $this->id . "-impressionsCount-$sDate-$eDate";
+            $minutes = 15;
+            $startDate = Carbon::now();
+
+            return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
+
+                $impresions = $this->pageImpressions($sDate, $eDate);
+
+                return $impresions;
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
     private function engagementsByType($sDate, $eDate)
     {
         try {
