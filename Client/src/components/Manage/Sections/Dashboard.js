@@ -77,10 +77,10 @@ class Dashboard extends React.Component {
                         </div>
                         <div className="col-md-3 col-xs-12">
                             <TwitterOverviewCard
-                                name='Traffic'
-                                type="tweetsCount"
-                                description='click'
-                                tooltipDesc='Clicks'
+                                name='Likes'
+                                type="likesCount"
+                                description='likes'
+                                tooltipDesc='Total likes you have made with your account'
                                 {...propData} />
                         </div>
                     </div>

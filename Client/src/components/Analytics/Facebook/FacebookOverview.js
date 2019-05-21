@@ -37,7 +37,7 @@ class FacebookOverview extends React.Component {
     };
 
     componentDidMount() {
-        console.log(this.state.selectedAccount);
+        console.log(this.props.selectedChannel);
     };
 
     onCalendarClose() {
@@ -60,7 +60,8 @@ class FacebookOverview extends React.Component {
             endDate: this.state.endDate, 
             selectedAccount: this.state.selectedAccount.value,
             calendarChange: this.state.calendarChange,
-            setForbidden: this.setForbidden
+            setForbidden: this.setForbidden,
+            selectedChannel: this.props.selectedChannel
         }
         return (
             <div>
@@ -213,14 +214,13 @@ const ProfileChannel = ({channel}) => (
 
 const mapStateToProps = (state) => {
 
-    const facebookChannelsFilter = {selected: undefined, provider: "facebook", publishable: true};
+    const facebookChannelsFilter = { selected: undefined, provider: "facebook", publishable: true };
     const channels = channelSelector(state.channels.list, facebookChannelsFilter);
-    let selectedChannel = channelSelector(state.channels.list, {selected: 1, provider: "facebook", publishable: true});
-    selectedChannel = selectedChannel.lenght ? selectedChannel[0] : {};
+    const selectedChannel = channelSelector(state.channels.list, { selected: 1, provider: "facebook", publishable: true });
 
     return {
         channels,
-        selectedChannel
+        selectedChannel: selectedChannel.length ? selectedChannel[0] : channels[0]
     };
 };
 
