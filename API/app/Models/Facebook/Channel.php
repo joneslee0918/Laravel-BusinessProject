@@ -213,7 +213,9 @@ class Channel extends Model
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
-                $fans = collect($this->pageLikes('day', $sDate, $eDate)['data'][0]['values'])->last()['value'];
+                $pageLikes = $this->pageLikes('day', $sDate, $eDate);
+                if(!isset($pageLikes['data']) || count($pageLikes['data']) < 1) return 0;
+                $fans = collect($pageLikes['data'][0]['values'])->last()['value'];
 
                 return $fans;
 
