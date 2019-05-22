@@ -202,7 +202,8 @@
 }
 .table-scrollbar {
     position: relative;
-    height: 500px;
+    max-height: 500px;
+    height: auto;
     overflow: auto;
 }
 .table-wrapper-scroll-y {

@@ -4,7 +4,7 @@ import 'react-dates/initialize';
 import moment from 'moment';
 import { DateRangePicker } from 'react-dates';
 import { isInclusivelyBeforeDay } from 'react-dates';
-import channelSelector, {linkedinPages} from '../../../selectors/channels';
+import channelSelector, {linkedinPages, channelById} from '../../../selectors/channels';
 import Select from 'react-select';
 import LinkedinOverviewCard from '../Linkedin/Cards/LinkedinOverviewCard';
 import LinkedinPageOverviewCard from '../Linkedin/Cards/LinkedinPageOverviewCard';
@@ -56,7 +56,8 @@ class LinkedinOverview extends React.Component {
             endDate: this.state.endDate, 
             selectedAccount: this.state.selectedAccount.value,
             calendarChange: this.state.calendarChange,
-            setForbidden: this.setForbidden
+            setForbidden: this.setForbidden,
+            selectedChannel: channelById(this.props.channels, { id: this.state.selectedAccount.value })
         }
         return (
             <div>
