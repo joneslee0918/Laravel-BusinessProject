@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {Dialog, FlatButton, Menu, MenuItem, TextField} from 'material-ui';
 import {Tabs, Tab} from "react-draggable-tab";
-import {getStreams, selectTab, positionTab, addTab, deleteTab, renameTab} from "../../requests/streams";
+import {getStreams, setRefreshRate, selectTab, positionTab, addTab, deleteTab, renameTab} from "../../requests/streams";
 import StreamItems from "./StreamItems";
 import StreamCreator from "./StreamCreator";
 import Loader from "../Loader";
@@ -49,9 +49,6 @@ class StreamTabs extends Component {
 
     componentDidMount(){
        this.fetchStreamTabs();
-    }
-    
-    componentDidUpdate(prevProps, prevState){
     }
 
     getChildContext(){
@@ -114,6 +111,13 @@ class StreamTabs extends Component {
             addTab(data);
         });
     }
+
+    handleRefreshRateChange = (e) => {
+        const refreshRate = parseInt(e.target.value);
+
+        setRefreshRate({key: this.state.selectedTab}, refreshRate)
+        .then(() => this.fetchStreamTabs());
+    };
 
     handleTabDoubleClick(key) {
         this.setState({
@@ -222,8 +226,21 @@ class StreamTabs extends Component {
                                  <div>
                                     {tab.streams.length ? 
                                     <div className="lightgrey-bg">
-                                        <button className="white-txt-btn" onClick={this.handleAddStream}>Add Stream</button>
-                                        <StreamItems streams={tab.streams}/>
+                                        <div className="stream-handles">
+                                            <button className="white-txt-btn" onClick={this.handleAddStream}>Add Stream</button>
+                                            <div id="refreshHandle">
+                                                <label htmlFor="refreshRate">Refresh: </label>
+                                                <select onChange={this.handleRefreshRateChange} value={parseInt(tab.refresh_rate)} id="refreshRate">
+                                                    <option value={2}>Every 2 minutes</option>
+                                                    <option value={5}>Every 5 minutes</option>
+                                                    <option value={10}>Every 10 minutes</option>
+                                                    <option value={30}>Every 30 minutes</option>
+                                                    <option value={60}>Every hour</option>
+                                                    <option value={120}>Every 2 hours</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <StreamItems streams={tab.streams} refreshRate={parseInt(tab.refresh_rate)}/>
                                     </div>
                                     : 
                                     <StreamCreator selectedTab = {selectedTab} reload = {this.fetchStreamTabs} />}

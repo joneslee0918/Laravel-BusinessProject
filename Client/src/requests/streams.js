@@ -8,6 +8,13 @@ export const getStreams = () => {
             });
 };
 
+export const setRefreshRate = (data, refreshRate) => {
+    return axios.post(`${apiUrl}/streams/tabs/refreshrate`, {data, refreshRate})
+            .then((response) => {
+                return response.data;
+            });
+};
+
 export const selectTab = (data) => {
     return axios.post(`${apiUrl}/streams/tabs/select`, {data})
             .then((response) => {

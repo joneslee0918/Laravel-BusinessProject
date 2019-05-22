@@ -33,6 +33,21 @@ class StreamsController extends Controller
         return $tabs;
     }
 
+    public function setRefreshRate(Request $request)
+    {
+        $data = $request->get("data");
+        $refreshRate = $request->get("refreshRate");
+
+        if(!$data) return;
+
+        $tab = $this->user->tabs()->where("key", $data["key"])->first();
+
+        $tab->refresh_rate = $refreshRate;
+        $tab->save();
+
+        return response()->json(["message" => "Successful update"], 200);
+    }
+
     public function selectTab(Request $request)
     {
         $data = $request->get("data");
@@ -46,7 +61,6 @@ class StreamsController extends Controller
         $tabs->where("key", $data)->update(["selected" => 1]);
 
         return response()->json(["message" => "Successful update"], 200);
-
     }
 
     public function positionTab(Request $request)

@@ -60,15 +60,14 @@ class StreamItems extends Component {
     this.state = {
       items: this.props.streams.length ? this.props.streams : [],
       currentItemId: "",
-      titleText: ""
+      titleText: "",
+      refresh: false,
+      loading: false
     };
 
     this.onDragEnd = this.onDragEnd.bind(this);
   }
-
-  componentDidMount(){
-  }
-
+  
   componentDidUpdate(prevProps){
     if(this.props.streams !== prevProps.streams){
       this.setState(() => ({
@@ -107,6 +106,19 @@ class StreamItems extends Component {
       titleText: val
     }));
   }
+
+  refresh = (id = false) => {
+    this.setState(() => ({
+      refresh: id,
+      loading: id ? id : this.state.loading
+    }));
+  };
+
+  loading = (id = false) => {
+    this.setState(() => ({
+      loading: id
+    }));
+  };
 
   handleTitleChangeSubmit = () => {
     document.removeEventListener('click', this.handleOutsideClick, false);
@@ -167,7 +179,7 @@ class StreamItems extends Component {
 
 
   render() {
-    const {channels} = this.props;
+    const {channels, refreshRate} = this.props;
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
@@ -198,16 +210,22 @@ class StreamItems extends Component {
                         provided.draggableProps.style
                       )} className="stream-title">
                         <i className={`fa fa-${item.network} ${item.network}_color`}></i> 
-                        
                           { this.state.currentItemId == item.id ? 
                             <input type="text" className="text-cursor" maxLength="14" data-editable={true} onKeyDown={this.handleKeyDown} onChange={this.handleTitleChange} value={this.state.titleText} /> : 
                             <span className="text-cursor" onClick={this.handleTitleClick} data-editable-item={JSON.stringify(item)}> {item.title} </span> } 
-                            
+            
                             <span className="stream-user">{item.network == "twitter" ? channel.username : channel.name}</span>
                         <i className={'fa fa-close pull-right'} onClick={() => this.handleStreamClose(item)}></i>
+                        <i className={`fa fa-refresh ${this.state.loading === item.id ? 'fa-spin' : ''} link-cursor pull-right `} onClick={() => this.refresh(item.id)}></i>
                         </h3>
 
-                      <StreamFeed streamItem = {item} channel={channel}/>
+                      <StreamFeed 
+                        streamItem = {item} 
+                        channel={channel} 
+                        refreshId={this.state.refresh} 
+                        resetRefresh={this.refresh}
+                        refreshRate={refreshRate} 
+                        resetLoading={this.loading}/>
                     </div>
                   )}
                 </Draggable>

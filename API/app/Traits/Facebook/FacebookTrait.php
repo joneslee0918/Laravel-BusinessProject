@@ -78,7 +78,7 @@ trait FacebookTrait
         return Cache::remember($key, $minutes, function () use ($pageId, $after) {
             $fb = $this->setAsCurrentUser();
             $response = $fb->get("/{$pageId}/posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
-
+    
             return $response->getDecodedBody();
         });
     }
@@ -93,7 +93,7 @@ trait FacebookTrait
         return Cache::remember($key, $minutes, function () use ($pageId, $after) {
             $fb = $this->setAsCurrentUser();
             $response = $fb->get("/{$pageId}/posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
-
+    
             return $response->getDecodedBody();
         });
     }
@@ -117,7 +117,7 @@ trait FacebookTrait
         return Cache::remember($key, $minutes, function () use ($after) {
             $fb = $this->setAsCurrentUser();
             $response = $fb->get("/{$this->original_id}/promotable_posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
-
+    
             return $response->getDecodedBody();
         });
     }
@@ -128,11 +128,11 @@ trait FacebookTrait
         $key = $pageId . "-mentions-$maxId";
         $after = $maxId ? "&after=$maxId" : "";
         $minutes = 1;
-
+        
         return Cache::remember($key, $minutes, function () use ($pageId, $after) {
             $fb = $this->setAsCurrentUser();
             $response = $fb->get("/{$pageId}/tagged?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
-
+    
             return $response->getDecodedBody();
         });
     }
@@ -142,7 +142,7 @@ trait FacebookTrait
         $response = $fb->get("/me/conversations?fields=id,link,updated_time");
         $response = $response->getDecodedBody();
 
-        if(!isset($response["data"])) return [];
+        if(!isset($response["data"])) return [];        
 
         $feed = [];
         foreach($response["data"] as $conversation){
@@ -207,14 +207,6 @@ trait FacebookTrait
     public function pageEngagement($period, $since=null, $until=null){
         $fb = $this->setAsCurrentUser();
         $response = $fb->get("/{$this->original_id}/insights/page_engaged_users?{$period}&since={$since}&until={$until}");
-
-        return $response->getDecodedBody();
-    }
-
-    public function pageImpressions($period, $since = null, $until = null)
-    {
-        $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/insights/page_impressions?since={$since}&until={$until}");
 
         return $response->getDecodedBody();
     }
@@ -316,7 +308,7 @@ trait FacebookTrait
        }catch(\Exception $e){
             //throw $e;
        }
-
+        
         return "";
     }
 
@@ -330,9 +322,9 @@ trait FacebookTrait
             }
 
         }catch(\Exception $e){
-
-        }
-
+           
+        } 
+        
         return "";
     }
 
@@ -393,13 +385,13 @@ trait FacebookTrait
      * @return mixed
      */
     public function uploadFile($image)
-    {
+    {   
         try{
             $imageData = explode(',', $image);
-
+            
             if(count($imageData) > 1){
                 $imageBase64 = $imageData[1];
-                $imageInfo = explode(';', $imageData[0]);
+                $imageInfo = explode(';', $imageData[0]);            
                 $imageOriginalName = explode('.',$imageInfo[1]);
                 $imageExtension = $imageOriginalName[1];
                 $contents = base64_decode($imageBase64);
@@ -467,7 +459,7 @@ trait FacebookTrait
                 $mediaIds["attached_media[$mediaCount]"] = "{'media_fbid': '$mediaId'}";
                 $mediaCount++;
             }
-
+            
             $text = $scheduledPost->content;
             $link = findUrlInText($text);
 
@@ -483,7 +475,7 @@ trait FacebookTrait
             if($mediaCount > 0){
                 $post = array_merge($mediaIds, $post);
             }
-
+            
             $result = $this->publish($post);
 
             $now = Carbon::now();
@@ -496,7 +488,7 @@ trait FacebookTrait
             return $result;
 
         }catch(\Exception $e){
-
+            
             $scheduledPost->posted = 0;
             $scheduledPost->status = -1;
             $scheduledPost->save();
@@ -507,7 +499,7 @@ trait FacebookTrait
 
         /**
      * Synchronize tweets from API
-     *
+     * 
      * @param int $sleep
      * @param bool $logCursor
      */

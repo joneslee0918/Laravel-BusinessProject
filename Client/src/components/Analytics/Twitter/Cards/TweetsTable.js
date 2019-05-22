@@ -52,7 +52,8 @@ class TweetsTable extends React.Component{
                 <AnalyticsTooltip tooltipDesc={this.props.tooltipDesc} />
             </div>
             <div className="card-table">
-                {this.state.tweets != null && !this.state.loading ?
+                <div className="table-loader-style">{this.state.loading && <Loader type="Bars" color="#46a5d1" height={70} width={70} />}</div>
+                {this.state.tweets !=null &&
                 <div className="table-wrapper-scroll-y table-scrollbar">
                     <table className="table table-striped mb-0">
                         <thead>
@@ -85,7 +86,7 @@ class TweetsTable extends React.Component{
                             ))}
                         </tbody>
                     </table>
-                </div> : <div className="table-loader-style">{this.state.loading && <Loader type="Bars" color="#46a5d1" height={70} width={70} />}</div>}
+                </div>}
             </div>
         </div>
         );

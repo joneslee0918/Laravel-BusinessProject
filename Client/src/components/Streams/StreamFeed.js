@@ -1,5 +1,6 @@
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
+import ReactInterval from 'react-interval';
 import Loader from 'react-loader-spinner';
 import StreamFeedItem from './StreamFeedItem';
 import {getStreamFeed} from '../../requests/streams';
@@ -16,21 +17,26 @@ class StreamFeed extends React.Component{
         loadMore: false,
         hasMore: false,
         nextPage: "",
-        error: ""
+        error: false
     };
+
+    refreshInterval = '';
 
     componentDidMount(){
         this.fetchFeed();
-        setInterval(() => {
-            console.log("refreshing");
-            this.fetchFeed();  
-           }, 120000);
+    }
+
+    componentDidUpdate(){        
+        if(typeof(this.props.streamItem) !== "undefined" && this.props.refreshId === this.props.streamItem.id){
+            this.fetchFeed();
+            this.props.resetRefresh();
+        }
     }
 
     fetchFeed = () => {
         const {streamItem} = this.props;
         this.setState(() => ({loading: true}));
-        getStreamFeed(streamItem.type, streamItem.network, streamItem.channel_id, streamItem.search_query, this.state.nextPage).then((response) => {
+        getStreamFeed(streamItem.type, streamItem.network, streamItem.channel_id, streamItem.search_query, "").then((response) => {
             
             const items = typeof response["data"] !== "undefined" ? response["data"] : response;
             let data = items.length ? items[items.length - 1] : "";
@@ -45,12 +51,15 @@ class StreamFeed extends React.Component{
                 items: items.length ? items : this.state.items,
                 loading: false,
                 hasMore: !!items,
+                error: false,
                 nextPage
             }));
+
+            this.props.resetLoading();
             
             if(!items.length) return;
         }).catch(e => {
-            this.setState(() => ({loading: false}));
+            this.setState(() => ({loading: false, error: e}));
         });
     };
 
@@ -134,10 +143,14 @@ class StreamFeed extends React.Component{
     };
 
     render(){
-        const {streamItem, channel} = this.props;
+        const {streamItem, channel, refreshRate} = this.props;
         const {imageViewer, imageIndex, images} = this.state;
         return (
             <div ref={(ref) => this.scrollParentRef = ref} className="stream-feed scrollbar">
+
+            <ReactInterval timeout={refreshRate * 60000} enabled={true}
+            callback={() => this.fetchFeed()} />
+
                 {imageViewer && (
                     <Lightbox
                         currentImage={imageIndex}
@@ -179,7 +192,7 @@ class StreamFeed extends React.Component{
                             <div className="container-nodata">
                                 <div>
                                     <p><i className="fa fa-folder-open"></i> </p>
-                                    <span>No data found.</span>
+                                    <span>{this.state.error ? "Rate limit exceeded" : "No data found."}</span>
                                 </div>
                             </div>
                     }

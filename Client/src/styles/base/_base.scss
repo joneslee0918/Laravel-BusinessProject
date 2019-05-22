@@ -655,7 +655,17 @@ input {
     cursor: pointer;
 }
 
-.stream-title .fa-close:hover{
+.stream-title .fa-refresh{
+    color: #777;
+    margin: 0 5px;
+}
+
+#refreshRate{
+    padding: 5px;
+    margin-left: 5px;
+}
+
+.stream-title .fa-close:hover, .stream-title .fa-refresh:hover{
     color: #555;
 }
 
@@ -2511,14 +2521,22 @@ aside .btn-group {
 
 .white-txt-btn{
     padding: 10px;
-    margin: 10px 0 0 10px;
     border: none;
     border-radius: 5px;
     background: white;
 }
 
+.stream-handles{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+    clear: both;
+}
+
 .lightgrey-bg{
     background: lightgrey;
+    overflow:hidden;
 }
 
 .sky-bg{

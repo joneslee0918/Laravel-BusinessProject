@@ -18,7 +18,6 @@ class PostsTable extends React.Component{
         if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
         {
             this.fetchAnalytics();
-            console.log(this.props.selectedChannel);
         }  
     }
 
@@ -54,40 +53,39 @@ class PostsTable extends React.Component{
                 <AnalyticsTooltip tooltipDesc={this.props.tooltipDesc} />
             </div>
             <div className="card-table">
-                {this.state.posts !=null && !this.state.loading ?
-                <div className="table-wrapper-scroll-y table-scrollbar">
-                        <table className="table table-striped mb-0">
-                        <thead>
-                            <tr>
-                                <th scope="col" className="anl-posts-table-th-first">Date</th>
-                                <th scope="col" className="anl-posts-table-th-second">Message</th>
-                                <th scope="col">Reactions</th>
-                                <th scope="col">Comments</th>
-                                <th scope="col">Shares</th>
+                <div className="table-loader-style">{this.state.loading && <Loader type="Bars" color="#46a5d1" height={70} width={70} />}</div>
+                {this.state.posts !=null &&
+                <table className="table anl-posts-table">
+                    <thead>
+                        <tr>
+                            <th className="anl-posts-table-th-first">Date</th>
+                            <th className="anl-posts-table-th-second">Message</th>
+                            <th>Reactions</th>
+                            <th>Comments</th>
+                            <th>Shares</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.posts.map((post, index)=> (
+                            <tr key={index}>
+                                <td className="anl-posts-table-th-first" scope="row">
+                                    <div className="post-table-images">
+                                        <img className="pt-page-img" src="/images/uniclix.png" />
+                                        <img className="pt-page-facebook" src="/images/facebook.png"></img>
+                                    </div>
+                                    <div className="post-table-page-date">
+                                        <p className="pt-page-name">UniClix</p>
+                                        <p className="pt-post-date">{post.date}</p>
+                                    </div>
+                                </td>
+                                <td className="anl-posts-table-th-second"><ReadMore characters={400}>{post.message ? post.message : ''}</ReadMore></td>
+                                <td>{post.reactions}</td>
+                                <td>{post.comments}</td>
+                                <td>{post.shares}</td>                            
                             </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.posts.map((post, index)=> (
-                                <tr key={index} scope="row">
-                                    <td className="anl-posts-table-th-first" scope="row">
-                                        <div className="post-table-images">
-                                            <img className="pt-page-img" src={this.props.selectedChannel.avatar} />
-                                            <img className="pt-page-facebook" src="/images/facebook.png"></img>
-                                        </div>
-                                        <div className="post-table-page-date">
-                                            <p className="pt-page-name">{this.props.selectedChannel.name}</p>
-                                            <p className="pt-post-date">{post.date}</p>
-                                        </div>
-                                    </td>
-                                    <td className="anl-posts-table-th-second"><ReadMore characters={400}>{post.message ? post.message : ''}</ReadMore></td>
-                                    <td>{post.reactions}</td>
-                                    <td>{post.comments}</td>
-                                    <td>{post.shares}</td>                            
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div> : <div className="table-loader-style">{this.state.loading && <Loader type="Bars" color="#46a5d1" height={70} width={70} />}</div>}
+                        ))}
+                    </tbody>
+                </table>}
             </div>
         </div>
         );

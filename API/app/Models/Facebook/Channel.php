@@ -74,7 +74,7 @@ class Channel extends Model
             case 30:
                 $period = 'month';
                 break;
-
+            
             default:
                 $period = 'day';
                 break;
@@ -85,15 +85,15 @@ class Channel extends Model
             $key = $this->id . "-facebookAnalytics-$days";
             $minutes = 15;
             return Cache::remember($key, $minutes, function () use ($days, $period) {
-                $data = [];
-                $startDate = Carbon::now();
+                $data = []; 
+                $startDate = Carbon::now();   
 
                 $likes = $this->pageLikes($period)['data'][0]['values'][1]['value'];
                 $unlikes = $this->pageUnlikes($period)['data'][0]['values'][1]['value'];
                 $engagement = $this->pageEngagement($period)['data'][0]['values'][1]['value'];
                 $reactions = $this->pageTotalReactions($period);
                 $posts = $this->posts()->whereBetween('original_created_at', [$startDate->subDays($days), Carbon::now()])->get();
-
+        
                 $data = [
                     'likes' => $likes,
                     'unlikes' => $unlikes,
@@ -121,11 +121,11 @@ class Channel extends Model
         try {
             $key = $this->id . "-pageInsights-$startDate-$endDate";
             $minutes = 15;
-            $startDate = Carbon::now();
+            $startDate = Carbon::now(); 
 
             return Cache::remember($key, $minutes, function () use ($period, $sDate, $eDate) {
-                $data = [];
-                $startDate = Carbon::now();
+                $data = []; 
+                $startDate = Carbon::now();   
 
                 $fans = collect($this->pageLikes('day', $sDate, $eDate)['data'][0]['values'])->last()['value'];
                 $posts = $this->getPosts($sDate, $eDate)['data'];
@@ -136,8 +136,8 @@ class Channel extends Model
                 $comments = $postsData->sum('comments');
                 $shares = $postsData->sum('shares');
                 $engagementByTypeData = $this->engagementByTypeData($sDate, $eDate);
-
-                $data = [
+        
+                $data = [                    
                     'posts' => count($posts),
                     'fans' => $fans,
                     'postsChartData' => $postsChartData,
@@ -166,8 +166,13 @@ class Channel extends Model
         try {
             $key = $this->id . "-$type-$startDate-$endDate";
             $minutes = 15;
+            $startDate = Carbon::now(); 
 
-            return Cache::remember($key, $minutes, function () use ($sDate, $eDate, $type) {
+            return Cache::remember($key, $minutes, function () use ($period, $sDate, $eDate, $type) {
+                $startDate = Carbon::now(); 
+
+                $data = []; 
+                $startDate = Carbon::now();   
 
                 $data = $this->{$type}($sDate, $eDate);
 
@@ -178,13 +183,13 @@ class Channel extends Model
             throw $e;
         }
     }
-
+    
     private function postsCount($sDate, $eDate)
     {
         try {
             $key = $this->id . "-postsCount-$sDate-$eDate";
             $minutes = 15;
-            $startDate = Carbon::now();
+            $startDate = Carbon::now(); 
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
@@ -204,7 +209,7 @@ class Channel extends Model
         try {
             $key = $this->id . "-fansCount-$sDate-$eDate";
             $minutes = 15;
-            $startDate = Carbon::now();
+            $startDate = Carbon::now(); 
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
@@ -225,7 +230,7 @@ class Channel extends Model
         try {
             $key = $this->id . "-engagementsCount-$sDate-$eDate";
             $minutes = 15;
-            $startDate = Carbon::now();
+            $startDate = Carbon::now(); 
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
@@ -234,39 +239,20 @@ class Channel extends Model
                 $reactions = $postsData->sum('reactions');
                 $comments = $postsData->sum('comments');
                 $shares = $postsData->sum('shares');
-
+        
                 return $reactions+$comments+$shares;
-
+                
             });
         } catch (\Exception $e) {
             throw $e;
         }
     }
-
-    private function impressionsCount($sDate, $eDate)
-    {
-        try {
-            $key = $this->id . "-impressionsCount-$sDate-$eDate";
-            $minutes = 15;
-            $startDate = Carbon::now();
-
-            return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
-
-                $impresions = $this->pageImpressions($sDate, $eDate);
-
-                return $impresions;
-            });
-        } catch (\Exception $e) {
-            throw $e;
-        }
-    }
-
     private function engagementsByType($sDate, $eDate)
     {
         try {
             $key = $this->id . "-engagementsByType-$sDate-$eDate";
             $minutes = 15;
-            $startDate = Carbon::now();
+            $startDate = Carbon::now(); 
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
@@ -275,22 +261,22 @@ class Channel extends Model
                 $reactions = $postsData->sum('reactions');
                 $comments = $postsData->sum('comments');
                 $shares = $postsData->sum('shares');
-
-                $data = [
+        
+                $data = [                    
                     'reactions' => $reactions,
                     'comments' => $comments,
                     'shares' => $shares
                 ];
-
+        
                 return $data;
-
+                
             });
         } catch (\Exception $e) {
             throw $e;
         }
     }
     /**
-     *
+     * 
      * Prepare data for Posts Chart
      */
     private function postsChartData($sDate, $eDate)
@@ -298,7 +284,7 @@ class Channel extends Model
         try {
             $key = $this->id . "-postsChartData-$sDate-$eDate";
             $minutes = 15;
-            $startDate = Carbon::now();
+            $startDate = Carbon::now(); 
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
@@ -316,12 +302,12 @@ class Channel extends Model
                 }
 
                 return $data;
-
+                
             });
         } catch (\Exception $e) {
             throw $e;
         }
-
+        
     }
 
     /**
@@ -332,7 +318,7 @@ class Channel extends Model
         try {
             $key = $this->id . "-postsChartData-$sDate-$eDate";
             $minutes = 15;
-            $startDate = Carbon::now();
+            $startDate = Carbon::now(); 
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
@@ -340,17 +326,17 @@ class Channel extends Model
 
                 $fans = $this->pageLikes('day', $sDate, $eDate);
                 if(!isset($fans['data']) || count($fans['data']) < 1) return 0;
-
+        
                 $values = $fans['data'][0]['values'];
-
+        
                 foreach($values as $value)
                 {
-
+        
                     $data[] = [Carbon::parse($value['end_time'])->timestamp*1000, $value['value']];
                 }
-
+        
                 return $data;
-
+                
             });
         } catch (\Exception $e) {
             throw $e;
@@ -361,17 +347,18 @@ class Channel extends Model
      * Prepare data for Posts Table
      */
     public function postsData($sDate, $eDate)
-    {
+    {        
         try {
             $key = $this->id . "-postsData-$sDate-$eDate";
             $minutes = 15;
+            $startDate = Carbon::now(); 
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
-                $posts = $this->getPosts($sDate, $eDate)['data'];
+                $posts = $this->getPosts($sDate, $eDate)['data']; 
 
                 $preparePosts = collect();
-
+        
                 foreach($posts as $post)
                 {
                     $post = collect($post);
@@ -380,12 +367,12 @@ class Channel extends Model
                     $post->put('comments', $post['comments']['summary']['total_count']);
                     $post->put('shares', 0);
                     $post->put('timestamp', Carbon::parse($post['created_time'])->timestamp);
-
+                    
                     $preparePosts->push($post);
                 }
-
+        
                 return $preparePosts;
-
+                
             });
         } catch (\Exception $e) {
             throw $e;
@@ -396,7 +383,7 @@ class Channel extends Model
      * Prepare data for Posts Table
      */
     public function engagementByTypeData($startDate, $endDate)
-    {
+    { 
         $posts = $this->getPosts($startDate, $endDate)['data'];
 
         $dataReactions = collect();
@@ -432,7 +419,7 @@ class Channel extends Model
         $dataReactions->put('data', $reactions);
         $dataComments->put('data', $comments);
         $dataShares->put('data', $shares);
-
+        
         $dataArray=[];
 
         $dataArray[] = $dataReactions;
@@ -440,6 +427,6 @@ class Channel extends Model
         $dataArray[] = $dataShares;
 
         return $dataArray;
-
+                
     }
 }
