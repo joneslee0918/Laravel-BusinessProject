@@ -27,6 +27,8 @@ const StreamPost = ({profileImg, username, date, text, media, setImages, childre
                                         </div>
                                         
                                         <ReadMore>{sharedStatus.text}</ReadMore>
+
+                                        <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>
                                     </div>
                                 )
                                 :
@@ -59,7 +61,7 @@ const StreamPost = ({profileImg, username, date, text, media, setImages, childre
                                 </div>
                             </a>
                             :
-                            <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>
+                            (typeof(sharedStatus) === "undefined" && <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>)
                         }
 
                         {children}
