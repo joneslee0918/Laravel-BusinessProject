@@ -2,14 +2,17 @@ import React from 'react';
 import StreamFeedMedia from './StreamFeedMedia';
 import ReadMore from '../ReadMore';
 import {truncate} from '../../utils/helpers';
+import {toHumanTime} from '../../utils/helpers';
 
-const StreamPost = ({profileImg, username, date, text, media, setImages, children, statusId, attachmentData, sharedStatus, networkType}) => (
-    <div className="stream-feed-container">
+const StreamPost = ({profileImg, username, date, text, media, setImages, children, statusId, attachmentData, sharedStatus, networkType}) => {
+
+    const postTime = date ? toHumanTime(date) : "";
+    return <div className="stream-feed-container">
                         <div className="post-info">
                             <img src={profileImg} />
                             <div className="post-info-item">
                                 <a href="#" className="username"><strong>{username}</strong></a>
-                                <div className="post-date">{date ? new Date(date).toDateString() : ""}</div>
+                                <div className="post-date">{postTime}</div>
                             </div>
                         </div>
                         <div className="post-content">
@@ -22,7 +25,7 @@ const StreamPost = ({profileImg, username, date, text, media, setImages, childre
                                             <img src={sharedStatus.user.profile_image_url_https} />
                                             <div className="post-info-item">
                                                 <a href="#" className="username"><strong>{sharedStatus.user.name}</strong></a>
-                                                <div className="post-date">{sharedStatus.created_at ? new Date(sharedStatus.created_at).toDateString() : ""}</div>
+                                                <div className="post-date">{sharedStatus.created_at ? toHumanTime(sharedStatus.created_at) : ""}</div>
                                             </div>
                                         </div>
                                         
@@ -66,6 +69,6 @@ const StreamPost = ({profileImg, username, date, text, media, setImages, childre
 
                         {children}
                     </div>
-);
+};
 
 export default StreamPost;

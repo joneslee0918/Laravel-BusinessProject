@@ -1,3 +1,6 @@
+import moment from "moment";
+import timeFormats from './timeFormats';
+
 export function linkify(text) {
     if(typeof(text) === "undefined") return;
     var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
@@ -64,4 +67,8 @@ export function isEmptyObject(obj) {
             return false;
     }
     return true;
+}
+
+export function toHumanTime(time){
+    return moment.utc(Date.now()).to(moment.utc(time, timeFormats));
 }

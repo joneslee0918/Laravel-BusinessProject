@@ -2,6 +2,7 @@ import React from 'react';
 import ReadMore from '../ReadMore';
 import DraftEditor from '../DraftEditor';
 import {sendMessage} from '../../requests/facebook/channels';
+import {toHumanTime} from '../../utils/helpers';
 
 class FacebookConversation extends React.Component{
 
@@ -65,7 +66,7 @@ class FacebookConversation extends React.Component{
                                 <img src={channel.name === message.from.name ? channel.avatar : "/images/dummy_profile.png"} />
                                 <div className="post-info-item">
                                     <a href="#" className="username"><strong>{message.from.name}</strong></a>
-                                    <div className="post-date">{(new Date(message.created_time)).toDateString()}</div>
+                                    <div className="post-date">{toHumanTime(message.created_time)}</div>
                                 </div>
                             </div>
                             <div className="post-content">

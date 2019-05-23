@@ -36,7 +36,7 @@ const StreamFeedItem = ({feedItem, streamItem, channel, setImages, updateItem}) 
 const TwitterDefaultFeed = ({feedItem, setImages, channel, updateItem}) => {
     try{
         const text = feedItem.text ? feedItem.text : "";
-        const profileImg = feedItem.user.profile_image_url;
+        const profileImg = feedItem.user.profile_image_url_https;
         const sharedStatus = feedItem.retweeted_status;
         const username = feedItem.user.screen_name;
         const date = feedItem.created_at;
@@ -72,7 +72,7 @@ const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem}) => {
         const text = typeof feedItem.status !== "undefined" && typeof feedItem.status["text"] !== "undefined" ? feedItem.status["text"] : "";
         const date = typeof feedItem.status !== "undefined" && typeof feedItem.status["created_at"] !== "undefined" ? feedItem.status["created_at"] : "";
         const username = feedItem.screen_name;
-        const profileImg = feedItem.profile_image_url;
+        const profileImg = feedItem.profile_image_url_https;
         const statusId = typeof feedItem.status !== "undefined" ? feedItem.status.id_str: "";
         const networkType = "twitter";
         let media = typeof feedItem.status !== "undefined" && typeof feedItem.status.extended_entities !== "undefined" && typeof feedItem.status.extended_entities.media !== "undefined" ? feedItem.status.extended_entities.media : [];
