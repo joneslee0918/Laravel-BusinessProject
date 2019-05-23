@@ -37,16 +37,18 @@ const TwitterDefaultFeed = ({feedItem, setImages, channel, updateItem}) => {
     try{
         const text = feedItem.text ? feedItem.text : "";
         const profileImg = feedItem.user.profile_image_url;
+        const sharedStatus = feedItem.retweeted_status;
         const username = feedItem.user.screen_name;
         const date = feedItem.created_at;
         const statusId = feedItem.id_str;
+        const networkType = "twitter";
         let media = typeof feedItem.extended_entities !== "undefined" && typeof feedItem.extended_entities.media !== "undefined" ? feedItem.extended_entities.media : [];
         media = media.map(file => {
             const source = file.type === "video" && typeof file.video_info.variants !== "undefined" && file.video_info.variants.length ? file.video_info.variants[0].url : "";
             return {src: file.media_url_https, type: file.type, source}
         });
 
-        const postData = {profileImg, username, text, date, media, setImages, statusId};
+        const postData = {profileImg, username, text, date, media, setImages, statusId, sharedStatus, networkType};
 
         return (
             <StreamPost {...postData} >
@@ -72,13 +74,14 @@ const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem}) => {
         const username = feedItem.screen_name;
         const profileImg = feedItem.profile_image_url;
         const statusId = typeof feedItem.status !== "undefined" ? feedItem.status.id_str: "";
+        const networkType = "twitter";
         let media = typeof feedItem.status !== "undefined" && typeof feedItem.status.extended_entities !== "undefined" && typeof feedItem.status.extended_entities.media !== "undefined" ? feedItem.status.extended_entities.media : [];
         media = media.map(file => {
             const source = file.type === "video" && typeof file.video_info.variants !== "undefined" && file.video_info.variants.length ? file.video_info.variants[0].url : "";
             return {src: file.media_url_https, type: file.type, source}
         });
 
-        const postData = {profileImg, username, text, date, media, setImages, statusId};
+        const postData = {profileImg, username, text, date, media, setImages, statusId, networkType};
 
         return(
             <div>
@@ -123,14 +126,21 @@ const FacebookPostsFeed = ({feedItem, setImages, channel, updateItem}) => {
 
     try{    
         let text = feedItem.message ? feedItem.message : "";
+        const attachmentData = {
+            title: "",
+            description: "",
+            attachmentType: "",
+            targetUrl: "",
+        }
+
         const profileImg = feedItem.from.picture.data.url;
         const username = feedItem.from.name;
         const date = feedItem.created_time;
 
         const attachments = typeof feedItem.attachments !== "undefined" ? feedItem.attachments.data : [];
         const subAttachments = attachments.length && typeof attachments[0].subattachments !== "undefined" ? (typeof attachments[0].subattachments.data !== "undefined" ? attachments[0].subattachments.data : []) : [];
+        const networkType = "facebook";
 
-        
         let mainMedia = attachments.map((item) => {
             if(typeof item.media !== "undefined"){
                 return item.media;
@@ -145,12 +155,25 @@ const FacebookPostsFeed = ({feedItem, setImages, channel, updateItem}) => {
 
         let media = [...mainMedia, ...subMedia];
 
-        text = text ? text : (attachments.length ? attachments[0].title : "");
+        if(attachments.length){
+            text = text ? text : attachments[0].title;
+            attachmentData.title = attachments[0].title;
+            attachmentData.description = attachments[0].description;
+            attachmentData.attachmentType = attachments[0].type;
+            attachmentData.targetUrl = attachments[0].url;
+        }
 
-        media = media.map(file => ({src: file.image.src, type: typeof file.source !== "undefined" ? "video": "photo", source: typeof file.source !== "undefined" ? file.source : ""}));
+        media = media.map(file => (
+            {
+            src: file.image.src, 
+            type: typeof file.source !== "undefined" ? "video": "photo", 
+            source: typeof file.source !== "undefined" ? file.source : ""
+        }));
+
+        attachmentData.media = media;
 
         const statusId = feedItem.id;
-        const postData = {profileImg, username, text, date, media, setImages, statusId};
+        const postData = {profileImg, username, text, attachmentData, date, media, setImages, statusId, networkType};
 
         return (
             <StreamPost {...postData} >

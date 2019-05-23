@@ -18,6 +18,7 @@ class StreamFeedMedia extends React.Component{
         const {videoClicked} = this.state;
 
         if(!media.length) return <div></div>;
+
         let images = media.filter(item => item.type === "photo");
         const thumbnails = chunk(media, 2);
 
