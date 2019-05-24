@@ -125,6 +125,7 @@ class Channel extends Model
 
             return Cache::remember($key, $minutes, function () use ($period, $sDate, $eDate) {
                 $data = [];
+                $startDate = Carbon::now();
 
                 $fans = collect($this->pageLikes('day', $sDate, $eDate)['data'][0]['values'])->last()['value'];
                 $posts = $this->getPosts($sDate, $eDate)['data'];
@@ -157,6 +158,8 @@ class Channel extends Model
     }
     public function pageInsightsByType($type, $startDate, $endDate)
     {
+        $period = 'month';
+
         $sDate = intval($startDate/1000);
         $eDate = intval($endDate/1000);
 
@@ -181,6 +184,7 @@ class Channel extends Model
         try {
             $key = $this->id . "-postsCount-$sDate-$eDate";
             $minutes = 15;
+            $startDate = Carbon::now();
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
@@ -200,6 +204,7 @@ class Channel extends Model
         try {
             $key = $this->id . "-fansCount-$sDate-$eDate";
             $minutes = 15;
+            $startDate = Carbon::now();
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
@@ -220,6 +225,7 @@ class Channel extends Model
         try {
             $key = $this->id . "-engagementsCount-$sDate-$eDate";
             $minutes = 15;
+            $startDate = Carbon::now();
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
@@ -242,45 +248,13 @@ class Channel extends Model
         try {
             $key = $this->id . "-impressionsCount-$sDate-$eDate";
             $minutes = 15;
+            $startDate = Carbon::now();
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
-                $first_date = Carbon::createFromTimestamp($sDate);
-                $second_date = Carbon::createFromTimestamp($eDate);
+                $impresions = $this->pageImpressions($sDate, $eDate);
 
-                $diff = $second_date->diffInDays($first_date);
-
-                $total=0;
-
-                while($diff>90){
-
-                    $until = $second_date->copy();
-
-                    $since = $until->copy()->subDays(90);
-
-
-                    $impresions = $this->pageImpressions($since->timestamp, $until->timestamp);
-                    $data = $impresions['data'][0]['values'];
-
-                    foreach ($data as $item) {
-                        $total += $item['value'];
-                    }
-
-                    $second_date = $since;
-
-                    $diff = $since->diffInDays($first_date);
-                }
-
-                $impresions = $this->pageImpressions($second_date->subDays($diff), $second_date);
-                $data = $impresions['data'][0]['values'];
-
-                foreach ($data as $item) {
-                    $total += $item['value'];
-                }
-
-
-                return $this->number_format_short($total);
-
+                return $impresions;
             });
         } catch (\Exception $e) {
             throw $e;
@@ -292,6 +266,7 @@ class Channel extends Model
         try {
             $key = $this->id . "-engagementsByType-$sDate-$eDate";
             $minutes = 15;
+            $startDate = Carbon::now();
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
@@ -323,6 +298,7 @@ class Channel extends Model
         try {
             $key = $this->id . "-postsChartData-$sDate-$eDate";
             $minutes = 15;
+            $startDate = Carbon::now();
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
@@ -356,6 +332,7 @@ class Channel extends Model
         try {
             $key = $this->id . "-postsChartData-$sDate-$eDate";
             $minutes = 15;
+            $startDate = Carbon::now();
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
@@ -464,32 +441,5 @@ class Channel extends Model
 
         return $dataArray;
 
-    }
-
-    private function number_format_short($n)
-    {
-        if ($n >= 0 && $n < 1000) {
-            // 1 - 999
-            $n_format = floor($n);
-            $suffix = '';
-        } else if ($n >= 1000 && $n < 1000000) {
-            // 1k-999k
-            $n_format = floor($n / 1000);
-            $suffix = 'K+';
-        } else if ($n >= 1000000 && $n < 1000000000) {
-            // 1m-999m
-            $n_format = floor($n / 1000000);
-            $suffix = 'M+';
-        } else if ($n >= 1000000000 && $n < 1000000000000) {
-            // 1b-999b
-            $n_format = floor($n / 1000000000);
-            $suffix = 'B+';
-        } else if ($n >= 1000000000000) {
-            // 1t+
-            $n_format = floor($n / 1000000000000);
-            $suffix = 'T+';
-        }
-
-        return !empty($n_format . $suffix) ? $n_format . $suffix : 0;
     }
 }

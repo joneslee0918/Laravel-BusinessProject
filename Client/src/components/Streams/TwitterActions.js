@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
-import {like, unlike, retweet} from '../../requests/twitter/tweets';
+import Popup from "reactjs-popup";
+import {like, unlike, retweet, deleteTweet} from '../../requests/twitter/tweets';
 import {abbrNum} from '../../utils/numberFormatter';
 import TwitterReply from './TwitterReply';
 import { ToastContainer } from "react-toastr";
@@ -56,6 +57,28 @@ class TwitterActions extends React.Component{
             }
         }).catch(e => {this.setState(() => ({retweeted: false}))});
     }
+
+    handlePostDelete = () => {
+        const {feedItem, channel, updateItem} = this.props;
+
+        this.setState(() => ({
+            loading: true
+        }));
+
+        deleteTweet(feedItem.id_str, channel.id).then((response) => {
+            if(typeof response !== "undefined"){
+                updateItem(feedItem, "delete");
+            }
+
+            this.setState(() => ({
+                loading: false
+            }));
+        }).catch(e => {
+            this.setState(() => ({
+                loading: false
+            }));
+        });
+    };
 
     toggleLike = () => {
         const {liked} = this.state;
@@ -119,7 +142,35 @@ class TwitterActions extends React.Component{
                         <i onClick={() => this.toggleLike()} className={`fa fa-heart ${likedPost}`}></i>
                         <span className={`status-counter ${likedPost} `}> {likesCount}</span>
                     </span>
-                    <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    <Popup
+                    trigger={<i className="fa fa-ellipsis-v" aria-hidden="true"></i>}
+                    on="click"
+                    position="top center"
+                    arrow={true}
+                    closeOnDocumentClick={true}
+                    >
+                    {
+                    close => ( 
+                        <div className="t-action-menu menu-with-icons">
+                            <a href={`mailto:?Subject=I'd like to share this story with you&Body=${feedItem.text}`}>
+                                <i className={`fa fa-envelope`}></i>&nbsp;Email
+                            </a>
+
+                            {postData.username === channel.details.username &&
+                                (
+                                    this.state.loading  ? 
+                                    <button className="disabled-btn">
+                                        <i className={`fa fa-circle-o-notch fa-spin`}></i>Delete
+                                    </button>
+                                    :
+                                    <button onClick={this.handlePostDelete}>
+                                        <i className={`fa fa-trash`}></i>Delete
+                                    </button>
+                                )
+                            }
+                        </div>
+                    )}
+                    </Popup>
                 </div>
             </div>
             )

@@ -21,3 +21,10 @@ export const retweet = (postId, channelId) => {
         return response.data;
     });
 };
+
+export const deleteTweet = (statusId, channelId) => {
+    return axios.post(`${apiUrl}/twitter/tweet/delete`, {statusId, channelId})
+    .then((response) => {
+        return response.data;
+    });
+};

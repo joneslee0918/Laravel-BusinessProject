@@ -119,17 +119,14 @@ class FacebookOverview extends React.Component {
                             name='Engagement'
                             type='engagementsCount' 
                             description='engagements'
-                            tooltipDesc='The sum of reactions, comments and shares recieved by content of your Pages(for the selected timeframe)'
+                            tooltipDesc='The sum of reactions, comments and shares recieved by content associated with your Pages(for the selected timeframe). Includes comments from the author of the post'
                             {...propData} />
                     </div>
                     <div className="col-md-3 col-xs-12">
                         <OverviewCard 
                             name='Impressions' 
-                            type='impressionsCount'
-                            description='impressions'
                             tooltipDesc="The number of times any content from your Page or about your Page entered a person' s screen. This includes posts, check-ins, ads, social information from people who interact with your Page and more. (Total Count)"
-                            description='impressions'
-                            {...propData} />
+                            description='impressions' />
                     </div>
                 </div>
                 <div className="row mb20">
@@ -171,7 +168,7 @@ class FacebookOverview extends React.Component {
                         <EngagementCard 
                             name="Engagement by Type" 
                             type='engagementsByType'
-                            tooltipDesc='The number of interactions received for content of your Page, broken down by reactions, comments and shares.'
+                            tooltipDesc='The number of interactions received for content associated with your Page, broken down by reactions, comments and shares.'
                             {...propData}/>
                     </div>
                     <div className="col-md-9 col-xs-12">

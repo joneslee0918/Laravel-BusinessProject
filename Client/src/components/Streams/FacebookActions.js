@@ -1,10 +1,11 @@
 import React from 'react';
 import { ToastContainer } from "react-toastr";
 import Modal from 'react-modal';
+import Popup from "reactjs-popup";
 import Loader from 'react-loader-spinner';
 import DraftEditor from '../DraftEditor';
 import {abbrNum} from '../../utils/numberFormatter';
-import {like, unlike, comment} from '../../requests/facebook/channels';
+import {like, unlike, comment, deletePost} from '../../requests/facebook/channels';
 import FacebookPost from './FacebookPost';
 
 
@@ -123,6 +124,28 @@ class FacebookActions extends React.Component{
         return
     };
 
+    handlePostDelete = () => {
+        const {feedItem, channel, updateItem} = this.props;
+
+        this.setState(() => ({
+            loading: true
+        }));
+
+        deletePost(channel.id, feedItem.id).then((response) => {
+            if(typeof response !== "undefined"){
+                updateItem(feedItem, "delete");
+            }
+
+            this.setState(() => ({
+                loading: false
+            }));
+        }).catch(e => {
+            this.setState(() => ({
+                loading: false
+            }));
+        });
+    };
+
     toggleComment = () => {
         this.setState(() => ({
             comment: !this.state.comment
@@ -149,6 +172,7 @@ class FacebookActions extends React.Component{
     };
 
     render(){
+        
         const {liked, comment} = this.state;
         const {feedItem, postData, channel} = this.props;
         const likedPost = liked ? 'acted' : '';
@@ -184,7 +208,37 @@ class FacebookActions extends React.Component{
                     </span>
                 
                     <i onClick={this.togglePostBox} className="fa fa-share"></i>
-                    <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+
+                    <Popup
+                    trigger={<i className="fa fa-ellipsis-v" aria-hidden="true"></i>}
+                    on="click"
+                    position="top center"
+                    arrow={true}
+                    closeOnDocumentClick={true}
+                    >
+                    {
+                    close => ( 
+                        <div className="t-action-menu menu-with-icons">
+                            <a href={`mailto:?Subject=I'd like to share this story with you&Body=${postData.text}`}>
+                                <i className={`fa fa-envelope`}></i>&nbsp;Email
+                            </a>
+
+                            {feedItem.from.id === channel.details.payload.id &&
+                                (
+                                this.state.loading  ? 
+                                <button className="disabled-btn">
+                                    <i className={`fa fa-circle-o-notch fa-spin`}></i>Delete
+                                </button>
+                                :
+                                <button onClick={this.handlePostDelete}>
+                                    <i className={`fa fa-trash`}></i>Delete
+                                </button>
+                                )
+                            }
+                        </div>
+                    )}
+                    </Popup>
+                    
                 </div>
                 <div>
                     {   comment &&

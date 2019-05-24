@@ -55,7 +55,7 @@ class PostsTable extends React.Component{
             </div>
             <div className="card-table">
                 {this.state.posts !=null && !this.state.loading ?
-                <div className="table-wrapper-scroll-y table-scrollbar scrollable">
+                <div className="table-wrapper-scroll-y table-scrollbar">
                         <table className="table table-striped mb-0">
                         <thead>
                             <tr>

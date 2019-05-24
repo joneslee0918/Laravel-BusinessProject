@@ -72,8 +72,12 @@ class StreamFeed extends React.Component{
     };
 
     updateItem = (currentItem, type = "twitterDefault") => {
-        this.setState(() => ({
-            items: this.state.items.map(item => {
+
+        let items = [];
+        if(type == "delete"){
+            items = this.state.items.filter(item => item.id !== currentItem.id);
+        }else{
+            items = this.state.items.map(item => {
 
                 if(type == "twitterDefault" && item.id == currentItem.id){
                     return currentItem;
@@ -101,7 +105,11 @@ class StreamFeed extends React.Component{
                 }
 
                 return item;
-            })
+            });
+        }
+
+        this.setState(() => ({
+            items
         }));
     }
 

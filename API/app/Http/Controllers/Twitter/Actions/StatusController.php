@@ -74,5 +74,31 @@ class StatusController extends Controller
         return response()->json(["success" => false, "message" => "Tweet cannot be empty"], 304);
     }
 
+        /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Request $request)
+    {   try{
+            $statusId = $request->input('statusId');
+
+            if(!$statusId) return response()->json(["error" => false, "message" => "Status id not specified"], 400);
+            $channelId = $request->input('channelId');
+            $channel = $this->selectedChannel;
+
+            if($channelId){
+                $channel = $this->user->channels()->find($channelId);
+                $channel = $channel->details;
+            }
+            
+            $channel->deleteTweet($statusId);
+            return response()->json(["success" => true, "message" => "Tweet posted successfully"]);
+        }catch(\Exception $e){
+            return response()->json(["success" => false, "message" => $e->getMessage()], 500);
+        }
+
+        return response()->json(["success" => false, "message" => "Tweet cannot be empty"], 304);
+    }
 
 }

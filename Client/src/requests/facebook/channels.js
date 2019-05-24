@@ -84,6 +84,15 @@ export const post = (channelId, message = "", objectId = "") => {
     });
 }
 
+export const deletePost = (channelId, postId) => {
+    return axios.post(`${apiUrl}/facebook/post/delete`, {
+        postId,
+        channelId
+    }).then((response) => {
+        return response.data;
+    });
+}
+
 export const sendMessage = (message, conversationId, channelId) => {
     return axios.post(`${apiUrl}/facebook/message/send`, {
         conversationId,

@@ -94,7 +94,17 @@ trait Tweetable
     public function publish($tweet)
     {
         $this->setAsCurrentUser();
-        return Twitter::postTweet($tweet);
+        $result = Twitter::postTweet($tweet);
+        $this->uncacheFeeds();
+        return $result;
+    }
+
+    public function deleteTweet($tweetId)
+    {
+        $this->setAsCurrentUser();
+        $result = Twitter::destroyTweet($tweetId);
+        $this->uncacheFeeds();
+        return $result;
     }
 
     /**

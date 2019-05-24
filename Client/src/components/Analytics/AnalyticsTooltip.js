@@ -1,5 +1,7 @@
 import React from 'react';
-import Popup from "reactjs-popup";
+import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 class AnalyticsTooltip extends React.Component {
   state = {
@@ -15,18 +17,24 @@ class AnalyticsTooltip extends React.Component {
   };
 
   render() {
-    return <Popup
-      trigger={<i class="fa fa-question-circle"></i>}
-      on="hover"
-      position="bottom center"
-      arrow={false}
-      closeOnDocumentClick={true}
-    >
-      {
-        close => (
-          <div className="anl-tooltip">{this.props.tooltipDesc}</div>
-        )}
-    </Popup>
+    return (
+        <ClickAwayListener onClickAway={this.handleTooltipClose}>
+            <Tooltip
+              PopperProps={{
+                disablePortal: true,
+              }}
+              onClose={this.handleTooltipClose}
+              open={this.state.open}
+              disableFocusListener
+              disableHoverListener
+              disableTouchListener
+              title={this.props.tooltipDesc}
+              placement="top"
+            >
+              <i className="fa fa-question-circle" onClick={this.handleTooltipOpen}></i>
+            </Tooltip>
+        </ClickAwayListener>
+    );
   }
 }
 

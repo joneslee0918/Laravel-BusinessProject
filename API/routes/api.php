@@ -87,6 +87,7 @@ Route::prefix("twitter")->group(function(){
         Route::patch('retweet/post', 'Twitter\Actions\RetweetController@retweetPost');
 
         Route::post('tweet', 'Twitter\Actions\StatusController@tweet');
+        Route::post('tweet/delete', 'Twitter\Actions\StatusController@delete');
         Route::post('dm', 'Twitter\Actions\DMController@DM');
 
         Route::post('streams/scheduled', 'Twitter\StreamsFeedController@scheduled');
@@ -109,6 +110,7 @@ Route::prefix("facebook")->group(function(){
         Route::post('streams/{type}', 'Facebook\StreamsFeedController@index');
         
         Route::post('post', 'Facebook\Actions\PostController@post');
+        Route::post('post/delete', 'Facebook\Actions\PostController@delete');
         Route::post('post/like', 'Facebook\Actions\LikeController@like');
         Route::post('post/unlike', 'Facebook\Actions\LikeController@unlike');
 

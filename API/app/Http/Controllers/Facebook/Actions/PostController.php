@@ -46,4 +46,25 @@ class PostController extends Controller{
 
         return response()->json(["error" => "General error."], 500);
     }
+
+    public function delete(Request $request)
+    {   
+        try{
+            $postId = $request->input("postId");
+            $channelId = $request->input("channelId");
+
+            if(!$channelId) return response()->json(["error" => "Channel is missing."], 400);
+
+            $channel = $this->user->channels()->find($channelId);
+            $channel = $channel->details;
+
+            $channel->deletePost($postId);
+
+            return response()->json(["success" => "Post deleted successfully."], 200);
+        }catch(\Exception $e){
+            return response()->json(["error" => $e->getMessage()], 400);
+        }
+
+        return response()->json(["error" => "General error."], 500);
+    }
 }
