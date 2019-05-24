@@ -684,42 +684,6 @@ input {
     color:#ccc;
 }
 
-.link-preview {
-    display: flex;
-    background: #efefef;
-}
-
-.link-preview .link-img img {
-    width: 220px;
-    height: 220px;
-    object-fit:cover;
-}
-
-.link-preview .link-info{
-    padding: 10px;
-    color: #333;
-}
-
-.link-preview .link-info h4{
-    font-size: 16px;
-    font-weight:bold;
-}
-
-.link-preview .link-info p{
-    font-size: 12px;
-}
-
-.shared-status{
-    padding: 10px;
-    border: 1px solid #ddd;
-}
-
-.shared-status .status-type{
-    display:block;
-    margin:0 0 10px;
-    color:#777;
-}
-
 .ReactModalPortal .ReactModal__Overlay {
     display: flex;
     justify-content: center;

@@ -3,7 +3,6 @@ import Modal from 'react-modal';
 import ReadMore from '../ReadMore';
 import FacebookConversation from './FacebookConversation';
 import { ToastContainer } from "react-toastr";
-import {toHumanTime} from '../../utils/helpers';
 
 let toastContainer;
 
@@ -58,7 +57,7 @@ class FacebookMessagesFeed extends React.Component{
                                 <img src={channel.name === feedItem.messages.data[0].from.name ? channel.avatar : "/images/dummy_profile.png"} />
                                 <div className="post-info-item">
                                     <a href="#" className="username"><strong>{feedItem.messages.data[0].from.name}</strong></a>
-                                    <div className="post-date">{toHumanTime(feedItem.messages.data[0].created_time)}</div>
+                                    <div className="post-date">{(new Date(feedItem.updated_time)).toDateString()}</div>
                                 </div>
                             </div>
                             <div className="post-content">

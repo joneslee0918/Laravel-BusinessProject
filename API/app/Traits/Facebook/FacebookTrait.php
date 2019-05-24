@@ -211,10 +211,10 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
-    public function pageImpressions($period, $since = null, $until = null)
+    public function pageImpressions($since = null, $until = null)
     {
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$this->original_id}/insights/page_impressions?since={$since}&until={$until}");
+        $response = $fb->get("/{$this->original_id}/insights/page_impressions?since={$since}&until={$until}&period=day");
 
         return $response->getDecodedBody();
     }
