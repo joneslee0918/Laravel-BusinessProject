@@ -149,7 +149,10 @@ class FacebookActions extends React.Component{
         });
     };
 
-    handlePostSchedule = () => {
+    handlePostSchedule = (close) => {
+
+        if(typeof close !== "undefined") close();
+        
         const {postData, setPost, setComposerModal} = this.props;
         const images = postData.media.splice(0, 3);
         let url = typeof(postData.attachmentData) !== "undefined" && typeof(postData.attachmentData.targetUrl) !== "undefined" ? postData.attachmentData.targetUrl : "";
@@ -245,7 +248,7 @@ class FacebookActions extends React.Component{
                             <a href={`mailto:?Subject=I'd like to share this story with you&Body=${postData.text}`}>
                                 <i className={`fa fa-envelope`}></i>&nbsp;Email
                             </a>
-                            <button onClick={this.handlePostSchedule}>
+                            <button onClick={() => this.handlePostSchedule(close)}>
                                 <i className={`fa fa-clock-o`}></i>Schedule
                             </button>
                             {feedItem.from.id === channel.details.payload.id &&
