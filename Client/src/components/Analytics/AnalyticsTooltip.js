@@ -16,7 +16,7 @@ class AnalyticsTooltip extends React.Component {
 
   render() {
     return <Popup
-      trigger={<i class="fa fa-question-circle"></i>}
+      trigger={<i className="fa fa-question-circle"></i>}
       on="hover"
       position="bottom center"
       arrow={false}
