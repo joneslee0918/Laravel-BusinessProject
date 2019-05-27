@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { ToastContainer } from "react-toastr";
 import Modal from 'react-modal';
 import Popup from "reactjs-popup";
@@ -7,6 +8,8 @@ import DraftEditor from '../DraftEditor';
 import {abbrNum} from '../../utils/numberFormatter';
 import {like, unlike, comment, deletePost} from '../../requests/facebook/channels';
 import FacebookPost from './FacebookPost';
+import {setComposerModal} from "../../actions/composer";
+import {setPost} from '../../actions/posts';
 
 
 let toastContainer;
@@ -146,6 +149,26 @@ class FacebookActions extends React.Component{
         });
     };
 
+    handlePostSchedule = () => {
+        const {postData, setPost, setComposerModal} = this.props;
+        const images = postData.media.splice(0, 3);
+        let url = typeof(postData.attachmentData) !== "undefined" && typeof(postData.attachmentData.targetUrl) !== "undefined" ? postData.attachmentData.targetUrl : "";
+        let content = postData.text;
+
+        if(url && content.indexOf("http") == -1){
+            url = decodeURIComponent(url.substring(url.indexOf("u=h") + 2, url.indexOf("h=") - 1));
+            content += " "+url;
+        } 
+
+        setComposerModal(true); 
+        setPost(
+            {
+             content: content, 
+             images: typeof(images) !== "undefined" ? images.map((image) => image.src): [],
+             type: 'store'
+            });
+    };
+
     toggleComment = () => {
         this.setState(() => ({
             comment: !this.state.comment
@@ -222,7 +245,9 @@ class FacebookActions extends React.Component{
                             <a href={`mailto:?Subject=I'd like to share this story with you&Body=${postData.text}`}>
                                 <i className={`fa fa-envelope`}></i>&nbsp;Email
                             </a>
-
+                            <button onClick={this.handlePostSchedule}>
+                                <i className={`fa fa-clock-o`}></i>Schedule
+                            </button>
                             {feedItem.from.id === channel.details.payload.id &&
                                 (
                                 this.state.loading  ? 
@@ -269,4 +294,9 @@ class FacebookActions extends React.Component{
     }
 }
 
-export default FacebookActions;
+const mapDispatchToProps = (dispatch) => ({
+    setPost: (post) => dispatch(setPost(post)),
+    setComposerModal: (modal) => dispatch(setComposerModal(modal))
+});
+
+export default connect(undefined, mapDispatchToProps)(FacebookActions);
