@@ -219,6 +219,7 @@ class PublishController extends Controller
 
     public function publish(Request $request)
     {
+
         $scheduledPost = unserialize($request->input('item'));
         if(!$scheduledPost) return;
         

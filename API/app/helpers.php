@@ -41,6 +41,7 @@ function getErrorResponse($e, $channel = false){
     || str_contains($error, "denied") 
     || str_contains($error, "permission")
     || str_contains($error, "authorization")
+    || str_contains($error, "invalid")
     || str_contains($error, "authentication")){
 
         if($channel){
@@ -53,7 +54,7 @@ function getErrorResponse($e, $channel = false){
         $type = $channel->type;
         return response()->json(['error' => $error, 'message' => "Your $type account \"$username\" needs to be reconnected."], 401);
     }
-    return response()->json(['message' => $e->getMessage(), 'error' => $e->getTrace(), 'errorMsg' => $e->getMessage()], 400);
+    return response()->json(['message' => $e->getMessage(), 'error' => $e->getTrace()], 400);
 }
 
 function exchangeFBToken($accessToken)

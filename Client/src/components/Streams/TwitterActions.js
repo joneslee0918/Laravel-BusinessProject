@@ -1,13 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import Modal from 'react-modal';
 import Popup from "reactjs-popup";
 import {like, unlike, retweet, deleteTweet} from '../../requests/twitter/tweets';
 import {abbrNum} from '../../utils/numberFormatter';
 import TwitterReply from './TwitterReply';
 import { ToastContainer } from "react-toastr";
-import { setComposerModal } from "../../actions/composer";
-import { setPost } from '../../actions/posts';
 
 let toastContainer;
 
@@ -81,28 +78,6 @@ class TwitterActions extends React.Component{
                 loading: false
             }));
         });
-    };
-
-    handlePostSchedule = (close) => {
-        if(typeof close !== "undefined") close();
-
-        const {postData, setPost, setComposerModal} = this.props;
-        const images = postData.media.splice(0, 3);
-        let url = typeof(postData.attachmentData) !== "undefined" && typeof(postData.attachmentData.targetUrl) !== "undefined" ? postData.attachmentData.targetUrl : "";
-        let content = postData.text;
-
-        if(url && content.indexOf("http") == -1){
-            url = decodeURIComponent(url.substring(url.indexOf("u=h") + 2, url.indexOf("h=") - 1));
-            content += " "+url;
-        } 
-
-        setComposerModal(true); 
-        setPost(
-            {
-             content: content, 
-             images: typeof(images) !== "undefined" ? images.map((image) => image.src): [],
-             type: 'store'
-            });
     };
 
     toggleLike = () => {
@@ -180,9 +155,7 @@ class TwitterActions extends React.Component{
                             <a href={`mailto:?Subject=I'd like to share this story with you&Body=${feedItem.text}`}>
                                 <i className={`fa fa-envelope`}></i>&nbsp;Email
                             </a>
-                            <button onClick={() => this.handlePostSchedule(close)}>
-                                <i className={`fa fa-clock-o`}></i>Schedule
-                            </button>
+
                             {postData.username === channel.details.username &&
                                 (
                                     this.state.loading  ? 
@@ -204,9 +177,4 @@ class TwitterActions extends React.Component{
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    setPost: (post) => dispatch(setPost(post)),
-    setComposerModal: (modal) => dispatch(setComposerModal(modal))
-});
-
-export default connect(undefined, mapDispatchToProps)(TwitterActions);
+export default TwitterActions;

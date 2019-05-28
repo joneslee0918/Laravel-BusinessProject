@@ -38,8 +38,8 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $user = \App\Models\Twitter\Channel::first();
-    return response()->json($user->DM("974286749739421696", "testing DM"));
+    $user = \App\Models\Facebook\Channel::find(6);
+    return $user->pageInsightsByType('postsCount', 1551438000000, 1556618400000);
 
 });
 

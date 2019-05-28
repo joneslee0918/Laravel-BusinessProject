@@ -15,7 +15,7 @@ class OverviewCard extends React.Component{
 
     componentDidUpdate(prevProps){
         if(prevProps.selectedAccount != this.props.selectedAccount || prevProps.calendarChange != this.props.calendarChange)
-        {
+        {   
             this.fetchAnalytics();
         }        
     }
@@ -45,7 +45,6 @@ class OverviewCard extends React.Component{
         } catch (error) {
             
         }
-        
     };
 
     render(){

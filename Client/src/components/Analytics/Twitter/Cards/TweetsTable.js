@@ -1,7 +1,8 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
 import { pageInsightsByType } from "../../../../requests/twitter/channels";
-import AnalyticsTooltip from '../../AnalyticsTooltip'
+import AnalyticsTooltip from '../../AnalyticsTooltip';
+import ReadMore from '../../../ReadMore';
 
 class TweetsTable extends React.Component{
     state = {
@@ -77,7 +78,7 @@ class TweetsTable extends React.Component{
                                             <p className="pt-post-date">{tweet.date}</p>
                                         </div>
                                     </td>
-                                    <td className="anl-posts-table-th-second">{tweet.text}</td>
+                                    <td className="anl-posts-table-th-second"><ReadMore characters={400}>{tweet.text ? tweet.text : ''}</ReadMore></td>
                                     <td>{tweet.retweet_count}</td>
                                     <td>0</td>
                                     <td>{tweet.favorite_count}</td>                            

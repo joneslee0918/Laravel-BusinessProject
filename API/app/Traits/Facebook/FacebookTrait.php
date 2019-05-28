@@ -83,16 +83,17 @@ trait FacebookTrait
         });
     }
 
-    public function getPagePosts($params = [], $pageId = ""){
+    public function getPagePosts($since = null, $until = null, $params = [], $pageId = "", $limit = 100){
 
         $pageId = $pageId ? $pageId : $this->original_id;
         $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
-        $key = $pageId . "-pagePosts-$maxId";
+        $key = $pageId . "-getPagePosts-$maxId-$since-$until";
         $after = $maxId ? "&after=$maxId" : "";
+        $limit = "&limit=".$limit;
         $minutes = 1;
-        return Cache::remember($key, $minutes, function () use ($pageId, $after) {
+        return Cache::remember($key, $minutes, function () use ($pageId, $after, $since, $until, $limit) {
             $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/{$pageId}/posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
+            $response = $fb->get("/{$pageId}/posts?since={$since}&until={$until}&fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true),reactions.summary(true)$limit$after");
 
             return $response->getDecodedBody();
         });

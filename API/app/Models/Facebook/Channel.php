@@ -162,15 +162,11 @@ class Channel extends Model
 
         try {
             $key = $this->id . "-$type-$startDate-$endDate";
-            $minutes = 15;
 
-            return Cache::remember($key, $minutes, function () use ($sDate, $eDate, $type) {
+            $data = $this->{$type}($sDate, $eDate);
 
-                $data = $this->{$type}($sDate, $eDate);
+            return $data;
 
-                return $data;
-
-            });
         } catch (\Exception $e) {
             throw $e;
         }
@@ -179,17 +175,20 @@ class Channel extends Model
     private function postsCount($sDate, $eDate)
     {
         try {
-            $key = $this->id . "-postsCount-$sDate-$eDate";
-            $minutes = 15;
+            $maxId = null;
+            $posts = [];
+            do {
+                $data = $this->getPagePosts($sDate, $eDate, ['max_id' => $maxId]);
+                $posts = array_merge($posts, $data['data']);
+                if (isset($data['paging']['next'])) {
+                    $maxId = $data['paging']['cursors']['after'];
+                } else {
+                    $maxId = null;
+                }
+            } while ($maxId);
 
-            return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
+            return count($posts);
 
-                $posts = $this->getPosts($sDate, $eDate);
-
-                if(!isset($posts['data'])) return 0;
-
-                return count($posts['data']);
-            });
         } catch (\Exception $e) {
             throw $e;
         }
@@ -326,7 +325,17 @@ class Channel extends Model
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
-                $posts = $this->getPosts($sDate, $eDate)['data'];
+                $maxId = null;
+                $posts = [];
+                do {
+                    $data = $this->getPagePosts($sDate, $eDate, ['max_id' => $maxId]);
+                    $posts = array_merge($posts, $data['data']);
+                    if (isset($data['paging']['next'])) {
+                        $maxId = $data['paging']['cursors']['after'];
+                    } else {
+                        $maxId = null;
+                    }
+                } while ($maxId);
 
                 $grouped_posts = collect($posts)->sortBy('created_time')->groupBy(function($post) {
                     return Carbon::parse($post['created_time'])->format('Y-m-d');
@@ -391,18 +400,30 @@ class Channel extends Model
 
             return Cache::remember($key, $minutes, function () use ($sDate, $eDate) {
 
-                $posts = $this->getPosts($sDate, $eDate)['data'];
+                $maxId = null;
+                $posts = [];
+                do {
+                    $data = $this->getPagePosts($sDate, $eDate, ['max_id' => $maxId]);
+                    $posts = array_merge($posts, $data['data']);
+                    if (isset($data['paging']['next'])) {
+                        $maxId = $data['paging']['cursors']['after'];
+                    } else {
+                        $maxId = null;
+                    }
+                } while ($maxId);
 
                 $preparePosts = collect();
 
                 foreach($posts as $post)
                 {
+                    $message = array_key_exists('message', $post) ? $post['message'] : $post['attachments']['data'][0]['title'];
                     $post = collect($post);
                     $post->put('date', Carbon::parse($post['created_time'])->format('M d, H:i'));
                     $post->put('reactions', $post['reactions']['summary']['total_count']);
                     $post->put('comments', $post['comments']['summary']['total_count']);
                     $post->put('shares', 0);
                     $post->put('timestamp', Carbon::parse($post['created_time'])->timestamp);
+                    $post->put('message', $message);
 
                     $preparePosts->push($post);
                 }
