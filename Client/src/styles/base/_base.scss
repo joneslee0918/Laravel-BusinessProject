@@ -684,6 +684,50 @@ input {
     color:#ccc;
 }
 
+.twitter-info-card {
+    width: 500px;
+    min-width: 320px;
+    padding: 15px;
+}
+
+.twitter-info-card-profile-pic {
+    margin-top: -27px;
+    display: flex;
+    align-items: center;
+}
+
+.twitter-info-card-stats {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.twitter-info-card-profile-container{
+    width:470px;
+    height: 156px;
+    min-width: 320px;
+    background: black;
+    overflow:hidden;
+}
+
+.twitter-info-card-profile-container img{
+    width: 100% !important;
+    height: 100%;
+    border-radius: inherit !important;
+}
+
+.twitter-info-card-profile-pic span {
+    margin-top: 27px;
+    padding: 10px;
+    display: block;
+}
+
+.twitter-info-card-info-item {
+    padding: 5px 0;
+    border-top: 1px solid #ddd;
+}
+
 .link-preview {
     display: flex;
     background: #efefef;

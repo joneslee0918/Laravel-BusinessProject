@@ -76,6 +76,21 @@ trait Tweetable
     }
 
 
+    public function getUserInfo($username)
+    {
+        try {
+            $key = $username . "-twitterInfo";
+            $minutes = 1;
+            return Cache::remember($key, $minutes, function () use ($username) {
+                $this->setAsCurrentUser();
+                return Twitter::getUsersLookup(['screen_name' => $username]);
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+
     /**
      * @param array $media
      * @return mixed

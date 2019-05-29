@@ -48,7 +48,7 @@ const TwitterDefaultFeed = ({feedItem, setImages, channel, updateItem}) => {
             return {src: file.media_url_https, type: file.type, source}
         });
 
-        const postData = {profileImg, username, text, date, media, setImages, statusId, sharedStatus, networkType};
+        const postData = {profileImg, username, text, date, media, setImages, statusId, sharedStatus, networkType, channel};
 
         return (
             <StreamPost {...postData} >
@@ -81,7 +81,7 @@ const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem}) => {
             return {src: file.media_url_https, type: file.type, source}
         });
 
-        const postData = {profileImg, username, text, date, media, setImages, statusId, networkType};
+        const postData = {profileImg, username, text, date, media, setImages, statusId, networkType, channel};
 
         return(
             <div>
@@ -115,7 +115,7 @@ const ScheduledFeed = ({feedItem, channel, setImages}) => {
         media = media.map(file => ({src: file.absolutePath, type: "photo"}));
 
         return (
-            <StreamPost {...{profileImg, username, text, date, media, setImages}} />
+            <StreamPost {...{profileImg, username, text, date, media, setImages, channel}} />
         )}catch(e){ 
             console.log(e);
             return <div></div>
@@ -173,7 +173,7 @@ const FacebookPostsFeed = ({feedItem, setImages, channel, updateItem}) => {
         attachmentData.media = media;
 
         const statusId = feedItem.id;
-        const postData = {profileImg, username, text, attachmentData, date, media, setImages, statusId, networkType};
+        const postData = {profileImg, username, text, attachmentData, date, media, setImages, statusId, networkType, channel};
 
         return (
             <StreamPost {...postData} >

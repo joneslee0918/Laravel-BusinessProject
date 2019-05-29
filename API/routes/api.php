@@ -90,6 +90,8 @@ Route::prefix("twitter")->group(function(){
         Route::post('tweet/delete', 'Twitter\Actions\StatusController@delete');
         Route::post('dm', 'Twitter\Actions\DMController@DM');
 
+        Route::get('user/info', 'Twitter\UserController@info');
+
         Route::post('streams/scheduled', 'Twitter\StreamsFeedController@scheduled');
         Route::post('streams/{type}', 'Twitter\StreamsFeedController@index');
         Route::get('insights/{type}', 'Twitter\AnalyticsController@pageInsightsByType');

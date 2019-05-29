@@ -3,15 +3,20 @@ import StreamFeedMedia from './StreamFeedMedia';
 import ReadMore from '../ReadMore';
 import {truncate} from '../../utils/helpers';
 import {toHumanTime} from '../../utils/helpers';
+import TwitterInfoCard from './TwitterInfoCard';
 
-const StreamPost = ({profileImg, username, date, text, media, setImages, children, statusId, attachmentData, sharedStatus, networkType}) => {
+const StreamPost = ({profileImg, username, date, text, media, setImages, children, statusId, attachmentData, sharedStatus, networkType, channel}) => {
 
     const postTime = date ? toHumanTime(date) : "";
     return <div className="stream-feed-container">
                         <div className="post-info">
                             <img src={profileImg} />
                             <div className="post-info-item">
-                                <a href="#" className="username"><strong>{username}</strong></a>
+                                {networkType == "twitter" ?
+                                    <TwitterInfoCard username={username} channelId={channel.id}/>
+                                    :
+                                    <a href="#" className="username"><strong>{username}</strong></a>
+                                }
                                 <div className="post-date">{postTime}</div>
                             </div>
                         </div>
