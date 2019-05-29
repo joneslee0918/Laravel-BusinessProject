@@ -32,6 +32,13 @@ trait FacebookTrait
         return $user;
     }
 
+    public function getProfileById($id){
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/$id");
+
+        return $response->getDecodedBody();
+    }
+
     public function getPages(){
         $fb = $this->setAsCurrentUser();
         $response = $fb->get('/me/accounts?fields=access_token,picture,name');

@@ -8,7 +8,7 @@ class TwitterInfoCard extends React.Component{
 
     state = {
         user: false,
-        loading: false
+        loading: true
     }
 
     fetchInfo = () => {
@@ -46,7 +46,7 @@ class TwitterInfoCard extends React.Component{
                 {
                 close => ( 
                     user ?
-                    <div className="twitter-info-card">
+                    <div className="twitter-info-card scrollbar">
                         <div className="twitter-info-card-profile-container">  
                             {typeof user.profile_banner_url !== "undefined" && user.profile_banner_url && 
                             <img src={user.profile_banner_url} />}                     

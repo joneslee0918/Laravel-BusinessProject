@@ -29,7 +29,7 @@ const StreamPost = ({profileImg, username, date, text, media, setImages, childre
                                         <div className="post-info">
                                             <img src={sharedStatus.user.profile_image_url_https} />
                                             <div className="post-info-item">
-                                                <a href="#" className="username"><strong>{sharedStatus.user.name}</strong></a>
+                                                <TwitterInfoCard username={sharedStatus.user.screen_name} channelId={channel.id}/>
                                                 <div className="post-date">{sharedStatus.created_at ? toHumanTime(sharedStatus.created_at) : ""}</div>
                                             </div>
                                         </div>
