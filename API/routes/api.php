@@ -119,6 +119,8 @@ Route::prefix("facebook")->group(function(){
         Route::post('post/comment', 'Facebook\Actions\CommentController@comment');
 
         Route::post('message/send', 'Facebook\Actions\MessageController@send');
+
+        Route::get('user/info', 'Facebook\UserController@info');
     });
 });
 

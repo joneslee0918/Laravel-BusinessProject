@@ -16,6 +16,13 @@ export const getAccounts = () => {
             });
 };
 
+export const getInfoById = (channelId, id) => {
+    return axios.get(`${apiUrl}/facebook/user/info?channelId=${channelId}&id=${id}`)
+    .then((response) => {
+                return response.data;
+            });
+};
+
 export const saveAccounts = (accounts) => {
     return axios.post(`${apiUrl}/facebook/channels/accounts/save`, {
                 accounts

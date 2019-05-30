@@ -32,11 +32,15 @@ trait FacebookTrait
         return $user;
     }
 
-    public function getProfileById($id){
-        $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/$id");
-
-        return $response->getDecodedBody();
+    public function getInfoById($id){
+        $key = "$id-facebookDetails";
+        $minutes = 1;
+        return Cache::remember($key, $minutes, function () use ($id){
+            $fb = $this->setAsCurrentUser();
+            $response = $fb->get("/$id?fields=about,picture,name,bio,company_overview,cover,description,general_info,genre,products,website,fan_count");
+    
+            return $response->getDecodedBody();
+        });
     }
 
     public function getPages(){

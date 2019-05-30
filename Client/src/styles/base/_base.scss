@@ -684,7 +684,7 @@ input {
     color:#ccc;
 }
 
-.twitter-info-card {
+.twitter-info-card, .facebook-info-card {
     width: 500px;
     max-height: 500px;
     overflow: auto;
@@ -692,20 +692,20 @@ input {
     padding: 15px;
 }
 
-.twitter-info-card-profile-pic {
+.twitter-info-card-profile-pic, .facebook-info-card-profile-pic {
     margin-top: -27px;
     display: flex;
     align-items: center;
 }
 
-.twitter-info-card-stats {
+.twitter-info-card-stats, .facebook-info-card-stats {
     display: flex;
     justify-content: space-between;
     text-align: center;
     padding: 10px 0;
 }
 
-.twitter-info-card-profile-container{
+.twitter-info-card-profile-container, .facebook-info-card-profile-container{
     width:470px;
     height: 156px;
     min-width: 320px;
@@ -713,19 +713,20 @@ input {
     overflow:hidden;
 }
 
-.twitter-info-card-profile-container img{
+.twitter-info-card-profile-container img, .facebook-info-card-profile-container img{
     width: 100% !important;
     height: 100%;
     border-radius: inherit !important;
+    object-fit:cover;
 }
 
-.twitter-info-card-profile-pic span {
+.twitter-info-card-profile-pic span, .facebook-info-card-profile-pic span {
     margin-top: 27px;
     padding: 10px;
     display: block;
 }
 
-.twitter-info-card-info-item {
+.twitter-info-card-info-item, .facebook-info-card-info-item {
     padding: 5px 0;
     border-top: 1px solid #ddd;
 }

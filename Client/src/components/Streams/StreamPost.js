@@ -4,19 +4,17 @@ import ReadMore from '../ReadMore';
 import {truncate} from '../../utils/helpers';
 import {toHumanTime} from '../../utils/helpers';
 import TwitterInfoCard from './TwitterInfoCard';
+import FacebookInfoCard from './FacebookInfoCard';
 
-const StreamPost = ({profileImg, username, date, text, media, setImages, children, statusId, attachmentData, sharedStatus, networkType, channel}) => {
+const StreamPost = ({profileImg, username, date, text, media, setImages, children, statusId, attachmentData, sharedStatus, networkType, channel, accountId}) => {
 
     const postTime = date ? toHumanTime(date) : "";
     return <div className="stream-feed-container">
                         <div className="post-info">
                             <img src={profileImg} />
                             <div className="post-info-item">
-                                {networkType == "twitter" ?
-                                    <TwitterInfoCard username={username} channelId={channel.id}/>
-                                    :
-                                    <a href="#" className="username"><strong>{username}</strong></a>
-                                }
+                                {networkType == "twitter" && <TwitterInfoCard username={username} channelId={channel.id}/>}
+                                {networkType == "facebook" && <FacebookInfoCard username={username} channelId={channel.id} accountId={accountId}/>}
                                 <div className="post-date">{postTime}</div>
                             </div>
                         </div>

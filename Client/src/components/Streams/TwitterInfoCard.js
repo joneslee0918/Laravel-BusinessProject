@@ -54,7 +54,7 @@ class TwitterInfoCard extends React.Component{
                         </div>
                         <div className="twitter-info-card-profile-pic">
                             <img src={user.profile_image_url_https} />
-                            <span>{user.name} @{abbrNum(user.screen_name)}</span> 
+                            <span>{user.name} @{user.screen_name}</span> 
                         </div>
 
                         <div className="twitter-info-card-stats">
