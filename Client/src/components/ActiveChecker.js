@@ -56,6 +56,7 @@ class ActiveChecker extends React.Component{
     onFacebookSuccess = (response) => {
         try{
             this.setState(() => ({loading: true}));
+            const accountId = this.props.selectedChannel.details.original_id;
             this.props.startAddFacebookChannel(response.accessToken).then(() => {
 
                 if(this.props.selectedChannel.account_type == "profile"){
@@ -63,7 +64,8 @@ class ActiveChecker extends React.Component{
                     return;
                 }else{
                     getAccounts().then((response) => {
-                        const accounts = findAccounts(response, {prop: this.props.selectedChannel.details.original_id});
+                        const accounts = findAccounts(response, {prop: accountId});
+                        console.log(this.props.selectedChannel.details.original_id, accounts);
                         
                         if(accounts.length){
                             saveAccounts(accounts)
