@@ -22,14 +22,14 @@ class ActiveChecker extends React.Component{
 
     componentDidMount() {
         this.setState(() => ({
-            active: this.props.selectedChannel ? this.props.selectedChannel.active : true
+            active: this.props.selectedChannel ? this.props.selectedChannel.active : false
         }));
     }
 
     componentDidUpdate(prevProps) {
         if(prevProps.selectedChannel !== this.props.selectedChannel){
             this.setState(() => ({
-                active: this.props.selectedChannel ? this.props.selectedChannel.active : true
+                active: this.props.selectedChannel ? this.props.selectedChannel.active : false
             }));
         }
     }
