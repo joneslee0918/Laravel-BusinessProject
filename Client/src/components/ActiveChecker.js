@@ -65,8 +65,7 @@ class ActiveChecker extends React.Component{
                 }else{
                     getAccounts().then((response) => {
                         const accounts = findAccounts(response, {prop: accountId});
-                        console.log(this.props.selectedChannel.details.original_id, accounts);
-                        
+            
                         if(accounts.length){
                             saveAccounts(accounts)
                             .then(() => {
