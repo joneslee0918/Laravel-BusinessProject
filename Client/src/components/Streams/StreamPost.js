@@ -3,15 +3,18 @@ import StreamFeedMedia from './StreamFeedMedia';
 import ReadMore from '../ReadMore';
 import {truncate} from '../../utils/helpers';
 import {toHumanTime} from '../../utils/helpers';
+import TwitterInfoCard from './TwitterInfoCard';
+import FacebookInfoCard from './FacebookInfoCard';
 
-const StreamPost = ({profileImg, username, date, text, media, setImages, children, statusId, attachmentData, sharedStatus, networkType}) => {
+const StreamPost = ({profileImg, username, date, text, media, setImages, children, statusId, attachmentData, sharedStatus, networkType, channel, accountId}) => {
 
     const postTime = date ? toHumanTime(date) : "";
     return <div className="stream-feed-container">
                         <div className="post-info">
                             <img src={profileImg} />
                             <div className="post-info-item">
-                                <a href="#" className="username"><strong>{username}</strong></a>
+                                {networkType == "twitter" && <TwitterInfoCard username={username} channelId={channel.id}/>}
+                                {networkType == "facebook" && <FacebookInfoCard username={username} channelId={channel.id} accountId={accountId}/>}
                                 <div className="post-date">{postTime}</div>
                             </div>
                         </div>
@@ -24,7 +27,7 @@ const StreamPost = ({profileImg, username, date, text, media, setImages, childre
                                         <div className="post-info">
                                             <img src={sharedStatus.user.profile_image_url_https} />
                                             <div className="post-info-item">
-                                                <a href="#" className="username"><strong>{sharedStatus.user.name}</strong></a>
+                                                <TwitterInfoCard username={sharedStatus.user.screen_name} channelId={channel.id}/>
                                                 <div className="post-date">{sharedStatus.created_at ? toHumanTime(sharedStatus.created_at) : ""}</div>
                                             </div>
                                         </div>
