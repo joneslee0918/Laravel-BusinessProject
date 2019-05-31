@@ -38,9 +38,8 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $user = \App\Models\Channel::find(53);
-    return $user;
-    return $user->getProfileById("243063499773793");
+    $user = \App\Models\Facebook\Channel::find(6);
+    return $user->pageInsightsByType('postsCount', 1551438000000, 1556618400000);
 
 });
 

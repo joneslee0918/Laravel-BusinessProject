@@ -32,17 +32,6 @@ trait FacebookTrait
         return $user;
     }
 
-    public function getInfoById($id){
-        $key = "$id-facebookDetails";
-        $minutes = 1;
-        return Cache::remember($key, $minutes, function () use ($id){
-            $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/$id?fields=about,picture,name,bio,company_overview,cover,description,general_info,genre,products,website,fan_count");
-    
-            return $response->getDecodedBody();
-        });
-    }
-
     public function getPages(){
         $fb = $this->setAsCurrentUser();
         $response = $fb->get('/me/accounts?fields=access_token,picture,name');
@@ -205,6 +194,14 @@ trait FacebookTrait
     public function pageLikes($period='day', $since=null, $until=null){
         $fb = $this->setAsCurrentUser();
         $response = $fb->get("/{$this->original_id}/insights/page_fans?since={$since}&until={$until}&period={$period}");
+
+        return $response->getDecodedBody();
+    }
+
+    public function pageNewLikes($period = 'day', $since = null, $until = null)
+    {
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/insights/page_fan_adds_unique/{$period}");
 
         return $response->getDecodedBody();
     }

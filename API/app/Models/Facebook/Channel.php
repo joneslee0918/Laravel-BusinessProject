@@ -67,39 +67,45 @@ class Channel extends Model
         switch ($days) {
             case 1:
                 $period = 'day';
+                $since = Carbon::now()->subDays(1)->timestamp;
+                $until = Carbon::now()->timestamp;
                 break;
             case 7:
                 $period = 'week';
+                $since = Carbon::now()->subDays(7)->timestamp;
+                $until = Carbon::now()->timestamp;
                 break;
             case 30:
-                $period = 'month';
+                $period = 'days_28';
+                $since = Carbon::now()->subDays(28)->timestamp;
+                $until = Carbon::now()->timestamp;
                 break;
 
             default:
                 $period = 'day';
+                $since = Carbon::now()->subDays(1)->timestamp;
+                $until = Carbon::now()->timestamp;
                 break;
         }
-
 
         try {
             $key = $this->id . "-facebookAnalytics-$days";
             $minutes = 15;
-            return Cache::remember($key, $minutes, function () use ($days, $period) {
+            return Cache::remember($key, $minutes, function () use ($since, $until, $period) {
                 $data = [];
-                $startDate = Carbon::now();
 
-                $likes = $this->pageLikes($period)['data'][0]['values'][1]['value'];
+                $likes = $this->pageNewLikes($period)['data'][0]['values'][1]['value'];
                 $unlikes = $this->pageUnlikes($period)['data'][0]['values'][1]['value'];
                 $engagement = $this->pageEngagement($period)['data'][0]['values'][1]['value'];
                 $reactions = $this->pageTotalReactions($period);
-                $posts = $this->posts()->whereBetween('original_created_at', [$startDate->subDays($days), Carbon::now()])->get();
+                $posts = count($this->getPagePosts($since, $until)['data']);
 
-                $data = [
+                    $data = [
                     'likes' => $likes,
                     'unlikes' => $unlikes,
                     'engagement' => $engagement,
                     'reactions' => $reactions,
-                    'posts' => $posts->count()
+                    'posts' => $posts
                 ];
 
                 return $data;
