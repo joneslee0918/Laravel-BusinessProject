@@ -98,7 +98,7 @@ trait FacebookTrait
 
         $pageId = isset($params["q"]) ? $params["q"] : $this->original_id;
         $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
-        $key = $pageId . "-myPosts-$maxId";
+        $key = $pageId . "-pageFeed-$maxId";
         $after = $maxId ? "&after=$maxId" : "";
         $minutes = 1;
         return Cache::remember($key, $minutes, function () use ($pageId, $after) {
@@ -223,6 +223,14 @@ trait FacebookTrait
     public function pageLikes($period='day', $since=null, $until=null){
         $fb = $this->setAsCurrentUser();
         $response = $fb->get("/{$this->original_id}/insights/page_fans?since={$since}&until={$until}&period={$period}");
+
+        return $response->getDecodedBody();
+    }
+
+    public function pageNewLikes($period = 'day', $since = null, $until = null)
+    {
+        $fb = $this->setAsCurrentUser();
+        $response = $fb->get("/{$this->original_id}/insights/page_fan_adds_unique/{$period}");
 
         return $response->getDecodedBody();
     }
