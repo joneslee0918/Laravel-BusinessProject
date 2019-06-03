@@ -51,7 +51,7 @@ function getErrorResponse($e, $channel = false){
         
         $username = $channel->details->name;
         $type = $channel->type;
-        return response()->json(['error' => $error, 'message' => "Your $type account \"$username\" needs to be reconnected.", "network" => $type], 401);
+        return response()->json(['error' => $error, 'message' => "Your $type account \"$username\" needs to be reconnected."], 401);
     }
     return response()->json(['message' => $e->getMessage(), 'error' => $e->getTrace(), 'errorMsg' => $e->getMessage()], 400);
 }

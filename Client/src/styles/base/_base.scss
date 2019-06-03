@@ -339,10 +339,6 @@ input {
     z-index: 999;
 }
 
-.vertical-menu .dropdown-menu{
-    width:212px;
-}
-
 .v-menu-links {
     margin-top: 30px;
     height: calc(100% - 300px);
@@ -605,80 +601,6 @@ input {
     width: 190px;
 }
 
-.react-autosuggest__container {
-    position: relative;
-  }
-  
-  .react-autosuggest__input {
-    width: 280px;
-    height: 30px;
-    padding: 10px 20px !important;
-    font-family: Helvetica, sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    border: 1px solid #aaa;
-    border-radius: 4px;
-  }
-  
-  .react-autosuggest__input--focused {
-    outline: none;
-  }
-  
-  .react-autosuggest__input--open {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  
-  .react-autosuggest__suggestions-container {
-    display: none;
-  }
-  
-  .react-autosuggest__suggestions-container--open {
-    display: block;
-    position: absolute;
-    top: 31px;
-    width: 280px;
-    height: 200px;
-    overflow: auto;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid #aaa;
-    background-color: #fff;
-    font-family: Helvetica, sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    z-index: 2;
-  }
-
-  .autocomplete-done{
-      margin-top:10px;
-      border-radius:20px !important;
-  }
-  
-  .react-autosuggest__suggestions-list {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
-  
-  .react-autosuggest__suggestion {
-    cursor: pointer;
-    padding: 10px 20px;
-  }
-  
-  .react-autosuggest__suggestion--highlighted {
-    background-color: #ddd;
-  }
-  
-  .react-autosuggest__suggestion-match {
-    color: red;
-    font-weight: bold;
-  }
-
 .container-p10{
     padding: 10px;
     width: 100%;
@@ -687,7 +609,6 @@ input {
 .container-nodata{
     display: flex;
     justify-content: center;
-    text-align: center;
     align-items: center;
     background: white;
     width: 100%;
@@ -761,53 +682,6 @@ input {
 .under-txt{
     font-size: 0.9em;
     color:#ccc;
-}
-
-.twitter-info-card, .facebook-info-card {
-    width: 500px;
-    max-height: 500px;
-    overflow: auto;
-    min-width: 320px;
-    padding: 15px;
-}
-
-.twitter-info-card-profile-pic, .facebook-info-card-profile-pic {
-    margin-top: -27px;
-    display: flex;
-    align-items: center;
-}
-
-.twitter-info-card-stats, .facebook-info-card-stats {
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-    padding: 10px 0;
-}
-
-.twitter-info-card-profile-container, .facebook-info-card-profile-container{
-    width:470px;
-    height: 156px;
-    min-width: 320px;
-    background: black;
-    overflow:hidden;
-}
-
-.twitter-info-card-profile-container img, .facebook-info-card-profile-container img{
-    width: 100% !important;
-    height: 100%;
-    border-radius: inherit !important;
-    object-fit:cover;
-}
-
-.twitter-info-card-profile-pic span, .facebook-info-card-profile-pic span {
-    margin-top: 27px;
-    padding: 10px;
-    display: block;
-}
-
-.twitter-info-card-info-item, .facebook-info-card-info-item {
-    padding: 5px 0;
-    border-top: 1px solid #ddd;
 }
 
 .link-preview {
@@ -2668,26 +2542,20 @@ aside .btn-group {
     margin: 100px auto 0 auto;
 }
 
-.scrollbar::-webkit-scrollbar-track, 
-.react-autosuggest__suggestions-container--open::-webkit-scrollbar-track, 
-.channel-list::-webkit-scrollbar-track
+.scrollbar::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 10px;
 	background-color: #F5F5F5;
 }
 
-.scrollbar::-webkit-scrollbar, 
-.react-autosuggest__suggestions-container--open::-webkit-scrollbar, 
-.channel-list::-webkit-scrollbar
+.scrollbar::-webkit-scrollbar
 {
 	width: 12px;
 	background-color: #F5F5F5;
 }
 
-.scrollbar::-webkit-scrollbar-thumb, 
-.react-autosuggest__suggestions-container--open::-webkit-scrollbar-thumb, 
-.channel-list::-webkit-scrollbar-thumb
+.scrollbar::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);

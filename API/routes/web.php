@@ -38,9 +38,8 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $user = \App\Models\Facebook\Channel::find(5);
-   // return $user;
-    return $user->searchPages(["q" => "Anime"]);
+    $user = \App\Models\Facebook\Channel::find(6);
+    return $user->pageInsightsByType('postsCount', 1551438000000, 1556618400000);
 
 });
 

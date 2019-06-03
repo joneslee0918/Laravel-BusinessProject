@@ -4,7 +4,7 @@ import {NavLink, Link} from "react-router-dom";
 const VerticalMenu = ({ menuItems, channels, selectedChannel, selectChannel }) => {
     return (
         <div>
-            <aside className="vertical-menu gradient-background-teal-blue scrollbar">
+            <aside className="vertical-menu gradient-background-teal-blue">
 
                 <div className="btn-group">
                     <ProfileInfo selectedChannel = {selectedChannel} />

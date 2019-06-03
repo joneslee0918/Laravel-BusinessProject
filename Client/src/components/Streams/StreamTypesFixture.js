@@ -69,7 +69,7 @@ const streamTypes = {
         },
         {
             label: "Pages",
-            value: "pages",
+            value: "myPosts",
             icon: "flag"
         },
         {

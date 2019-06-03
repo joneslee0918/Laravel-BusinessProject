@@ -80,7 +80,7 @@ class TwitterOverview extends React.Component {
                                     />
                                 </div>        
                             </div> 
-                            <div className="analytics-head-right">
+                            {/* <div className="analytics-head-right">
                                 <DateRangePicker
                                     startDate={this.state.startDate} // momentPropTypes.momentObj or null,
                                     startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
@@ -93,7 +93,7 @@ class TwitterOverview extends React.Component {
                                     showDefaultInputIcon={true}
                                     onClose={({})=> this.onCalendarClose()}
                                 />
-                            </div>                   
+                            </div>                    */}
                         </div>                        
                     </div>
                 </div>
@@ -103,7 +103,7 @@ class TwitterOverview extends React.Component {
                             name='Tweets' 
                             type="tweetsCount" 
                             description='tweets' 
-                            tooltipDesc='The number of tweets published from your Twitter account'
+                            tooltipDesc='Total tweets of your selected twitter account'
                             {...propData}/>               
                     </div>
                     <div className="col-md-3 col-xs-12">
@@ -111,27 +111,27 @@ class TwitterOverview extends React.Component {
                             name='Followers' 
                             type="followersCount" 
                             description='followers'
-                            tooltipDesc='The number of people who are following your Twitter account'
+                            tooltipDesc='Total followers of your selected twitter account'
                             {...propData}/>
                     </div>
                     <div className="col-md-3 col-xs-12">
-                        <TwitterOverviewCard 
-                            name='Engagement' 
-                            type="tweetsCount" 
-                            description='engagement' 
-                            tooltipDesc='The sum of interactions received for the tweets published in the selected timeframe: retweets, replies and likes'
-                            {...propData}/>
+                        <TwitterOverviewCard
+                            name='Following'
+                            type="followingCount"
+                            description='following'
+                            tooltipDesc='Total people who follows you on twitter'
+                            {...propData} />
                     </div>
                     <div className="col-md-3 col-xs-12">
                         <TwitterOverviewCard 
-                            name='Traffic' 
-                            type="tweetsCount" 
-                            description='click' 
-                            tooltipDesc='Clicks'
+                            name='Likes' 
+                            type="totalLikesCount" 
+                            description='likes' 
+                            tooltipDesc='Number of likes with your selected account'
                             {...propData}/>
                     </div>
                 </div>
-                <div className="row mb20">
+                {/* <div className="row mb20">
                     <div className="col-md-3 col-xs-12">
                         <TwiterPageOverviewCard 
                             name="Tweets by Account"  
@@ -180,7 +180,7 @@ class TwitterOverview extends React.Component {
                             tooltipDesc='The sum of interactions received for the tweets published in the selected timeframe: retweets, replies and likes'
                             {...propData}/>
                     </div>
-                </div>
+                </div> */}
                 <div className="row mb20">
                     <div className="col-xs-12">
                         <TweetsTable 

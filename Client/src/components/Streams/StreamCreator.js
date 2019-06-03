@@ -8,7 +8,6 @@ import streamTypes from './StreamTypesFixture';
 import {addStream} from '../../requests/streams';
 import Loader from '../Loader';
 import {isEmptyObject} from '../../utils/helpers';
-import AutoCompleteSearch from '../AutoCompleteSearch';
 
 class StreamCreator extends React.Component{
 
@@ -19,7 +18,6 @@ class StreamCreator extends React.Component{
           {label: <ProfileChannel channel={this.props.channels[0]} />, value: this.props.channels[0].name, type: this.props.channels[0].type, id: this.props.channels[0].id} : {}),
         loading: false,
         searchModal: false,
-        autoCompleteSearchModal: false,
         searchTerm: ""
     }
 
@@ -46,15 +44,11 @@ class StreamCreator extends React.Component{
     };
 
     handleTypeClick = (item) => {
-        if(item.value === "search"){
+        if(item.value !== "search"){
+            this.submitStream(item);
+        }else{
             this.toggleSearchModal();
-            return;
-        }else if(item.value === "pages"){
-            this.toggleAutoCompleteSearchModal();
-            return;
         }
-
-        this.submitStream(item);
     }
 
     handleSearchInputChange = (event) => {
@@ -75,23 +69,7 @@ class StreamCreator extends React.Component{
                 this.submitStream({label: "Search", value: "search", icon: "search"});
             }
         });
-    };
-
-    toggleAutoCompleteSearchModal = () => {
-        this.setState(() => ({
-            autoCompleteSearchModal: !this.state.autoCompleteSearchModal
-        }), () => {
-            if(!this.state.autoCompleteSearchModal && this.state.searchTerm !== ""){
-                this.submitStream({label: "Pages", value: "pages", icon: "flag"});
-            }
-        });
-    };
-
-    setAutoCompleteSelected = (value) => {
-        this.setState(() => ({
-            searchTerm: value
-        }));
-    };
+    }
 
 
     render(){
@@ -110,13 +88,6 @@ class StreamCreator extends React.Component{
                         <div>
                             <input type="text" onChange={e => this.handleSearchInputChange(e)} value={this.state.searchTerm} placeholder="Example: coca cola or #fashion"/>
                             <button onClick={this.toggleSearchModal} className="publish-btn-group gradient-background-teal-blue link-cursor">Done</button>
-                        </div>
-                    </Modal>
-
-                    <Modal isOpen={!!this.state.autoCompleteSearchModal} ariaHideApp={false} className="stream-type-modal search-modal">
-                        <div>
-                            <AutoCompleteSearch placeholder="Type a page name..." channelId={this.state.selectedAccount.id} setSelected={this.setAutoCompleteSelected}/>
-                            <button onClick={this.toggleAutoCompleteSearchModal} className="publish-btn-group autocomplete-done gradient-background-teal-blue link-cursor">Done</button>
                         </div>
                     </Modal>
 

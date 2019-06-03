@@ -126,13 +126,6 @@ export const getFollowing = (order = 'desc', page = 1) => {
     });
 };
 
-export const getUserInfo = (channelId, username) => {
-    return axios.get(`${apiUrl}/twitter/user/info?channelId=${channelId}&username=${username}`)
-    .then((response) => {
-        return response.data;
-    });
-}
-
 
 export const follow = (userId) => {
     return axios.patch(`${apiUrl}/twitter/follow/${userId}`)

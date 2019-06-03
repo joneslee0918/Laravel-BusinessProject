@@ -188,16 +188,30 @@ class Channel extends Model
 
     public function tweetsCount($sDate, $eDate)
     {
-        $data = $this->getTweets();
+        $data = $this->getData();
 
-        return count($data);
+        return $data->statuses_count;
     }
 
     public function followersCount($sDate, $eDate)
     {
-        $data = $this->getFollowers();
+        $data = $this->getData();
 
-        return count($data);
+        return $data->followers_count;
+    }
+
+    public function followingCount($sDate, $eDate)
+    {
+        $data = $this->getData();
+
+        return $data->friends_count;
+    }
+
+    public function totalLikesCount($sDate, $eDate)
+    {
+        $data = $this->getData();
+
+        return $data->favourites_count;
     }
 
     public function tweetsChartData($sDate, $eDate)

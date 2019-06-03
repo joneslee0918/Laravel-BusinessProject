@@ -32,17 +32,6 @@ trait FacebookTrait
         return $user;
     }
 
-    public function getInfoById($id){
-        $key = "$id-facebookDetails";
-        $minutes = 1;
-        return Cache::remember($key, $minutes, function () use ($id){
-            $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/$id?fields=about,picture,name,bio,company_overview,cover,description,general_info,genre,products,website,fan_count");
-    
-            return $response->getDecodedBody();
-        });
-    }
-
     public function getPages(){
         $fb = $this->setAsCurrentUser();
         $response = $fb->get('/me/accounts?fields=access_token,picture,name');
@@ -94,21 +83,6 @@ trait FacebookTrait
         });
     }
 
-    public function getPageFeed($params = []){
-
-        $pageId = isset($params["q"]) ? $params["q"] : $this->original_id;
-        $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
-        $key = $pageId . "-pageFeed-$maxId";
-        $after = $maxId ? "&after=$maxId" : "";
-        $minutes = 1;
-        return Cache::remember($key, $minutes, function () use ($pageId, $after) {
-            $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/{$pageId}/posts?fields=message,attachments,created_time,to,from{id,name,picture},shares{link},likes.summary(true),comments.summary(true)$after");
-
-            return $response->getDecodedBody();
-        });
-    }
-
     public function getPagePosts($since = null, $until = null, $params = [], $pageId = "", $limit = 100){
 
         $pageId = $pageId ? $pageId : $this->original_id;
@@ -129,14 +103,11 @@ trait FacebookTrait
         $maxId = isset($params["max_id"]) ? $params["max_id"] : "";
         $query = isset($params["q"]) ? $params["q"] : "";
         $after = $maxId ? "&after=$maxId" : "";
-        $key = $query . "-search-$maxId";
-        $minutes = 1;
-        return Cache::remember($key, $minutes, function () use ($after, $query) {
-            $fb = $this->setAsCurrentUser();
-            $response = $fb->get("/pages/search?q=$query$after");
-    
-            return $response->getDecodedBody();
-        });
+
+        $fb = $this->setAsCurrentUser();
+        // $fb = app(Facebook::class);
+        // $fb->setDefaultAccessToken("256286968360427|5d2182648d1f5a58a6b2d95e42c1ee0a");
+        $response = $fb->get("/pages/search?q=$query$after");
     }
 
     public function getUnpublished($params = []){

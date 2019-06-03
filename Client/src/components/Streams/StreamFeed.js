@@ -1,5 +1,4 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import ReactInterval from 'react-interval';
 import Loader from 'react-loader-spinner';
@@ -18,8 +17,7 @@ class StreamFeed extends React.Component{
         loadMore: false,
         hasMore: false,
         nextPage: "",
-        error: false,
-        errorStatus: false
+        error: false
     };
 
     refreshInterval = '';
@@ -61,14 +59,7 @@ class StreamFeed extends React.Component{
             
             if(!items.length) return;
         }).catch(e => {
-            let error = "You may have exceeded the rate limit.";
-            let errorStatus = e.response.status;
-                      
-            if(errorStatus === 401){
-                error = e.response.data.message;
-            }
-            
-            this.setState(() => ({loading: false, error, errorStatus}));  
+            this.setState(() => ({loading: false, error: e}));
         });
     };
 
@@ -209,8 +200,7 @@ class StreamFeed extends React.Component{
                             <div className="container-nodata">
                                 <div>
                                     <p><i className="fa fa-folder-open"></i> </p>
-                                    <span>{this.state.error ? this.state.error : "No data found."}</span>
-                                    {this.state.errorStatus === 401 && <div><NavLink to={`/accounts/${channel.type}`}>Reconnect</NavLink></div>}
+                                    <span>{this.state.error ? "Rate limit exceeded" : "No data found."}</span>
                                 </div>
                             </div>
                     }
