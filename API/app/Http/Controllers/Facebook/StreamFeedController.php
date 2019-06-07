@@ -20,24 +20,32 @@ class StreamsFeedController extends Controller{
 
     public function index($type, Request $request){
 
-        $channelId = $request->get("channelId");
-        $params = $request->get("query") ? ["q" => $request->get("query")] : [];
-        
-        if($request->get("nextPage")) $params["max_id"] = $request->get("nextPage");
+        try{
+            $channelId = $request->get("channelId");
+            $params = $request->get("query") ? ["q" => $request->get("query")] : [];
+            
+            if($request->get("nextPage")) $params["max_id"] = $request->get("nextPage");
 
-        if(!$channelId) return;
+            if(!$channelId) return;
 
-        $channel = $this->user->channels()->find($channelId);
+            $channel = $this->user->channels()->find($channelId);
 
-        if(!$channel) return;
+            $global = $channel;
 
-        $channel = $channel->details;
+            if(!$channel) return;
 
-        $func = "get".ucfirst($type);
+            $channel = $channel->details;
 
-        $feed = $channel->{$func}($params);
+            if($type == "pages") $func = "getPageFeed";
+            else $func = "get".ucfirst($type);
 
-        if(!$feed) return;
+            $feed = $channel->{$func}($params);
+
+            if(!$feed) return; 
+        }catch(\Exception $e){
+            return getErrorResponse($e, $global);
+        }
+
 
         return response()->json($feed, 200);
     }

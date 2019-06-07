@@ -39,6 +39,7 @@ const TwitterDefaultFeed = ({feedItem, setImages, channel, updateItem}) => {
         const profileImg = feedItem.user.profile_image_url_https;
         const sharedStatus = feedItem.retweeted_status;
         const username = feedItem.user.screen_name;
+        const accountId = feedItem.user.id_str;
         const date = feedItem.created_at;
         const statusId = feedItem.id_str;
         const networkType = "twitter";
@@ -48,7 +49,7 @@ const TwitterDefaultFeed = ({feedItem, setImages, channel, updateItem}) => {
             return {src: file.media_url_https, type: file.type, source}
         });
 
-        const postData = {profileImg, username, text, date, media, setImages, statusId, sharedStatus, networkType};
+        const postData = {profileImg, username, text, date, media, setImages, statusId, sharedStatus, networkType, channel, accountId};
 
         return (
             <StreamPost {...postData} >
@@ -72,6 +73,7 @@ const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem}) => {
         const text = typeof feedItem.status !== "undefined" && typeof feedItem.status["text"] !== "undefined" ? feedItem.status["text"] : "";
         const date = typeof feedItem.status !== "undefined" && typeof feedItem.status["created_at"] !== "undefined" ? feedItem.status["created_at"] : "";
         const username = feedItem.screen_name;
+        const accountId = feedItem.id_str;
         const profileImg = feedItem.profile_image_url_https;
         const statusId = typeof feedItem.status !== "undefined" ? feedItem.status.id_str: "";
         const networkType = "twitter";
@@ -81,7 +83,7 @@ const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem}) => {
             return {src: file.media_url_https, type: file.type, source}
         });
 
-        const postData = {profileImg, username, text, date, media, setImages, statusId, networkType};
+        const postData = {profileImg, username, text, date, media, setImages, statusId, networkType, channel, accountId};
 
         return(
             <div>
@@ -109,13 +111,14 @@ const ScheduledFeed = ({feedItem, channel, setImages}) => {
         const text = feedItem.content ? feedItem.content : "";
         const profileImg = channel.avatar;
         const username = channel.username;
+        const accountId = channel.details.payload.id;
         const date = feedItem.scheduled_at_original;
         let media = typeof feedItem.payload.images !== "undefined" && feedItem.payload.images.length ? feedItem.payload.images : [];
 
         media = media.map(file => ({src: file.absolutePath, type: "photo"}));
 
         return (
-            <StreamPost {...{profileImg, username, text, date, media, setImages}} />
+            <StreamPost {...{profileImg, username, text, date, media, setImages, channel, accountId}} />
         )}catch(e){ 
             console.log(e);
             return <div></div>
@@ -135,6 +138,7 @@ const FacebookPostsFeed = ({feedItem, setImages, channel, updateItem}) => {
 
         const profileImg = feedItem.from.picture.data.url;
         const username = feedItem.from.name;
+        const accountId = feedItem.from.id;
         const date = feedItem.created_time;
 
         const attachments = typeof feedItem.attachments !== "undefined" ? feedItem.attachments.data : [];
@@ -173,7 +177,7 @@ const FacebookPostsFeed = ({feedItem, setImages, channel, updateItem}) => {
         attachmentData.media = media;
 
         const statusId = feedItem.id;
-        const postData = {profileImg, username, text, attachmentData, date, media, setImages, statusId, networkType};
+        const postData = {profileImg, username, text, attachmentData, date, media, setImages, statusId, networkType, channel, accountId};
 
         return (
             <StreamPost {...postData} >
