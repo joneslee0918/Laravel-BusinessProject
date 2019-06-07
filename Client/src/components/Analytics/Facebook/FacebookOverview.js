@@ -90,7 +90,6 @@ class FacebookOverview extends React.Component {
                                     onDatesChange={({startDate, endDate}) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
                                     focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                                     onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-                                    showDefaultInputIcon={true}
                                     onClose={({})=> this.onCalendarClose()}
                                 />
                             </div>                   
@@ -103,7 +102,7 @@ class FacebookOverview extends React.Component {
                             name='Posts' 
                             type="postsCount" 
                             description='posts' 
-                            tooltipDesc='The total number of posts that have been published on your Page'
+                            tooltipDesc='The total number of posts that have been published on your Pages'
                             {...propData}/>
                     </div>
                     <div className="col-md-3 col-xs-12">
@@ -111,7 +110,7 @@ class FacebookOverview extends React.Component {
                             name='Fans' 
                             type="fansCount"
                             description='fans'
-                            tooltipDesc='The total number of fans(people who liked the Page) for your Page'
+                            tooltipDesc='The total number of fans (people who liked the Page) for your Page'
                             {...propData} />
                     </div>
                     <div className="col-md-3 col-xs-12">
@@ -119,7 +118,7 @@ class FacebookOverview extends React.Component {
                             name='Engagement'
                             type='engagementsCount' 
                             description='engagements'
-                            tooltipDesc='The sum of reactions, comments and shares recieved by content of your Pages(for the selected timeframe)'
+                            tooltipDesc='The sum of reactions, comments and shares recieved by content of your Pages (for the selected timeframe)'
                             {...propData} />
                     </div>
                     <div className="col-md-3 col-xs-12">
@@ -145,7 +144,7 @@ class FacebookOverview extends React.Component {
                         <PostsChart 
                             name="Posts" 
                             type='postsChartData'
-                            tooltipDesc='The total number of posts that have been published on your Page'
+                            tooltipDesc='The total number of posts that have been published on your Pages'
                             {...propData}/>
                     </div>
                 </div>

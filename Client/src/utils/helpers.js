@@ -32,7 +32,7 @@ export function getParameterByName(name, url) {
 }
 
 export function truncate(string, length){
-    if(typeof(string) === "undefined" || !string) return;
+    if(typeof(string) === "undefined") return;
     if (string.length > length)
        return string.substring(0,length)+'...';
     else
