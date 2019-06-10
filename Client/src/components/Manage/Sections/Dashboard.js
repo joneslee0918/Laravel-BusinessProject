@@ -69,18 +69,18 @@ class Dashboard extends React.Component {
                         </div>
                         <div className="col-md-3 col-xs-12">
                             <TwitterOverviewCard
-                                name='Engagement'
-                                type="tweetsCount"
-                                description='engagement'
-                                tooltipDesc='The sum of interactions received for the tweets published in the selected timeframe: retweets, replies and likes'
+                                name='Following'
+                                type="followingCount"
+                                description='following'
+                                tooltipDesc='Toatal number of people you are following on your Twitter accounts'
                                 {...propData} />
                         </div>
                         <div className="col-md-3 col-xs-12">
                             <TwitterOverviewCard
                                 name='Likes'
-                                type="likesCount"
+                                type="totalLikesCount"
                                 description='likes'
-                                tooltipDesc='Total likes you have made with your account'
+                                tooltipDesc='Number of likes with your selected account'
                                 {...propData} />
                         </div>
                     </div>
