@@ -72,7 +72,7 @@ class TwitterAnalytics extends React.Component {
                             <div><span className="analytics-header">@{channel.username}</span></div>                        
                         </div>
                         <div className="col-md-6 col-xs-12 text-right">
-                        <span className="analytics-header">{this.state.data.profile.friends_count} Followers</span>
+                                <span className="analytics-header">{this.state.data.profile.followers_count} Followers</span>
                         </div>
                     </div>
                 </div>
@@ -92,17 +92,13 @@ class TwitterAnalytics extends React.Component {
                         </div>
                         <div className="col-md-6 col-xs-12">
                             <div className="row">
-                                <div className="col-md-4 col-xs-12 border-right">
+                                <div className="col-md-6 col-xs-12 border-right">
                                     <h3>{this.state.data.tweets}</h3>
                                     <p>Tweets</p>
                                 </div>
-                                <div className="col-md-4 col-xs-12 border-right">
+                                <div className="col-md-6 col-xs-12 border-right">
                                     <h3>{this.state.data.likes}</h3>
                                     <p>Likes</p>
-                                </div>
-                                <div className="col-md-4 col-xs-12">
-                                    <h3>{this.state.data.retweets}</h3>
-                                    <p>Retweets</p>
                                 </div>
                             </div>
                         </div>

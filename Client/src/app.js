@@ -46,7 +46,7 @@ const setAuthentication = () => {
         let profile = localStorage.getItem("profile");
         profile = profile ? JSON.parse(profile) : "";
 
-        if(!profile){
+        if(!channels.length || !profile){
             localStorage.setItem("token", undefined);
             store.dispatch(logout());
             setAuthorizationHeader(undefined);
