@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class AnalyticsController extends Controller
-{
+{   
     private $user;
 
     public function __construct()
@@ -27,7 +27,7 @@ class AnalyticsController extends Controller
         try{
             if($channel){
                 $channel = $channel->details;
-                return response()->json($channel->getAnalytics($request->days));
+                return response()->json($channel->getAnalytics($request->id, $request->days));
             }
         }catch(\Exception $e){
             return getErrorResponse($e, $channel->global);
@@ -37,11 +37,11 @@ class AnalyticsController extends Controller
     }
 
     /**
-     *
+     * 
      * Get count of facebook page posts
      */
     public function pageInsightsByType($type, Request $request)
-    {
+    {   
         if(!$this->user->hasPermission("advanced-analytics")) return response()->json(["error" => "You need to upgrade to unlock this feature."], 403);
         $user = $this->user;
         $channel = $user->channels()->find($request->id);

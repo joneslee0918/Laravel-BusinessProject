@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {NavLink} from 'react-router-dom';
 import TwitterLogin from 'react-twitter-auth';
 import Modal from 'react-modal';
 import {startSetChannels, startAddFacebookChannel, startAddLinkedinChannel, startAddPinterestChannel, startAddTwitterChannel} from "../actions/channels";
@@ -35,7 +36,7 @@ class ActiveChecker extends React.Component{
     }
 
     onFailure = (response) => {
-        console.log(response);
+        this.setState(() => ({loading: false}));
     };
 
     onTwitterSuccess = (response) => {
@@ -85,7 +86,9 @@ class ActiveChecker extends React.Component{
             }).catch(error => {
                 this.setState(() => ({loading: false}));
             });
-        }catch(e){}
+        }catch(e){
+            this.setState(() => ({loading: false}));
+        }
 
     };
 
@@ -97,7 +100,9 @@ class ActiveChecker extends React.Component{
             }).catch(error => {
                 this.setState(() => ({loading: false}));
             });
-        }catch(e){}
+        }catch(e){
+            this.setState(() => ({loading: false}));
+        }
     };
 
     onPinterestSuccess = (response) => {
@@ -108,7 +113,9 @@ class ActiveChecker extends React.Component{
             }).catch(error => {
                 this.setState(() => ({loading: false}));
             });
-        }catch(e){}
+        }catch(e){
+            this.setState(() => ({loading: false}));
+        }
     };
 
     render(){
@@ -154,27 +161,65 @@ class ActiveChecker extends React.Component{
                     />
                 );
              }else{
-                 return (<div></div>);
+                 return (
+                     <div className="social-login">
+                        <TwitterLogin loginUrl={twitterAccessTokenUrl}
+                            onFailure={this.onFailure} onSuccess={this.onTwitterSuccess}
+                            requestTokenUrl={twitterRequestTokenUrl}
+                            showIcon={false}
+                            forceLogin={true}
+                            >
+                        </TwitterLogin>
+                        <FacebookLogin
+                            appId={facebookAppId}
+                            autoLoad={false}
+                            fields="name,email,picture"
+                            scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,public_profile,email"
+                            callback={this.onFacebookSuccess} 
+                        />
+                        <LinkedInButton 
+                            clientId={linkedinAppId}
+                            redirectUri={`${backendUrl}/api/linkedin/callback`}
+                            onSuccess={this.onLinkedInSuccess}
+                            onError={this.onFailure}
+                        />
+                        <PinterestButton 
+                            clientId={pinterestAppId}
+                            redirectUri={`${backendUrl}/api/pinterest/callback`}
+                            onSuccess={this.onPinterestSuccess}
+                            onError={this.onFailure}
+                        />
+                    </div>);
              }
         };
 
         return (
             <div>
                 <Modal
-                isOpen={!!this.state.active == false}
+                isOpen={!!this.state.active == false && !this.state.loading}
                 ariaHideApp={false}
                 >       
 
                     <div className="form-group flex_container-center center-inline">
                         {this.state.loading && <Loader />}
-                        <div>
-                            <h3>Login required!</h3>
-                            <p> It seems like your <strong>{selectedChannel.type}</strong> account <strong>{selectedChannel.name}</strong> has been disconnected. 
-                            Please reconnect and continue your progress by pressing the button below.
-                            <br/><br/>
-                            <strong>Important: Please make sure that you are logged out from any other {selectedChannel.type} account first!</strong>
-                            </p>
-                        </div>
+                        {this.props.channels.length ?
+                            <div>
+                                <h3>Login required!</h3>
+                                <p> It seems like your <strong>{selectedChannel.type}</strong> account <strong>{selectedChannel.name}</strong> has been disconnected. 
+                                Please reconnect and continue your progress by pressing the button below.
+                                <br/><br/>
+                                <strong>Important: Please make sure that you are logged out from any other {selectedChannel.type} account first!</strong>
+                                </p>
+                            </div>
+                            :
+                            <div>
+                            <h3>Let's connect!</h3>
+                                <p> In order to use Uniclix features, you need to connect at least one social account.
+                                </p>
+                            </div>
+                        }
+                        
+
                     </div>
                     <div className="center-inline top-border p10 m10-top social-login">
                         <LoginButton />
@@ -192,6 +237,7 @@ const mapStateToProps = (state) => {
     const selectedChannel = channelSelector(state.channels.list, filter);
 
     return {
+        channels: state.channels.list,
         channelsLoading: state.channels.loading,
         selectedChannel: selectedChannel.length ? selectedChannel[0] : {}
     };

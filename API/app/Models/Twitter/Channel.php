@@ -131,34 +131,24 @@ class Channel extends Model
 
     public function getAnalytics($days=1)
     {
-        $start_date = Carbon::now()->subDays($days);
-        $end_date = Carbon::now();
-
         try {
             $key = $this->id . "-twitterAnalytics-$days";
             $minutes = 15;
-            return Cache::remember($key, $minutes, function () use ($days, $start_date, $end_date) {
+            return Cache::remember($key, $minutes, function () use ($days) {
                 $data = [];
                 $startDate = Carbon::now();
 
                 $followers = $this->followerIds()->whereNull('unfollowed_you_at')->whereBetween('created_at', [$startDate->subDays($days), Carbon::now()])->whereNotBetween('created_at', [$this->created_at , $this->created_at->addMinutes(5)])->get();
                 $unfollowers = $this->followerIds()->whereNotNull('unfollowed_you_at')->whereBetween('unfollowed_you_at', [$startDate->subDays($days), Carbon::now()])->get();
+                $tweets = $this->tweets()->whereBetween('original_created_at', [$startDate->subDays($days), Carbon::now()])->get();
+                $retweets = $this->retweets()->whereBetween('original_created_at', [$startDate->subDays($days), Carbon::now()])->get();
                 $likes = $this->likes()->whereBetween('original_created_at', [$startDate->subDays($days), Carbon::now()])->get();
-
-                $tweets = $this->getTweets();
-
-                $dataTweets = [];
-
-                foreach ($tweets as $tweet) {
-                    if (Carbon::parse($tweet->created_at) >= $start_date && Carbon::parse($tweet->created_at) <= $end_date) {
-                        $dataTweets[] = $tweet;
-                    }
-                }
 
                 $data = [
                     'followers' => $followers->count(),
                     'unfollowers' => $unfollowers->count(),
-                    'tweets' => count($dataTweets),
+                    'tweets' => $tweets->count(),
+                    'retweets' => $retweets->count(),
                     'likes' => $likes->count(),
                     'profile' => $this->getData()
                 ];

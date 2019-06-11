@@ -119,7 +119,7 @@ class TwitterOverview extends React.Component {
                             name='Following'
                             type="followingCount"
                             description='following'
-                            tooltipDesc='Toatal number of people you are following on your Twitter accounts'
+                            tooltipDesc='Total people who follows you on twitter'
                             {...propData} />
                     </div>
                     <div className="col-md-3 col-xs-12">
