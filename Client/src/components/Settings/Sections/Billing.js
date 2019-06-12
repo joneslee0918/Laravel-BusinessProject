@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {startSetProfile} from "../../../actions/profile";
 import { changePlan, activateAddon, cancelAddon } from '../../../requests/billing';
 import UpgradeAlert from '../../UpgradeAlert';
+import Checkout from './Checkout';
 
 class Billing extends React.Component{
 
@@ -153,7 +154,7 @@ class Billing extends React.Component{
                                 {profile.role !== null && profile.role.name === 'free' ?
                                     <button disabled className="plan-btn free-plan disabled-btn">Current Plan</button>
                                     :
-                                    <button onClick={() => this.onPlanClick('free')} className="plan-btn free-plan">Change</button>
+                                    <button onClick={() => this.onPlanCliclk('free')} className="plan-btn free-plan">Change</button>
                                 }    
                                 
                             </td>
@@ -161,7 +162,7 @@ class Billing extends React.Component{
                                 {profile.role !== null && profile.role.name === 'basic' ?
                                     <button disabled className="plan-btn basic-plan disabled-btn">Current Plan</button>
                                     :
-                                    <button onClick={() => this.onPlanClick('basic')} className="plan-btn basic-plan">Free 30 Days Trial</button>
+                                    <Checkout />
                                 }    
                                 
                             </td>

@@ -43,16 +43,6 @@ export const startLogin = (body, network = "twitter") => {
     };
 };
 
-export const initLogin = (token) => {
-    return (dispatch) => {
-        if(typeof token === "undefined") Promise.reject("Invalid token.");
-        localStorage.setItem("token", token);
-        setAuthorizationHeader(token);
-        dispatch(login(token));
-        return Promise.resolve(token);
-    };
-};
-
 export const logout = () => ({
     type: "LOGOUT"
 });

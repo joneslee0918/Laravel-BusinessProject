@@ -88,11 +88,7 @@ input {
 }
 
 .login-container{
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    background: #3592c4;
-    height: 100vh;
+    overflow:hidden;
 }
 
 .avatar-box{
@@ -106,21 +102,11 @@ input {
 }
 
 .box-container{
-    background:white;
+    width: 300px;
     padding: 25px 50px;
     border: 1px solid #ccc;
-    margin: 0 auto;
+    margin: 100px auto;
     text-align: center;
-}
-
-.social-login.login-btns, .form-container .login-form {
-    width: 300px;
-    text-align: left;
-}
-
-.box-wrapper {
-    display: flex;
-    justify-content: space-evenly;
 }
 
 .account-info p{
@@ -355,10 +341,6 @@ input {
     box-shadow: 1px 0px 2px #ccc;
     margin-top: 70px;
     z-index: 999;
-}
-
-.red-border{
-    border: 1px solid red !important;
 }
 
 .vertical-menu .dropdown-menu{

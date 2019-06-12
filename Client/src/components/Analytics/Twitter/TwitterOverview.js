@@ -190,7 +190,7 @@ class TwitterOverview extends React.Component {
                             {...propData}/>
                     </div>
                 </div>
-                </div> : <div><div class="no-data">There is no Twitter account<div><NavLink to="/accounts">Connect to Twitter</NavLink></div></div></div>}
+                </div> : <div><div className="no-data">There is no Twitter account<div><NavLink to="/accounts">Connect to Twitter</NavLink></div></div></div>}
             </div>
         );
     }
