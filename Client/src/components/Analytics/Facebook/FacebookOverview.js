@@ -218,7 +218,7 @@ const mapStateToProps = (state) => {
 
     return {
         channels,
-        selectedChannel: selectedChannel.length ? selectedChannel[0] : {}
+        selectedChannel: selectedChannel.length ? selectedChannel[0] : channels[0]
     };
 };
 
