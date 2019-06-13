@@ -54,5 +54,4 @@ return [
         'client_secret' => function_exists('env') ? env('PINTEREST_SECRET', '') : '',
         'redirect' => '/'
     ],
-
 ];

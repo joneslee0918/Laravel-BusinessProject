@@ -20,6 +20,7 @@ Route::middleware('auth:api')->group(function(){
     Route::post('/billing/change/plan', 'BillingController@changePlan');
     Route::post('/billing/activate/addon', 'BillingController@activateAddon');
     Route::post('/billing/cancel/addon', 'BillingController@cancelAddon');
+    Route::post('/billing/create/subscription', 'BillingController@createSubscription');
 
     Route::get('/channels', 'ChannelController@channels');
     Route::patch('/channels/select/{id}', 'ChannelController@select');
@@ -54,11 +55,11 @@ Route::post('/publish', 'PublishController@publish')->name('publish');
 Route::post('/articles/sync', 'ArticlesController@sync')->name('articles.sync');
 
 Route::prefix("twitter")->group(function(){
-    
+
     //Twitter login
     Route::get("login", "Twitter\AuthController@login")->name("api.twitter.login");
     Route::post("access", "Twitter\AuthController@access")->name("api.twitter.access");
-    Route::post("reverse", "Twitter\AuthController@reverse")->name("api.twitter.reverse"); 
+    Route::post("reverse", "Twitter\AuthController@reverse")->name("api.twitter.reverse");
 
     Route::middleware('auth:api')->group(function(){
         Route::get('dashboard', 'Twitter\DashboardController@index');
@@ -113,7 +114,7 @@ Route::prefix("facebook")->group(function(){
 
         Route::post('streams/scheduled', 'Facebook\StreamsFeedController@scheduled');
         Route::post('streams/{type}', 'Facebook\StreamsFeedController@index');
-        
+
         Route::post('post', 'Facebook\Actions\PostController@post');
         Route::post('post/delete', 'Facebook\Actions\PostController@delete');
         Route::post('post/like', 'Facebook\Actions\LikeController@like');
