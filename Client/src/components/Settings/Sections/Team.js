@@ -1,51 +1,37 @@
 import React from 'react';
+import TeamMember from './TeamMembers';
 
 class Team extends React.Component{
+
+    state = {
+        loading: false,
+        members: []
+    }
+
     render(){
+        const {members} = this.state;
         return (
             
             <div>    
-            <h2>TEAM</h2>
+                <h2>TEAM</h2>
+                {!!this.state.members.length ?
+                    <div>
 
-                <div>
-                    <button className="btn upgrade-btn pull-right">Add New Team Member</button>
-                </div>
-                
-                <div className="clear-both">
-
-                    <div className="item-row">
-            
                         <div>
-                            <div className="profile-info pull-left">
-                                
-                                <div className="pull-left">
-                                    <p className="profile-name">Test Name <span className="profile-username">test@email.com</span></p>
-                                    <p className="profile-title">Some description here</p>
-                                </div>
-                            </div>
+                            <button className="btn upgrade-btn pull-right">Add New Team Member</button>
                         </div>
+                        
+                        {members.map(member => (
+                            <TeamMember member={member} />
+                        ))}
 
-                        <div className="item-actions pull-right">
-
-                            <ul className="v-center-align">
-                                <li className="text-links">
-                                    <a className="link-cursor">View</a>
-                                </li>
-                                
-                                <li className="text-links">
-                                    <a className="link-cursor">Edit</a>
-                                </li>
-                            
-                                <li className="text-links">
-                                    <a className="link-cursor">Remove</a>
-                                </li>
-                            </ul>
-                            
-                        </div>
                     </div>
-                
+                :
+                <div className="no-data">
+                    You don't have any member in your team.
+                    <div><button className="btn compose-btn">Add New Team Member</button></div>
                 </div>
-
+                }
             </div>
         );
     }
