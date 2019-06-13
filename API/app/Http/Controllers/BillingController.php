@@ -25,20 +25,6 @@ class BillingController extends Controller
         });
     }
 
-    public function createSubscription(Request $request)
-    {
-        try {
-            $user = \Auth::user();
-
-            $user->newSubscription('main', 'basic')->create($request->id);
-
-            return "success";
-        } catch (\Throwable $th) {
-            return $th->getMessage();
-        }
-
-    }
-
     public function changePlan(Request $request)
     {
         $plan = $request->input('plan');

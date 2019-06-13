@@ -6,11 +6,10 @@ use App\Traits\Permissible;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable, Permissible, Billable;
+    use HasApiTokens, Notifiable, Permissible;
 
     /**
      * The attributes that are mass assignable.
@@ -36,12 +35,17 @@ class User extends Authenticatable
         return $this->hasMany(Channel::class);
     }
 
+    public function teams()
+    {
+        return $this->hasMany(Team::class);
+    }
+
     public function formattedChannels(){
 
         if($channels = $this->channels()->get()){
-
+            
             return collect($channels)->map(function($channel){
-
+                    
                     $channel->details = @$channel->details;
 
                     if($channel->details){

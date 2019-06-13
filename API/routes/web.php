@@ -38,10 +38,7 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $user = \App\Models\Facebook\Channel::find(5);
-   // return $user;
-    return $user->searchPages(["q" => "Anime"]);
-
+    //
 });
 
 

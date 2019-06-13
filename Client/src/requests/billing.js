@@ -21,10 +21,3 @@ export const cancelAddon = (addon) => {
                 return response.data;
             });
 }
-
-export const createSubscription = (plan) => {
-    return axios.post(`${apiUrl}/billing/create/subscription`, { plan })
-        .then((response) => {
-            return response.data;
-        });
-}
