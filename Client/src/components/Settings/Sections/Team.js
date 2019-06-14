@@ -1,11 +1,20 @@
 import React from 'react';
+import Modal from 'react-modal';
 import TeamMember from './TeamMembers';
+import AddTeamMember from './AddTeamMember';
 
 class Team extends React.Component{
 
     state = {
         loading: false,
+        addNewMember: false,
         members: []
+    }
+
+    toggleAddNewMember = () => {
+        this.setState(() => ({
+            addNewMember: !this.state.addNewMember
+        }));
     }
 
     render(){
@@ -13,12 +22,23 @@ class Team extends React.Component{
         return (
             
             <div>    
+
+            <Modal
+                isOpen={this.state.addNewMember}
+                ariaHideApp={false}
+                className="team-modal scrollbar"
+            >       
+                <AddTeamMember close={this.toggleAddNewMember}/>
+            </Modal>
+
                 <h2>TEAM</h2>
-                {!!this.state.members.length ?
+
+                {
+                    !!this.state.members.length ?
                     <div>
 
                         <div>
-                            <button className="btn upgrade-btn pull-right">Add New Team Member</button>
+                            <button onClick={this.toggleAddNewMember} className="btn upgrade-btn pull-right">Add New Team Member</button>
                         </div>
                         
                         {members.map(member => (
@@ -26,11 +46,11 @@ class Team extends React.Component{
                         ))}
 
                     </div>
-                :
-                <div className="no-data">
-                    You don't have any member in your team.
-                    <div><button className="btn compose-btn">Add New Team Member</button></div>
-                </div>
+                    :
+                    <div className="no-data">
+                        You don't have any member in your team.
+                        <div><button onClick={this.toggleAddNewMember} className="btn compose-btn">Add New Team Member</button></div>
+                    </div>
                 }
             </div>
         );

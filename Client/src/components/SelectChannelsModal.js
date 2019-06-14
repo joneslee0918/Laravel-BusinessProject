@@ -53,7 +53,7 @@ class SelectChannelsModal extends React.Component{
         return (
             <div className="modal-content">
                 <button className="upgrade-btn m10" onClick={this.onAddAccountsClick}><i className="fa fa-plus"></i> Add accounts</button>
-                <div className="modal-body scrollable-400">
+                <div className="modal-body scrollable-400 scrollbar">
                     
                     {!!twitterChannels.length &&
                         <h3 className="bg-heading" onClick={this.toggleTwitterSelect}>
