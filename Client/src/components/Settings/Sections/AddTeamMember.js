@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
 import Modal from 'react-modal';
-import Select from 'react-select';
 import {publishChannels} from '../../../selectors/channels';
 import {validateEmail, validateUrl} from "../../../utils/validator";
 import {startSetProfile} from "../../../actions/profile";
@@ -14,6 +13,7 @@ class AddTeamMember extends React.Component{
         name: "",
         email: "",
         admin: false,
+        publishChannels: this.props.channels,
         assignedChannels: [],
         assignedApprover: "",
         selectChannelsModal: false,
@@ -23,6 +23,12 @@ class AddTeamMember extends React.Component{
         success: false
     };
 
+
+    componentDidMount(){
+        this.setState(() => ({
+            publishChannels: this.props.channels
+        }), () => this.setAssignedChannels());
+    }
 
     onFieldChange = (e) => {
         const id = e.target.id;
@@ -40,38 +46,56 @@ class AddTeamMember extends React.Component{
     onChannelSelectionChange = (obj) => {
         const selectedPinterestChannel = !obj.selected && obj.type == "pinterest" ? obj : false;
 
-        const assignedChannels = this.props.channels.map((channel) => {
+        const publishChannels = this.state.publishChannels.map((channel) => {
             if(channel.id === obj.id){
                 return {
                     ...channel,
                     selected: channel.selected ? 0 : 1
                 }
             }
-            else{
-        
-                if(obj.type == "twitter" && channel.type == "twitter"){
-                    return {
-                        ...channel,
-                        selected:0
-                    }
-                }else{
-                    return {
-                        ...channel
-                    };
+
+            return {
+                ...channel
+            };
+        });
+
+        this.setState(() => ({
+            publishChannels,
+            selectedPinterestChannel
+        }), () => this.setAssignedChannels());
+    };
+
+    setAssignedChannels = () => {
+        const assignedChannels = this.state.publishChannels.filter(channel => channel.selected === 1)
+        .map(channel => ({...channel, permissionLevel: "member"}));
+
+        this.setState(() => ({
+            assignedChannels
+        }));
+    };
+
+    setPermissionLevel = (e, channelId) => {
+        const  assignedChannels = this.state.assignedChannels.map(channel => {
+            if(channel.id === channelId){
+                return {
+                    ...channel,
+                    permissionLevel: e.target.value
                 }
+            }
+
+            return {
+                ...channel
             }
         });
 
         this.setState(() => ({
-            assignedChannels,
-            selectedPinterestChannel
+            assignedChannels
         }));
     };
 
     toggleSelectChannelsModal = () => {
 
         this.setState(() => ({
-            assignedChannels: this.props.channels,
             selectChannelsModal: !this.state.selectChannelsModal
         }));
     };
@@ -81,9 +105,10 @@ class AddTeamMember extends React.Component{
             <div>
             <Modal isOpen={this.state.selectChannelsModal} closeTimeoutMS={300} ariaHideApp={false} className="flex-center modal-no-radius no-outline">
                 <SelectChannelsModal 
-                channels={this.props.channels} 
+                channels={this.state.publishChannels} 
                 onChange={this.onChannelSelectionChange}
                 toggle={this.toggleSelectChannelsModal}
+                twitterSelectType="checkbox"
                 toggleComposer={this.props.close}
                 />
             </Modal>
@@ -100,7 +125,7 @@ class AddTeamMember extends React.Component{
                     <div className="alert alert-success">{this.state.success}</div>
                 }
 
-                <form onSubmit={(e) => this.onSubmit(e)} className="profile-form">
+                <div className="profile-form">
                     <div className="form-group shadow-box team-form scrollbar">
     
                         <div className="col-6 col-md-6 form-field">
@@ -122,17 +147,32 @@ class AddTeamMember extends React.Component{
 
                     </div>
 
-                    <div className="form-group shadow-box team-form scrollbar">
-        
-                        <div className="col-6 col-md-6 form-field">
-                            <label htmlFor="channel">ASSIGN SOCIAL ACCOUNT</label>
-                            <input type="text" className="form-control whiteBg" onClick={this.toggleSelectChannelsModal} readOnly value={this.state.website} id="channel" placeholder="Name of the social account" />
+                    <div className="form-group shadow-box">
+
+                        <div>
+                            <button onClick={this.toggleSelectChannelsModal} className="btn compose-btn" >Add/Remove Social Accounts</button>
+                        </div>
+                        
+                        <div className="team-form scrollbar">
+                            <br />
+
+                            {this.state.assignedChannels.map((channel, index) => (
+                            <div key={index}>
+                                <div className="col-6 col-md-6 form-field">
+                                    <label htmlFor={`channel-${channel.id}`}>ASSIGN SOCIAL ACCOUNT</label>
+                                    <input type="text" value={`${channel.name} - ${channel.type}`} className="form-control whiteBg" onClick={this.toggleSelectChannelsModal} readOnly id={`channel-${channel.id}`} placeholder="Name of the social account" />
+                                </div>
+
+                                <div className="col-6 col-md-6 form-field">
+                                    <label htmlFor={`permission-${channel.id}`}>PERMISSION LEVEL</label>
+                                    <select id={`permission-${channel.id}`} onChange={(e) => this.setPermissionLevel(e, channel.id)} value={channel.permissionLevel} className="form-control">
+                                        <option value="member">Approval Required</option>
+                                        <option value="publisher">Publisher</option>
+                                    </select>
+                                </div>
+                            </div>))}
                         </div>
 
-                        <div className="col-6 col-md-6 form-field">
-                            <label htmlFor="permissionLevel">PERMISSION LEVEL</label>
-                            <input type="text" className="form-control" value={this.state.website} onChange={(e) => this.onFieldChange(e)} id="permissionLevel" placeholder="Select permission" />
-                        </div>
         
                     </div>
         
@@ -140,26 +180,12 @@ class AddTeamMember extends React.Component{
                         <button className="upgrade-btn pull-right">Submit</button>
                         <button onClick={this.props.close} className="btn btn-link pull-right">Cancel</button>
                     </div>
-                </form>
+                </div>
             </div>
         );
     }
 }
 
-
-const ProfileChannel = ({channel}) => (
-    <div className="channel-container">
-        <div className="profile-info pull-right">
-            <span className="pull-left profile-img-container">
-                <img src={channel.avatar}/>
-                <i className={`fa fa-${channel.type} ${channel.type}_bg smallIcon`}></i>
-            </span>
-            <div className="pull-left"><p className="profile-name" title={channel.name}>{channel.name}</p>
-            <p className="profile-username">{channel.username !== null ? "@"+channel.username : ""}</p>
-            </div>
-        </div>
-    </div>
-);
 
 const mapStateToProps = (state) => {
     const channels = publishChannels(state.channels.list);

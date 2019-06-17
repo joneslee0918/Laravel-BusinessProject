@@ -43,7 +43,7 @@ class SelectChannelsModal extends React.Component{
 
     render(){
 
-        const {channels, onChange, toggle} = this.props;
+        const {channels, onChange, toggle, twitterSelectType = "radio"} = this.props;
 
         const twitterChannels = channelSelector(channels, {selected: undefined, provider: "twitter"});
         const facebookChannels = channelSelector(channels, {selected: undefined, provider: "facebook"});
@@ -65,8 +65,8 @@ class SelectChannelsModal extends React.Component{
                         
                         twitterChannels.map((channel) => (
                                 <label key={channel.id} className="channel-item selection-container">
-                                    <input type="radio" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="twitter_channel" />
-                                    <span className="checkmark round"></span>
+                                    <input type={twitterSelectType} onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="twitter_channel" />
+                                    <span className={`checkmark ${twitterSelectType == 'radio' ? 'round' : ''}`}></span>
                                     <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
                                 </label>
                         )
