@@ -27,12 +27,34 @@ class TeamController extends Controller
         });
     }
 
-    public function getMembers()
+
+    public function getTeams()
     {   
-        return response()->json($this->user);
+        $user = $this->user;
+        $teamIds = TeamUser::where("member_id", $user->id)
+        ->orWhere("owner_id", $user->id)->pluck("team_id");
+
+        return Team::whereIn("id", $teamIds)->orWhere("user_id", $user->id)->get();
     }
 
-    public function add(Request $request)
+    public function getMembers(Request $request)
+    {   
+        $teamId = $request->input("teamId");
+        if(!$teamId) return [];
+
+        $team = Team::find($teamId);
+
+        if(!$team) return response()->json(["error" => "Team not found."], 404);
+
+        $members = $team->members()->with("details")->orderBy("created_at", "DESC")->get();
+
+        return collect($members)->map(function($member){
+            $member->assignedChannels = $member->formattedChannels(true);
+            return $member;
+        });
+    }
+
+    public function addOrUpdate(Request $request)
     {   
         $user = $this->user;
         $name = $request->input('name');
@@ -54,7 +76,9 @@ class TeamController extends Controller
         }else{
             $team = Team::find($teamId);
 
-            if(!$team->members()->where("member_id", $user->id)->where("is_admin", 1)->exists()){
+            if(!$team) return response()->json(["error" => "Team not found."], 404);
+
+            if($team->user_id != $user->id && !$team->members()->where("member_id", $user->id)->where("is_admin", 1)->exists()){
                 return response()->json(["error" => "You don't have permission to add members to this team"], 403);
             }
         }
@@ -67,19 +91,25 @@ class TeamController extends Controller
                 "name" => $name,
                 "role_id" => 1
             ]);
+        }else{
+            $member->name = $name;
+            $member->email = $email;
+            $member->save();
         }        
 
-        if($team->members()->where("member_id", $member->id)
-        ->orWhere("approver_id", $member->id)
-        ->orWhere("owner_id", $member->id)) return response()->json(["error" => "Member already exists in this team."], 409);
+        if($teamMember = $team->members()->where("member_id", $member->id)
+        ->orWhere("owner_id", $member->id)->first()){
+            $teamMember->is_admin = $admin ? 1 : 0;
+            $teamMember->save();
+        }else{
+            $teamMember = $team->members()->create([
+                "member_id" => $member->id,
+                "owner_id" => $user->id,
+                "is_admin" => $admin ? 1 : 0
+            ]);
+        }
 
-        $teamMember = $team->members()->create([
-            "member_id" => $member->id,
-            "owner_id" => $user->id,
-            "is_admin" => $admin ? 1 : 0
-        ]);
-
-        $team->channels()->delete();
+        $team->channels()->where("member_id", $member->id)->delete();
 
         $assignedChannelData = [];
 
@@ -98,5 +128,23 @@ class TeamController extends Controller
         TeamUserChannel::insert($assignedChannelData);
         
         return response()->json(["message" => "New member has been added"], 200);
+    }
+
+    public function remove(Request $request)
+    {   
+        $user = $this->user;
+        $memberId = $request->input("memberId");
+        $teamId = $request->input("teamId");
+
+        $team = Team::find($teamId);
+
+        if($team->user_id != $user->id && !$team->members()->where("member_id", $user->id)->where("is_admin", 1)->exists()){
+            return response()->json(["error" => "You don't have permission to remove members from this team"], 403);
+        }
+
+        $team->members()->where("member_id", $memberId)->delete();
+        $team->channels()->where("member_id", $memberId)->delete();
+
+        return response()->json(["message" => "Member removed successfuly."]);
     }
 }

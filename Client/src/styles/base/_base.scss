@@ -891,8 +891,20 @@ input {
     width:inherit !important;
     background: white;
     padding: 20px;
-    max-height: 80vh;
+    max-height: 90vh;
     overflow: auto !important;
+}
+
+.lowerCase{
+    text-transform: lowercase !important;
+}
+
+.upperCase{
+    text-transform: uppercase !important;
+}
+
+.capitalize{
+    text-transform: capitalize !important;
 }
 
 .team-form{

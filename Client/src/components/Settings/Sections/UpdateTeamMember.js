@@ -5,19 +5,19 @@ import {publishChannels} from '../../../selectors/channels';
 import {validateEmail} from "../../../utils/validator";
 import SelectChannelsModal from "../../SelectChannelsModal";
 import {LoaderWithOverlay} from "../../Loader";
-import {addTeamMember} from '../../../requests/team';
+import {updateTeamMember} from '../../../requests/team';
 
-class AddTeamMember extends React.Component{
+class UpdateTeamMember extends React.Component{
 
     state = {
-        name: "",
-        email: "",
-        admin: false,
-        publishChannels: this.props.channels,
-        assignedChannels: [],
+        name: !!this.props.member ? this.props.member.details.name : "",
+        email: !!this.props.member ? this.props.member.details.email : "",
+        admin: !!this.props.member ? this.props.member.is_admin : false,
+        publishChannels: !!this.props.member && this.props.member.assignedChannels.length > 0 ? this.props.member.assignedChannels : this.props.channels,
+        assignedChannels: !!this.props.member && this.props.member.assignedChannels.length > 0 ? this.props.member.assignedChannels : [],
         assignedApprover: "",
         selectChannelsModal: false,
-        teamId: false,
+        teamId: this.props.teamId,
         loading: false,
         error: false,
         success: false
@@ -25,8 +25,16 @@ class AddTeamMember extends React.Component{
 
 
     componentDidMount(){
+        const memberChannels = !!this.props.member && this.props.member.assignedChannels.length > 0 ? this.props.member.assignedChannels : [];
+
+        const publishChannels = this.props.channels.map(channel => {
+            return Object.assign(channel, memberChannels.find(channel2 => {
+              return channel2 && channel.id === channel2.id
+            }))
+          });
+
         this.setState(() => ({
-            publishChannels: this.props.channels
+            publishChannels
         }), () => this.setAssignedChannels());
     }
 
@@ -67,7 +75,7 @@ class AddTeamMember extends React.Component{
 
     setAssignedChannels = () => {
         const assignedChannels = this.state.publishChannels.filter(channel => channel.selected === 1)
-        .map(channel => ({...channel, permissionLevel: "member"}));
+        .map(channel => ({...channel, permissionLevel: channel.permissionLevel ? channel.permissionLevel : "member"}));
 
         this.setState(() => ({
             assignedChannels
@@ -101,7 +109,6 @@ class AddTeamMember extends React.Component{
     };
 
     onSubmit = () => {
-
         this.setState(() => ({loading: true}));
         if(!validateEmail(this.state.email) || this.state.email === ""){
             this.setState(() => ({
@@ -138,9 +145,10 @@ class AddTeamMember extends React.Component{
             teamId: this.state.teamId
         };
 
-        addTeamMember(data).then(response => {
+        updateTeamMember(data).then(response => {
             this.setState(() => ({loading: false}));
-            console.log(response);
+            this.props.fetchMembers();
+            this.props.close();
         }).catch(e => {
             this.setState(() => ({loading: false}));
             if(typeof e.response !== "undefined" && typeof e.response.data.error !== "undefined"){
@@ -192,7 +200,13 @@ class AddTeamMember extends React.Component{
 
                         <div className="col-6 col-md-6 form-field">
                             <div className="custom-control custom-switch">
-                                <input type="checkbox" onChange={this.toggleAdmin} value={this.state.admin} className="custom-control-input" id="admin" />
+                                {
+                                   !!this.state.admin ?
+                                    <input type="checkbox" onChange={this.toggleAdmin} value={this.state.admin} className="custom-control-input" id="admin" checked/>
+                                    :
+                                    <input type="checkbox" onChange={this.toggleAdmin} value={this.state.admin} className="custom-control-input" id="admin" />
+                                }
+                                
                                 <label className="custom-control-label" htmlFor="admin">&nbsp;Make Admin</label>
                             </div>
                         </div>
@@ -246,4 +260,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(AddTeamMember);
+export default connect(mapStateToProps)(UpdateTeamMember);

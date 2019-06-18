@@ -36,6 +36,16 @@ class User extends Authenticatable
         return $this->hasMany(Channel::class);
     }
 
+    public function memberChannels()
+    {
+        return $this->hasMany(TeamUserChannel::class, "member_id");
+    }
+
+    public function approverChannels()
+    {
+        return $this->hasMany(TeamUserChannel::class, "approver_id");
+    }
+
     public function teams()
     {
         return $this->hasMany(Team::class);
@@ -64,6 +74,44 @@ class User extends Authenticatable
         }
 
         return [];
+    }
+
+    public function formattedMemberChannels($markSelected = false){
+
+        if($channels = $this->memberChannels()->get()){
+
+            return collect($channels)->map(function($channel) use ($markSelected){
+                    $permissionLevel = $channel->role;
+                    $teamId = $channel->team_id;
+                    $approverId = $channel->approver_id;
+
+                    $channel = $channel->channel;
+                    $channel->details = @$channel->details;
+                    $channel->permissionLevel = $permissionLevel;
+                    $channel->teamId = $teamId;
+                    $channel->approverId = $approverId;
+
+                    if($markSelected) $channel->selected = 1;
+
+                    if($channel->details){
+                        if($channel->details->account_type != "page" && $channel->type != "linkedin"){
+                            $avatar = @$channel->details->getAvatar();
+                        }
+                        $channel->details->payload = @unserialize($channel->details->payload);
+                        $channel->avatar = @$avatar ? @$avatar : @$channel->details->payload->avatar;
+                        $channel->name = @$channel->details->payload->name;
+                        $channel->username = @$channel->details->payload->nickname;
+                    }
+
+                    return $channel;
+                });
+        }
+
+        return [];
+    }
+
+    public function allFormattedChannels(){
+        return $this->formattedChannels()->merge($this->formattedMemberChannels());
     }
 
     public function selectedChannel()

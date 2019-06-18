@@ -17,8 +17,10 @@ Route::middleware('auth:api')->group(function(){
     Route::post('/profile', 'ProfileController@update');
     Route::get('/profile', 'ProfileController@profile');
 
-    Route::get('/team/members', 'TeamController@index');
-    Route::post('/team/members/add', 'TeamController@add');
+    Route::get('/team', 'TeamController@getTeams');
+    Route::get('/team/members', 'TeamController@getMembers');
+    Route::post('/team/members/update', 'TeamController@addOrUpdate');
+    Route::post('/team/members/remove', 'TeamController@remove');
 
     Route::post('/billing/change/plan', 'BillingController@changePlan');
     Route::post('/billing/activate/addon', 'BillingController@activateAddon');
