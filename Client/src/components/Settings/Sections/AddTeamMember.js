@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from "react-redux";
 import Modal from 'react-modal';
 import {publishChannels} from '../../../selectors/channels';
-import {validateEmail, validateUrl} from "../../../utils/validator";
-import {startSetProfile} from "../../../actions/profile";
+import {validateEmail} from "../../../utils/validator";
 import SelectChannelsModal from "../../SelectChannelsModal";
 import {LoaderWithOverlay} from "../../Loader";
+import {addTeamMember} from '../../../requests/team';
 
 class AddTeamMember extends React.Component{
 
@@ -100,6 +100,58 @@ class AddTeamMember extends React.Component{
         }));
     };
 
+    onSubmit = () => {
+
+        this.setState(() => ({loading: true}));
+        if(!validateEmail(this.state.email) || this.state.email === ""){
+            this.setState(() => ({
+                error: "Email is not right.",
+                loading: false
+            }));
+
+            return;
+        }
+
+        if(this.state.name === ""){
+            this.setState(() => ({
+                error: "Name cannot be empty.",
+                loading: false
+            }));
+
+            return;
+        }
+
+        if(this.state.assignedChannels.length < 1){
+            this.setState(() => ({
+                error: "You need to assign at least one social account.",
+                loading: false
+            }));
+
+            return;
+        }
+
+        const data = {
+            name: this.state.name,
+            email: this.state.email,
+            admin: this.state.admin,
+            assignedChannels: this.state.assignedChannels,
+            teamId: this.state.teamId
+        };
+
+        addTeamMember(data).then(response => {
+            this.setState(() => ({loading: false}));
+            console.log(response);
+        }).catch(e => {
+            this.setState(() => ({loading: false}));
+            if(typeof e.response !== "undefined" && typeof e.response.data.error !== "undefined"){
+                this.setState(() => ({
+                    error: e.response.data.error
+                }));
+                return;
+            }
+        });
+    };
+
     render(){
         return (
             <div>
@@ -177,7 +229,7 @@ class AddTeamMember extends React.Component{
                     </div>
         
                     <div>
-                        <button className="upgrade-btn pull-right">Submit</button>
+                        <button className="upgrade-btn pull-right" onClick={this.onSubmit}>Submit</button>
                         <button onClick={this.props.close} className="btn btn-link pull-right">Cancel</button>
                     </div>
                 </div>
@@ -194,8 +246,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    startSetProfile: () => dispatch(startSetProfile())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddTeamMember);
+export default connect(mapStateToProps)(AddTeamMember);

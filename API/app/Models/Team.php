@@ -17,6 +17,11 @@ class Team extends Model
 
     public function members()
     {
-        return $this->hasMany(TeamUser::class, "member_id");
+        return $this->hasMany(TeamUser::class);
+    }
+
+    public function channels()
+    {
+        return $this->hasMany(TeamUserChannel::class);
     }
 }

@@ -38,7 +38,9 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    //
+    $team = \App\Models\Team::first();
+
+    return response()->json($team->channels()->delete());
 });
 
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
