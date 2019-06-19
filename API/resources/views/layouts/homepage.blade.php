@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="robots" content="index, follow">
     <title>Uniclix</title>
 
     <!-- Scripts -->
@@ -21,6 +21,19 @@
     <link href="{{ asset('css/frontend.css') }}" rel="stylesheet">
     <link href="{{ asset('css/helper.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139556974-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-139556974-1');
+    </script>
+
+
+    </head>
 </head>
 <body>
 <!-- <div id="top-image"><img  class="img-responsive" src="{{ asset('images/top-office.png') }}" /></div> -->
@@ -46,9 +59,10 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="{{ Request::is('/') ? 'active' : ''}}"><a href="/">Home</a></li>
                             <!-- <li class="{{ Request::is('upgrade') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('upgrade') }}">Upgrade</a></li> -->
-                            <li class="{{ Request::is('education') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('education') }}">How it works</a></li>
-                            <li class="{{ Request::is('pricing') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('pricing') }}">Pricing</a></li>
+                            <!-- <li class="{{ Request::is('education') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('education') }}">How it works</a></li>
+                            <li class="{{ Request::is('pricing') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('pricing') }}">Pricing</a></li> -->
                             <li class="{{ Request::is('blog') ? 'active' : ''}}"><a class="page-scroll" href="https://blog.uniclixapp.com">Blog</a></li>
+                            <li class="{{ Request::is('blog') ? 'active' : ''}}"><a class="page-scroll" href="/jobs">Jobs</a></li>
                         </ul>
                     </nav>
                 </div>

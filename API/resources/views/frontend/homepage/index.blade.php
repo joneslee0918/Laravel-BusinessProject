@@ -12,8 +12,8 @@
             <div class="col-md-5 col-xs-12 pb50">
                 <h1>Social Media Management<br>Simplified</h1>
                 <p class="mt20">Uniclix helps you centralize, manage and grow your social media accounts with just a couple of clicks.</p>
-                <h3 style="color:white;">Start at only $7.99</h3>
-                <a href="/pricing" class="btn theme-btn mt30">Learn more</a>
+                <a class="btn theme-btn mt30" href="{{config('frontendclient.client_url')}}" target="_blank">Sign Up for Beta </a> 
+                <!-- <a href="/pricing" class="btn theme-btn mt30">Learn more</a> -->
             </div>
             <div class="col-md-7 col-xs-12 pb50">
                 <img src="{{ asset('images/laptop.png') }}" class="img-responsive laptop-img">
@@ -75,10 +75,10 @@ In order to build a global Uniclix community we are offering our services at unb
             <img src="{{ asset('images/quotes.png') }}" class="quotes-img">
             <div class="slider single-item">
                 <div class="text-center single-item-content">
-                    <p>Nullam imperdiet dui et ligula ultrices, id dictum velit consequat. Maecenas venenatis vel lorem vitae cursus.</p>
-                    <div class="testimonial-author">Iana Green, New York</div>
+                    <p>Something very cool is coming soon! Stay tuned for the official release by signing up for early access!</p>
+                    <div class="testimonial-author">Uniclix</div>
                 </div>
-                <div class="text-center single-item-content">
+<!--                 <div class="text-center single-item-content">
                     <p>Nullam imperdiet dui et ligula ultrices, id dictum velit consequat. Maecenas venenatis vel lorem vitae cursus.</p>
                     <div class="testimonial-author">Iana Green, New York</div>
                 </div>
@@ -86,7 +86,7 @@ In order to build a global Uniclix community we are offering our services at unb
                 <div class="text-center single-item-content">
                     <p>Nullam imperdiet dui et ligula ultrices, id dictum velit consequat. Maecenas venenatis vel lorem vitae cursus.</p>
                     <div class="testimonial-author">Iana Green, New York</div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

@@ -43,6 +43,14 @@ Route::get('/test', function(){
     return response()->json($team->formattedChannels(true));
 });
 
+Route::get('/jobs', function(){
+    return view("frontend.jobs");
+});
+
+Route::get('/software-developer', function(){
+    return view("frontend.software_developer");
+});
+
 Route::post('twitter/login', ['as' => 'twitter.login', 'uses' => 'Twitter\ChannelController@login']);
 Route::post('twitter/callback', ['as' => 'twitter.callback', 'uses' => 'Twitter\ChannelController@callback']);
 Route::get('twitter/error', ['as' => 'twitter.error', 'Twitter\ChannelController@error']);
