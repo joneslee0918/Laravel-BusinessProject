@@ -74,6 +74,12 @@ export class PastScheduled extends React.Component{
                 }));
             }
 
+            if(typeof error.response.data.error != 'undefined'){
+                this.setState(() => ({
+                    error: error.response.data.error
+                }));
+            }
+
             this.setLoading(false);
         });
     };
@@ -89,6 +95,12 @@ export class PastScheduled extends React.Component{
             if(typeof error.response.data.message != 'undefined'){
                 this.setState(() => ({
                     error: error.response.data.message
+                }));
+            }
+
+            if(typeof error.response.data.error != 'undefined'){
+                this.setState(() => ({
+                    error: error.response.data.error
                 }));
             }
 

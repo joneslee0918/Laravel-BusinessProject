@@ -51,6 +51,15 @@ class User extends Authenticatable
         return $this->hasMany(Team::class);
     }
 
+    public function hasPublishPermission($channel)
+    {
+        if(!$channel) return false;
+
+        if($this->id === $channel->user_id) return true;
+
+        return $this->memberChannels()->where("channel_id", $channel->id)->where("role", "publisher")->exists();
+    }
+
     public function formattedChannels(){
 
         if($channels = $this->channels()->get()){
@@ -115,28 +124,33 @@ class User extends Authenticatable
     }
 
     public function selectedChannel()
-    {
-        return $this->channels()->where("selected", 1)->first();
+    {   
+        $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
+        return Channel::where("selected", 1)->whereIn("id", $channelIds)->first();
     }
 
     public function twitterChannels()
-    {
-        return $this->hasMany(Twitter\Channel::class);
+    {   
+        $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
+        return Twitter\Channel::whereIn("channel_id", $channelIds);
     }
 
     public function facebookChannels()
-    {
-        return $this->hasMany(Facebook\Channel::class);
+    {   
+        $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
+        return Facebook\Channel::whereIn("channel_id", $channelIds);
     }
 
     public function linkedinChannels()
-    {
-        return $this->hasMany(Linkedin\Channel::class);
+    {   
+        $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
+        return Linkedin\Channel::whereIn("channel_id", $channelIds);
     }
 
     public function pinterestChannels()
-    {
-        return $this->hasMany(Pinterest\Channel::class);
+    {   
+        $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
+        return Pinterest\Channel::whereIn("channel_id", $channelIds);
     }
 
     public function selectedTwitterChannel()

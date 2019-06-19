@@ -12,7 +12,7 @@ class UpdateTeamMember extends React.Component{
     state = {
         name: !!this.props.member ? this.props.member.details.name : "",
         email: !!this.props.member ? this.props.member.details.email : "",
-        admin: !!this.props.member ? this.props.member.is_admin : false,
+        admin: !!this.props.member ? this.props.member.is_admin : "",
         publishChannels: !!this.props.member && this.props.member.assignedChannels.length > 0 ? this.props.member.assignedChannels : this.props.channels,
         assignedChannels: !!this.props.member && this.props.member.assignedChannels.length > 0 ? this.props.member.assignedChannels : [],
         assignedApprover: "",

@@ -17,7 +17,8 @@ class Team extends React.Component{
         teamId: false,
         removePrompt: false,
         memberToRemove: false,
-        memberToUpdate: false
+        memberToUpdate: false,
+        error: false
     }
 
     componentDidMount(){
@@ -112,6 +113,15 @@ class Team extends React.Component{
             }));
             this.loadTeams();
         }).catch( e => {
+
+            if(typeof e.response !== "undefined" && typeof e.response.data.error !== "undefined"){
+                this.setState(() => ({
+                    error: e.response.data.error,
+                    loading: false
+                }));
+                return;
+            }
+
             this.setState(() => ({
                 loading: false
             }));
@@ -124,6 +134,9 @@ class Team extends React.Component{
             
             <div>    
             <h2>TEAM</h2>
+            {this.state.error && 
+                <div className="alert alert-danger">{this.state.error}</div>
+            }
             {this.state.loading && <LoaderWithOverlay/>}
 
             <SweetAlert

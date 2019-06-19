@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Password;
 use App\Models\User;
 use App\Models\Team;
 use App\Models\TeamUser;
 use App\Models\TeamUserChannel;
+use App\Notifications\SendPasswordResetInviteNotification;
 
 class TeamController extends Controller
 {
@@ -63,8 +66,6 @@ class TeamController extends Controller
         $teamId = $request->input('teamId');
         $assignedChannels = $request->input('assignedChannels');
 
-        if($email === $user->email) return response()->json(["error" => "You are already the owner of this team."], 409);
-
         if(!$teamId){
             $team = $user->teams()->first();
 
@@ -79,9 +80,11 @@ class TeamController extends Controller
             if(!$team) return response()->json(["error" => "Team not found."], 404);
 
             if($team->user_id != $user->id && !$team->members()->where("member_id", $user->id)->where("is_admin", 1)->exists()){
-                return response()->json(["error" => "You don't have permission to add members to this team"], 403);
+                return response()->json(["error" => "You don't have permission to perform this action."], 403);
             }
         }
+        
+        if($team->user_id === $user->id && $email === $user->email) return response()->json(["error" => "You are already the owner of this team."], 409);
 
         $member = User::where("email", $email)->first();
 
@@ -91,6 +94,7 @@ class TeamController extends Controller
                 "name" => $name,
                 "role_id" => 1
             ]);
+
         }else{
             $member->name = $name;
             $member->email = $email;
@@ -107,6 +111,9 @@ class TeamController extends Controller
                 "owner_id" => $user->id,
                 "is_admin" => $admin ? 1 : 0
             ]);
+
+            $token = Password::getRepository()->create($member);
+            $member->notify(new SendPasswordResetInviteNotification($token, $user));
         }
 
         $team->channels()->where("member_id", $member->id)->delete();

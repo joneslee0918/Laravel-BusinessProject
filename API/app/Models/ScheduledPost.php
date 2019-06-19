@@ -14,6 +14,7 @@ class ScheduledPost extends Model
         "payload",
         "status",
         "posted",
+        "approved",
         "article_id"
     ];
     

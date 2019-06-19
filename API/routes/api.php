@@ -31,12 +31,14 @@ Route::middleware('auth:api')->group(function(){
     Route::patch('/channels/select/{id}', 'ChannelController@select');
     Route::delete('channels/delete/{id}', 'ChannelController@destroy');
 
+    Route::get('/scheduled/unapproved', 'ScheduledController@unapprovedPosts');
     Route::get('/scheduled/posts', 'ScheduledController@scheduledPosts');
     Route::get('/scheduled/past', 'ScheduledController@pastScheduled');
 
     Route::post('/post/store', 'PublishController@store');
     Route::delete('/post/{postId}', 'PublishController@destroy');
     Route::post('/post/{postId}', 'PublishController@postNow');
+    Route::patch('/post/{postId}', 'PublishController@approve');
 
     Route::get('/articles', 'ArticlesController@articles');
 

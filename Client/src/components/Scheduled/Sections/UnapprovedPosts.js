@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import UpgradeAlert from '../../UpgradeAlert';
 import channelSelector from '../../../selectors/channels';
-import {scheduledPosts, destroyPost, postNow} from '../../../requests/channels';
+import {unapprovedPosts, destroyPost, postNow, approvePost} from '../../../requests/channels';
 import PostList from '../../PostList';
 import Loader from '../../Loader';
 
-export class ScheduledPosts extends React.Component{
+export class UnapprovedPosts extends React.Component{
 
     defaultAction = {
         type: '',
@@ -108,9 +108,33 @@ export class ScheduledPosts extends React.Component{
         });
     };
 
+    approve = (postId) => {
+        this.setLoading(true);
+        return approvePost(postId)
+        .then((response) => {
+            this.fetchPosts();
+            this.setLoading(false);
+        }).catch((error) => {
+
+            if(typeof error.response.data.message != 'undefined'){
+                this.setState(() => ({
+                    error: error.response.data.message
+                }));
+            }
+
+            if(typeof error.response.data.error != 'undefined'){
+                this.setState(() => ({
+                    error: error.response.data.error
+                }));
+            }
+
+            this.setLoading(false);
+        });
+    };
+
     fetchPosts = () => {
         this.setLoading(true);
-        scheduledPosts()
+        unapprovedPosts()
             .then((response) => {
                 this.setState(() => ({
                     posts: response.items,
@@ -126,6 +150,12 @@ export class ScheduledPosts extends React.Component{
                     }));
                 }
 
+                if(typeof error.response.data.error != 'undefined'){
+                    this.setState(() => ({
+                        error: error.response.data.error
+                    }));
+                }    
+
                 if(error.response.status === 403){
                     this.setForbidden(true);
                 }
@@ -137,7 +167,7 @@ export class ScheduledPosts extends React.Component{
     loadMore = () => {
         this.setLoading(true);
         let page = this.state.page + 1;
-        scheduledPosts(page)
+        unapprovedPosts(page)
             .then((response) => {
                 this.setState((prevState) => ({
                     posts: prevState.posts.concat(response.items),
@@ -166,13 +196,14 @@ export class ScheduledPosts extends React.Component{
                     action={this.state.action}
                     setAction={this.setAction}
                     destroyPost={this.destroy}
+                    approvePost={this.approve}
                     publishPost={this.publishPost}
                     error={this.state.error}
                     setError={this.setError}
                     posts={this.state.posts}
                     loading={this.state.loading}
-                    title="SCHEDULED POSTS"
-                    type="scheduled-posts"
+                    title="AWAITING APPROVAL"
+                    type="unapproved-posts"
                 />
 
                 <BottomScrollListener onBottom={this.loadMore} />
@@ -194,4 +225,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(ScheduledPosts);
+export default connect(mapStateToProps)(UnapprovedPosts);
