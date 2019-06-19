@@ -37,13 +37,21 @@ class TeamController extends Controller
         $teamIds = TeamUser::where("member_id", $user->id)
         ->orWhere("owner_id", $user->id)->pluck("team_id");
 
+        $team = $user->teams()->first();
+
+        if(!$team){
+            $team = $user->teams()->create([
+                "name" => $user->organization_name ? $user->organization_name : "My Organization" 
+            ]);
+        }
+
         return Team::whereIn("id", $teamIds)->orWhere("user_id", $user->id)->get();
     }
 
     public function getMembers(Request $request)
     {   
         $teamId = $request->input("teamId");
-        if(!$teamId) return [];
+        if(!$teamId || $teamId == 'false') return [];
 
         $team = Team::find($teamId);
 
@@ -66,7 +74,7 @@ class TeamController extends Controller
         $teamId = $request->input('teamId');
         $assignedChannels = $request->input('assignedChannels');
 
-        if(!$teamId){
+        if(!$teamId || $teamId == 'false'){
             $team = $user->teams()->first();
 
             if(!$team){

@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Lang;
 
 class SendPasswordResetInviteNotification extends Notification
 {
@@ -65,8 +66,8 @@ class SendPasswordResetInviteNotification extends Notification
             ->subject('You have been added to a Uniclix Team')
             ->line('You are receiving this email because '.$this->user->name.' invited you to their team.')
             ->action('Create Password', url(config('app.url').route('password.reset', $this->token, false)))
-            ->line('This password creation link will expire in :count minutes.', ['count' => config('auth.passwords.users.expire')])
-            ->line('If you do not wish to change your password or already have one, no further action is required.');
+            ->line(Lang::getFromJson('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.users.expire')]))
+            ->line('If you already have a password, no further action is required.');
     }
 
     /**

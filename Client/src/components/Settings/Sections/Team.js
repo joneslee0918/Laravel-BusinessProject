@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Modal from 'react-modal';
 import TeamMember from './TeamMember';
 import UpdateTeamMember from './UpdateTeamMember';
@@ -67,7 +68,8 @@ class Team extends React.Component{
 
             this.setState(() => ({
                 teams: response,
-                teamId: response[0].id
+                teamId: response[0].id,
+                error: false
             }), () => {
                 this.fetchMembers();
             });
@@ -82,7 +84,8 @@ class Team extends React.Component{
         }));
         getTeamMembers(this.state.teamId).then(response => {
             this.setState(() => ({
-                members: response
+                members: response,
+                error: false
             }));
         }).catch(e => {
             this.setState(() => ({
@@ -100,6 +103,15 @@ class Team extends React.Component{
             this.loadTeams();
         });
     };
+
+    hasOwnTeamOnly = () => {
+        const {profile} = this.props;
+        const {teams} = this.state;
+
+        const teamsArr = teams.filter(team => team.user_id === profile.user.id);
+
+        return teamsArr.length < 2;
+    }
 
     remove = () => {
         const member = this.state.memberToRemove;
@@ -170,7 +182,7 @@ class Team extends React.Component{
                 />
             </Modal>
 
-                {!!teams.length && <div className="col-4 col-md-4 form-field">
+                {teams.length > 1 && <div className="col-4 col-md-4 form-field">
                     <select id={`teams`} onChange={this.onTeamChange} value={this.state.teamId} className="form-control">
                         {
                             this.state.teams.map((team, index) => (
@@ -212,4 +224,11 @@ class Team extends React.Component{
     }
 }
 
-export default Team;
+const mapStateToProps = (state) => {
+    const profile = state.profile
+    return {
+        profile
+    };
+};
+
+export default connect(mapStateToProps)(Team);
