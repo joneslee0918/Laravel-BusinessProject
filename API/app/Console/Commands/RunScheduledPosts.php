@@ -41,7 +41,6 @@ class RunScheduledPosts extends Command
     {
         $scheduledPosts = ScheduledPost::where('posted', 0)
         ->where('scheduled_at', '<=', Carbon::now())
-        ->where('approved', 1)
         ->whereNull('status')->get();
         
         $ids = $scheduledPosts->pluck('id');

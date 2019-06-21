@@ -276,14 +276,9 @@ class Compose extends React.Component{
 
             let errorMessage = "Something went wrong";
             if(error.response.status === 401){
-
-                if(typeof error.response.data.error !== "undefined")
-                    errorMessage = error.response.data.error;
-
-                if(typeof error.response.data.message !== "undefined")
-                    errorMessage = error.response.data.message;
+                errorMessage = error.response.data.message;
+                window.location.reload();
             }
-            
             this.setState(() => ({
                 loading: false,
                 error: errorMessage

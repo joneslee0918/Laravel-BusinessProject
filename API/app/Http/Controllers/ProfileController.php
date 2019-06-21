@@ -61,13 +61,6 @@ class ProfileController extends Controller
 
             $user->save();
 
-            if(array_key_exists("organization_name", $data)){
-                $user->teams()->updateOrCreate(
-                    ['user_id' => $user->id],
-                    ['name' => $data["organization_name"]]
-                );
-            }
-
             if(array_key_exists("topics", $data)){
                 $user->topics()->delete();
                 collect($data["topics"])->map(function($topic) use ($user){

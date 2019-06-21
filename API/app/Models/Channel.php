@@ -19,11 +19,6 @@ class Channel extends Model
         "updated_at",
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function details()
     {
         $classType = "\App\Models\\" . ucfirst($this->type) . "\Channel";

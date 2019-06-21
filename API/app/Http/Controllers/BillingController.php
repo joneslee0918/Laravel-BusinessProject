@@ -25,22 +25,104 @@ class BillingController extends Controller
         });
     }
 
+    /**
+     * Get all billing plans
+     *
+     */
+    public function getPlans()
+    {
+        $plans = Role::all();
+        $currentPLan = $this->user->role_id;
+        $activeSubscription = $this->user->subscribed('main');
+        $onGracePeriod = $this->user->subscribed('main') ? $this->user->subscription('main')->onGracePeriod() : false;
+        $addon = $this->user->subscribed('addon') ? $this->user->subscription('addon') : null;
+        $activeAddon = $this->user->subscribed('addon');
+        $addonOnGracePeriod = $this->user->subscribed('addon') ? $this->user->subscription('addon')->onGracePeriod() : false;
+
+        $subscription = [
+            "currentPlan" => $currentPLan,
+            "activeSubscription" => $activeSubscription,
+            "onGracePeriod" => $onGracePeriod,
+        ];
+
+        $addon = [
+            "addon" => $addon,
+            "activeAddon" => $activeAddon,
+            "addonOnGracePeriod" => $addonOnGracePeriod
+        ];
+
+        return ["plans"=>$plans, "subscription"=>$subscription, "addon"=>$addon];
+    }
+
     public function createSubscription(Request $request)
     {
+        $token = $request->input('token');
+        $plan = $token['plan'];
+        $trialDays = $token['trialDays'];
+        $subType = $token['subType'];
+        $id = $token['id'];
+        $user = $this->user;
+
         try {
-            $user = \Auth::user();
 
-            $user->newSubscription('main', 'basic')->create($request->id);
+            if($trialDays != "0"){
+                $user->newSubscription($subType, $plan)->trialDays($trialDays)->create($id);
+            } else {
+                $user->newSubscription($subType, $plan)->create($id);
+            }
 
-            return "success";
+            if($subType == "main"){
+                $role = Role::where("name", $plan)->first();
+                if (!$role) return response()->json(["error" => "Plan not found"], 404);
+
+                $user->role_id = $role->id;
+                $user->save();
+            }
+            elseif($subType == "addon"){
+
+                $roleAddon = RoleAddon::where("name", $plan)->first();
+                if (!$roleAddon) return response()->json(["error" => "Addon not found"], 404);
+
+                $user->roleAddons()->attach($roleAddon->id);
+
+                return response()->json(["success" => true], 200);
+            }
+
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
 
     }
 
+    public function cancelSubscription()
+    {
+        try {
+            $user = $this->user;
+
+            $user->subscription('main')->cancel();
+
+            return response()->json(["success" => true], 200);
+        } catch (\Throwable $th) {
+            return response()->json(["error" => "Something went wrong!"], 404);
+        }
+    }
+
+    public function resumeSubscription(Request $request)
+    {
+        try {
+            $user = $this->user;
+
+            $user->subscription($request->input('type'))->resume();
+
+            return response()->json(["success" => true], 200);
+        } catch (\Throwable $th) {
+            return response()->json(["error" => "Something went wrong!"], 404);
+        }
+    }
+
     public function changePlan(Request $request)
     {
+
         $plan = $request->input('plan');
         $role = Role::where("name", $plan)->first();
         if(!$role) return response()->json(["error" => "Plan not found"], 404);
@@ -48,33 +130,33 @@ class BillingController extends Controller
         $user = $this->user;
         if($user->channels()->count() > $role->roleLimit->account_limit)return response()->json(["error" => "Delete some accounts first."], 403);
 
+        $user->subscription('main')->swap($plan);
+
         $user->role_id = $role->id;
         $user->save();
 
         return response()->json(["success" => true], 200);
     }
 
-    public function activateAddon(Request $request)
-    {
-        $addon = $request->input('addon');
-        $roleAddon = RoleAddon::where("name", $addon)->first();
-        if(!$roleAddon) return response()->json(["error" => "Addon not found"], 404);;
-
-        $user = $this->user;
-        $user->roleAddons()->attach($roleAddon->id);
-
-        return response()->json(["success" => true], 200);
-    }
-
     public function cancelAddon(Request $request)
     {
-        $addon = $request->input('addon');
-        $roleAddon = RoleAddon::where("name", $addon)->first();
-        if(!$roleAddon) return response()->json(["error" => "Addon not found"], 404);;
+        try {
+            $user = $this->user;
 
-        $user = $this->user;
-        $user->roleAddons()->detach($roleAddon->id);
+            $user->subscription('addon')->cancel();
 
-        return response()->json(["success" => true], 200);
+            $addon = $request->input('addon');
+            $roleAddon = RoleAddon::where("name", $addon)->first();
+            if (!$roleAddon) return response()->json(["error" => "Addon not found"], 404);;
+
+            $user = $this->user;
+            $user->roleAddons()->detach($roleAddon->id);
+
+            return response()->json(["success" => true], 200);
+
+            return response()->json(["success" => true], 200);
+        } catch (\Throwable $th) {
+            return response()->json(["error" => "Something went wrong!"], 404);
+        }
     }
 }

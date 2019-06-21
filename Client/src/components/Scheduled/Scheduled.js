@@ -7,11 +7,6 @@ import ScheduledRouter from '../../routes/ScheduledRouter';
 
 const menuItems = [
     {   
-        id: "unapproved_posts",
-        displayName: "Awaiting Approval",
-        uri: "/scheduled/unapproved" 
-    },
-    {   
         id: "scheduled_posts",
         displayName: "Scheduled Posts",
         uri: "/scheduled/posts" 

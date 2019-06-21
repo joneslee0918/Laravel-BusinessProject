@@ -36,30 +36,6 @@ class User extends Authenticatable
         return $this->hasMany(Channel::class);
     }
 
-    public function memberChannels()
-    {
-        return $this->hasMany(TeamUserChannel::class, "member_id");
-    }
-
-    public function approverChannels()
-    {
-        return $this->hasMany(TeamUserChannel::class, "approver_id");
-    }
-
-    public function teams()
-    {
-        return $this->hasMany(Team::class);
-    }
-
-    public function hasPublishPermission($channel)
-    {
-        if(!$channel) return false;
-
-        if($this->id === $channel->user_id) return true;
-
-        return $this->memberChannels()->where("channel_id", $channel->id)->where("role", "publisher")->exists();
-    }
-
     public function formattedChannels(){
 
         if($channels = $this->channels()->get()){
@@ -85,72 +61,29 @@ class User extends Authenticatable
         return [];
     }
 
-    public function formattedMemberChannels($markSelected = false){
-
-        if($channels = $this->memberChannels()->get()){
-
-            return collect($channels)->map(function($channel) use ($markSelected){
-                    $permissionLevel = $channel->role;
-                    $teamId = $channel->team_id;
-                    $approverId = $channel->approver_id;
-
-                    $channel = $channel->channel;
-                    $channel->details = @$channel->details;
-                    $channel->permissionLevel = $permissionLevel;
-                    $channel->teamId = $teamId;
-                    $channel->approverId = $approverId;
-
-                    if($markSelected) $channel->selected = 1;
-
-                    if($channel->details){
-                        if($channel->details->account_type != "page" && $channel->type != "linkedin"){
-                            $avatar = @$channel->details->getAvatar();
-                        }
-                        $channel->details->payload = @unserialize($channel->details->payload);
-                        $channel->avatar = @$avatar ? @$avatar : @$channel->details->payload->avatar;
-                        $channel->name = @$channel->details->payload->name;
-                        $channel->username = @$channel->details->payload->nickname;
-                    }
-
-                    return $channel;
-                });
-        }
-
-        return [];
-    }
-
-    public function allFormattedChannels(){
-        return $this->formattedChannels()->merge($this->formattedMemberChannels());
-    }
-
     public function selectedChannel()
-    {   
-        $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
-        return Channel::where("selected", 1)->whereIn("id", $channelIds)->first();
+    {
+        return $this->channels()->where("selected", 1)->first();
     }
 
     public function twitterChannels()
-    {   
-        $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
-        return Twitter\Channel::whereIn("channel_id", $channelIds);
+    {
+        return $this->hasMany(Twitter\Channel::class);
     }
 
     public function facebookChannels()
-    {   
-        $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
-        return Facebook\Channel::whereIn("channel_id", $channelIds);
+    {
+        return $this->hasMany(Facebook\Channel::class);
     }
 
     public function linkedinChannels()
-    {   
-        $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
-        return Linkedin\Channel::whereIn("channel_id", $channelIds);
+    {
+        return $this->hasMany(Linkedin\Channel::class);
     }
 
     public function pinterestChannels()
-    {   
-        $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
-        return Pinterest\Channel::whereIn("channel_id", $channelIds);
+    {
+        return $this->hasMany(Pinterest\Channel::class);
     }
 
     public function selectedTwitterChannel()

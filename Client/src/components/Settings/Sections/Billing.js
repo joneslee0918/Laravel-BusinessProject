@@ -1,14 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {startSetProfile} from "../../../actions/profile";
-import { changePlan, activateAddon, cancelAddon } from '../../../requests/billing';
+import { changePlan, cancelAddon, getPlans, cancelSubscription, resumeSubscription } from '../../../requests/billing';
 import UpgradeAlert from '../../UpgradeAlert';
 import Checkout from './Checkout';
 
 class Billing extends React.Component{
 
     state = {
-        forbidden: false
+        forbidden: false,
+        plans: null,
+        subscription: null,
+        addon: null
+    }
+
+    componentDidMount() {
+        try {
+            getPlans()
+                .then((response) => {
+                    this.setState(() => ({
+                        plans: response.plans,
+                        subscription: response.subscription,
+                        addon: response.addon
+                    }));
+                }).catch(error => {
+                    this.setState(() => ({
+                        plans: null,
+                        subscription: null,
+                        addon: null
+                    }));
+                    return Promise.reject(error);
+                });
+        } catch (error) {
+
+        }
     }
 
     onPlanClick = (plan) => {
@@ -24,11 +49,18 @@ class Billing extends React.Component{
          });
     };
 
-    onAddonClick = (addon) => {
-        activateAddon(addon).then(response => {
+    cancelPlan = () => {
+        cancelSubscription().then(response => {
             this.props.startSetProfile();
         });
     };
+
+    resumePlan = (type) => {
+        resumeSubscription(type).then(response => {
+            this.props.startSetProfile();
+        });
+    };
+
 
     onAddonCancel = (addon) => {
         cancelAddon(addon).then(response => {
@@ -45,6 +77,8 @@ class Billing extends React.Component{
     render(){
         const {profile} = this.props;
         return(
+            <div>
+            {this.state.plans != null &&
             <div className="flex-container flex-space-between pricing-table">
                 <UpgradeAlert 
                     isOpen={this.state.forbidden} 
@@ -66,8 +100,7 @@ class Billing extends React.Component{
                             <th scope="col" className={`plan plan-pro`}>Pro $70</th>
                             <th scope="col" className={`plan plan-agency`}>Agency $140</th>
                             <th scope="col" className={`plan plan-twitter-growth`}>Twitter Growth $9.99</th>
-                        </tr>
-                    
+                        </tr>                    
                         <tr>
                             <td className="feature-category"><i className="fa fa-angle-right"></i>Social Accounts</td>
                             <td>1</td>
@@ -78,6 +111,16 @@ class Billing extends React.Component{
                             <td>100</td>
                             <td>Recommended Followers</td>
                         </tr>
+                            <tr>
+                                <td className="feature-category"><i className="fa fa-angle-right"></i>Users</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>6</td>
+                                <td>6</td>
+                                <td></td>
+                            </tr>
                         <tr>
                             <td className="feature-category"><i className="fa fa-angle-right"></i>Post Limitation</td>
                             <td>10 posts per account </td>
@@ -150,67 +193,46 @@ class Billing extends React.Component{
                         </tr>
                         <tr>
                             <td className="empty-td"></td>
-                            <td>
-                                {profile.role !== null && profile.role.name === 'free' ?
-                                    <button disabled className="plan-btn free-plan disabled-btn">Current Plan</button>
-                                    :
-                                    <button onClick={() => this.onPlanCliclk('free')} className="plan-btn free-plan">Change</button>
-                                }    
-                                
-                            </td>
-                            <td>
-                                {profile.role !== null && profile.role.name === 'basic' ?
-                                    <button disabled className="plan-btn basic-plan disabled-btn">Current Plan</button>
-                                    :
-                                    <Checkout />
-                                }    
-                                
-                            </td>
-                            <td>
-                                {profile.role !== null && profile.role.name === 'plus' ?
-                                    <button disabled className="plan-btn plus-plan disabled-btn">Current Plan</button>
-                                    :
-                                    <button onClick={() => this.onPlanClick('plus')} className="plan-btn plus-plan">Free 30 Days Trial</button>
-                                }    
-                                
-                            </td>
-                            <td>
-                                {profile.role !== null && profile.role.name === 'premium' ?
-                                    <button disabled className="plan-btn premium-plan disabled-btn">Current Plan</button>
-                                    :
-                                    <button onClick={() => this.onPlanClick('premium')} className="plan-btn premium-plan">Free 30 Days Trial</button>
-                                }    
-                                
-                            </td>
+                            {this.state.plans.map((plan, index) => (
+                                <td key={index}>
+                                {
+                                    this.state.subscription.currentPlan == 1 
+                                    ? <Checkout plan={plan.name} subType="main" trialDays={plan.trial_days} text={plan.trial_days == 0 ? "Buy" : "Start " + plan.trial_days + " Free Trial"}/>
+                                    : [
+                                        (plan.id == 1 
+                                        ? "Free Plan"
+                                        : plan.id != 1 && plan.id == this.state.subscription.currentPlan && this.state.subscription.onGracePeriod == false && this.state.subscription.activeSubscription == true?
+                                        <button onClick={() => this.cancelPlan()} className="plan-btn btn-cancel">Cancel</button>
+                                        : plan.id != 1 && plan.id == this.state.subscription.currentPlan && this.state.subscription.onGracePeriod == true &&this.state.subscription.activeSubscription == true?
+                                        <button onClick={() => this.resumePlan('main')} className="plan-btn btn-resume">Resume</button>
+                                        : plan.id != 1 && plan.id != this.state.subscription.currentPlan && this.state.subscription.activeSubscription == true ? 
+                                        <button onClick={() => this.onPlanClick(plan.name)} className="plan-btn free-plan">Change</button>
+                                        : <Checkout plan={plan.name} subType="main" trialDays={plan.trial_days} text={plan.trial_days == 0 ? "Buy" : "Start " + plan.trial_days + " Free Trial"}/>
+                                        )
+                                    ]
+                                }
+                                </td>
+                            ))}
 
                             <td>
-                                {profile.role !== null && profile.role.name === 'pro' ?
-                                    <button disabled className="plan-btn pro-plan disabled-btn">Current Plan</button>
-                                    :
-                                    <button onClick={() => this.onPlanClick('pro')} className="plan-btn pro-plan">Buy Now</button>
-                                }    
-                            </td>
-
-                            <td>
-                                {profile.role !== null && profile.role.name === 'agency' ?
-                                    <button disabled className="plan-btn agency-plan disabled-btn">Current Plan</button>
-                                    :
-                                    <button onClick={() => this.onPlanClick('agency')} className="plan-btn agency-plan">Buy Now</button>
-                                }    
-                                
-                            </td>
-
-                            <td>
-                                {profile.roleAddons.length && profile.roleAddons[0].name === 'twitter_growth' ?
-                                    <button onClick={() => this.onAddonCancel('twitter_growth')} className="plan-btn twitter-growth-addon">Cancel Addon</button>
-                                    :
-                                    <button onClick={() => this.onAddonClick('twitter_growth')} className="plan-btn twitter-growth-addon">Free 30 Days Trial</button>
-                                }                                    
-                            </td>
+                            {
+                                this.state.addon == null ? <Checkout plan="twitter_growth" subType="addon" trialDays="30" text="Free 30 Days Trial" /> :
+                                [
+                                    (
+                                        this.state.addon.activeAddon == true && this.state.addon.addonOnGracePeriod ==false
+                                        ? <button onClick={() => this.onAddonCancel('twitter_growth')} className="plan-btn btn-cancel">Cancel Addon</button>
+                                        : this.state.addon.activeAddon == true && this.state.addon.addonOnGracePeriod == true
+                                        ? <button onClick={() => this.resumePlan('addon')} className="plan-btn btn-resume">Resume Addon</button> 
+                                        : <Checkout plan="twitter_growth" subType="addon" trialDays="30" text="Free 30 Days Trial" />
+                                    )
+                                ] 
+                            }                                    
+                            </td> 
 
                         </tr>
                     </tbody>
                 </table>
+            </div>}
             </div>
         );
     }

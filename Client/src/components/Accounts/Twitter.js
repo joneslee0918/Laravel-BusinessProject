@@ -77,13 +77,8 @@ class Twitter extends React.Component {
                     this.props.logout();
                 }
             });
-        }).catch((e) => {
-            if(typeof e.response !== "undefined" && typeof e.response.data.error !== "undefined"){
-                this.setState(() => ({
-                    error: e.response.data.error
-                }));
-                return;
-            }
+        }).catch((error) => {
+
         });
     }
 

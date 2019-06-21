@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UserOrganizationName extends Migration
+class AddTrialDaysToRoles extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UserOrganizationName extends Migration
      */
     public function up()
     {
-        Schema::table("users", function(Blueprint $table){
-            $table->string("organization_name")->nullable()->after("name");
+        Schema::table('roles', function (Blueprint $table) {
+            $table->integer('trial_days')->after('name');
         });
     }
 
@@ -25,8 +25,8 @@ class UserOrganizationName extends Migration
      */
     public function down()
     {
-        Schema::table("users", function(Blueprint $table){
-            $table->dropColumn("organization_name");
+        Schema::table('roles', function (Blueprint $table) {
+            $table->dropColumn('trial_days');
         });
     }
 }

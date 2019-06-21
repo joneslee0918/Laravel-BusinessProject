@@ -17,28 +17,24 @@ Route::middleware('auth:api')->group(function(){
     Route::post('/profile', 'ProfileController@update');
     Route::get('/profile', 'ProfileController@profile');
 
-    Route::get('/team', 'TeamController@getTeams');
-    Route::get('/team/members', 'TeamController@getMembers');
-    Route::post('/team/members/update', 'TeamController@addOrUpdate');
-    Route::post('/team/members/remove', 'TeamController@remove');
-
     Route::post('/billing/change/plan', 'BillingController@changePlan');
+    Route::get('/billing/plans', 'BillingController@getPlans');
     Route::post('/billing/activate/addon', 'BillingController@activateAddon');
     Route::post('/billing/cancel/addon', 'BillingController@cancelAddon');
-    Route::post('/billing/create/subscription', 'BillingController@createSubscription');
+    Route::post('/billing/subscription/create', 'BillingController@createSubscription');
+    Route::post('/billing/subscription/cancel', 'BillingController@cancelSubscription');
+    Route::post('/billing/subscription/resume', 'BillingController@resumeSubscription');
 
     Route::get('/channels', 'ChannelController@channels');
     Route::patch('/channels/select/{id}', 'ChannelController@select');
     Route::delete('channels/delete/{id}', 'ChannelController@destroy');
 
-    Route::get('/scheduled/unapproved', 'ScheduledController@unapprovedPosts');
     Route::get('/scheduled/posts', 'ScheduledController@scheduledPosts');
     Route::get('/scheduled/past', 'ScheduledController@pastScheduled');
 
     Route::post('/post/store', 'PublishController@store');
     Route::delete('/post/{postId}', 'PublishController@destroy');
     Route::post('/post/{postId}', 'PublishController@postNow');
-    Route::patch('/post/{postId}', 'PublishController@approve');
 
     Route::get('/articles', 'ArticlesController@articles');
 

@@ -25,30 +25,10 @@ class ScheduledController extends Controller
         });
     }
 
-    public function unapprovedPosts(Request $request)
-    {
-        $posts = $this->selectedChannel->scheduledPosts()
-        ->where("posted", 0)
-        ->where("approved", 0)
-        ->orderBy('scheduled_at', 'asc')
-        ->paginate(20);
-
-        foreach($posts as $post){
-            $post->payload = unserialize($post->payload);
-        }
-        
-        $posts = $posts->groupBy(function($date) {
-            return Carbon::parse($date->scheduled_at_original)->format('Y-m-d');
-        });
-
-        return response()->json(["items" => $posts->values()]);
-    }
-
     public function scheduledPosts(Request $request)
     {
         $posts = $this->selectedChannel->scheduledPosts()
         ->where("posted", 0)
-        ->where("approved", 1)
         ->orderBy('scheduled_at', 'asc')
         ->paginate(20);
 

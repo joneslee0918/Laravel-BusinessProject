@@ -25,26 +25,32 @@ class UserRolePermissionLimitsSeeder extends Seeder
         DB::table("roles")->insert([
             [
                 "name" => "free",
+                "trial_days" => 0,
                 "description" => "Free features"
             ],
             [
                 "name" => "basic",
+                "trial_days" => 30,
                 "description" => "Basic features"
             ],
             [
                 "name" => "plus",
+                "trial_days" => 30,
                 "description" => "Plus features"
             ],
             [
                 "name" => "premium",
+                "trial_days" => 0,
                 "description" => "Premium features"
             ],
             [
                 "name" => "pro",
+                "trial_days" => 0,
                 "description" => "Pro features"
             ],
             [
                 "name" => "agency",
+                "trial_days" => 0,
                 "description" => "Agency features"
             ]
         ]);
@@ -158,20 +164,20 @@ class UserRolePermissionLimitsSeeder extends Seeder
 
         $freePerm = Permission::whereIn("name", ["articles", "compose", "scheduling", "analytics", "accounts"])->pluck("id");
         $permissions = Permission::whereIn("name", [
-                "articles", 
-                "compose", 
-                "scheduling", 
-                "schedule-best-time", 
-                "analytics", 
-                "advanced-analytics", 
-                "streams", 
+                "articles",
+                "compose",
+                "scheduling",
+                "schedule-best-time",
+                "analytics",
+                "advanced-analytics",
+                "streams",
                 "mentions"])->pluck("id");
-        
-        $twitterGrowthPerm = Permission::whereIn("name", 
-            ["manage", 
-            "manage-dashboard", 
-            "manage-reply", 
-            "manage-fans", 
+
+        $twitterGrowthPerm = Permission::whereIn("name",
+            ["manage",
+            "manage-dashboard",
+            "manage-reply",
+            "manage-fans",
             "manage-non-followers",
             "manage-recent-unfollowers",
             "manage-recent-followers",

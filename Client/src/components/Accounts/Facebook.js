@@ -106,7 +106,7 @@ class Facebook extends React.Component {
     }
 
     remove = (id) => {
-        destroyChannel(id)
+        return destroyChannel(id)
         .then((response) => {
             this.props.startSetChannels()
             .then((response) => {
@@ -114,13 +114,8 @@ class Facebook extends React.Component {
                     this.props.logout();
                 }
             });
-        }).catch((e) => {
-            if(typeof e.response !== "undefined" && typeof e.response.data.error !== "undefined"){
-                this.setState(() => ({
-                    error: e.response.data.error
-                }));
-                return;
-            }
+        }).catch((error) => {
+
         });
     }
 

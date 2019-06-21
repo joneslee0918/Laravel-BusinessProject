@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Twitter;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Team;
 
 class FollowingController extends Controller
 {
