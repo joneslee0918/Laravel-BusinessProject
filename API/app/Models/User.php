@@ -36,6 +36,11 @@ class User extends Authenticatable
         return $this->hasMany(Channel::class);
     }
 
+    public function teams()
+    {
+        return $this->hasMany(Team::class);
+    }
+
     public function formattedChannels(){
 
         if($channels = $this->channels()->get()){

@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserRolePermissionLimitsSeeder::class);
         $this->call(AdminTableSeeder::class);
         $this->call(PostCategoriesSeeder::class);
+        $this->call(TeamPermissionSeeder::class);
     }
 }

@@ -15,6 +15,7 @@ class Profile extends React.Component{
         name: "",
         email: "",
         website: "",
+        organizationName: "",
         reason: "",
         topics: [],
         topic: "",
@@ -42,6 +43,7 @@ class Profile extends React.Component{
             stateCopy["name"] = user.name ? user.name : "";
             stateCopy["email"] = user.email ? user.email : "";
             stateCopy["website"] = user.website ? user.website : "";
+            stateCopy["organizationName"] = user.organization_name ? user.organization_name : "";
             stateCopy["reason"] = user.usage_reason ? user.usage_reason : "Myself";
             stateCopy["topics"] = topics.map((topic) => topic.topic);
             stateCopy["locations"] = locations.map((location) => {
@@ -125,6 +127,7 @@ class Profile extends React.Component{
             name: this.state.name,
             email: this.state.email,
             website: this.state.website,
+            organization_name: this.state.organizationName,
             topics: this.state.topics,
             locations: this.state.locations,
             timezone: this.state.timezone,
@@ -299,7 +302,12 @@ class Profile extends React.Component{
                                 <option>My Clients</option>
                             </select>
                         </div>
-        
+
+                        <div className="col-6 col-md-6 form-field">
+                            <label htmlFor="topics">Organization Name</label>
+                            <input type="text" className="form-control whiteBg" id="organizationName" onChange={(e) => this.onFieldChange(e)} value={this.state.organizationName} placeholder="My Organization" />
+                        </div>
+
                         <div className="col-6 col-md-6 form-field">
                             <label htmlFor="topics">MY TOPICS</label>
                             <input type="text" className="form-control whiteBg" id="topics" readOnly={true} onClick={this.toggleTopicsModal} value={this.state.topics.map(topic => ` ${topic}`)} placeholder="food, pets, fashion..." />

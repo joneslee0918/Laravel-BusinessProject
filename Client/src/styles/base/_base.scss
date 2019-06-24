@@ -33,6 +33,10 @@ body {
     background: white;
 }
 
+button, button:focus, button:active{
+    outline: none;
+}
+
 ul {
     list-style: none;
     padding: 0;

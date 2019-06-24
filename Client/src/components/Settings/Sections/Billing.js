@@ -4,6 +4,7 @@ import {startSetProfile} from "../../../actions/profile";
 import { changePlan, cancelAddon, getPlans, cancelSubscription, resumeSubscription } from '../../../requests/billing';
 import UpgradeAlert from '../../UpgradeAlert';
 import Checkout from './Checkout';
+import Loader from '../../Loader';
 
 class Billing extends React.Component{
 
@@ -11,7 +12,8 @@ class Billing extends React.Component{
         forbidden: false,
         plans: null,
         subscription: null,
-        addon: null
+        addon: null,
+        loading: false
     }
 
     componentDidMount() {
@@ -21,13 +23,15 @@ class Billing extends React.Component{
                     this.setState(() => ({
                         plans: response.plans,
                         subscription: response.subscription,
-                        addon: response.addon
+                        addon: response.addon,
+                        loading: true
                     }));
                 }).catch(error => {
                     this.setState(() => ({
                         plans: null,
                         subscription: null,
-                        addon: null
+                        addon: null,
+                        loading: false
                     }));
                     return Promise.reject(error);
                 });
@@ -78,7 +82,7 @@ class Billing extends React.Component{
         const {profile} = this.props;
         return(
             <div>
-            {this.state.plans != null &&
+            {this.state.plans != null ?
             <div className="flex-container flex-space-between pricing-table">
                 <UpgradeAlert 
                     isOpen={this.state.forbidden} 
@@ -232,7 +236,7 @@ class Billing extends React.Component{
                         </tr>
                     </tbody>
                 </table>
-            </div>}
+                </div> : <Loader />}
             </div>
         );
     }
