@@ -43,7 +43,7 @@ class SelectChannelsModal extends React.Component{
 
     render(){
 
-        const {channels, onChange, toggle} = this.props;
+        const {channels, onChange, toggle, twitterSelectType = "radio"} = this.props;
 
         const twitterChannels = channelSelector(channels, {selected: undefined, provider: "twitter"});
         const facebookChannels = channelSelector(channels, {selected: undefined, provider: "facebook"});
@@ -53,7 +53,7 @@ class SelectChannelsModal extends React.Component{
         return (
             <div className="modal-content">
                 <button className="upgrade-btn m10" onClick={this.onAddAccountsClick}><i className="fa fa-plus"></i> Add accounts</button>
-                <div className="modal-body scrollable-400">
+                <div className="modal-body scrollable-400 scrollbar">
                     
                     {!!twitterChannels.length &&
                         <h3 className="bg-heading" onClick={this.toggleTwitterSelect}>
@@ -65,8 +65,8 @@ class SelectChannelsModal extends React.Component{
                         
                         twitterChannels.map((channel) => (
                                 <label key={channel.id} className="channel-item selection-container">
-                                    <input type="radio" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="twitter_channel" />
-                                    <span className="checkmark round"></span>
+                                    <input type={twitterSelectType} onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="twitter_channel" />
+                                    <span className={`checkmark ${twitterSelectType == 'radio' ? 'round' : ''}`}></span>
                                     <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
                                 </label>
                         )

@@ -11,6 +11,7 @@ export const PostList = ({
     setAction, 
     destroyPost, 
     publishPost,
+    approvePost,
     error,
     setError,
     posts,
@@ -111,7 +112,11 @@ export const PostList = ({
                                                  type: type !== 'past-scheduled' ? 'edit' : 'store'
                                                 });} } className="link-cursor">{`${type === 'past-scheduled' ? 'Reschedule' : 'Edit'}`}</a></li>
                                             <li className="text-links link-inactive"><a className="link-cursor danger-btn" onClick={() => setAction({type: 'delete', id: post.id})}>Delete</a></li>
-                                            <li className="text-links"><a className="link-cursor" onClick={() => setAction({type: 'post', id: post.id})}>Post Now</a></li>
+                                            {type !== "unapproved-posts" ?
+                                                <li className="text-links"><a className="link-cursor" onClick={() => setAction({type: 'post', id: post.id})}>Post Now</a></li>
+                                                :
+                                                <li className="text-links"><a className="link-cursor" onClick={() => approvePost(post.id)}>Approve</a></li>
+                                            }
                                         </ul>
                                     </div>
                                 </div>

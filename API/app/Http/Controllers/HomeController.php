@@ -22,7 +22,8 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('home');
+    {   
+        $clientUrl = config('frontendclient.client_url');
+        return redirect($clientUrl);
     }
 }

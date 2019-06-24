@@ -26,7 +26,7 @@ class ChannelController extends Controller
 
     public function channels() {
         $user = $this->user;
-        return $user->formattedChannels();
+        return $user->allFormattedChannels();
     }
 
     public function select($id)
@@ -38,7 +38,7 @@ class ChannelController extends Controller
             $channel->select();
         }
 
-        return $user->formattedChannels();
+        return $user->allFormattedChannels();
     }
 
     public function destroy($id)
@@ -53,6 +53,10 @@ class ChannelController extends Controller
                 $channel->select();
                 $channel->details->select();
             }
+
+            return response()->json(["message" => "Channel has been deleted"], 200);
+        }else{
+            return response()->json(["error" => "You don't have permission to perform this action"], 403);
         }
     }
 

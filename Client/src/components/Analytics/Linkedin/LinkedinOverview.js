@@ -190,7 +190,7 @@ class LinkedinOverview extends React.Component {
                             {...propData}/>
                     </div>
                 </div>
-                </div> : <div><div className="no-data">There is no Linkedin page!<div><NavLink to="/accounts">Connect to Linkedin</NavLink></div></div></div>}
+                </div> : <div><div className="no-data">There is no Linkedin page!<div><NavLink to="/accounts">Add Linkedin page</NavLink></div></div></div>}
             </div>
         );
     }

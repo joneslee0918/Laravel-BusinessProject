@@ -38,6 +38,21 @@ export const destroyPost = (postId) => {
     });
 };
 
+
+export const approvePost = (postId) => {
+    return axios.patch(`${apiUrl}/post/${postId}`)
+    .then((response) => {
+        return response.data;
+    });
+};
+
+export const unapprovedPosts = (page = 1) => {
+    return axios.get(`${apiUrl}/scheduled/unapproved?page=${page}`)
+    .then((response) => {
+        return response.data;
+    });
+};
+
 export const scheduledPosts = (page = 1) => {
     return axios.get(`${apiUrl}/scheduled/posts?page=${page}`)
     .then((response) => {

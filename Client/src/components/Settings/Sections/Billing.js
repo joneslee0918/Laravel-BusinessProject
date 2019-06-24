@@ -196,6 +196,16 @@ class Billing extends React.Component{
                             <td></td>
                         </tr>
                         <tr>
+                            <td className="feature-category"></td>
+                            <td><button disabled className="plan-btn">Sign Up Free</button></td>
+                            <td><button disabled className="plan-btn">Sign Up Free</button></td>
+                            <td><button disabled className="plan-btn">Sign Up Free</button></td>
+                            <td><button disabled className="plan-btn">Sign Up Free</button></td>
+                            <td><button disabled className="plan-btn">Sign Up Free</button></td>
+                            <td><button disabled className="plan-btn">Sign Up Free</button></td>
+                            <td><button disabled className="plan-btn">Sign Up Free</button></td>
+                        </tr>
+                        {/* <tr>
                             <td className="empty-td"></td>
                             {this.state.plans.map((plan, index) => (
                                 <td key={index}>
@@ -233,7 +243,7 @@ class Billing extends React.Component{
                             }                                    
                             </td> 
 
-                        </tr>
+                        </tr> */}
                     </tbody>
                 </table>
                 </div> : <Loader />}

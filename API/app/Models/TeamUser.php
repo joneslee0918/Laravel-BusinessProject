@@ -14,4 +14,14 @@ class TeamUser extends Model
     {
         return $this->belongsTo(Team::class, "team_id");
     }
+
+    public function details()
+    {
+        return $this->belongsTo(User::class, "member_id");
+    }
+
+    public function formattedChannels($markSelected = false)
+    {
+        return $this->details->formattedMemberChannels($markSelected);
+    }
 }

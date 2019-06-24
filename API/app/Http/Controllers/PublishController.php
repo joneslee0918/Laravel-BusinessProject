@@ -7,6 +7,8 @@ use App\Models\Channel;
 use App\Models\ScheduledPost;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\PublishApprovalNotification;
+use App\Notifications\PostApprovedNotification;
 
 class PublishController extends Controller
 {   
@@ -50,9 +52,7 @@ class PublishController extends Controller
             $uploadedImages = $this->uploadImages($images);
 
             $bestTime = false;
-
-            $postLimit = $this->user->getLimit("posts_per_account");
-
+            $permissionLevel = "publisher";
             $failedChannels = [];
             foreach($channels as $channel){
                 $boards = false;
@@ -66,6 +66,8 @@ class PublishController extends Controller
                 }
 
                 $channel = Channel::find($channel['id']);
+                $postLimit = $channel->user->getLimit("posts_per_account");
+                $permissionLevel = $this->user->hasPublishPermission($channel);
 
                 if($postLimit < 10000){
                     $scheduledPosts = $channel->scheduledPosts()->latest()->take($postLimit)->get()->reverse();
@@ -146,15 +148,27 @@ class PublishController extends Controller
                     'scheduled_at' => $publishTime,
                     'scheduled_at_original' => $publishOriginalTime,
                     'payload' => serialize($payload),
+                    'approved' => $permissionLevel ? 1 : 0,
                     // 'posted' => $publishType == 'now' ? 1 : 0,
                     'posted' => 0,
                     'article_id' => $post['articleId'] ? $post['articleId'] : null
                 ];
 
-                if($post['type'] == 'edit'){                   
-                    $channel->scheduledPosts()->where("id", $post['id'])->update($postData);
+                if($post['type'] == 'edit'){
+                    if($channel->scheduledPosts()->where("id", $post['id'])->where("approved", 0)->exists()){
+                        $channel->scheduledPosts()->where("id", $post['id'])->where("approved", 0)->update($postData);
+                    }else if($this->user->hasPublishPermission($channel)){
+                        $channel->scheduledPosts()->where("id", $post['id'])->update($postData);
+                    }else{
+                        return response()->json(["error" => "You don't have permission to perform this action."], 401);
+                    }
+                    
                 }else{
                     $scheduledPost = $channel->scheduledPosts()->create($postData);
+                }
+
+                if(!$permissionLevel && $post['type'] !== 'edit'){
+                    $channel->user->notify(new PublishApprovalNotification());
                 }
 
                 // if($publishType == 'now'){
@@ -235,7 +249,10 @@ class PublishController extends Controller
     }
 
     public function postNow($postId)
-    {
+    {   
+        if(!$this->user->hasPublishPermission($this->selectedChannel))
+            return response()->json(["error" => "Publisher permission required."], 403);
+
         if($this->selectedChannel){
 
             try{
@@ -247,8 +264,30 @@ class PublishController extends Controller
         }
     }
 
+    public function approve($postId)
+    {
+        if(!$this->user->hasPublishPermission($this->selectedChannel))
+            return response()->json(["error" => "You don't have permission to approve posts."], 403);
+
+        if($this->selectedChannel){
+
+            try{
+                $scheduledPost = $this->selectedChannel->scheduledPosts()->find($postId);
+                $scheduledPost->approved = 1;
+                $scheduledPost->save();
+
+                //$this->user->notify(new PostApprovedNotification());
+            }catch(\Exception $e){
+                return getErrorResponse($e, $this->selectedChannel);
+            }
+        }
+    }
+
     public function destroy($postId)
     {
+        if(!$this->user->hasPublishPermission($this->selectedChannel))
+            return response()->json(["error" => "Publisher permission required."], 403);
+
         if($this->selectedChannel){
 
             try{

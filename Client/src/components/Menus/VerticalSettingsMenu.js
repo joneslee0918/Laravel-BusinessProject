@@ -25,7 +25,7 @@ const MenuItems = ({ menuItems }) => (
 const SupportSection = ({logout}) => (
     <div className="support">
         <div>
-            <a href="mailto:info@oda-lab.com?Subject=The%20sky%20is%20falling!"><i className="fa fa-comment"></i> SUPPORT</a>
+            <a href="mailto:info@uniclixapp.com?Subject=The%20sky%20is%20falling!"><i className="fa fa-comment"></i> SUPPORT</a>
         </div>
         <div className="logout-btn">
             <a className="link-cursor" onClick={logout}>LOG OUT</a>

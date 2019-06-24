@@ -887,6 +887,38 @@ input {
     width: 300px;
 }
 
+.team-modal{
+    width:inherit !important;
+    background: white;
+    padding: 20px;
+    max-height: 90vh;
+    overflow: auto !important;
+}
+
+.lowerCase{
+    text-transform: lowercase !important;
+}
+
+.upperCase{
+    text-transform: uppercase !important;
+}
+
+.capitalize{
+    text-transform: capitalize !important;
+}
+
+.team-form{
+    max-height: 30vh;
+    max-width: 50vw;
+    overflow: auto !important;
+}
+
+.blend-title{
+    font-size: 18px;
+    font-family: open-sansSemiBold, Arial, sans-serif;
+    color: #999;
+}
+
 .ReactModalPortal .ReactModal__Content.tailored-post-wrapper{
     position: fixed !important;
     width: 100%;

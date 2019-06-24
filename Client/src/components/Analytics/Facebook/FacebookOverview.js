@@ -190,7 +190,7 @@ class FacebookOverview extends React.Component {
                             {...propData}/>
                         </div>
                 </div>
-                </div> : <div><div className="no-data">There is no Facebook page!<div><NavLink to="/accounts">Connect to Facebook</NavLink></div></div></div>}
+                </div> : <div><div className="no-data">There is no Facebook page!<div><NavLink to="/accounts">Add Facebook page</NavLink></div></div></div>}
             </div>
         );
     }

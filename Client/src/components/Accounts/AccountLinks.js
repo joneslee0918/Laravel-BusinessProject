@@ -45,7 +45,7 @@ class AccountLinks extends React.Component {
                     </NavLink>
 
                     
-                    <NavLink to="/accounts/pinterest" >
+                    {/* <NavLink to="/accounts/pinterest" >
                         <div className="account_box pinterest_bg whiteTxt col-xs-12">
                             <div>
                                 <div className="center-inline"><i className="fa fa-pinterest xl_font"></i></div>
@@ -53,7 +53,7 @@ class AccountLinks extends React.Component {
                                 <p className="center-inline">Connected: {this.props.pinterestChannels.length}</p>
                             </div>
                         </div>
-                    </NavLink>
+                    </NavLink> */}
                     
                 </div>
             </div>

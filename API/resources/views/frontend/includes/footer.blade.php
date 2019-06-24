@@ -40,7 +40,8 @@
                         <ul class="footer-ul">
                             <!-- <li><a href="#">The Team</a></li> -->
                             <li><a href="#about">About Us</a></li>
-                            <li><a href="/blog">Blog</a></li>
+                            <li><a href="https://blog.uniclixapp.com" target="_blank">Blog</a></li>
+                            <li><a href="/jobs" target="_blank">Jobs</a></li>
                         </ul>
                     </div>
                     <div class="col-md-4 col-xs-12 mb20">

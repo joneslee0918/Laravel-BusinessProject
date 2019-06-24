@@ -12,7 +12,7 @@ export const PublicRoute = ({
                 <Component {...props} />
             </div>
         ) : (
-            <Redirect to="/home" />
+            <Redirect to="/accounts" />
         )
     )} />
 );
