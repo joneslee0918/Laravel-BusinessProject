@@ -30,22 +30,42 @@ class ProfileController extends Controller
         $locations = $this->user->locations;
         $role = $this->user->role()->with("permissions")->first();
         $roleAddons = $this->user->roleAddons()->with("permissions")->get();
+        $currentPLan = $this->user->role_id;
+        $activeSubscription = $this->user->subscribed('main');
+        $onGracePeriod = $this->user->subscribed('main') ? $this->user->subscription('main')->onGracePeriod() : false;
+        $addon = $this->user->subscribed('addon') ? $this->user->subscription('addon') : null;
+        $activeAddon = $this->user->subscribed('addon');
+        $addonOnGracePeriod = $this->user->subscribed('addon') ? $this->user->subscription('addon')->onGracePeriod() : false;
+
+        $subscription = [
+            "currentPlan" => $currentPLan,
+            "activeSubscription" => $activeSubscription,
+            "onGracePeriod" => $onGracePeriod,
+        ];
+
+        $addon = [
+            "addon" => $addon,
+            "activeAddon" => $activeAddon,
+            "addonOnGracePeriod" => $addonOnGracePeriod
+        ];
 
         return response()->json([
             "user" => $this->user,
             "topics" => $topics,
             "locations" => $locations,
             "role" => $role,
-            "roleAddons" => $roleAddons
+            "roleAddons" => $roleAddons,
+            "subscription" => $subscription,
+            "addon" => $addon
         ]);
     }
 
     public function update(Request $request)
-    {   
+    {
         try{
             $user = $this->user;
             $data = $request->input('data');
-            
+
             foreach($data as $key => $value){
 
                 if($key == "topics" || $key == "locations"){
@@ -84,7 +104,7 @@ class ProfileController extends Controller
             if(array_key_exists("locations", $data)){
                 $user->locations()->delete();
                 collect($data["locations"])->map(function($location) use ($user){
-                    
+
                     $location = [
                         'label' => $location['label'],
                         'location' => $location['location']
@@ -96,9 +116,9 @@ class ProfileController extends Controller
                 });
             }
 
-            
+
         }catch(\Exception $e){
-            
+
             return getErrorResponse($e, $this->selectedChannel);
         }
 
