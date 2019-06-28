@@ -130,7 +130,7 @@ class BillingController extends Controller
         $user = $this->user;
         if($user->channels()->count() > $role->roleLimit->account_limit)return response()->json(["error" => "Delete some accounts first."], 403);
 
-        // $user->subscription('main')->swap($plan);
+        $user->subscription('main')->swap($plan);
 
         $user->role_id = $role->id;
         $user->save();

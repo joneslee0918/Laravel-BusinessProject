@@ -4,7 +4,7 @@ import { startSetProfile } from "../../../actions/profile";
 import { changePlan, cancelAddon, getPlans, cancelSubscription, resumeSubscription } from '../../../requests/billing';
 import UpgradeAlert from '../../UpgradeAlert';
 import Checkout from './Checkout';
-import Loader from '../../Loader';
+import { LoaderWithOverlay as Loader } from '../../Loader';
 
 class Billing extends React.Component {
 
@@ -39,14 +39,10 @@ class Billing extends React.Component {
   }
 
   onPlanClick = (plan) => {
-    this.setState(() => ({
-      loading: true
-    }));
+    this.setLoading(true);
     changePlan(plan).then(response => {
       this.props.startSetProfile();
-      this.setState(() => ({
-        loading: false
-      }));
+      this.setLoading(false);
     }).then()
       .catch(error => {
         if (error.response.status === 403) {
@@ -60,39 +56,27 @@ class Billing extends React.Component {
   };
 
   cancelPlan = () => {
-    this.setState(() => ({
-      loading: true
-    }));
+    this.setLoading(true);
     cancelSubscription().then(response => {
       this.props.startSetProfile();
-      this.setState(() => ({
-        loading: false
-      }));
+      this.setLoading(false);
     });
   };
 
   resumePlan = (type) => {
-    this.setState(() => ({
-      loading: true
-    }));
+    this.setLoading(true);
     resumeSubscription(type).then(response => {
       this.props.startSetProfile();
-      this.setState(() => ({
-        loading: false
-      }));
+      this.setLoading(false);
     });
   };
 
 
   onAddonCancel = (addon) => {
-    this.setState(() => ({
-      loading: true
-    }));
+    this.setLoading(true);
     cancelAddon(addon).then(response => {
       this.props.startSetProfile();
-      this.setState(() => ({
-        loading: false
-      }));
+      this.setLoading(false);
     });
   };
 
@@ -101,6 +85,12 @@ class Billing extends React.Component {
       forbidden
     }));
   };
+
+  setLoading = (loading = false) => {
+    this.setState(() => ({
+      loading
+    }));
+  }
 
   render() {
     const { profile } = this.props;
@@ -229,7 +219,7 @@ class Billing extends React.Component {
                         <td key={index}>
                         {
                             profile.subscription.currentPlan == 1 
-                            ? <Checkout plan={plan.name} subType="main" trialDays={plan.trial_days} text={plan.trial_days == 0 ? "Buy" : "Start " + plan.trial_days + " Free Trial"}/>
+                            ? <Checkout plan={plan.name} subType="main" trialDays={plan.trial_days} setLoading={this.setLoading} setProfile={this.props.startSetProfile} text={plan.trial_days == 0 ? "Buy" : "Start " + plan.trial_days + " Free Trial"}/>
                             : [
                                 (plan.id == 1 
                                 ? "Free Plan"
@@ -239,7 +229,7 @@ class Billing extends React.Component {
                                 <button onClick={() => this.resumePlan('main')} className="plan-btn btn-resume">Resume</button>
                                 : plan.id != 1 && plan.id != profile.subscription.currentPlan && profile.subscription.activeSubscription == true ? 
                                 <button onClick={() => this.onPlanClick(plan.name)} className="plan-btn free-plan">Change</button>
-                                : <Checkout plan={plan.name} subType="main" trialDays={plan.trial_days} text={plan.trial_days == 0 ? "Buy" : "Start " + plan.trial_days + " Free Trial"}/>
+                                : <Checkout plan={plan.name} subType="main" trialDays={plan.trial_days} setLoading={this.setLoading} setProfile={this.props.startSetProfile} text={plan.trial_days == 0 ? "Buy" : "Start " + plan.trial_days + " Free Trial"}/>
                                 )
                             ]
                         }
@@ -248,14 +238,14 @@ class Billing extends React.Component {
 
                     <td>
                     {
-                        profile.addon == null ? <Checkout plan="twitter_growth" subType="addon" trialDays="30" text="Free 30 Days Trial" /> :
+                        profile.addon == null ? <Checkout plan="twitter_growth" subType="addon" setLoading={this.setLoading} setProfile={this.props.startSetProfile} trialDays="30" text="Free 30 Days Trial" /> :
                         [
                             (
                                 profile.addon.activeAddon == true && profile.addon.addonOnGracePeriod ==false
                                 ? <button onClick={() => this.onAddonCancel('twitter_growth')} className="plan-btn btn-cancel">Cancel Addon</button>
                                 : profile.addon.activeAddon == true && profile.addon.addonOnGracePeriod == true
                                 ? <button onClick={() => this.resumePlan('addon')} className="plan-btn btn-resume">Resume Addon</button> 
-                                : <Checkout plan="twitter_growth" subType="addon" trialDays="30" text="Free 30 Days Trial" />
+                                : <Checkout plan="twitter_growth" subType="addon" setLoading={this.setLoading} setProfile={this.props.startSetProfile} trialDays="30" text="Free 30 Days Trial" />
                             )
                         ] 
                     }                                    

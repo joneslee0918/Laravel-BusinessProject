@@ -10,15 +10,31 @@ use App\Models\RoleAddon;
 trait Permissible
 {
     public function hasRole($roleName)
-    {
-        return Role::where("id", $this->role_id)->where("name", strtolower($roleName))->exists() || $this->hasAddon($roleName);
+    {  
+        if($roleName=="free") return true;
+
+        if ($this->subscribedToPlan($roleName, 'main')) {
+           return Role::where("id", $this->role_id)->where("name", strtolower($roleName))->exists() || $this->hasAddon($roleName);
+        }
+
+        if(!$this->subscribed('main')) {
+            $this->setRole("free");
+        }
+
+        return false;
     }
 
     public function hasPermission($permission)
     {
-        if ($role = Role::where("id", $this->role_id)->first()) {
+        $role = Role::where("id", $this->role_id)->first();
+
+        if ($role && $this->subscribedToPlan($role->name, 'main')) {
 
             return $role->permissions()->where("name", strtolower($permission))->exists() || $this->hasAddonPermission($permission);
+        }
+
+        if(!$this->subscribed('main')) {
+            $this->setRole("free");
         }
 
         return false;
@@ -26,7 +42,7 @@ trait Permissible
 
     public function hasAddon($addon)
     {
-        return $this->roleAddons()->where("name", strtolower($addon))->exists();
+        return $this->roleAddons()->where("name", strtolower($addon))->exists() && $this->subscribedToPlan($addon, 'addon');
     }
 
     public function hasAddonPermission($permission)
@@ -34,7 +50,7 @@ trait Permissible
         $addons = $this->roleAddons()->get();
 
         foreach($addons as $addon){
-            if($addon->permissions()->where("name", strtolower($permission))->exists()) return true;
+            if($addon->permissions()->where("name", strtolower($permission))->exists() && $this->subscribedToPlan($addon->name, 'addon')) return true;
         }
 
         return false;

@@ -4,10 +4,15 @@ import { createSubscription } from '../../../requests/billing';
 
 export default class Checkout extends React.Component {
   onToken = (token) => {
+    console.log(this.props);
     token.plan = this.props.plan
     token.trialDays = this.props.trialDays
     token.subType = this.props.subType
-    createSubscription(token)
+    this.props.setLoading(true);
+    createSubscription(token).then(response=>{
+      this.props.setLoading(false);
+      this.props.setProfile();
+    })
   }
 
   render() {
