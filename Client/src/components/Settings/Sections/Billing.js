@@ -13,7 +13,8 @@ class Billing extends React.Component {
     plans: null,
     subscription: null,
     addon: null,
-    loading: true
+    loading: true,
+    error: false,
   }
 
   componentDidMount() {
@@ -28,10 +29,7 @@ class Billing extends React.Component {
           }));
         }).catch(error => {
           this.setState(() => ({
-            plans: null,
-            subscription: null,
-            addon: null,
-            loading: false
+            error: "Something went wrong!",
           }));
           return Promise.reject(error);
         });
@@ -53,8 +51,10 @@ class Billing extends React.Component {
       .catch(error => {
         if (error.response.status === 403) {
           this.setForbidden(true);
-        } else {
-          this.setError("Something went wrong!");
+        } else if(error.response.status === 500) {
+          this.setState(() => ({
+            error: response
+          }));
         }
       });
   };
@@ -106,6 +106,9 @@ class Billing extends React.Component {
     const { profile } = this.props;
     return (
       <div>
+        {this.state.error &&
+          <div className="alert alert-danger">{this.state.error}</div>
+        }
         {this.state.loading && <Loader />}
         {this.state.plans != null &&
           <div className="flex-container flex-space-between pricing-table">

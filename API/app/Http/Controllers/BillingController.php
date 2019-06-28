@@ -89,7 +89,7 @@ class BillingController extends Controller
             }
 
         } catch (\Throwable $th) {
-            return $th->getMessage();
+            return response()->json(["error" => $th->getMessage()], 500);
         }
 
     }
