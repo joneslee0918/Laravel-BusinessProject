@@ -181,92 +181,96 @@ export class LoginPage extends React.Component{
                     <a href={backendUrl} className="brand"><img className="brand-img" src="/images/uniclix.png"/></a>
                     <div className="divider"></div>
 
-                    <div className="box-wrapper">
-                        <div className="social-login login-btns">
-                            <TwitterLogin loginUrl={twitterAccessTokenUrl}
-                                        onFailure={this.onFailure} onSuccess={this.onTwitterSuccess}
-                                        requestTokenUrl={twitterRequestTokenUrl}
-                                        showIcon={false}
-                                        >
-                            </TwitterLogin>
+                    <div className="row">
+                        <div className="col-md-6 col-sm-6 col-xs-12 text-center">
+                            <div className="social-login login-btns">
+                                <TwitterLogin loginUrl={twitterAccessTokenUrl}
+                                            onFailure={this.onFailure} onSuccess={this.onTwitterSuccess}
+                                            requestTokenUrl={twitterRequestTokenUrl}
+                                            showIcon={false}
+                                            >
+                                </TwitterLogin>
 
-                            <FacebookButton
-                                appId={facebookAppId}
-                                onSuccess={this.onFacebookSuccess} 
-                            />
+                                <FacebookButton
+                                    appId={facebookAppId}
+                                    onSuccess={this.onFacebookSuccess} 
+                                />
 
-                            <LinkedInButton 
-                                clientId={linkedinAppId}
-                                redirectUri={`${backendUrl}/api/linkedin/callback`}
-                                onSuccess={this.onLinkedInSuccess}
-                                onError={this.onFailure}
-                            />
+                                <LinkedInButton 
+                                    clientId={linkedinAppId}
+                                    redirectUri={`${backendUrl}/api/linkedin/callback`}
+                                    onSuccess={this.onLinkedInSuccess}
+                                    onError={this.onFailure}
+                                />
 
-                            <PinterestButton 
-                                clientId={pinterestAppId}
-                                redirectUri={`${backendUrl}/api/pinterest/callback`}
-                                onSuccess={this.onPinterestSuccess}
-                                onError={this.onFailure}
-                            />
+                                <PinterestButton 
+                                    clientId={pinterestAppId}
+                                    redirectUri={`${backendUrl}/api/pinterest/callback`}
+                                    onSuccess={this.onPinterestSuccess}
+                                    onError={this.onFailure}
+                                />
+                            </div>
                         </div>
 
-                        <div className="form-container">
-                        {!!this.state.error.length && 
-                        <div className="alert alert-danger">
-                            {this.state.error}
-                        </div>}
+                        <div className="col-md-6 col-sm-6 col-xs-12 text-center">
+                            <div className="form-container">
+                            {!!this.state.error.length && 
+                            <div className="alert alert-danger">
+                                {this.state.error}
+                            </div>}
 
-                            {!this.state.register ?
+                                {!this.state.register ?
+                                    <div className="login-form">
+                                        <div className="form-group">
+                                            <label htmlFor="exampleInputEmail1">Email address</label>
+                                            <input type="email" onChange={this.onEmailChange} value={this.state.email} className="form-control" id="inputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required/>
+                                            <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="inputPassword1">Password</label>
+                                            <input type="password" onChange={this.onPasswordChange} value={this.state.password} className="form-control" id="inputPassword1" placeholder="Password" required/>
+                                        </div>                                    
+                                        
+                                        <button type="submit" onClick={this.toggleRegister} className="btn btn-link">Create a new account</button>
+                                        <a href={`${backendUrl}/password/reset`} className="btn btn-link">Forgot password?</a>
+                                        <button type="submit" onClick={this.onLoginSubmit} className="btn btn-primary">Sign in</button>
+
+                                    </div>
+                                :
                                 <div className="login-form">
                                     <div className="form-group">
-                                        <label htmlFor="exampleInputEmail1">Email address</label>
-                                        <input type="email" onChange={this.onEmailChange} value={this.state.email} className="form-control" id="inputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required/>
+                                        <label htmlFor="inputName1">Name</label>
+                                        <input type="text" onChange={this.onNameChange} minLength="6" className="form-control" value={this.state.name} id="inputName1" aria-describedby="emailHelp" placeholder="Enter name" required/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="inputEmail1">Email address</label>
+                                        <input type="email" onChange={this.onEmailChange} minLength="8" className="form-control" value={this.state.email} id="inputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required/>
                                         <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="inputPassword1">Password</label>
-                                        <input type="password" onChange={this.onPasswordChange} value={this.state.password} className="form-control" id="inputPassword1" placeholder="Password" required/>
-                                    </div>                                    
-                                    
-                                    <button type="submit" onClick={this.toggleRegister} className="btn btn-link">Create a new account</button>
-                                    <a href={`${backendUrl}/password/reset`} className="btn btn-link">Forgot password?</a>
-                                    <button type="submit" onClick={this.onLoginSubmit} className="btn btn-primary">Sign in</button>
+                                        <input type="password" onChange={this.onPasswordChange} minLength="8" 
+                                        className={`form-control ${this.state.password !== "" && this.state.password.length < 8 ? 'red-border' : ''}`}
+                                        value={this.state.password} id="inputPassword1" placeholder="Password" required/>
+                                    </div>
+                                    <div className="form-group">
+                                    <label htmlFor="inputConfirmPassword1">Confirm Password</label>
+                                        <input type="password" 
+                                        onChange={this.onConfirmPasswordChange}
+                                        className={`form-control 
+                                        ${this.state.confirmPassword !== "" && this.state.confirmPassword !== this.state.password ? 'red-border' : ''}`} 
+                                        value={this.state.confirmPassword} id="inputConfirmPassword1" placeholder="Password" 
+                                        />
+                                    </div>
+
+                                    <button type="submit" onClick={this.toggleRegister} className="btn btn-link">Already have an account</button>
+                                    <button type="submit" onClick={this.onRegisterSubmit} className="btn btn-primary">Sign up</button>
 
                                 </div>
-                            :
-                            <div className="login-form">
-                                <div className="form-group">
-                                    <label htmlFor="inputName1">Name</label>
-                                    <input type="text" onChange={this.onNameChange} minLength="6" className="form-control" value={this.state.name} id="inputName1" aria-describedby="emailHelp" placeholder="Enter name" required/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="inputEmail1">Email address</label>
-                                    <input type="email" onChange={this.onEmailChange} minLength="8" className="form-control" value={this.state.email} id="inputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required/>
-                                    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="inputPassword1">Password</label>
-                                    <input type="password" onChange={this.onPasswordChange} minLength="8" 
-                                    className={`form-control ${this.state.password !== "" && this.state.password.length < 8 ? 'red-border' : ''}`}
-                                    value={this.state.password} id="inputPassword1" placeholder="Password" required/>
-                                </div>
-                                <div className="form-group">
-                                <label htmlFor="inputConfirmPassword1">Confirm Password</label>
-                                    <input type="password" 
-                                    onChange={this.onConfirmPasswordChange}
-                                    className={`form-control 
-                                    ${this.state.confirmPassword !== "" && this.state.confirmPassword !== this.state.password ? 'red-border' : ''}`} 
-                                    value={this.state.confirmPassword} id="inputConfirmPassword1" placeholder="Password" 
-                                    />
-                                </div>
+                                }
 
-                                <button type="submit" onClick={this.toggleRegister} className="btn btn-link">Already have an account</button>
-                                <button type="submit" onClick={this.onRegisterSubmit} className="btn btn-primary">Sign up</button>
-
+        
                             </div>
-                            }
-
-    
                         </div>
                     </div>
                 </div>
