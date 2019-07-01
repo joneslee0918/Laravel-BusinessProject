@@ -28,7 +28,7 @@ class StreamsFeedController extends Controller{
 
             if(!$channelId) return;
 
-            $channel = $this->user->channels()->find($channelId);
+            $channel = $this->user->getChannel($channelId);
 
             $global = $channel;
 
@@ -57,7 +57,7 @@ class StreamsFeedController extends Controller{
 
         if(!$channelId) return;
 
-        $channel = $this->user->channels()->find($channelId);
+        $channel = $this->user->getChannel($channelId);
 
         if(!$channel) return;
 

@@ -7,7 +7,7 @@ use App\Models\Role;
 use App\Models\RoleLimit;
 use App\Models\RoleAddon;
 
-trait Permissible
+trait NewPermissible
 {
     public function hasRole($roleName)
     {  

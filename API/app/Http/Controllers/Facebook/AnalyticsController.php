@@ -22,7 +22,7 @@ class AnalyticsController extends Controller
     public function index(Request $request)
     {
         $user = $this->user;
-        $channel = $user->channels()->find($request->id);
+        $channel = $user->getChannel($request->id);
 
         try{
             if($channel){
@@ -42,7 +42,7 @@ class AnalyticsController extends Controller
     public function pageInsights(Request $request)
     {
         $user = $this->user;
-        $channel = $user->channels()->find($request->id);
+        $channel = $user->getChannel($request->id);
 
         try{
             if($channel){
@@ -63,7 +63,7 @@ class AnalyticsController extends Controller
     public function pagePostsInsights(Request $request)
     {
         $user = $this->user;
-        $channel = $user->channels()->find($request->id);
+        $channel = $user->getChannel($request->id);
 
         try{
             if($channel){
@@ -85,7 +85,7 @@ class AnalyticsController extends Controller
     {   
         if(!$this->user->hasPermission("advanced-analytics")) return response()->json(["error" => "You need to upgrade to unlock this feature."], 403);
         $user = $this->user;
-        $channel = $user->channels()->find($request->id);
+        $channel = $user->getChannel($request->id);
 
         try{
             if($channel){

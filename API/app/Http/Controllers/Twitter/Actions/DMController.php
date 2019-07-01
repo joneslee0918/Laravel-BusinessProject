@@ -38,7 +38,7 @@ class DMController extends Controller
             $channelId = $request->input('channelId');
 
             if($channelId){
-                $channel = $this->user->channels()->find($channelId);
+                $channel = $this->user->getChannel($channelId);
                 $channel = $channel->details;
             }else{
                 $channel = $this->selectedChannel;

@@ -28,7 +28,7 @@ class RetweetController extends Controller
     {
         $postId = $request->input("postId");
         $channelId = $request->input("channelId");
-        $channel = $this->user->channels()->find($channelId);
+        $channel = $this->user->getChannel($channelId);
 
         $channel = $channel->details;
 
