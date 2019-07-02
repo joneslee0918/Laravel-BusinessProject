@@ -193,7 +193,7 @@ class StreamItems extends Component {
               {this.state.items.map((item, index) => {
                 const channel = channelById(channels, {id: item.channel_id});
                 return (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
+                channel && <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
@@ -219,7 +219,7 @@ class StreamItems extends Component {
                         <i className={`fa fa-refresh ${this.state.loading === item.id ? 'fa-spin' : ''} link-cursor pull-right `} onClick={() => this.refresh(item.id)}></i>
                         </h3>
 
-                      <StreamFeed 
+                       <StreamFeed 
                         streamItem = {item} 
                         channel={channel} 
                         refreshId={this.state.refresh} 
