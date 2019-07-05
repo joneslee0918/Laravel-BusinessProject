@@ -142,12 +142,24 @@ class BillingController extends Controller
         return response()->json(["success" => true], 200);
     }
 
+    public function activateAddon(Request $request)
+    {
+        $addon = $request->input('addon');
+        $roleAddon = RoleAddon::where("name", $addon)->first();
+        if(!$roleAddon) return response()->json(["error" => "Addon not found"], 404);;
+
+        $user = $this->user;
+        $user->roleAddons()->attach($roleAddon->id);
+
+        return response()->json(["success" => true], 200);
+    }
+
     public function cancelAddon(Request $request)
     {
         try {
             $user = $this->user;
 
-            $user->subscription('addon')->cancel();
+            //$user->subscription('addon')->cancel();
 
             $addon = $request->input('addon');
             $roleAddon = RoleAddon::where("name", $addon)->first();
@@ -160,7 +172,7 @@ class BillingController extends Controller
 
             return response()->json(["success" => true], 200);
         } catch (\Throwable $th) {
-            return response()->json(["error" => "Something went wrong!"], 404);
+            return response()->json(["error" => "Something went wrong!"], 500);
         }
     }
 }
