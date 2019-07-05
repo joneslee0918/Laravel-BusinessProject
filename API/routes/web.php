@@ -39,10 +39,10 @@ Route::get('/privacy-policy', function(){
 
 Route::get('/test', function(){
     $team = \App\Models\User::find(1);
-    $channel = $team->channels()->first();
-   // $channel->select($team);
+//     $channel = $team->channels()->first();
+//    // $channel->select($team);
 
-    return response()->json($team->selectedChannel());
+    return response()->json($team->teamMembers()->count());
 });
 
 Route::get('/jobs', function(){

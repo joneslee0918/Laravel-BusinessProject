@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $this->hasMany(Team::class);
     }
 
+    public function teamMembers()
+    {
+        return $this->hasMany(TeamUser::class, "owner_id");
+    }
+
     public function hasPublishPermission($channel)
     {
         if(!$channel) return false;

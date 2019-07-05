@@ -128,7 +128,11 @@ class BillingController extends Controller
         if(!$role) return response()->json(["error" => "Plan not found"], 404);
 
         $user = $this->user;
-        if($user->channels()->count() > $role->roleLimit->account_limit)return response()->json(["error" => "Delete some accounts first."], 403);
+        if($user->channels()->count() > $role->roleLimit->account_limit) 
+            return response()->json(["error" => "Please delete some social accounts to correspond to the limits of your new plan.", "redirect" => "/accounts"], 403);
+
+        if($user->teamMembers()->count() + 1 > $role->roleLimit->team_accounts) 
+            return response()->json(["error" => 'Please delete some team accounts to correspond to the limits of your new plan.', "redirect" => "/settings/team"], 403);
 
         // $user->subscription('main')->swap($plan);
 
