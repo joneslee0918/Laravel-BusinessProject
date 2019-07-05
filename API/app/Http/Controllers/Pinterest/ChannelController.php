@@ -65,7 +65,7 @@ class ChannelController extends Controller
                 }
             }
 
-            return $user->formattedChannels();
+            return $user->allFormattedChannels();
         }
 
         return response()->json(['error' => 'Channel could not be authenticated with pinterest'], 401);
@@ -75,7 +75,7 @@ class ChannelController extends Controller
     {   
         try{
             $user = auth()->user();
-            $channel = $user->channels()->find($request->input("id"));
+            $channel = $user->getChannel($request->input("id"));
 
             if(!$channel){
                 return response()->json(["error" => "Channel not found."], 404);

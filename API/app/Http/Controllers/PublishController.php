@@ -54,6 +54,7 @@ class PublishController extends Controller
             $bestTime = false;
             $permissionLevel = "publisher";
             $failedChannels = [];
+            $channelCount = 0;
             foreach($channels as $channel){
                 $boards = false;
 
@@ -66,6 +67,8 @@ class PublishController extends Controller
                 }
 
                 $channel = Channel::find($channel['id']);
+                if($channelCount < 1) $channel->select();
+                
                 $postLimit = $channel->user->getLimit("posts_per_account");
                 $permissionLevel = $this->user->hasPublishPermission($channel);
 
@@ -73,7 +76,7 @@ class PublishController extends Controller
                     $scheduledPosts = $channel->scheduledPosts()->latest()->take($postLimit)->get()->reverse();
                     if($firstOfThisMonth = $scheduledPosts->first()){
                         if(Carbon::parse($firstOfThisMonth->created_at)->addDays(30) >= Carbon::now() && $scheduledPosts->count() >= $postLimit){
-                            return response()->json(['error' => 'You have exceeded the post limit for this month'], 403);
+                            return response()->json(['error' => 'You have exceeded the post limit for this month.'], 403);
                             // $channel->details = $channel->details;
                             // $failedChannels[] = $channel;
                             // continue;
@@ -171,6 +174,7 @@ class PublishController extends Controller
                     $channel->user->notify(new PublishApprovalNotification());
                 }
 
+                $channelCount++;
                 // if($publishType == 'now'){
                 //     $channel->details->publishScheduledPost($scheduledPost);
                 // }

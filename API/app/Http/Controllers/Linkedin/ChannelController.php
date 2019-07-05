@@ -53,7 +53,7 @@ class ChannelController extends Controller
                 }
             }
 
-            return $user->formattedChannels();
+            return $user->allFormattedChannels();
         }
 
         return response()->json(['error' => 'Channel could not be authenticated with linkedin'], 401);

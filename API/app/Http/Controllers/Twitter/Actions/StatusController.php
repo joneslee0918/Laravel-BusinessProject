@@ -41,7 +41,7 @@ class StatusController extends Controller
             $channel = $this->selectedChannel;
 
             if($channelId){
-                $channel = $this->user->channels()->find($channelId);
+                $channel = $this->user->getChannel($channelId);
                 $channel = $channel->details;
             }
 

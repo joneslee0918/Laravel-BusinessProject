@@ -26,7 +26,7 @@ class LikeController extends Controller{
 
             if(!$objectId || !$channelId) return response()->json(["error" => "Channel or post id is missing."], 400);
 
-            $channel = $this->user->channels()->find($channelId);
+            $channel = $this->user->getChannel($channelId);
             $channel = $channel->details;
 
             $channel->likePost($objectId);
@@ -47,7 +47,7 @@ class LikeController extends Controller{
 
             if(!$objectId || !$channelId) return response()->json(["error" => "Channel or post id is missing."], 400);
 
-            $channel = $this->user->channels()->find($channelId);
+            $channel = $this->user->getChannel($channelId);
             $channel = $channel->details;
 
             $channel->unlikePost($objectId);

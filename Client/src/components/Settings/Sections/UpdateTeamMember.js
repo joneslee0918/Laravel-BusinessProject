@@ -28,11 +28,12 @@ class UpdateTeamMember extends React.Component{
         const memberChannels = !!this.props.member && this.props.member.assignedChannels.length > 0 ? this.props.member.assignedChannels : [];
 
         const publishChannels = this.props.channels.map(channel => {
+            channel.selected = 0;
             return Object.assign(channel, memberChannels.find(channel2 => {
               return channel2 && channel.id === channel2.id
             }))
           });
-
+          
         this.setState(() => ({
             publishChannels
         }), () => this.setAssignedChannels());

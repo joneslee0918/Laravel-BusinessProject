@@ -7,7 +7,9 @@ import UpgradeAlert from '../../UpgradeAlert';
 class Billing extends React.Component {
 
     state = {
-        forbidden: false
+        forbidden: false,
+        error: 'Please delete some accounts to correspond to the limits of your new plan.',
+        redirect: '/accounts'
     }
 
     onPlanClick = (plan) => {
@@ -16,7 +18,11 @@ class Billing extends React.Component {
         }).then()
             .catch(error => {
                 if (error.response.status === 403) {
-                    this.setForbidden(true);
+                    this.setState(() => ({
+                        forbidden: true,
+                        error: error.response.data.error,
+                        redirect: error.response.data.redirect  
+                    }))
                 } else {
                     this.setError("Something went wrong!");
                 }
@@ -50,9 +56,9 @@ class Billing extends React.Component {
                     setForbidden={this.setForbidden}
                     title="Change required"
                     confirmBtn="Accounts"
-                    text="Please remove some accounts to correspond to the limits of the new plan"
+                    text={this.state.error}
                     type="info"
-                    redirectUri="/accounts"
+                    redirectUri={this.state.redirect}
                 />
                 <table className="table table-striped flex-center">
                     <tbody>

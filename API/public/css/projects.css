@@ -94,6 +94,9 @@
 .tg-first-section {
     background-image: url(../images/tg-image-1.svg);
     height: 530px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 #page-banner {
     padding-top: 110px;
