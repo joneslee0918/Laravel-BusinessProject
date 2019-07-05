@@ -28,7 +28,7 @@ class LikeController extends Controller
     {
         $postId = $request->input("postId");
         $channelId = $request->input("channelId");
-        $channel = $this->user->getChannel($channelId);
+        $channel = $this->user->channels()->find($channelId);
 
         $channel = $channel->details;
 
@@ -46,7 +46,7 @@ class LikeController extends Controller
     {
         $postId = $request->input("postId");
         $channelId = $request->input("channelId");
-        $channel = $this->user->getChannel($channelId);
+        $channel = $this->user->channels()->find($channelId);
 
         $channel = $channel->details;
 

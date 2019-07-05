@@ -28,7 +28,7 @@ class CommentController extends Controller{
 
             if(!$objectId || !$channelId || !$message) return response()->json(["error" => "Channel or post id is missing."], 400);
 
-            $channel = $this->user->getChannel($channelId);
+            $channel = $this->user->channels()->find($channelId);
             $channel = $channel->details;
 
             $uploadedImage = false;

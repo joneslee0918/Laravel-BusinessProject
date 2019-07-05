@@ -33,15 +33,16 @@
 html, body {
     background-color: #fff;
     color: #636b6f;
-    /*font-family: 'Open Sans', Arial, sans-serif;*/
+    font-family: 'Quicksand', sans-serif !important;
     font-weight: 100;
     height: 100vh;
     margin: 0;
 }
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Quicksand', sans-serif;
+h1, h2, h3, h4, h5, h6, a, span {
+    font-family: 'Quicksand', sans-serif !important;
 }
 p, span { font-family: 'Open Sans', Arial, sans-serif; }
+
 
 .full-height {
     height: 100vh;
@@ -854,7 +855,7 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 }
 .category-span {
     padding: 10px 20px!important;
-     font-weight: normal; 
+     font-weight: normal;
     font-size: 12px;
 }
 .blog-panel-image {
@@ -1063,7 +1064,7 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     padding: 0;
 }
 .plan-features-ul li {
-    padding:32px 0;   
+    padding:32px 0;
     font-weight: 700;
 }
 .plans-features {
@@ -1098,7 +1099,7 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     height: 510px;
     text-align: center;
     padding-top: 200px;
-    color: #ffffff; 
+    color: #ffffff;
     background-image: url(../images/article-banner-bg.png);
 }
 .article-category {
@@ -1300,7 +1301,7 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     text-decoration: none;
 }
 .footer-ul li a:hover {
-    color: #b358b3; 
+    color: #b358b3;
 }
 .copyright {
     padding: 25px 0;

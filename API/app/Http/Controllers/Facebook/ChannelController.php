@@ -55,7 +55,7 @@ class ChannelController extends Controller
                 }
             }
 
-            return $user->allFormattedChannels();
+            return $user->formattedChannels();
         }
 
         return response()->json(['error' => 'Channel could not be authenticated with facebook'], 401);
@@ -145,13 +145,13 @@ class ChannelController extends Controller
     public function select($id)
     {
         $user = auth()->user();
-        $channel = $user->getChannel($id);
+        $channel = $user->channels()->find($id);
 
         if($channel){
-            $channel->select($user);
-            $channel->details->select($user);
+            $channel->select();
+            $channel->details->select();
         }
 
-        return $user->allFormattedChannels();
+        return $user->formattedChannels();
     }
 }

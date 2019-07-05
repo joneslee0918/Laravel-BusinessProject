@@ -25,7 +25,7 @@ class PagesController extends Controller
 
         if(!$channelId || !$query) return response()->json(["error" => "Required fields missing."], 400);
 
-        $channel = $this->user->getChannel($channelId);
+        $channel = $this->user->channels()->find($channelId);
 
         if(!$channel) return response()->json(["error" => "Channel not found."], 404);
 

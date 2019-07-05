@@ -32,17 +32,20 @@ Route::get('/upgrade', ['as' => 'upgrade', 'uses' => 'PagesController@upgrade'])
 Route::get('/education', ['as' => 'education', 'uses' => 'PagesController@education']);
 Route::get('/pricing', ['as' => 'pricing', 'uses' => 'PagesController@pricing']);
 Route::get('/blog', ['as' => 'blog', 'uses' => 'PagesController@blog']);
+Route::get('/products/publisher', ['as' => 'products.publisher', 'uses' => 'PagesController@publisher']);
+Route::get('/products/content_curation', ['as' => 'products.content_curation', 'uses' => 'PagesController@content_curation']);
+Route::get('/products/social_listening', ['as' => 'products.social_listening', 'uses' => 'PagesController@social_listening']);
+Route::get('/products/analytics', ['as' => 'products.analytics', 'uses' => 'PagesController@analytics']);
+Route::get('/products/twitter_growth', ['as' => 'products.twitter_growth', 'uses' => 'PagesController@twitter_growth']);
 Route::get('/article/{id}', ['as' => 'article', 'uses' => 'PagesController@article']);
 Route::get('/privacy-policy', function(){
     return view("privacy-policy");
 });
 
 Route::get('/test', function(){
-    $team = \App\Models\User::find(1);
-//     $channel = $team->channels()->first();
-//    // $channel->select($team);
+    $team = \App\Models\TeamUser::find(25);
 
-    return response()->json($team->teamMembers()->count());
+    return response()->json($team->formattedChannels(true));
 });
 
 Route::get('/jobs', function(){

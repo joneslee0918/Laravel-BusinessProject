@@ -267,8 +267,6 @@ class Compose extends React.Component{
                         posted: publishType == "now" ? 1 : 0
                     });
                 }
-
-                this.props.startSetChannels();
             });
         }).catch((error) => {
             if(error.response.status === 403){

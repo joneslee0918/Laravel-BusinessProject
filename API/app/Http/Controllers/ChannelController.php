@@ -32,10 +32,10 @@ class ChannelController extends Controller
     public function select($id)
     {   
         $user = $this->user;
-        $channel = $user->getChannel($id);
+        $channel = $user->channels()->find($id);
 
         if($channel){
-            $channel->select($user);
+            $channel->select();
         }
 
         return $user->allFormattedChannels();

@@ -27,7 +27,7 @@ class PostController extends Controller{
 
             if(!$channelId) return response()->json(["error" => "Channel is missing."], 400);
 
-            $channel = $this->user->getChannel($channelId);
+            $channel = $this->user->channels()->find($channelId);
             $channel = $channel->details;
             $post = [
                 "message" => $message

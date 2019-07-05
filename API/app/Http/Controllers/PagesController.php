@@ -42,7 +42,7 @@ class PagesController extends Controller
      */
     public function pricing()
     {
-    	return view('frontend.tableprices');
+    	return view('frontend.pricing');
     }
 
      /**
@@ -54,6 +54,51 @@ class PagesController extends Controller
         $posts = Post::paginate(5);
 
     	return view('frontend.blog', compact('posts'));
+    }
+
+    /**
+     *
+     * Show publisher page
+     */
+    public function publisher()
+    {
+        return view('frontend.products.publisher');
+    }
+
+    /**
+     *
+     * Show content curation page
+     */
+    public function content_curation()
+    {
+        return view( 'frontend.products.content_curation');
+    }
+
+    /**
+     *
+     * Show social listening page
+     */
+    public function social_listening()
+    {
+        return view('frontend.products.social_listening');
+    }
+
+    /**
+     *
+     * Show analytics page
+     */
+    public function analytics()
+    {
+        return view('frontend.products.analytics');
+    }
+
+    /**
+     *
+     * Show Twitter growth page
+     */
+    public function twitter_growth()
+    {
+        return view('frontend.products.twitter_growth');
     }
 
     /**

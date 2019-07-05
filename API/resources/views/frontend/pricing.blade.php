@@ -1,244 +1,74 @@
 @extends('layouts.homepage')
 
 @section('content')
-<div id="banner">
-	<div class="container">
-		<h1>Pricing</h1>
-		<p>Manuals take time. These videos will get you started instantly.</p>
-	</div>
+<div id="page-banner">
+</div>
+<div class="product-pages">
+    <div class="p-first-section">
+        <div class="container">
+            <div class="row standard-padding">
+                <h class="col-xs-12 text-center">
+                    <h2>Uniclix price table</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt iaculis nisi, at interdum urna interdum bibendum. Curabitur ut sodales nibh, vestibulum auctor tellus.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="container mt100 mb100">
-	<div class="flex-container flex-space-between">
-		<div class="pricing-column">
-			<div class="price-package-head blue-bg">
-				<h4 class="text-center trial-color">TRIAL</h4>
-				<h2 class="text-center trial-color">FREE</h2>
-			</div>
-			<div class="plan-content">
-				<ul class="plan-ul">
-					<li>
-						<div class="plan-content-features">
-							<p class="fw700">Social Profiles</p>
-							<p>1</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-							<p class="fw700">Scheduling</p>
-							<p>Normal</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Posts</p>
-							<p>10 per Account</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">RSS Integration</p>
-							<p>Basic</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Twitter Growth</p>
-							<p>Limited</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Analytics</p>
-							<p>-</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Access to recommended</p>
-							<p>-</p>
-						</div>
-					</li>
-					<li class="mb30"><a href="#" class="theme-btn-transparent">Buy</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="pricing-column">
-			<div class="price-package-head yellow-bg">
-				<h4 class="text-center basic-color">BASIC</h4>
-				<h2 class="text-center basic-color">7.99$/mo</h2>
-			</div>
-			<div class="plan-content">
-			    <ul class="plan-ul">
-					<li>
-						<div class="plan-content-features">
-							<p class="fw700">Social Profiles</p>
-							<p>1</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-							<p class="fw700">Scheduling</p>
-							<p>Normal</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Posts</p>
-							<p>10 per Account</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">RSS Integration</p>
-							<p>Basic</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Twitter Growth</p>
-							<p>Limited</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Analytics</p>
-							<p>-</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Access to recommended</p>
-							<p>-</p>
-						</div>
-					</li>
-					<li class="mb30"><a href="#" class="theme-btn-transparent">Buy</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="pricing-column">
-			<div class="price-package-head orange-bg">
-				<h4 class="text-center plus-color">PLUS</h4>
-				<h2 class="text-center plus-color">13.99$/mo</h2>
-			</div>
-			<div class="plan-content">
-			    <ul class="plan-ul">
-					<li>
-						<div class="plan-content-features">
-							<p class="fw700">Social Profiles</p>
-							<p>1</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-							<p class="fw700">Scheduling</p>
-							<p>Normal</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Posts</p>
-							<p>10 per Account</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">RSS Integration</p>
-							<p>Basic</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Twitter Growth</p>
-							<p>Limited</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Analytics</p>
-							<p>-</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Access to recommended</p>
-							<p>-</p>
-						</div>
-					</li>
-					<li class="mb30"><a href="#" class="theme-btn-transparent">Buy</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="pricing-column">
-			<div class="price-package-head purple-bg">
-				<h4 class="text-center premium-color">PREMIUM</h4>
-				<h2 class="text-center premium-color">25.99$/mo</h2>
-			</div>
-			<div class="plan-content">
-			   	<ul class="plan-ul">
-					<li>
-						<div class="plan-content-features">
-							<p class="fw700">Social Profiles</p>
-							<p>1</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-							<p class="fw700">Scheduling</p>
-							<p>Normal</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Posts</p>
-							<p>10 per Account</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">RSS Integration</p>
-							<p>Basic</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Twitter Growth</p>
-							<p>Limited</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Analytics</p>
-							<p>-</p>
-						</div>
-					</li>
-					<li>
-						<div class="plan-content-features">
-						    <p class="fw700">Access to recommended</p>
-							<p>-</p>
-						</div>
-					</li>
-					<li class="mb30"><a href="#" class="theme-btn-transparent">Buy</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</div>
+<div class="tabset">
 
-<div class="container">
-	<div class="bg-white-radius panel-bg">
-		<div class="col-md-6 col-xs-12">
-			<h4>ENTERPRISE</h4>
-			<p>Custom Solution - Contact for Pricing</p>
-		</div>
-		<div class="col-md-6 col-xs-12 text-right lh4">
-			<a href="#" class="btn-white-bg">Contact</a>
-		</div>
-	</div>
-</div>
+    <input type="radio" name="tabset" id="tab1" aria-controls="marzen" checked>
+    <label for="tab1">Product Plan</label>
 
+    <input type="radio" name="tabset" id="tab2" aria-controls="rauchbier">
+    <label for="tab2">Twitter Growth</label>
+
+    <div class="tab-panels">
+        <section id="marzen" class="tab-panel">
+            <div class="container">
+                <div class="montly-annual text-right">
+                    <span class="billing-toggle">monthly billing</span>
+                    <label class="label">
+                    <div class="toggle">
+                        <input class="toggle-state" type="checkbox" name="check" value="check" />
+                        <div class="toggle-inner">
+                        <div class="indicator"></div>
+                        </div>
+                        <div class="active-bg"></div>
+                    </div>
+                    </label>
+                    <span class="billing-toggle">annual billing</span>
+                </div>
+
+                <div class="pricing-plans">
+                    <div class="plan panel-shadow">
+                        <h2>Basic</h2>
+                    </div>
+                    <div class="plan panel-shadow">
+                        <h2>Basic</h2>
+                    </div>
+                    <div class="plan panel-shadow">
+                        <h2>Basic</h2>
+                    </div>
+                    <div class="plan panel-shadow">
+                        <h2>Basic</h2>
+                    </div>
+                    <div class="plan panel-shadow">
+                        <h2>Basic</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="rauchbier" class="tab-panel">
+            <div class="container">
+
+            </div>
+        </section>
+    </div>
+
+</div>
 
 @include('frontend.includes.footer')
-
 
 @endsection

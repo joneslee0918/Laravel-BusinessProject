@@ -68,9 +68,6 @@ class TeamController extends Controller
     public function addOrUpdate(Request $request)
     {   
         $user = $this->user;
-
-        if($user->teamMembers()->count() + 1 >= $user->getLimit("team_accounts")) return response()->json(["error" => "You have exceeded the account limit for your current plan."], 403);
-
         $name = $request->input('name');
         $email = $request->input('email');
         $admin = $request->input('admin');

@@ -198,9 +198,8 @@ class UserRolePermissionLimitsSeeder extends Seeder
         $twitterGrowth->permissions()->attach($twitterGrowthPerm);
 
         $free->roleLimit()->create([
-            "account_limit" => 6,
-            "accounts_per_platform" => 6,
-            "team_accounts" => 1,
+            "account_limit" => 1,
+            "accounts_per_platform" => 1,
             "posts_per_account" => 10,
             "twitter_daily_follows" => 100,
             "twitter_daily_unfollows" => 100
@@ -209,7 +208,6 @@ class UserRolePermissionLimitsSeeder extends Seeder
         $basic->roleLimit()->create([
             "account_limit" => 6,
             "accounts_per_platform" => 6,
-            "team_accounts" => 1,
             "posts_per_account" => 99999,
             "twitter_daily_follows" => 500,
             "twitter_daily_unfollows" => 500
@@ -218,7 +216,6 @@ class UserRolePermissionLimitsSeeder extends Seeder
         $plus->roleLimit()->create([
             "account_limit" => 10,
             "accounts_per_platform" => 10,
-            "team_accounts" => 1,
             "posts_per_account" => 99999,
             "twitter_daily_follows" => 500,
             "twitter_daily_unfollows" => 500
@@ -227,7 +224,6 @@ class UserRolePermissionLimitsSeeder extends Seeder
         $premium->roleLimit()->create([
             "account_limit" => 25,
             "accounts_per_platform" => 25,
-            "team_accounts" => 2,
             "posts_per_account" => 99999,
             "twitter_daily_follows" => 500,
             "twitter_daily_unfollows" => 500
@@ -236,7 +232,6 @@ class UserRolePermissionLimitsSeeder extends Seeder
         $pro->roleLimit()->create([
             "account_limit" => 50,
             "accounts_per_platform" => 50,
-            "team_accounts" => 6,
             "posts_per_account" => 99999,
             "twitter_daily_follows" => 500,
             "twitter_daily_unfollows" => 500
@@ -245,7 +240,6 @@ class UserRolePermissionLimitsSeeder extends Seeder
         $agency->roleLimit()->create([
             "account_limit" => 100,
             "accounts_per_platform" => 100,
-            "team_accounts" => 6,
             "posts_per_account" => 99999,
             "twitter_daily_follows" => 500,
             "twitter_daily_unfollows" => 500

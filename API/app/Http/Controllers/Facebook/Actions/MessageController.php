@@ -27,7 +27,7 @@ class MessageController extends Controller{
 
             if(!$channelId || !$text || !$conversationId) return response()->json(["error" => "Required parameters are missing."], 400);
 
-            $channel = $this->user->getChannel($channelId);
+            $channel = $this->user->channels()->find($channelId);
             $channel = $channel->details;
             $message = [
                 "message" => $text

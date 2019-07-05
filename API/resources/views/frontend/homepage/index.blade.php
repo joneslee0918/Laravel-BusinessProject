@@ -12,7 +12,7 @@
             <div class="col-md-5 col-xs-12 pb50">
                 <h1>Social Media Management<br>Simplified</h1>
                 <p class="mt20">Uniclix helps you centralize, manage and grow your social media accounts with just a couple of clicks.</p>
-                <a class="btn theme-btn mt30" href="{{config('frontendclient.client_url')}}" target="_blank">Sign Up for Beta </a> 
+                <a class="btn theme-btn mt30" href="{{config('frontendclient.client_url')}}" target="_blank">Sign Up for Beta </a>
                 <!-- <a href="/pricing" class="btn theme-btn mt30">Learn more</a> -->
             </div>
             <div class="col-md-7 col-xs-12 pb50">
@@ -37,9 +37,9 @@
             <div class="col-md-3 col-xs-12 text-center">
                 <div class="feature-img">
                     <img src="{{ asset('images/feature-img-1.png') }}">
-                </div>                
+                </div>
                 <h6>Scheduled posts</h6>
-                <p>Publish & schedule posts for multiple social media networks & accounts with a couple of clicks. 
+                <p>Publish & schedule posts for multiple social media networks & accounts with a couple of clicks.
 Uniclix helps you determine best times to post to reach maximum engagement.</p>
             </div>
             <div class="col-md-3 col-xs-12 text-center">
@@ -91,6 +91,7 @@ In order to build a global Uniclix community we are offering our services at unb
         </div>
     </div>
 </div>
+@include('frontend.includes.readytostart')
 @include('frontend.includes.footer')
 @endsection
 

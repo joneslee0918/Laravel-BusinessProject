@@ -15,13 +15,6 @@ export const cancelAddon = (addon) => {
             });
 }
 
-export const activateAddon = (addon) => {
-    return axios.post(`${apiUrl}/billing/activate/addon`, {addon})
-            .then((response) => {
-                return response.data;
-            });
-}
-
 export const createSubscription = (token) => {
     return axios.post(`${apiUrl}/billing/subscription/create`, { token })
         .then((response) => {
