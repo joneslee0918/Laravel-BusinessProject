@@ -26,7 +26,7 @@
             </div>
 
             <div class="row standard-padding">
-                <div class="col-md-6 col-md-push-6">
+                <div class="col-md-6 col-xs-12">
                     <h2>Auto Scheduling</h2>
                     <p>Keep your social presence active 24/7 by automatically scheduling a post for all of your social accounts at once with unified Clix, and UniClix will publish them automatically for you.</p>
                 </div>
@@ -37,7 +37,7 @@
 
             <div class="row standard-padding">
                 <div class="col-md-6 col-xs-12">
-                    <img class="img-responsive" src="{{asset('/images/account.png')}}">
+                    <img class="img-responsive" src="{{asset('/images/accounts-images.png')}}">
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <h2>Publish in all Social Media Accounts</h2>

@@ -64,26 +64,25 @@
         <div class="row">
             <div class="col-xs-12 text-center">
                 <h2>Learn more about other Uniclix products</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt iaculis nisi, at interdum urna interdum bibendum. Curabitur ut sodales nibh, vestibulum auctor tellus.</p>
                 <div class="row">
                     <div class="col-md-3 col-xs-12">
                         <div class="card panel-shadow mt50">
                             <h5>Publisher</h5>
-                            <p>Craft the perfect post for each social network, all in few click</p>
+                            <p>Craft the perfect post for each social network</p>
                             <a href="#">Learn more</a>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-12">
                         <div class="card panel-shadow mt50">
                             <h5>Content Curation</h5>
-                            <p>Simplify Your Social Content Curation</p>
+                            <p>Simplify your social content curation</p>
                             <a href="#">Learn more</a>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-12">
                         <div class="card panel-shadow mt50">
                             <h5>Social Listening</h5>
-                            <p>Simplify Your Social Content Curation</p>
+                            <p>Simplify your social content curation</p>
                             <a href="#">Learn more</a>
                         </div>
                     </div>

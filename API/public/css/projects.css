@@ -95,7 +95,7 @@
     background-image: url(../images/tg-image-1.svg);
     height: 530px;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: 100%;
     background-position: center;
 }
 #page-banner {
@@ -266,6 +266,10 @@
     }
     .standard-padding .col-xs-12 {
         padding: 30px 15px;
+    }
+    .tg-first-section {
+        background-size: cover;
+        height: 580px;
     }
 }
 
