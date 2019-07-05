@@ -73,7 +73,7 @@ class PublishController extends Controller
                     $scheduledPosts = $channel->scheduledPosts()->latest()->take($postLimit)->get()->reverse();
                     if($firstOfThisMonth = $scheduledPosts->first()){
                         if(Carbon::parse($firstOfThisMonth->created_at)->addDays(30) >= Carbon::now() && $scheduledPosts->count() >= $postLimit){
-                            return response()->json(['error' => 'You have exceeded the post limit for this month'], 403);
+                            return response()->json(['error' => 'You have exceeded the post limit for this month.'], 403);
                             // $channel->details = $channel->details;
                             // $failedChannels[] = $channel;
                             // continue;
