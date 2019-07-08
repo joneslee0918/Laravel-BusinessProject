@@ -1,8 +1,9 @@
 <div id="footer">
     <div class="container">
         <div class="row mt100 mb80">
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <div class="row">
+
+            <div class="col-md-6 col-sm-8 col-xs-12">
+
                     <!-- <div class="col-md-3 col-xs-12">
                         <img src="{{ asset('images/uniclix-logo.png') }}" class="img-responsive footer-logo">
                     </div> -->
@@ -17,31 +18,47 @@
                             <li><a target="_blank" href="https://www.instagram.com/uniclix/"><i class="fa fa-instagram fa-2x"></i></a></li>
                         </ul>
                     </div>
+            </div>
+
+            <div class="col-md-2 col-xs-12 mb20">
+                <div class="col-md-12">                        
+                    <div class="footer-h">Products</div>
+                    <ul class="footer-ul">
+                        <!-- <li><a href="#">The Team</a></li> -->
+                        <li><a href="{{route('products.publisher')}}">Publishing</a></li>
+                        <li><a href="{{route('products.content_curation')}}">Content Curation</a></li>
+                        <li><a href="{{route('products.social_listening')}}" >Monitoring</a></li>
+                        <li><a href="{{route('products.analytics')}}" >Analytics</a></li>
+                        <li><a href="{{route('products.twitter_growth')}}" >Twitter Booster</a></li>
+                        <li><a href="{{route('pricing')}}" >Pricing</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4 col-xs-12 mb20">
-                        <div class="footer-h">Company</div>
-                        <ul class="footer-ul">
-                            <!-- <li><a href="#">The Team</a></li> -->
-                            <li><a href="#about">About Us</a></li>
-                            <li><a href="https://blog.uniclixapp.com" target="_blank">Blog</a></li>
-                            <li><a href="/jobs" target="_blank">Jobs</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4 col-xs-12 mb20">
-                        <div class="footer-h">Resources</div>
-                        <ul class="footer-ul">
-                            <li><a href="mailto:info@uniclixapp.com?Subject=The%20sky%20is%20falling!">Support</a></li>
-                            <!-- <li><a href="#">Contact</a></li> -->
-                            <li><a target="_blank" href="/privacy-policy">Terms of Service</a></li>
-                            <li><a target="_blank" href="/privacy-policy">Privacy Policy</a></li>
-                        </ul>
-                    </div>
+
+            <div class="col-md-2 col-xs-12 mb20">
+                <div class="col-md-12">                        
+                    <div class="footer-h">Company</div>
+                    <ul class="footer-ul">
+                        <!-- <li><a href="#">The Team</a></li> -->
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="https://blog.uniclixapp.com" target="_blank">Blog</a></li>
+                        <li><a href="/jobs" target="_blank">Jobs</a></li>
+                    </ul>
                 </div>
             </div>
+            
+            <div class="col-md-2 col-xs-12 mb20">
+                <div class="col-md-12">                        
+                    <div class="footer-h">Resources</div>
+                    <ul class="footer-ul">
+                        <li><a href="mailto:info@uniclixapp.com?Subject=The%20sky%20is%20falling!">Support</a></li>
+                        <!-- <li><a href="#">Contact</a></li> -->
+                        <li><a target="_blank" href="/privacy-policy">Terms of Service</a></li>
+                        <li><a target="_blank" href="/privacy-policy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

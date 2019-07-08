@@ -32,11 +32,11 @@ Route::get('/upgrade', ['as' => 'upgrade', 'uses' => 'PagesController@upgrade'])
 Route::get('/education', ['as' => 'education', 'uses' => 'PagesController@education']);
 Route::get('/pricing', ['as' => 'pricing', 'uses' => 'PagesController@pricing']);
 Route::get('/blog', ['as' => 'blog', 'uses' => 'PagesController@blog']);
-Route::get('/social-media-calendar', ['as' => 'products.publisher', 'uses' => 'PagesController@publisher']);
-Route::get('/content-curation-tool', ['as' => 'products.content_curation', 'uses' => 'PagesController@content_curation']);
-Route::get('/social-listening-tool', ['as' => 'products.social_listening', 'uses' => 'PagesController@social_listening']);
-Route::get('/social-media-analytics', ['as' => 'products.analytics', 'uses' => 'PagesController@analytics']);
-Route::get('/twitter-followers-app', ['as' => 'products.twitter_growth', 'uses' => 'PagesController@twitter_growth']);
+Route::get('/products/publisher', ['as' => 'products.publisher', 'uses' => 'PagesController@publisher']);
+Route::get('/products/content_curation', ['as' => 'products.content_curation', 'uses' => 'PagesController@content_curation']);
+Route::get('/products/social_listening', ['as' => 'products.social_listening', 'uses' => 'PagesController@social_listening']);
+Route::get('/products/analytics', ['as' => 'products.analytics', 'uses' => 'PagesController@analytics']);
+Route::get('/products/twitter_growth', ['as' => 'products.twitter_growth', 'uses' => 'PagesController@twitter_growth']);
 Route::get('/article/{id}', ['as' => 'article', 'uses' => 'PagesController@article']);
 Route::get('/privacy-policy', function(){
     return view("privacy-policy");
