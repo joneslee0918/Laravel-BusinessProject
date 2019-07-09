@@ -219,7 +219,7 @@
     </div>
 </div>
 
-<div class="row post-crafting intro-section">
+<div class="row post-crafting people-talking intro-section">
     <div class="container">        
         
         <div class="col-md-6 col-xs-12">

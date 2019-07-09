@@ -80,7 +80,7 @@
                         </div>
                         <div class="plan-button-container">
                             <a class="btn plan-price-btn" href="#">Start free trial</a>
-                            <div class="plan-see-more">or <a href="#">see more features</a></div>
+                            <div class="plan-see-more">or <a href="#compareplans">see more features</a></div>
                         </div>
                     </div>
                     <div class="plan plan-shadow">
@@ -101,7 +101,7 @@
                         </div>
                         <div class="plan-button-container">
                             <a class="btn plan-price-btn" href="#">Start free trial</a>
-                            <div class="plan-see-more">or <a href="#">see more features</a></div>
+                            <div class="plan-see-more">or <a href="#compareplans">see more features</a></div>
                         </div>
                     </div>
                     <div class="plan plan-shadow">
@@ -122,7 +122,7 @@
                         </div>
                         <div class="plan-button-container">
                             <a class="btn plan-price-btn" href="#">Start free trial</a>
-                            <div class="plan-see-more">or <a href="#">see more features</a></div>
+                            <div class="plan-see-more">or <a href="#compareplans">see more features</a></div>
                         </div>
                     </div>
                     <div class="plan plan-shadow">
@@ -143,16 +143,15 @@
                         </div>
                         <div class="plan-button-container">
                             <a class="btn plan-price-btn" href="#">Start free trial</a>
-                            <div class="plan-see-more">or <a href="#">see more features</a></div>
+                            <div class="plan-see-more">or <a href="#compareplans">see more features</a></div>
                         </div>
                     </div>
                 </div>
                 <div class="text-box plan-shadow">
-                    Try our basic free plan. 6 social accounts, 10 posts per account, 1 user. <a href="#">Get started now</a>
+                    Try our basic free plan. 1 social accounts, 10 posts per account, 1 user. <a href="#">Get started now</a>
                 </div>
-                <div class="compare-plans-container text-left">
+                <div class="compare-plans-container text-left" id="compareplans">
                     <h1>Compare plans</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt iaculis nisi, at interdum urna interdum bibendum. Curabitur ut sodales nibh, vestibulum auctor tellus.</p>
                 </div>
                 <div class="compare-plans-table-container">
                     <table class="compare-plans-table" style="width:100%">
@@ -164,23 +163,23 @@
                                 <a class="btn plan-price-btn" href="#">Start trial</a>
                             </th>
                             <th>
-                                <h5>Free</h5>
+                                <h5>Basic</h5>
                                 <a class="btn plan-price-btn" href="#">Start trial</a>
                             </th>
                             <th>
-                                <h5>Free</h5>
+                                <h5>Plus</h5>
                                 <a class="btn plan-price-btn" href="#">Start trial</a>
                             </th>
                             <th>
-                                <h5>Free</h5>
+                                <h5>Premium</h5>
                                 <a class="btn plan-price-btn" href="#">Start trial</a>
                             </th>
                             <th>
-                                <h5>Free</h5>
+                                <h5>Pro</h5>
                                 <a class="btn plan-price-btn" href="#">Start trial</a>
                             </th>
                             <th>
-                                <h5>Free</h5>
+                                <h5>Agency</h5>
                                 <a class="btn plan-price-btn" href="#">Start trial</a>
                             </th>
                         </tr>
@@ -204,7 +203,7 @@
                         </tr>
                         <tr class="grey-tr">
                             <td class="fs14 text-left">Social Accounts</td>
-                            <td>6</td>
+                            <td>1</td>
                             <td>6</td>
                             <td>10</td>
                             <td>25</td>
@@ -318,23 +317,23 @@
                                 <a class="btn plan-price-btn" href="#">Start trial</a>
                             </th>
                             <th>
-                                <h5>Free</h5>
+                                <h5>Basic</h5>
                                 <a class="btn plan-price-btn" href="#">Start trial</a>
                             </th>
                             <th>
-                                <h5>Free</h5>
+                                <h5>Plus</h5>
                                 <a class="btn plan-price-btn" href="#">Start trial</a>
                             </th>
                             <th>
-                                <h5>Free</h5>
+                                <h5>Premium</h5>
                                 <a class="btn plan-price-btn" href="#">Start trial</a>
                             </th>
                             <th>
-                                <h5>Free</h5>
+                                <h5>Pro</h5>
                                 <a class="btn plan-price-btn" href="#">Start trial</a>
                             </th>
                             <th>
-                                <h5>Free</h5>
+                                <h5>Agency</h5>
                                 <a class="btn plan-price-btn" href="#">Start trial</a>
                             </th>
                         </tr>
