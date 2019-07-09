@@ -61,13 +61,44 @@
                             <li class="{{ Request::is('/') ? 'active' : ''}}"><a href="/">Home</a></li>
                             <!-- <li class="{{ Request::is('upgrade') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('upgrade') }}">Upgrade</a></li> -->
                             <!-- <li class="{{ Request::is('education') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('education') }}">How it works</a></li> -->
-                            <li class="{{ Request::is('products') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('products.publisher')}}">Products</a></li>
+                            <li id="products" class="{{ Request::is('products') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('products.publisher')}}">Products</a></li>
                             <li class="{{ Request::is('pricing') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('pricing') }}">Pricing</a></li>
                              <li class="{{ Request::is('blog') ? 'active' : ''}}"><a class="page-scroll" href="https://blog.uniclixapp.com">Blog</a></li>
-                           
+
                             <!-- <li class="{{ Request::is('blog') ? 'active' : ''}}"><a class="page-scroll" href="/jobs">Jobs</a></li> -->
                         </ul>
                     </nav>
+                </div>
+            </div>
+        </div>
+        <div class="projects-navbar">
+            <div class="container">
+                <div class="projects-navbar-container">
+                    <div class="projects-menu-item">
+                        <h5>Publisher</h5>
+                        <p>Craft the perfect post for each social network, all in…</p>
+                        <a href="#">Learn more</a>
+                    </div>
+                    <div class="projects-menu-item">
+                        <h5>Content Curation</h5>
+                        <p>Simplify Your Social Content Curation</p>
+                        <a href="#">Learn more</a>
+                    </div>
+                    <div class="projects-menu-item">
+                        <h5>Social Listening</h5>
+                        <p>People are talking, make sure your listening.</p>
+                        <a href="#">Learn more</a>
+                    </div>
+                    <div class="projects-menu-item">
+                        <h5>Analytics</h5>
+                        <p>A simpler way to measure performance</p>
+                        <a href="#">Learn more</a>
+                    </div>
+                    <div class="projects-menu-item">
+                        <h5>Twitter Booster</h5>
+                        <p>Grow your Twitter audience and expand your Influence</p>
+                        <a href="#">Learn more</a>
+                    </div>
                 </div>
             </div>
         </div>

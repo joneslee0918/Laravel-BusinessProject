@@ -24,12 +24,12 @@ const tabsClassNames = {
   
   const tabsStyles = {
     tabWrapper: {marginTop: '10px'},
-    tabBar: {backgroundColor: '#485576', maxWidth: '100%', height: '50px'},
-    tab:{marginLeft: '0px', paddingLeft: '0px', paddingRight: '0px', height: '100%'},
+    tabBar: {},
+    tab:{},
     tabTitle: {},
     tabCloseIcon: {},
-    tabBefore: {width: '0px'},
-    tabAfter: {width: '0px'}
+    tabBefore: {},
+    tabAfter: {}
   };
 
 class StreamTabs extends Component {
@@ -225,20 +225,18 @@ class StreamTabs extends Component {
                              <Tab key={tab.key} title={tab.title} {...this.makeListeners(tab.key)}>
                                  <div>
                                     {tab.streams.length ? 
-                                    <div className="easygrey-bg">
+                                    <div className="lightgrey-bg">
                                         <div className="stream-handles">
-                                            <button className="new-theme-btn" onClick={this.handleAddStream}>
-                                                <span>+</span>
-                                                Add Stream
-                                            </button>
+                                            <button className="white-txt-btn" onClick={this.handleAddStream}>Add Stream</button>
                                             <div id="refreshHandle">
+                                                <label htmlFor="refreshRate">Refresh: </label>
                                                 <select onChange={this.handleRefreshRateChange} value={parseInt(tab.refresh_rate)} id="refreshRate">
-                                                    <option value={2}>Refresh every 2 minutes</option>
-                                                    <option value={5}>Refresh every 5 minutes</option>
-                                                    <option value={10}>Refresh every 10 minutes</option>
-                                                    <option value={30}>Refresh every 30 minutes</option>
-                                                    <option value={60}>Refresh every hour</option>
-                                                    <option value={120}>Refresh every 2 hours</option>
+                                                    <option value={2}>Every 2 minutes</option>
+                                                    <option value={5}>Every 5 minutes</option>
+                                                    <option value={10}>Every 10 minutes</option>
+                                                    <option value={30}>Every 30 minutes</option>
+                                                    <option value={60}>Every hour</option>
+                                                    <option value={120}>Every 2 hours</option>
                                                 </select>
                                             </div>
                                         </div>

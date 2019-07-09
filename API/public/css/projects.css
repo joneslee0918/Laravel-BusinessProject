@@ -200,6 +200,37 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
     font-size: 14px!important;
     font-weight: 500!important;
 }
+.projects-navbar {
+    min-height: 200px;
+    position: absolute;
+    background-color: #ffffff;
+    width: 100%;
+    z-index: 1;
+    margin-top: -5px;
+    padding: 30px 0;
+    display:none;
+}
+#products:hover .projects-navbar{
+    display:block;
+}
+.projects-navbar-container {
+    display: flex;
+}
+.projects-menu-item {
+    padding-right: 15px;
+    flex: 1 1 0;
+}
+.projects-menu-item h5 {
+    font-size: 20px;
+}
+.projects-menu-item p {
+    font-size: 16px;
+}
+.projects-menu-item a {
+    text-decoration: none;
+    color: #489FD7;
+    font-size: 16px;
+}
 /*
  CSS for the main interaction
 */
@@ -313,7 +344,7 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
    transform: translate3d(25%, 0, 0);
 }
 
-@media only screen and (max-width: 425px)  {
+@media only screen and (max-width: 737px)  {
     .p-container {
         padding: 0 10px;
     }
@@ -324,9 +355,6 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
     }
     .margin-center {
         margin:0 auto;
-    }
-    #page-banner {
-        padding-top: 0px;
     }
     .projects-menu-container .navbar-nav {
         margin:0;
@@ -354,6 +382,20 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
         background-size: cover;
         height: 580px;
     }
+    #page-banner {
+        display:none;
+    }
+    .content {
+        margin-top:0;
+    }
 }
+
+@media only screen and (max-width: 375px) {
+    #page-banner {
+        padding-top: 0px;
+    }
+}
+
+
 
 

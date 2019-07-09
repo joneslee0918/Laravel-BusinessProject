@@ -21,7 +21,7 @@
             </div>
 
             <div class="col-md-2 col-xs-12 mb20">
-                <div class="col-md-12">                        
+                <div class="col-md-12">
                     <div class="footer-h">Products</div>
                     <ul class="footer-ul">
                         <!-- <li><a href="#">The Team</a></li> -->
@@ -30,13 +30,14 @@
                         <li><a href="{{route('products.social_listening')}}" >Monitoring</a></li>
                         <li><a href="{{route('products.analytics')}}" >Analytics</a></li>
                         <li><a href="{{route('products.twitter_growth')}}" >Twitter Booster</a></li>
+                        <li><a href="{{route('products.twitter_unfollow')}}" >Twitter Unfollow</a></li>
                         <li><a href="{{route('pricing')}}" >Pricing</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="col-md-2 col-xs-12 mb20">
-                <div class="col-md-12">                        
+                <div class="col-md-12">
                     <div class="footer-h">Company</div>
                     <ul class="footer-ul">
                         <!-- <li><a href="#">The Team</a></li> -->
@@ -46,9 +47,9 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="col-md-2 col-xs-12 mb20">
-                <div class="col-md-12">                        
+                <div class="col-md-12">
                     <div class="footer-h">Resources</div>
                     <ul class="footer-ul">
                         <li><a href="mailto:info@uniclixapp.com?Subject=The%20sky%20is%20falling!">Support</a></li>

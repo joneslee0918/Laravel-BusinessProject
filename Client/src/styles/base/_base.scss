@@ -280,64 +280,30 @@ input {
 }
 
 .dndTabBarAfter{
-    display:none;
-    background-color: #485576!important;
-    border-bottom: 1px solid #485576 !important;
+    background-color: #e2f7ff !important;
+    border-bottom: 1px solid #e2f7ff !important;
 }
 
 .dndTab{
-    background: #485576 !important;
+    background: #efefef !important;
     border: none !important;
     border-bottom: none !important;
-    display: flex;
-    align-items: center;
 }
 
 .dndTabBefore, .dndTabAfter{
-    background: #485576 !important;
+    background: #efefef !important;
     border: none !important;
     box-shadow: none !important;
     border-top: none !important;
 }
 
 .rdTabActive, .rdTabActive .dndTabAfter, .rdTabActive .dndTabBefore{
-    background:#5B6684!important;
+    background:#e2f7ff !important;
     border: none !important;
 }
 
-.dndTabTitle, .rdTabCloseIcon{
-    color: #858EA4 !important;
-    height: auto !important;
-    margin-top: 0px !important;
-    margin-bottom: 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: open-sansSemiBold, arial, sans-serif;
-    letter-spacing: .5px;
-}
-
-.rdTabCloseIcon{
-    text-shadow: none !important;
-    opacity: 1 !important;
-    color: #485576 !important;
-    background: #858EA4 !important;
-    font-size: 1rem !important;
-    font-family: open-sansBold, arial, sans-serif !important;
-    width: 10px !important;
-    right: 10px !important;
-}
-
-.rdTabActive .dndTabTitle{
-    color: #FFFFFF !important;
-}
-
-.rdTabActive .rdTabCloseIcon{
-    background: white !important;
-}
-
-.rdTabCloseIcon.hover{
-    background: white !important;
+.dndTabTitle{
+    color: #777 !important;
 }
 
 .dndTabBefore{
@@ -346,28 +312,6 @@ input {
 
 .dndTabAfter{
     border-left: none !important;
-}
-
-.dndTabBar{
-    display: flex;
-    align-items: center;
-}
-
-
-.rdTabAddButton{
-    text-shadow: none !important;
-    font-family: open-sansLight, arial, sans-serif !important;
-    color: white !important;
-    border: 1px solid #858EA4 !important;
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.rdTabAddButton:hover{
-    color: white !important;
-    border: 1px solid white !important;
 }
 
 .trash-btn{
@@ -549,9 +493,6 @@ input {
     margin: 0 auto;
 }
 
-.streams-container{
-    margin-top: 70px !important;
-}
 
 .streams-default .selection-item {
     font-size: 5em;
@@ -825,18 +766,8 @@ input {
 }
 
 #refreshRate{
+    padding: 5px;
     margin-left: 5px;
-    padding: 6px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    color: #485576;
-    border: 1px solid #CCCCCC;
-    border-radius: 20px;
-    font-family: open-sansSemiBold, arial, sans-serif, helvetica;
-    font-size: 1.3rem;
-    background: white;
-    outline: none;
 }
 
 .stream-title .fa-close:hover, .stream-title .fa-refresh:hover{
@@ -2835,41 +2766,16 @@ aside .btn-group {
     background: white;
 }
 
-.new-theme-btn{
-    padding: 4px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 120px;
-    color: #485576;
-    border: 1px solid #CCCCCC;
-    border-radius: 20px;
-    font-family: open-sansSemiBold, arial, sans-serif, helvetica;
-    font-size: 1.3rem;
-    background: white;
-}
-
-.new-theme-btn span {
-    font-size: 1.5em;
-    font-family: open-sansLight;
-}
-
 .stream-handles{
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    background: white;
-    padding: 10px;
+    justify-content: space-between;
+    margin: 10px;
     clear: both;
 }
 
 .lightgrey-bg{
     background: lightgrey;
-    overflow:hidden;
-}
-
-.easygrey-bg{
-    background: #f8f8f8;
     overflow:hidden;
 }
 
