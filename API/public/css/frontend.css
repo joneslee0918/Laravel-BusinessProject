@@ -1001,7 +1001,7 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 }
 
 .mtb100 {
-    margin: 100px 0;
+    margin: 100px 0 !important;
 }
 
 .video-panel {
@@ -1536,73 +1536,9 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 
 /** Media Queries */
 @media only screen and (max-width: 768px) {
-
-    #header-wrap .navbar-nav>.active>a {
-        color: #b358b3;
-    }
-
-    #header-wrap .navbar-nav li a {
-        color: #495676;
-    }
-
-    .navbar-default .navbar-collapse {
-        border-color: #ffffff;
-        background: white;
-    }
-
-    .intro-section .draft-section{
-        text-align:center;
-    }
-
-    .collaborate-section .container, .people-talking .container{
-        display: flex;
-        flex-direction: column-reverse;
-    }
-
-    .intro-box{
-        min-height: 0;
-        margin-top:20px;
-    }
-
-    .intro-section{
-        padding: 50px 10px !important;
-    }
-
-    .home-features.mt100{
-        margin-top: 50px !important;
-    }
-
-    .mb100{
-        margin-bottom: 50px !important;
-    }
-
-    .mtb100{
-        margin: 50px 0 !important;
-    }
-
-    .join-business .text-right{
-        text-align:center;
-    }
-
-    .intro-box .profile-box{
-        height: 100px !important;
-        max-width: 100px !important;
-        margin: 0 auto !important;
-    }
-
-    .intro-box .text-content{
-        text-align:center;
-    }
-
     #home-banner {
-        /*padding-top: 100px;*/
-        background-color: #49AFC2;
+        padding-top: 100px;
     }
-
-    .navbar-default .navbar-brand{
-        width: 70px;
-    }
-
     .laptop-img {
         width: 70%;
         margin:0 auto;
@@ -1649,51 +1585,6 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 }
 
 @media only screen and (max-width: 425px) {
-
-    .intro-section .draft-section{
-        text-align:center;
-    }
-
-    .collaborate-section .container, .people-talking .container{
-        display: flex;
-        flex-direction: column-reverse;
-    }
-
-    .intro-box{
-        min-height: 0;
-        margin-top:20px;
-    }
-
-    .intro-section{
-        padding: 50px 10px !important;
-    }
-
-    .home-features.mt100{
-        margin-top: 50px !important;
-    }
-
-    .mb100{
-        margin-bottom: 50px !important;
-    }
-
-    .mtb100{
-        margin: 50px 0 !important;
-    }
-
-    .join-business .text-right{
-        text-align:center;
-    }
-
-    .intro-box .profile-box{
-        height: 100px !important;
-        max-width: 100px !important;
-        margin: 0 auto !important;
-    }
-
-    .intro-box .text-content{
-        text-align:center;
-    }
-
     #home-banner {
         padding-top: 40px;
         text-align: center;

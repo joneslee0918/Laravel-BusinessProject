@@ -103,6 +103,15 @@ class PagesController extends Controller
 
     /**
      *
+     * Show Twitter unfollow page
+     */
+    public function twitter_unfollow()
+    {
+        return view('frontend.products.twitter_unfollow');
+    }
+
+    /**
+     *
      * Show Article page
      */
     public function article($id)

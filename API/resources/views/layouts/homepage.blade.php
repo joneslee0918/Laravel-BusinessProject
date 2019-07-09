@@ -60,12 +60,11 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="{{ Request::is('/') ? 'active' : ''}}"><a href="/">Home</a></li>
                             <!-- <li class="{{ Request::is('upgrade') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('upgrade') }}">Upgrade</a></li> -->
-                            <!-- <li class="{{ Request::is('education') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('education') }}">How it works</a></li> -->
+                            <!-- <li class="{{ Request::is('education') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('education') }}">How it works</a></li>
+                            <li class="{{ Request::is('pricing') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('pricing') }}">Pricing</a></li> -->
+                            <li class="{{ Request::is('blog') ? 'active' : ''}}"><a class="page-scroll" href="https://blog.uniclixapp.com">Blog</a></li>
                             <li class="{{ Request::is('products') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('products.publisher')}}">Products</a></li>
-                            <li class="{{ Request::is('pricing') ? 'active' : ''}}"><a class="page-scroll" href="{{ route('pricing') }}">Pricing</a></li>
-                             <li class="{{ Request::is('blog') ? 'active' : ''}}"><a class="page-scroll" href="https://blog.uniclixapp.com">Blog</a></li>
-                           
-                            <!-- <li class="{{ Request::is('blog') ? 'active' : ''}}"><a class="page-scroll" href="/jobs">Jobs</a></li> -->
+                            <li class="{{ Request::is('blog') ? 'active' : ''}}"><a class="page-scroll" href="/jobs">Jobs</a></li>
                         </ul>
                     </nav>
                 </div>
