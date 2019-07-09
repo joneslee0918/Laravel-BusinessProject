@@ -9,8 +9,8 @@
         <div class="container">
             <div class="row standard-padding text-center">
                 <div class="col-xs-12">
-                    <h2>Grow your Twitter audience and expand your Influence</h2>
-                    <p>Grow your community on Twitter by targeting the right audience. Think of our Booster tool as a matchmaker that connects you with people most interested in what you have to offer.</p>
+                    <h2>Get Uniclix Twitter Unfollow Tool</h2>
+                    <p>Join other influencers and small businesses who trust our easy to use Twitter Unfollow tool to unfollow inactive users, egg profiles, unwanted avatars and undesirable users.</p>
                 </div>
             </div>
         </div>
@@ -19,8 +19,8 @@
     <div class="container">
         <div class="row standard-padding">
             <div class="col-md-6 col-xs-12">
-                <h2>Follow relevant users only</h2>
-                <p>Find users by interest, hashtags, location, and channels. Just set your target and we will find you most relevant active users to follow.</p>
+                <h2>Find inactive  and undesirable users & unfollowers</h2>
+                <p>Quickly and easily find users you currently follow and find who to unfollow.</p>
             </div>
             <div class="col-md-6 col-xs-12">
                 <img class="img-responsive" src="{{asset('/images/tg-image-2.png')}}">
@@ -32,15 +32,15 @@
                 <img class="img-responsive" src="{{asset('/images/tg-image-3.png')}}">
             </div>
             <div class="col-md-6 col-xs-12">
-                <h2>Unfollow Inactive users</h2>
-                <p>Find inactive or non-engaging users that you follow. With few clix a day clear your follow list and get rid of spammers.</p>
+                <h2>Quickly, unfollow them</h2>
+                <p>Uniclix enables you to unfollow unwanted users fast.</p>
             </div>
         </div>
 
         <div class="row standard-padding">
             <div class="col-md-6 col-xs-12">
-                <h2>Unfollow undesirable users</h2>
-                <p>Track engagement for all of your individual post in one platform.</p>
+                <h2>Stay within limits</h2>
+                <p>Twitter has limits on following users, Hence use Uniclix to stay within those limits by unfollowing extra followers that are inactive.</p>
             </div>
             <div class="col-md-6 col-xs-12">
                 <img class="img-responsive" src="{{asset('/images/tg-image-4.png')}}">
@@ -52,8 +52,8 @@
         <div class="container">
             <div class="row mt30 mb30">
                 <div class="col-xs-12 text-center">
-                    <h2>SignUp and see the difference.</h2>
-                    <a href="#" class="signin-btn">Get Started</a>
+                    <h2>Try Uniclix and see the difference.</h2>
+                    <a href="{{config('frontendclient.client_url')}}" class="signin-btn">Get Started</a>
                 </div>
             </div>
         </div>
