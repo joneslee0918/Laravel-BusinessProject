@@ -184,6 +184,11 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
 .compare-plans-container {
     margin-top: 100px;
 }
+.compare-plans-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
 .compare-plans-table th{
    padding: 15px;
    text-align: center;
@@ -356,6 +361,10 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
     .column-reverse {
         display:flex;
         flex-direction: column-reverse;
+    }
+    .pricing-plans {
+        align-items: inherit;
+        flex-direction: column;
     }
     .margin-center {
         margin:0 auto;
