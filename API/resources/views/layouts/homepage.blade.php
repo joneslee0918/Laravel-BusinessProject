@@ -111,12 +111,14 @@
 @stack('scripts')
 <script>
 $(document).ready(function() {
-    $("#products").on("mouseenter", function() {
-       $(".projects-navbar").show();
-    });
-    $(".projects-navbar").on("mouseleave", function() {
-       $(this).hide();  //or $('.overlay').hide()
-    });
+    if ($(window).width() >= 768) {
+        $("#products").on("mouseenter", function() {
+           $(".projects-navbar").show();
+        });
+        $(".projects-navbar").on("mouseleave", function() {
+           $(this).hide();  //or $('.overlay').hide()
+        });
+    }
 });
 </script>
 </body>

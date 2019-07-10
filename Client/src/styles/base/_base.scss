@@ -586,17 +586,42 @@ input {
     overflow-x: hidden;
 }
 
-.stream-action-icons{
+.stream-action-icons .status-counter {
+    margin-left: 5px;
+}
+
+.stream-action-icons > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stream-action-icons > span > .fa, .stream-action-icons > .fa {
+    border: 1px solid #c5c5c5;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.stream-action-icons {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 15px;
-    color: #999;
-    font-size: 20px;
+    color: #485576;
+    font-size: 1.4rem;
     cursor: pointer;
 }
 
 .stream-action-icons .acted{
     color: #25a2f0;
+}
+
+.stream-action-icons .fa.acted{
+    border: 1px solid #25a2f0 !important;
 }
 
 .stream-action-icons .status-counter{
@@ -605,10 +630,12 @@ input {
 
 .stream-action-icons .acted:hover{
     color: #337ab7;
+    border: 1px solid #337ab7;
 }
 
 .stream-action-icons i:hover{
-    color: #666;
+    color: #5b6684;
+    border: 1px solid #5b6684;
 }
 
 .readMoreText{
@@ -633,7 +660,13 @@ input {
     width: 100%;
     background: white;
     padding:16px;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
+}
+
+.stream-feed-container .username {
+    color: #485576;
+    font-family: open-sansLight, sans-serif, arial;
+    letter-spacing: 0.5px;
 }
 
 .stream-feed-container .post-info img, .stream-feed-container .post-info{
@@ -675,19 +708,39 @@ input {
 }
 
 .stream-user{
-    font-size: 16px;
-    color: #999;
+    color: #c5c5c5;
+    font-family: open-sans, sans-serif, arial;
 }
 
 .stream-title{
     background:white;
-    border-bottom:1px solid #ccc;
-    margin:0;
-    padding:10px;
+    border-top: 3px solid #4267b2;
+    border-bottom: 2px solid #f1f1f1;
+    margin: 0;
+    font-size: 1.6rem;
+    color: #485576;
+    font-family: open-sansSemiBold, sans-serif, arial;
+    padding: 10px;
+}
+
+.stream-title > .social-icon{
+    color: white !important;
+    width: 17px;
+    height: 17px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    float: left;
+    align-items: center;
+    font-size: 1.2rem;
+    padding: 5px;
+    border-radius: 100%;
 }
 
 .stream-title input{
-    width: 190px;
+    width: auto;
+    outline: none;
+    font-family: open-sansSemiBold, sans-serif, arial;
 }
 
 .react-autosuggest__container {
@@ -814,13 +867,13 @@ input {
 }
 
 .stream-title .fa-close{
-    color: #999;
+    color: #c5c5c5;
     font-size: 16px;
     cursor: pointer;
 }
 
 .stream-title .fa-refresh{
-    color: #777;
+    color: #c5c5c5;
     margin: 0 5px;
 }
 
@@ -840,7 +893,7 @@ input {
 }
 
 .stream-title .fa-close:hover, .stream-title .fa-refresh:hover{
-    color: #555;
+    color: #485576;
 }
 
 .fb-actions-container .draft_editor_container{
@@ -2806,7 +2859,7 @@ aside .btn-group {
 .react-autosuggest__suggestions-container--open::-webkit-scrollbar-track, 
 .channel-list::-webkit-scrollbar-track
 {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	// -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 10px;
 	background-color: #F5F5F5;
 }
@@ -2815,7 +2868,7 @@ aside .btn-group {
 .react-autosuggest__suggestions-container--open::-webkit-scrollbar, 
 .channel-list::-webkit-scrollbar
 {
-	width: 12px;
+	width: 10px;
 	background-color: #F5F5F5;
 }
 
@@ -2824,8 +2877,8 @@ aside .btn-group {
 .channel-list::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #555;
+	// -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: rgba(72, 85, 118, 0.5)
 }
 
 .white-txt-btn{
@@ -2924,10 +2977,16 @@ aside .btn-group {
 
 .linkedin_bg{
     background: #0077B5 !important;
+    color: #fff;
 }
 
 .pinterest_color{
     color: #AA2529 !important;
+    color: #fff;
+}
+
+.pinterest_bg{
+    background: #AA2529 !important;
 }
 
 .social-preview-title{
@@ -2948,6 +3007,22 @@ aside .btn-group {
 .twitter_bg{
     background:#25A2F0 !important;
     color:#fff;
+}
+
+.facebook_bt{
+    border-top:3px solid #4267B2 !important;
+}
+
+.twitter_bt{
+    border-top:3px solid #25A2F0 !important;
+}
+
+.linkedin_bt{
+    border-top:3px solid #0077B5 !important;
+}
+
+.pinterest_bt{
+    border-top:3px solid #AA2529 !important;
 }
 
 .accounts-container__content__wrapper,
