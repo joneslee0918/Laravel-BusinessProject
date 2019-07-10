@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="row standard-padding">
+        <div class="row standard-padding column-reverse">
             <div class="col-md-6 col-xs-12">
                 <img class="img-responsive" src="{{asset('/images/tg-image-3.png')}}">
             </div>
@@ -93,6 +93,18 @@
                             <a href="#">Learn more</a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-gradient-bg">
+        <div class="container">
+            <div class="row mt30 mb30">
+                <div class="col-xs-12 text-center">
+                    <p>Use Uniclix powerful Unfollow tool powered by AI algorithm. Complex algorithm, yet easy to use Twitter unfollow tool that help you save a lot of time and money managing and growing your following on Twitter. Instead of spending many hours of your time in daily bases trying to figure out who to unfollow, Uniclix unfollow tool will show you filtered list of inactive, and irrelevant users that provide no value to you or your brand, such as unfollowers, inactive users, egg profiles, recent unfollowers, or other undesirable people you would want to unfollow on Twitter.</p>
+
+                    <p>By using our unfollow tool, you can focus your time on doing the things you like most, while you easily unfollow unfollowers, users with no value to you, along with any other reasons to unfollow people on Twitter, so your following continues to grow quick and easy with followers that matter more to you.</p>
                 </div>
             </div>
         </div>

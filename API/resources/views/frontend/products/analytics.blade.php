@@ -25,7 +25,7 @@
                 </div>
             </div>
 
-            <div class="row standard-padding">
+            <div class="row standard-padding column-reverse">
                 <div class="col-md-6 col-xs-12">
                     <img class="img-responsive" src="{{asset('/images/anl-image-3.png')}}">
                 </div>

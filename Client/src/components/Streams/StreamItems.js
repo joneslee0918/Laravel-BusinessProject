@@ -21,20 +21,18 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const grid = 10;
+const grid = 5;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: 'none',
-  margin: `0px ${grid}px 0px 10px`,
+  margin: `0px ${grid}px 0px 5px`,
   width: `500px`,
   minWidth: `320px`,
   height: `auto`,
-  outline: `none`,
 
   // change background colour if dragging
-  background: isDragging ? '#f1f1f1' : '#f1f1f1',
-  boxShadow: '0px 1px 3px 0px #c5c5c5',
+  background: isDragging ? '#efefef' : '#efefef',
 
   // styles we need to apply on draggables
   ...draggableStyle,
@@ -53,7 +51,7 @@ const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'lightblue' : '#f8f8f8',
   display: 'flex',
   padding: grid,
-  overflow: 'auto'
+  overflow: 'auto',
 });
 
 class StreamItems extends Component {
@@ -210,8 +208,8 @@ class StreamItems extends Component {
                       <h3 style={getTitleStyle(
                         snapshot.isDragging,
                         provided.draggableProps.style
-                      )} className={`stream-title ${item.network}_bt`}>
-                        <i className={`fa fa-${item.network} ${item.network}_bg social-icon`}></i> 
+                      )} className="stream-title">
+                        <i className={`fa fa-${item.network} ${item.network}_color`}></i> 
                           { this.state.currentItemId == item.id ? 
                             <input type="text" className="text-cursor" maxLength="14" data-editable={true} onKeyDown={this.handleKeyDown} onChange={this.handleTitleChange} value={this.state.titleText} /> : 
                             <span className="text-cursor" onClick={this.handleTitleClick} data-editable-item={JSON.stringify(item)}> {item.title} </span> } 
