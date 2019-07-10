@@ -77,27 +77,27 @@
                     <div class="projects-menu-item">
                         <h5>Publisher</h5>
                         <p>Craft the perfect post for each social network, all in…</p>
-                        <a href="{{ route('products.publisher') }}">Learn more</a>
+                        <a href="#">Learn more</a>
                     </div>
                     <div class="projects-menu-item">
                         <h5>Content Curation</h5>
                         <p>Simplify Your Social Content Curation</p>
-                        <a href="{{ route('products.content_curation') }}">Learn more</a>
+                        <a href="#">Learn more</a>
                     </div>
                     <div class="projects-menu-item">
                         <h5>Social Listening</h5>
                         <p>People are talking, make sure your listening.</p>
-                        <a href="{{ route('products.social_listening') }}">Learn more</a>
+                        <a href="#">Learn more</a>
                     </div>
                     <div class="projects-menu-item">
                         <h5>Analytics</h5>
                         <p>A simpler way to measure performance</p>
-                        <a href="{{ route('products.analytics') }}">Learn more</a>
+                        <a href="#">Learn more</a>
                     </div>
                     <div class="projects-menu-item">
                         <h5>Twitter Booster</h5>
                         <p>Grow your Twitter audience and expand your Influence</p>
-                        <a href="{{ route('products.twitter_growth') }}">Learn more</a>
+                        <a href="#">Learn more</a>
                     </div>
                 </div>
             </div>
@@ -109,15 +109,5 @@
     </div>
 </div>
 @stack('scripts')
-<script>
-$(document).ready(function() {
-    $("#products").on("mouseenter", function() {
-       $(".projects-navbar").show();
-    });
-    $(".projects-navbar").on("mouseleave", function() {
-       $(this).hide();  //or $('.overlay').hide()
-    });
-});
-</script>
 </body>
 </html>
