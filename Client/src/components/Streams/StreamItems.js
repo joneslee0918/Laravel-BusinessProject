@@ -48,7 +48,7 @@ const getTitleStyle = (isDragging, draggableStyle) => ({
   });
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  background: isDraggingOver ? 'lightblue' : '#f8f8f8',
   display: 'flex',
   padding: grid,
   overflow: 'auto',
