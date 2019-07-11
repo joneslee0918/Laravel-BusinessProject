@@ -169,6 +169,14 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
     width: 100%;
     font-weight: 500;
 }
+.color-theme-btn {
+    background: #b358b3;
+    color:#ffffff;
+}
+.color-theme-btn:hover {
+    background: #b358b3;
+    color:#ffffff;
+}
 .plan-price-btn:hover, .plan-price-btn:focus {
     color: #FFFFFF;
 }
@@ -183,10 +191,6 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
 }
 .compare-plans-container {
     margin-top: 100px;
-}
-.compare-plans-table {
-    overflow-x: auto;
-    white-space: nowrap;
 }
 .compare-plans-table th{
    padding: 15px;
@@ -401,6 +405,11 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
     }
     .content {
         margin-top:0;
+    }
+    .compare-plans-table {
+        overflow-x: auto;
+        white-space: nowrap;
+        display:block;
     }
 }
 
