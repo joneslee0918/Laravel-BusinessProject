@@ -33,7 +33,7 @@
                 <img src="{{ asset('images/home-img-1.png') }}" class="img-responsive center-img">
             </div> -->
         </div>
-        <div class="row home-features mt100">
+        <div class="home-features mt100">
             <div class="col-md-3 col-xs-12">
                 <div class="col-md-12 text-center intro-box intro-box">
                     <div class="profile-box schedule-bg">
@@ -103,7 +103,7 @@
         </div>
     </div>
 </div>
-<div class="row post-crafting intro-section">
+<div class="post-crafting intro-section">
     <div class="container">
         <div class="col-md-6 col-xs-12">
             <div class="col-md-12 text-content">
@@ -126,7 +126,7 @@
     </div>
 </div>
 
-<div class="row collaborate-section intro-section">
+<div class="collaborate-section intro-section">
     <div class="container">
         <div class="col-md-6 col-xs-12">
             <div class="col-md-12">
@@ -191,14 +191,14 @@
 </div>
 </div>
 
-<div class="row join-business intro-section">
+<div class="join-business intro-section">
     <div class="container">
         <h3>Join small and large business that use Uniclix to build their brands</h3>
         <a href="https://web.uniclix.test" class="btn signin-btn get-started-btn">Get Started Now</a>
     </div>
 </div>
 
-<div class="row simplify-social intro-section">
+<div class="simplify-social intro-section">
     <div class="container">
         <div class="col-md-6 col-xs-12">
             <div class="col-md-12 text-content">
@@ -219,7 +219,7 @@
     </div>
 </div>
 
-<div class="row post-crafting people-talking intro-section">
+<div class="post-crafting people-talking intro-section">
     <div class="container">        
         
         <div class="col-md-6 col-xs-12">
@@ -245,7 +245,7 @@
     </div>
 </div>
 
-<div class="row learn-more intro-section">
+<div class="learn-more intro-section">
     <div class="container">
         <h3>Learn more about our Twitter Booster tool</h3>   
         <p class="description">Grow your community on Twitter by targeting the right audience. 

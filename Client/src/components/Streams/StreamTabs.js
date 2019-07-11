@@ -9,6 +9,7 @@ import {Tabs, Tab} from "react-draggable-tab";
 import {getStreams, setRefreshRate, selectTab, positionTab, addTab, deleteTab, renameTab} from "../../requests/streams";
 import StreamItems from "./StreamItems";
 import StreamCreator from "./StreamCreator";
+import StreamInitiator from "./StreamInitiator";
 import Loader from "../Loader";
 
 const tabsClassNames = {
@@ -23,7 +24,7 @@ const tabsClassNames = {
   };
   
   const tabsStyles = {
-    tabWrapper: {marginTop: '10px'},
+    tabWrapper: {},
     tabBar: {backgroundColor: '#485576', maxWidth: '100%', height: '50px'},
     tab:{marginLeft: '0px', paddingLeft: '0px', paddingRight: '0px', height: '100%'},
     tabTitle: {},
@@ -93,7 +94,7 @@ class StreamTabs extends Component {
 
         let newTab = (<Tab key={key} title='untitled' {...this.makeListeners(key)}>
                         <div>
-                            <StreamCreator selectedTab = {key} reload = {this.fetchStreamTabs}/>
+                            <StreamInitiator selectedTab = {key} reload = {this.fetchStreamTabs}/>
                         </div>
                         </Tab>);
 
@@ -242,10 +243,10 @@ class StreamTabs extends Component {
                                                 </select>
                                             </div>
                                         </div>
-                                        <StreamItems streams={tab.streams} refreshRate={parseInt(tab.refresh_rate)}/>
+                                        <StreamItems streams={tab.streams} refreshRate={parseInt(tab.refresh_rate)} selectedTab={selectedTab} reload={this.fetchStreamTabs}/>
                                     </div>
                                     : 
-                                    <StreamCreator selectedTab = {selectedTab} reload = {this.fetchStreamTabs} />}
+                                    <StreamInitiator selectedTab={selectedTab} reload={this.fetchStreamTabs} />}
                                     
                                  </div>
                              </Tab>
@@ -343,7 +344,7 @@ class StreamTabs extends Component {
                             <TextField
                                 ref='input' id="rename-input" style={{width: '90%'}}/>
                             </Dialog>
-                    </div> : !this.state.loading && <StreamCreator selectedTab = {this.state.selectedTab} reload = {this.fetchStreamTabs}/>  
+                    </div> : !this.state.loading && <StreamInitiator selectedTab={this.state.selectedTab} reload={this.fetchStreamTabs} /> 
                 }
             </div>
         );

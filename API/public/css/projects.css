@@ -169,14 +169,6 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
     width: 100%;
     font-weight: 500;
 }
-.color-theme-btn {
-    background: #b358b3;
-    color:#ffffff;
-}
-.color-theme-btn:hover {
-    background: #b358b3;
-    color:#ffffff;
-}
 .plan-price-btn:hover, .plan-price-btn:focus {
     color: #FFFFFF;
 }
@@ -233,8 +225,6 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
 }
 .projects-menu-item p {
     font-size: 16px;
-    font-family: "Quicksand";
-    color: #2B2B2B;
 }
 .projects-menu-item a {
     text-decoration: none;
@@ -363,14 +353,6 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
         text-align:center;
         padding: 0;
     }
-    .column-reverse {
-        display:flex;
-        flex-direction: column-reverse;
-    }
-    .pricing-plans {
-        align-items: inherit;
-        flex-direction: column;
-    }
     .margin-center {
         margin:0 auto;
     }
@@ -405,11 +387,6 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
     }
     .content {
         margin-top:0;
-    }
-    .compare-plans-table {
-        overflow-x: auto;
-        white-space: nowrap;
-        display:block;
     }
 }
 

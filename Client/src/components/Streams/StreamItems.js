@@ -4,6 +4,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import StreamFeed from "./StreamFeed";
 import channelSelector, {channelById} from '../../selectors/channels';
 import {deleteStream, positionStream, updateStream} from '../../requests/streams';
+import {StreamMaker} from "./StreamInitiator";
 
 // fake data generator
 // const getItems = streams =>
@@ -64,7 +65,8 @@ class StreamItems extends Component {
       currentItemId: "",
       titleText: "",
       refresh: false,
-      loading: false
+      loading: false,
+      streamMaker: true
     };
 
     this.onDragEnd = this.onDragEnd.bind(this);
@@ -179,9 +181,14 @@ class StreamItems extends Component {
     }
   }
 
+  toggleStreamMaker = () => {
+    this.setState(() => ({
+      streamMaker: !this.state.streamMaker
+    }));
+  }
 
   render() {
-    const {channels, refreshRate} = this.props;
+    const {channels, refreshRate, selectedTab, reload} = this.props;
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
@@ -233,6 +240,12 @@ class StreamItems extends Component {
                 </Draggable>
               )})}
               {provided.placeholder}
+              <StreamMaker 
+                title="Add Stream" streamCreator={true} 
+                item={{value: "browse"}} 
+                selectedTab={selectedTab} 
+                reload={reload} 
+                streamSize={true}/>
             </div>
           )}
         </Droppable>

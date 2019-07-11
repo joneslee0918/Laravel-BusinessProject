@@ -30,7 +30,7 @@
                     <span class="billing-toggle">monthly billing</span>
                     <label class="label">
                     <div class="toggle">
-                        <input id="toggleMonthlyYearly" class="toggle-state" type="checkbox" name="check" value="check" />
+                        <input class="toggle-state" type="checkbox" name="check" value="check" />
                         <div class="toggle-inner">
                         <div class="indicator"></div>
                         </div>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="plan-price-container">
                             <div>
-                                <span class="plan-price">$<span class="plan-price-amount">10</span></span>
+                                <span class="plan-price">$10.00</span>
                                 <span class="fw700">/ mo</span>
                             </div>
                             <div class="billed-period">Billend monthly</div>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="plan-price-container">
                             <div>
-                                <span class="plan-price">$<span class="plan-price-amount">15</span></span>
+                                <span class="plan-price">$15.00</span>
                                 <span class="fw700">/ mo</span>
                             </div>
                             <div class="billed-period">Billend monthly</div>
@@ -89,7 +89,7 @@
                         </div>
                         <div class="plan-price-container">
                             <div>
-                                <span class="plan-price">$<span class="plan-price-amount">50</span></span>
+                                <span class="plan-price">$50.00</span>
                                 <span class="fw700">/ mo</span>
                             </div>
                             <div class="billed-period">Billend monthly</div>
@@ -110,7 +110,7 @@
                         </div>
                         <div class="plan-price-container">
                             <div>
-                                <span class="plan-price">$<span class="plan-price-amount">90</span></span>
+                                <span class="plan-price">$90.00</span>
                                 <span class="fw700">/ mo</span>
                             </div>
                             <div class="billed-period">Billend monthly</div>
@@ -131,7 +131,7 @@
                         </div>
                         <div class="plan-price-container">
                             <div>
-                                <span class="plan-price">$<span class="plan-price-amount">180</span></span>
+                                <span class="plan-price">$180.00</span>
                                 <span class="fw700">/ mo</span>
                             </div>
                             <div class="billed-period">Billend monthly</div>
@@ -197,7 +197,7 @@
                             <td></td>
                             <td>$100</td>
                             <td>$150</td>
-                            <td>$500</td>
+                            <td>-</td>
                             <td>$900</td>
                             <td>$1800</td>
                         </tr>
@@ -392,26 +392,6 @@
     </div>
 
 </div>
-
-<script>
-$(document).ready(function(){
-    $("#toggleMonthlyYearly").click( function(){
-        if( $(this).is(':checked') )
-        {
-            $('.plan-price-amount').each(function(){
-                var text = parseInt($(this).text())*10;
-                $(this).text(text);
-            })
-        }
-        else {
-            $('.plan-price-amount').each(function(){
-                var text = parseInt($(this).text())/10;
-                $(this).text(text);
-            })
-        }
-    });
-})
-</script>
 
 @include('frontend.includes.footer')
 
