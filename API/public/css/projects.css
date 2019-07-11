@@ -185,7 +185,6 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
     margin-top: 100px;
 }
 .compare-plans-table {
-    display: block;
     overflow-x: auto;
     white-space: nowrap;
 }
@@ -230,6 +229,8 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
 }
 .projects-menu-item p {
     font-size: 16px;
+    font-family: "Quicksand";
+    color: #2B2B2B;
 }
 .projects-menu-item a {
     text-decoration: none;
