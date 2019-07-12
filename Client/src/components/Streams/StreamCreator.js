@@ -20,9 +20,7 @@ class StreamCreator extends React.Component{
         loading: false,
         searchModal: false,
         autoCompleteSearchModal: false,
-        searchTerm: "",
-        verticalDisplay: this.props.verticalDisplay ? this.props.verticalDisplay : false,
-        defaultItem: this.props.defaultItem ? this.props.defaultItem : false
+        searchTerm: ""
     }
 
     handleAccountChange = (selectedAccount) => {
@@ -42,44 +40,12 @@ class StreamCreator extends React.Component{
         const selectedTab = this.props.selectedTab;
         const searchTerm = this.state.searchTerm;
 
-        return addStream(item, channelId, selectedTab, network, searchTerm).then(() => this.props.reload()).then(() => {
-            this.setState(() => ({
-                loading: false
-            }));
+        addStream(item, channelId, selectedTab, network, searchTerm).then(() => this.props.reload()).then(() => {
            if(typeof this.props.close !== "undefined") this.props.close();
         });
     };
 
     handleTypeClick = (item) => {
-        const {selectedAccount} = this.state;
-        let input = item;
-        if(item.value == "myPostsMentions"){
-            if(selectedAccount.type == "facebook"){
-                input =  {label: "My Posts", value: "myPosts"} 
-            }else if(selectedAccount.type == "twitter"){
-                input = {label: "My Tweets", value: "tweets"};
-            }
-
-            this.submitStream(input).then(response => {
-                input = {label: "Mentions", value: "mentions"};
-                this.submitStream(input);
-            });
-
-            return;
-        }
-        else if(item.value === "keywords"){
-            if(selectedAccount.type == "facebook"){
-                this.toggleAutoCompleteSearchModal();
-                return;
-            }else if(selectedAccount.type == "twitter"){
-                this.toggleSearchModal();
-                return;
-            }
-        }else if(item.value === "browse"){
-            this.toggleStreamCreator();
-            return;
-        } 
-
         if(item.value === "search"){
             this.toggleSearchModal();
             return;
@@ -88,7 +54,7 @@ class StreamCreator extends React.Component{
             return;
         }
 
-        this.submitStream(input);
+        this.submitStream(item);
     }
 
     handleSearchInputChange = (event) => {
@@ -138,7 +104,7 @@ class StreamCreator extends React.Component{
                         </div>
                     </div>
                     :
-                    <div className={`streams-default-container ${this.state.verticalDisplay && 'streams-default-container-new'}`}>
+                    <div className="streams-default-container">
 
                     <Modal isOpen={!!this.state.searchModal} ariaHideApp={false} className="stream-type-modal search-modal">
                         <div>
@@ -163,17 +129,14 @@ class StreamCreator extends React.Component{
                             })}
                         />
                     </div>
-                    <div className={`streams-default ${this.state.verticalDisplay && 'streams-default-new'}`}>
+                    <div className="streams-default">
                             
-                        {!this.state.defaultItem ? 
-                            (streamTypes[this.state.selectedAccount.type]).map((item, index) => (
+                        {(streamTypes[this.state.selectedAccount.type]).map((item, index) => (
                             <div key={index} className="selection-item" onClick={(e) => this.handleTypeClick(item)}>
                                 <i className={`fa fa-${item.icon}`}></i>
                                 <span>{item.label}</span>
                             </div>
-                        ))
-                        : <button className="magento-btn" onClick={() => this.handleTypeClick(this.state.defaultItem)}>Create Stream</button>
-                        }
+                        ))}
 
                     </div>
                     {typeof this.props.close !== "undefined" && 

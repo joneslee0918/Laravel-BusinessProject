@@ -1,4 +1,4 @@
-<div class="join-business ready-section intro-section">
+<div class="row join-business ready-section intro-section">
     <div class="container">
 
             <div class="col-md-8 col-sm-8 col-xs-12">

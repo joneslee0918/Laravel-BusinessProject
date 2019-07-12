@@ -402,11 +402,15 @@ $(document).ready(function(){
                 var text = parseInt($(this).text())*10;
                 $(this).text(text);
             })
+
+            $('.billed-period').text("Billed annually");
         }
         else {
             $('.plan-price-amount').each(function(){
                 var text = parseInt($(this).text())/10;
                 $(this).text(text);
+
+                $('.billed-period').text("Billed monthly");
             })
         }
     });
