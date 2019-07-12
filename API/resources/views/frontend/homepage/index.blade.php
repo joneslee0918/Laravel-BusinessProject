@@ -15,7 +15,7 @@
             <div class="col-md-5 col-xs-12 pb50">
                 <h1>Social Media Management<br>Simplified</h1>
                 <p class="mt20">Uniclix helps you centralize, manage and grow your social media accounts with just a couple of clicks.</p>
-                <a class="btn theme-btn mt30" href="{{config('frontendclient.client_url')}}" target="_blank">Get Started Now </a>
+                <a class="btn theme-btn mt30" href="{{config('frontendclient.client_url')}}?register" target="_blank">Get Started Now </a>
                 <!-- <a href="/pricing" class="btn theme-btn mt30">Learn more</a> -->
             </div>
         </div>
@@ -194,7 +194,7 @@
 <div class="join-business intro-section">
     <div class="container">
         <h3>Join small and large business that use Uniclix to build their brands</h3>
-        <a href="https://web.uniclix.test" class="btn signin-btn get-started-btn">Get Started Now</a>
+        <a href="{{config('frontendclient.client_url')}}?register" class="btn signin-btn get-started-btn">Get Started Now</a>
     </div>
 </div>
 
