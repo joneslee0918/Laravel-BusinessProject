@@ -10,7 +10,7 @@
             <div class="row standard-padding">
                 <div class="col-md-7 col-xs-12">
                     <h1 class="mb30">Craft the perfect post for each social network, all in few clix</h1>
-                    <a href="{{config('frontendclient.client_url')}}" class="btn theme-btn fw700 color-theme-btn">Get started now</a>
+                    <a href="https://web.uniclix.test" class="btn theme-btn fw700 color-theme-btn">Get started now</a>
                 </div>
                 <div class="col-md-5 col-xs-12">
                     <img class="img-responsive" src="{{asset('/images/publisher-img-1.svg')}}">

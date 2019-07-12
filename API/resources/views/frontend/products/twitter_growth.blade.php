@@ -52,7 +52,7 @@
             <div class="row mt30 mb30">
                 <div class="col-xs-12 text-center">
                     <h2>SignUp and see the difference.</h2>
-                    <a href="{{config('frontendclient.client_url')}}" class="signin-btn">Get Started</a>
+                    <a href="#" class="signin-btn">Get Started</a>
                 </div>
             </div>
         </div>
