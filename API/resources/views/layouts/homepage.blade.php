@@ -55,7 +55,9 @@
                     </a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <a href="{{config('frontendclient.client_url')}}" class="btn pull-right signin-btn">Sign in</a>
+                    <a href="{{config('frontendclient.client_url')}}?register" class="btn pull-right signin-btn nav-btn nav-btn-white">Get Started Now</a>
+                    <a href="{{config('frontendclient.client_url')}}" class="btn pull-right signin-btn nav-btn">Sign in</a>
+                    
                     <nav>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="{{ Request::is('/') ? 'active' : ''}}"><a href="/">Home</a></li>

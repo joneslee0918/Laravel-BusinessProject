@@ -398,16 +398,23 @@ $(document).ready(function(){
     $("#toggleMonthlyYearly").click( function(){
         if( $(this).is(':checked') )
         {
-            $('.plan-price-amount').each(function(){
-                var text = parseInt($(this).text())*10;
-                $(this).text(text);
+            var annually_prices = [8.3, 12.5, 41.5, 75, 150];
+
+            $('.plan-price-amount').each(function(index){
+                $(this).text(annually_prices[index]);
             })
+
+            $('.billed-period').text("Billed annually");
         }
         else {
-            $('.plan-price-amount').each(function(){
-                var text = parseInt($(this).text())/10;
-                $(this).text(text);
+            var monthly_prices = [10, 15, 50, 90, 180];
+
+            $('.plan-price-amount').each(function(index){
+
+                $(this).text(monthly_prices[index]);
             })
+
+            $('.billed-period').text("Billed monthly");
         }
     });
 })

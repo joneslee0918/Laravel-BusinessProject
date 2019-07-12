@@ -28,13 +28,17 @@
     src: url(/fonts/open-sans/OpenSans-Light.ttf);
 }
 
+*, *:active, *:focus, *:visited{
+    outline: none !important;
+}
+
 body {
     font-family: open-sans, sans-serif, Arial, Helvetica;
     background: white;
 }
 
 button, button:focus, button:active{
-    outline: none;
+    outline: none !important;
 }
 
 ul {
@@ -95,8 +99,45 @@ input {
     display: flex;
     align-items: center;
     overflow: hidden;
-    background: #3592c4;
     height: 100vh;
+}
+
+.login-container .box-container label {
+    font-family: open-sansLight, sans-serif, arial;
+    line-height: 1;
+}
+
+.login-container .box-container input {
+    border-radius: 3px;
+    height: 35px;
+    border: 1px solid #e5e5e5;
+    font-weight: normal;
+    box-shadow: none;
+}
+
+.login-form h4 {
+    font-family: open-sansSemiBold, arial, sans-serif;
+    margin: 0 0 30px 0;
+}
+
+.login-form .btn-link {
+    display: block;
+    padding: 10px 0 0;
+    text-align: left;
+    color: #485576;
+    font-family: open-sansSemiBold, sans-serif, arial;
+}
+
+.login-form p.inline-txt a {
+    padding: 0 !important;
+    font-size: 1.3rem;
+}
+
+.login-form p.inline-txt {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 1.3rem;
 }
 
 .avatar-box{
@@ -115,6 +156,10 @@ input {
     border: 1px solid #ccc;
     margin: 0 auto;
     text-align: center;
+}
+
+.login-container .box-container{
+    border:none;
 }
 
 .social-login.login-btns, .form-container .login-form {
@@ -912,6 +957,7 @@ input {
     font-size: 1em;
     max-width: 250px;
     margin: 0 auto;
+    outline: none;
 }
 
 .profile-placeholder {
@@ -2513,6 +2559,15 @@ button.doneBtn {
     color: #666;
     width:100%;
     font-size: $l-size;
+}
+
+.img-responsive{
+    width:100%;
+}
+
+.full-width{
+    width: 100%;
+    max-width: 100%;
 }
 
 .card-img-top{

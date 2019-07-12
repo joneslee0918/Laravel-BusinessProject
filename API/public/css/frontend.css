@@ -116,6 +116,20 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     color: #ffffff;
 }
 
+.signin-btn.nav-btn{
+    font-family: open-sansSemiBold, sans-serif, arial !important;
+}
+
+.signin-btn.nav-btn.nav-btn-white{
+    background:white !important;
+    color:black !important;
+}
+
+.signin-btn.nav-btn.nav-btn-white:hover{
+    color: white !important;
+    background: transparent !important;
+}
+
 .signin-btn {
     margin-top: 30px;
     margin-left: 15px;
