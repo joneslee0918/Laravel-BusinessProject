@@ -170,12 +170,14 @@ class StreamsController extends Controller
         $tabs = $this->user->tabs();
 
         if(!$selectedTab || $selectedTab == "tab0"){
-            $tab = $tabs->create([
-                "key" => "newtab_".Carbon::now()->timestamp,
-                "title" => "untitled",
-                "index" => 0,
-                "selected" => 1
-            ]);
+            if(!($tab = $this->user->tabs()->first())){
+                $tab = $tabs->create([
+                    "key" => "newtab_".Carbon::now()->timestamp,
+                    "title" => "untitled",
+                    "index" => 0,
+                    "selected" => 1
+                ]);
+            }
         }else{
             $tab = $this->user->tabs()->where("key", $selectedTab)->first();
         }
