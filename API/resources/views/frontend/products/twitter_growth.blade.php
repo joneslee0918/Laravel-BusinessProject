@@ -2,8 +2,7 @@
 
 @section('content')
 
-@include('frontend.includes.projects_menu')
-
+<div id="page-banner"></div>
 <div class="product-pages">
     <div class="tg-first-section">
         <div class="container">
@@ -27,7 +26,7 @@
             </div>
         </div>
 
-        <div class="row standard-padding">
+        <div class="row standard-padding column-reverse">
             <div class="col-md-6 col-xs-12">
                 <img class="img-responsive" src="{{asset('/images/tg-image-3.png')}}">
             </div>
@@ -69,28 +68,28 @@
                         <div class="card panel-shadow mt50">
                             <h5>Publisher</h5>
                             <p>Craft the perfect post for each social network</p>
-                            <a href="#">Learn more</a>
+                            <a href="{{route('products.publisher')}}">Learn more</a>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-12">
                         <div class="card panel-shadow mt50">
                             <h5>Content Curation</h5>
                             <p>Simplify your social content curation</p>
-                            <a href="#">Learn more</a>
+                            <a href="{{route('products.content_curation')}}">Learn more</a>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-12">
                         <div class="card panel-shadow mt50">
                             <h5>Social Listening</h5>
                             <p>Simplify your social content curation</p>
-                            <a href="#">Learn more</a>
+                            <a href="{{route('products.social_listening')}}">Learn more</a>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-12">
                         <div class="card panel-shadow mt50">
                             <h5>Analytics</h5>
                             <p>A simpler way to measure performance</p>
-                            <a href="#">Learn more</a>
+                            <a href="{{route('products.analytics')}}">Learn more</a>
                         </div>
                     </div>
                 </div>

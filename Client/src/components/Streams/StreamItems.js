@@ -65,8 +65,7 @@ class StreamItems extends Component {
       currentItemId: "",
       titleText: "",
       refresh: false,
-      loading: false,
-      streamMaker: true
+      loading: false
     };
 
     this.onDragEnd = this.onDragEnd.bind(this);
@@ -181,14 +180,8 @@ class StreamItems extends Component {
     }
   }
 
-  toggleStreamMaker = () => {
-    this.setState(() => ({
-      streamMaker: !this.state.streamMaker
-    }));
-  }
-
   render() {
-    const {channels, refreshRate, selectedTab, reload} = this.props;
+    const {channels, refreshRate, selectedTab, reload, toggleStreamMaker, isStreamMakerOpen} = this.props;
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
@@ -240,12 +233,16 @@ class StreamItems extends Component {
                 </Draggable>
               )})}
               {provided.placeholder}
-              <StreamMaker 
-                title="Add Stream" streamCreator={true} 
+              {isStreamMakerOpen && <StreamMaker 
+                title="Add Stream" 
+                streamCreator={true} 
                 item={{value: "browse"}} 
                 selectedTab={selectedTab} 
                 reload={reload} 
-                streamSize={true}/>
+                streamSize={true}
+                minimize={true}
+                toggle={toggleStreamMaker}
+              />}
             </div>
           )}
         </Droppable>

@@ -995,19 +995,39 @@ input {
     margin: 0 auto;
 }
 
-.stream-title .fa-close{
+.stream-title .fa{
     color: #c5c5c5;
+}
+
+.stream-title .fa-close{
     font-size: 16px;
     cursor: pointer;
 }
 
 .stream-title .fa-refresh{
-    color: #c5c5c5;
     margin: 0 5px;
 }
 
 .stream-feed-container-text{
     padding: 10px 10px 50px;
+}
+
+button.streammaker-btn {
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    z-index: 999;
+    background: #485576;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    font-size: 4.3rem;
+    font-family: open-sansLight, arial, sans-serif;
+    padding: 5px 15px;
+}
+
+button.streammaker-btn:hover {
+    background: #5b6684;
 }
 
 #refreshRate{
@@ -1025,7 +1045,7 @@ input {
     outline: none;
 }
 
-.stream-title .fa-close:hover, .stream-title .fa-refresh:hover{
+.stream-title .fa:hover{
     color: #485576;
 }
 

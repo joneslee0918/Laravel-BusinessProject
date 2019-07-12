@@ -210,13 +210,28 @@ export class StreamMaker extends React.Component{
 
     render(){
 
-        const {title, description, icon, intro=false, onItemClick, item, selectedTab, reload, channels, streamSize=false} = this.props;
+        const {
+            title, 
+            description, 
+            icon, 
+            intro=false, 
+            onItemClick, 
+            item, 
+            selectedTab, 
+            reload, 
+            channels, 
+            streamSize=false,
+            toggle,
+            minimize
+        } = this.props;
+
         const {streamCreator} = this.state;
         return (
             <div className={`stream-maker ${streamSize && 'stream-size'}`}>
             <h3 className={`stream-title`}>
             
                 <span className="text-cursor">{!!icon && <img src={`/images/${icon}.svg`} />} {title} </span> 
+                {!!minimize && <i className="fa fa-minus pull-right link-cursor" onClick={toggle}></i>}
 
             </h3>
 
@@ -258,7 +273,7 @@ export class StreamMaker extends React.Component{
                 </div>}
             </div>
             :
-                <div className="stream-feed stream-creator-feed">
+                <div className="stream-feed stream-creator-feed scrollbar">
                     {item.value === "browse" ?
                         <StreamCreator selectedTab={selectedTab} reload={reload} verticalDisplay={true}/>
                         :

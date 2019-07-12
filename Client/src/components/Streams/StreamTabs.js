@@ -45,11 +45,19 @@ class StreamTabs extends Component {
       selectedTab: "tab0",
       loading: false,
       forbidden: false,
-      addStream: false
+      addStream: false,
+      streamMaker: localStorage.getItem("streamMaker") === 'false' ? false : true
     };
 
     componentDidMount(){
        this.fetchStreamTabs();
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevState.streamMaker !== this.state.streamMaker){
+            this.setTabs(this.state.tabData, this.state.selectedTab);
+            localStorage.setItem("streamMaker", this.state.streamMaker);
+        }
     }
 
     getChildContext(){
@@ -204,6 +212,57 @@ class StreamTabs extends Component {
             addStream: !this.state.addStream
         }));
     }
+
+    toggleStreamMaker = () => {
+        this.setState(() => ({
+            streamMaker: !this.state.streamMaker
+        }));
+    };
+
+    setTabs = (items, selectedTab = "tab0") => {
+        this.setState(() => ({
+            tabs: items.map(tab => 
+                 (
+                     <Tab key={tab.key} title={tab.title} {...this.makeListeners(tab.key)}>
+                         <div>
+                            {tab.streams.length ? 
+                            <div className="easygrey-bg">
+                                <div className="stream-handles">
+                                    <button className="new-theme-btn" onClick={this.handleAddStream}>
+                                        <span>+</span>
+                                        Add Stream
+                                    </button>
+                                    <div id="refreshHandle">
+                                        <select onChange={this.handleRefreshRateChange} value={parseInt(tab.refresh_rate)} id="refreshRate">
+                                            <option value={2}>Refresh every 2 minutes</option>
+                                            <option value={5}>Refresh every 5 minutes</option>
+                                            <option value={10}>Refresh every 10 minutes</option>
+                                            <option value={30}>Refresh every 30 minutes</option>
+                                            <option value={60}>Refresh every hour</option>
+                                            <option value={120}>Refresh every 2 hours</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <StreamItems 
+                                    streams={tab.streams} 
+                                    refreshRate={parseInt(tab.refresh_rate)} 
+                                    selectedTab={selectedTab} 
+                                    reload={this.fetchStreamTabs}
+                                    toggleStreamMaker={this.toggleStreamMaker}
+                                    isStreamMakerOpen={this.state.streamMaker}
+                                />
+                            </div>
+                            : 
+                            <StreamInitiator selectedTab={selectedTab} reload={this.fetchStreamTabs} />}
+                            
+                         </div>
+                     </Tab>
+                 )
+               ),
+            tabData: items,
+            selectedTab: selectedTab
+         }));
+    }
     
     setForbidden = (forbidden = false) => {
         this.setState(() => ({
@@ -220,41 +279,7 @@ class StreamTabs extends Component {
            selectedTab = !!selectedTab.length ? selectedTab[0].key : this.state.selectedTab;
 
             if(!!response.length){
-                 this.setState(() => ({
-                    tabs: response.map(tab => 
-                         (
-                             <Tab key={tab.key} title={tab.title} {...this.makeListeners(tab.key)}>
-                                 <div>
-                                    {tab.streams.length ? 
-                                    <div className="easygrey-bg">
-                                        <div className="stream-handles">
-                                            <button className="new-theme-btn" onClick={this.handleAddStream}>
-                                                <span>+</span>
-                                                Add Stream
-                                            </button>
-                                            <div id="refreshHandle">
-                                                <select onChange={this.handleRefreshRateChange} value={parseInt(tab.refresh_rate)} id="refreshRate">
-                                                    <option value={2}>Refresh every 2 minutes</option>
-                                                    <option value={5}>Refresh every 5 minutes</option>
-                                                    <option value={10}>Refresh every 10 minutes</option>
-                                                    <option value={30}>Refresh every 30 minutes</option>
-                                                    <option value={60}>Refresh every hour</option>
-                                                    <option value={120}>Refresh every 2 hours</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <StreamItems streams={tab.streams} refreshRate={parseInt(tab.refresh_rate)} selectedTab={selectedTab} reload={this.fetchStreamTabs}/>
-                                    </div>
-                                    : 
-                                    <StreamInitiator selectedTab={selectedTab} reload={this.fetchStreamTabs} />}
-                                    
-                                 </div>
-                             </Tab>
-                         )
-                       ),
-                    tabData: response,
-                    selectedTab: selectedTab
-                 }));
+                 this.setTabs(response, selectedTab);
             }
 
             this.setState(() => ({
@@ -298,6 +323,9 @@ class StreamTabs extends Component {
         return (
             <div>
             <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
+
+            {!this.state.streamMaker && <button onClick={this.toggleStreamMaker} className="streammaker-btn">+</button>}
+
             {this.state.loading && <Loader />}
             
             {this.state.tabs.length > 0 ?            
