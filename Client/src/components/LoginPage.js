@@ -222,7 +222,7 @@ export class LoginPage extends React.Component{
 
                                         <h4>Let's get your account setup</h4>
                                         <div className="form-group">
-                                            <label htmlFor="inputName1">Name:</label>
+                                            <label htmlFor="inputName1">Full Name:</label>
                                             <input type="text" onChange={this.onNameChange} minLength="6" className="form-control" value={this.state.name} id="inputName1" aria-describedby="emailHelp" required/>
                                         </div>
                                         <div className="form-group">
