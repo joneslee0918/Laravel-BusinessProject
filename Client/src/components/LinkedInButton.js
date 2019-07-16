@@ -56,11 +56,12 @@ export default class LinkedInButton extends React.Component{
       };
 
       render(){
-          const {cssClass, icon} = this.props;
+          const {cssClass, icon, textButton = ""} = this.props;
           const btnClass = cssClass ? cssClass : "linkedin-login-btn";
-          const btnChild = icon ? icon : "Login with LinkedIn"
+          const btnChild = icon ? icon : "Login with LinkedIn";
+  
           return(
-            <button className={btnClass} onClick={this.requestOAuthToken}>{btnChild}</button>
+            <button className={btnClass} onClick={this.requestOAuthToken}>{btnChild}{textButton}</button>
           );
       }
 }

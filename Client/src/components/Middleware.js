@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { setMiddleware } from '../actions/middleware';
 import TwitterLogin from 'react-twitter-auth';
-import Modal from 'react-modal';
+import SelectAccountsModal from './Accounts/SelectAccountsModal';
 import {startSetChannels, startAddFacebookChannel, startAddLinkedinChannel, startAddPinterestChannel, startAddTwitterChannel} from "../actions/channels";
 import {getAccounts, saveAccounts} from "../requests/facebook/channels";
 import FacebookLogin from 'react-facebook-login';
@@ -13,12 +13,16 @@ import channelSelector, {findAccounts} from "../selectors/channels";
 import {fbFields, fbScope} from "./FacebookButton";
 import {destroyChannel} from "../requests/channels";
 import Loader, {LoaderWithOverlay} from './Loader';
+import UpgradeAlert from "./UpgradeAlert";
 
 class Middleware extends React.Component{
 
     state = {
         continueBtn: this.props.channels.length > 0,
-        loading: false
+        facebookPagesModal: false,
+        facebookPages: [],
+        loading: false,
+        forbidden: false
     }
 
     twitterRef = React.createRef();
@@ -42,6 +46,12 @@ class Middleware extends React.Component{
         this.setState(() => ({loading: false}));
     };
 
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+            forbidden
+        }));
+    };
+
     onTwitterSuccess = (response) => {
         this.setState(() => ({loading: true}));
 
@@ -52,48 +62,82 @@ class Middleware extends React.Component{
                     this.setState(() => ({loading: false}));
                 }).catch(error => {
                     this.setState(() => ({loading: false}));
+                    if(error.response.status === 403){
+                        this.setForbidden(true);
+                    }else{
+                        this.setError("Something went wrong!");
+                    }
                 });
             });
-        }catch(e){}
+        }catch(e){
+        }
     };
 
     onFacebookSuccess = (response) => {
         try{
             this.setState(() => ({loading: true}));
-            const accountId = this.props.selectedChannel.details.original_id;
-            this.props.startAddFacebookChannel(response.accessToken).then(() => {
-
-                if(this.props.selectedChannel.account_type == "profile"){
-                    this.setState(() => ({loading: false}));
-                    return;
-                }else{
+            if(response){
+                this.setState(() => ({loading: false}));
+                this.props.startAddFacebookChannel(response.accessToken)
+                .then(() => {
+                    this.setState(() => ({loading: true}));
                     getAccounts().then((response) => {
-                        const accounts = findAccounts(response, {prop: accountId});
-            
-                        if(accounts.length){
-                            saveAccounts(accounts)
-                            .then(() => {
-                                this.props.startSetChannels();
-                                this.setState(() => ({loading: false}));
-                            }).catch( error => {
-                                this.setState(() => ({
-                                    error: "Something went wrong!",
-                                    loading: false
-                                }));
-                            });
+    
+                        if(response.length){
+                            this.setState(() => ({
+                                facebookPages: response,
+                                facebookPagesModal: true,
+                                loading: false
+                            }));
                         }
                     });
-                }
-
-
-            }).catch(error => {
-                this.setState(() => ({loading: false}));
-            });
+                }).catch(error => {
+                    this.setState(() => ({loading: false}));
+                    if(error.response.status === 403){
+                        this.setForbidden(true);
+                        return;
+                    }               
+                    
+                    if(error.response.status === 409){
+                        this.setError("This facebook account is already registered from another uniclix account.");
+                    }
+                    else{
+                        this.setError("Something went wrong!");
+                    }
+                });
+            }        
         }catch(e){
+            console.log(e);
             this.setState(() => ({loading: false}));
         }
 
     };
+
+    onFacebookPagesSave = (accounts) => {
+        this.setState(() => ({
+            error: "",
+            loading: true
+        }));
+        saveAccounts(accounts)
+        .then(() => {
+            this.setState(() => ({loading: false}));
+            this.props.startSetChannels();
+            this.toggleFacebookPagesModal();
+        }).catch( error => {
+            this.setState(() => ({loading: false}));
+            if(error.response.status === 403){
+                this.setForbidden(true);
+            }else{
+                this.setError("Something went wrong!");
+            }
+        });
+    };
+
+    toggleFacebookPagesModal = () => {
+        this.setState(() => ({
+            facebookPagesModal: !this.state.facebookPagesModal
+        }));
+    }
 
     onLinkedInSuccess = (response) => {
         try{
@@ -102,6 +146,11 @@ class Middleware extends React.Component{
                 this.setState(() => ({loading: false}));
             }).catch(error => {
                 this.setState(() => ({loading: false}));
+                if(error.response.status === 403){
+                    this.setForbidden(true);
+                }else{
+                    this.setError("Something went wrong!");
+                }
             });
         }catch(e){
             this.setState(() => ({loading: false}));
@@ -115,6 +164,11 @@ class Middleware extends React.Component{
                 this.setState(() => ({loading: false}));
             }).catch(error => {
                 this.setState(() => ({loading: false}));
+                if(error.response.status === 403){
+                    this.setForbidden(true);
+                }else{
+                    this.setError("Something went wrong!");
+                }
             });
         }catch(e){
             this.setState(() => ({loading: false}));
@@ -148,7 +202,13 @@ class Middleware extends React.Component{
         const {continueBtn, loading} = this.state;
         return (
             <div className="middleware">
-
+                <UpgradeAlert isOpen={this.state.forbidden} text={"Your current plan does not support more accounts."} setForbidden={this.setForbidden}/>
+                <SelectAccountsModal 
+                    isOpen={this.state.facebookPagesModal} 
+                    accounts={this.state.facebookPages}
+                    onSave={this.onFacebookPagesSave}
+                    error={this.state.error}
+                />
                 {middleware !== "loading" && <h2>{middleware === "channels" ? "Connect your social profiles." : "Start Your Free Trial"}</h2>}
                 {middleware !== "channels" && middleware !== "billing" && <Loader />}
                 {loading && <LoaderWithOverlay />}
@@ -163,7 +223,7 @@ class Middleware extends React.Component{
                             
                             {channels.map(channel => (
                                 <div key={channel.id} className="channel-profile-box col-xs-12">
-                                    <img className="channel-profile-picture" src="https://uniclix.test/images/logo.png" />
+                                    <img className="channel-profile-picture" src={channel.avatar} />
                                     <div className="channel-profile-info">                                
                                         <p className="channel-profile-name">{channel.name}</p>
                                         <p className="channel-profile-type">{channel.type}</p>
@@ -181,13 +241,34 @@ class Middleware extends React.Component{
                     
                     <div className="channel-buttons">
                         <div className="col-md-4 col-xs-12">
-                            <button className="facebook_bg col-xs-12" onClick={(e) => this.facebookRef.current.click()}> <i className="fa fa-facebook"></i> Facebook</button>
+                            <FacebookLogin
+                                appId={facebookAppId}
+                                autoLoad={false}
+                                fields={fbFields}
+                                scope={fbScope}
+                                callback={this.onFacebookSuccess} 
+                                cssClass="facebook_bg col-xs-12"
+                                icon={<i className="fa fa-facebook"></i>}
+                                textButton="Facebook"
+                                ref={this.facebookRef}
+                            />
                         </div>
                         <div className="col-md-4 col-xs-12">
                             <button className="twitter_bg col-xs-12" onClick={(e) => this.twitterRef.current.onButtonClick(e)}> <i className="fa fa-twitter"></i> Twitter</button>
                         </div>
                         <div className="col-md-4 col-xs-12">
-                            <button className="linkedin_bg col-xs-12" onClick={(e) => console.log(this.linkedinRef.current)}> <i className="fa fa-linkedin"></i> Linkedin</button>
+                            
+                            <LinkedInButton 
+                                clientId={linkedinAppId}
+                                redirectUri={`${backendUrl}/api/linkedin/callback`}
+                                onSuccess={this.onLinkedInSuccess}
+                                onError={this.onFailure}
+                                cssClass="linkedin_bg col-xs-12"
+                                icon={<i className="fa fa-linkedin"></i>}
+                                textButton="Linkedin"
+                                ref={this.linkedinRef}
+                            />
+
                         </div>
 
                         <TwitterLogin loginUrl={twitterAccessTokenUrl}
@@ -198,26 +279,6 @@ class Middleware extends React.Component{
                             className="hide"
                             ref={this.twitterRef}
                         ></TwitterLogin>
-
-                        <FacebookLogin
-                            appId={facebookAppId}
-                            autoLoad={false}
-                            fields={fbFields}
-                            scope={fbScope}
-                            callback={this.onFacebookSuccess} 
-                            cssClass="hide"
-                            onClick={() => console.log("clicked")}
-                            ref={this.facebookRef}
-                        />
-
-                        <LinkedInButton 
-                            clientId={linkedinAppId}
-                            redirectUri={`${backendUrl}/api/linkedin/callback`}
-                            onSuccess={this.onLinkedInSuccess}
-                            onError={this.onFailure}
-                            cssClass="hide"
-                            ref={this.linkedinRef}
-                        />
                     
                     </div>
 
@@ -245,10 +306,16 @@ class Middleware extends React.Component{
     }
 }
 
-const mapStateToProps = (state) => ({
-    middleware: state.middleware.step,
-    channels: state.channels.list
-});
+const mapStateToProps = (state) => {
+    const filter = {selected: 1, provider: undefined};
+    const selectedChannel = channelSelector(state.channels.list, filter);
+
+    return {
+        middleware: state.middleware.step,
+        channels: state.channels.list,
+        selectedChannel
+    }
+};
 
 const mapDispatchToProps = (dispatch) => ({
     setMiddleware: (middleware) => dispatch(setMiddleware(middleware)),

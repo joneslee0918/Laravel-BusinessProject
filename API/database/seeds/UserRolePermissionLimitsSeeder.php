@@ -198,8 +198,8 @@ class UserRolePermissionLimitsSeeder extends Seeder
         $twitterGrowth->permissions()->attach($twitterGrowthPerm);
 
         $free->roleLimit()->create([
-            "account_limit" => 6,
-            "accounts_per_platform" => 6,
+            "account_limit" => 2,
+            "accounts_per_platform" => 2,
             "team_accounts" => 1,
             "posts_per_account" => 10,
             "twitter_daily_follows" => 100,

@@ -73,7 +73,7 @@ class Facebook extends React.Component {
                 }               
                 
                 if(error.response.status === 409){
-                    this.setError("This twitter account is already registered from another uniclix account.");
+                    this.setError("This facebook account is already registered from another uniclix account.");
                 }
                 else{
                     this.setError("Something went wrong!");
