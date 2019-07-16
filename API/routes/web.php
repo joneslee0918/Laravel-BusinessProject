@@ -1,5 +1,6 @@
 <?php
 use function GuzzleHttp\json_decode;
+use App\Model\User;
 
 set_time_limit (200);
 /*
@@ -45,7 +46,7 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $team = \App\Models\User::find(1);
+    $team = User::find(1);
 //     $channel = $team->channels()->first();
 //    // $channel->select($team);
 

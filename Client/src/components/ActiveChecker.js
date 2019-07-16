@@ -9,6 +9,7 @@ import {twitterRequestTokenUrl, twitterAccessTokenUrl, backendUrl, facebookAppId
 import LinkedInButton from "./LinkedInButton";
 import PinterestButton from "./PinterestButton";
 import channelSelector, {findAccounts} from "../selectors/channels";
+import {fbFields, fbScope} from "./FacebookButton";
 import Loader from "./Loader";
 
 
@@ -17,12 +18,13 @@ class ActiveChecker extends React.Component{
     state = {
         active: true,
         error: false,
-        loading: false
+        loading: true
     }
 
     componentDidMount() {
         this.setState(() => ({
-            active: this.props.selectedChannel ? this.props.selectedChannel.active : false
+            active: this.props.selectedChannel ? this.props.selectedChannel.active : false,
+            loading: false
         }));
     }
 
@@ -137,8 +139,8 @@ class ActiveChecker extends React.Component{
                     <FacebookLogin
                     appId={facebookAppId}
                     autoLoad={false}
-                    fields="name,email,picture"
-                    scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,public_profile,email"
+                    fields={fbFields}
+                    scope={fbScope}
                     callback={this.onFacebookSuccess} />
                );
             }else if(selectedChannel.type == "linkedin"){
@@ -172,8 +174,8 @@ class ActiveChecker extends React.Component{
                         <FacebookLogin
                             appId={facebookAppId}
                             autoLoad={false}
-                            fields="name,email,picture"
-                            scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,public_profile,email"
+                            fields={fbFields}
+                            scope={fbScope}
                             callback={this.onFacebookSuccess} 
                         />
                         <LinkedInButton 
@@ -193,7 +195,7 @@ class ActiveChecker extends React.Component{
         };
 
         return (
-            <div>
+            <div className="active-checker">
                 <Modal
                 isOpen={!!this.state.active == false && !this.state.loading}
                 ariaHideApp={false}

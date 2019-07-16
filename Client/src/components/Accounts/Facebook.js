@@ -110,9 +110,9 @@ class Facebook extends React.Component {
         .then((response) => {
             this.props.startSetChannels()
             .then((response) => {
-                if(response.length < 1){
-                    this.props.logout();
-                }
+                // if(response.length < 1){
+                //     this.props.logout();
+                // }
             });
         }).catch((e) => {
             if(typeof e.response !== "undefined" && typeof e.response.data.error !== "undefined"){

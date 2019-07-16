@@ -3,7 +3,6 @@
         <div class="row mt100 mb80">
 
             <div class="col-md-6 col-sm-8 col-xs-12">
-
                     <!-- <div class="col-md-3 col-xs-12">
                         <img src="{{ asset('images/uniclix-logo.png') }}" class="img-responsive footer-logo">
                     </div> -->

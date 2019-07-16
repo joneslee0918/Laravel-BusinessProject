@@ -5,12 +5,15 @@ const FacebookButton = ({appId, onSuccess, icon=undefined, cssClass=undefined, t
     <FacebookLogin
         appId={appId}
         autoLoad={false}
-        fields="name,email,picture"
-        scope="manage_pages,publish_pages,pages_show_list,publish_to_groups,public_profile,email,read_insights,pages_messaging"
+        fields={fbFields}
+        scope={fbScope}
         callback={onSuccess}
         icon={icon}
         cssClass={cssClass}
         textButton={textButton} />
 );
+
+export const fbFields = "name,email,picture";
+export const fbScope = "manage_pages,publish_pages,pages_show_list,publish_to_groups,public_profile,email,read_insights,pages_messaging";
 
 export default FacebookButton;

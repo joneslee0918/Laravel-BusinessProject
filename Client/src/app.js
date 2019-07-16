@@ -9,6 +9,7 @@ import { login, logout } from "./actions/auth";
 import setAuthorizationHeader from "./utils/setAuthorizationHeader";
 import { setProfile, startSetProfile } from "./actions/profile";
 import { setChannels, startSetChannels } from "./actions/channels";
+import { setMiddleware } from "./actions/middleware";
 
 const store = configStore();
 
@@ -37,6 +38,7 @@ const setAuthentication = () => {
     token = token == "undefined" || typeof(token) === "undefined" ? undefined : token;
 
     store.dispatch(login(token));
+    store.dispatch(setMiddleware("loading"));
     setAuthorizationHeader(token);
 
     if(token && token !== "undefined"){

@@ -54,6 +54,10 @@ input {
     font-family: open-sans, sans-serif, FontAwesome;
 }
 
+.hide{
+    display:none;
+}
+
 .grey-txt{
     color: rgb(204, 204, 204) !important;
 }
@@ -93,6 +97,135 @@ input {
     /*when navigating through the items using the arrow keys:*/
     background-color: DodgerBlue !important;
     color: #ffffff;
+}
+
+.middleware{
+    background:#f8f8f8;
+    height:100vh;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.middleware h2 {
+    font-family: open-sansSemiBold, arial, sans-serif;
+    font-size: 4rem;
+    letter-spacing: 1px;
+    color: black;
+    margin-top:0;
+    margin-bottom: 30px;
+}
+
+.middleware h5 {
+    font-family: open-sansSemiBold, arial sans-serif;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-align:left;
+}
+
+.middleware .channel-buttons button > i {
+    font-size: 3.5rem;
+    width: 55px;
+}
+
+.middleware .channel-buttons button {
+    background: blue;
+    border: none;
+    color: white;
+    width: 300px;
+    padding: 13px 20px;
+    text-align: left;
+    border-radius: 5px;
+    font-size: 2rem;
+    font-family: open-sans;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    float: left;
+}
+
+.middleware .box{
+    background:white;
+    padding:50px;
+    max-width:1060px;
+}
+
+.middleware .box {
+    text-align: center;
+}
+
+.middleware .channel-profile-container{
+    margin-left: 15px;
+}
+
+.middleware .channel-profile-box, .middleware .channel-buttons button{
+    margin-bottom: 10px;
+}
+
+.middleware .channel-profile-box .fa {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #485576;
+    border-radius: 100%;
+    width: 13px;
+    height: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 9px;
+    margin: 3px;
+    opacity: .5;
+    color: white;
+    text-align:center;
+    cursor:pointer;
+}
+
+.middleware .channel-profile-box .fa:hover{
+    opacity:1;
+}
+
+
+.middleware .channel-profiles {
+    overflow:hidden;
+    margin-bottom: 40px;
+}
+
+.middleware .channel-profile-box .channel-profile-type {
+    font-family: open-sansLight, arial, sans-serif;
+    color: #aaa;
+}
+
+.middleware .channel-profile-box .channel-profile-name {
+    font-size: 1.7rem;
+}
+
+.middleware .channel-profile-box p {
+    margin: 0;
+    font-family: open-sans, arial, sans-serif;
+    color: #485576;
+}
+
+.middleware .channel-profile-box img {
+    width: 60px;
+    object-fit: cover;
+    border-radius: 100%;
+    border: 1px solid #f0f0f0;
+    margin-right: 15px;
+}
+
+.middleware .channel-profile-box {
+    float:left;
+    position: relative;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    border: 1px solid #f0f0f0;
+    padding: 10px;
+    width: auto;
+    margin-right: 20px;
+    border-radius: 5px;
 }
 
 .login-container{
@@ -955,7 +1088,7 @@ input {
     letter-spacing: .5px;
     font-weight: 500;
     font-size: 1em;
-    max-width: 250px;
+    max-width: 262px;
     margin: 0 auto;
     outline: none;
 }
@@ -2336,6 +2469,10 @@ button.streammaker-btn:hover {
 
 .mt20{
     margin-top:20px !important;
+}
+
+.mt50{
+    margin-top:50px !important;
 }
 
 .mt15{

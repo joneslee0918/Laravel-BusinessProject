@@ -5,14 +5,22 @@ import TopMenu from "../components/Menus/TopMenu";
 import Composer from "../components/Compose";
 import EmailChecker from "../components/EmailChecker";
 import ActiveChecker from "../components/ActiveChecker";
+import Middleware from "../components/Middleware";
 
 export const PrivateRoute = ({
     isAuthenticated, 
+    middleware,
     component: Component, 
     ...rest}) => (
     <Route {...rest} component={(props) => (
         isAuthenticated ? 
-        (   <div>
+        (   (!!middleware)
+            ? 
+            <div>
+                <Middleware />
+            </div>
+            :
+            <div>
                 <TopMenu />
                 <Component {...props} />
                 <Composer />
@@ -26,7 +34,8 @@ export const PrivateRoute = ({
 );
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: !!state.auth.token
+    isAuthenticated: !!state.auth.token,
+    middleware: state.middleware.step
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

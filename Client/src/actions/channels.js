@@ -3,6 +3,7 @@ import { selectChannel as selectTwitterChannel, addChannel as addTwitterChannel 
 import { addChannel as addFacebookChannel } from "../requests/facebook/channels";
 import { addChannel as addLinkedinChannel } from "../requests/linkedin/channels";
 import { addChannel as addPinterestChannel } from "../requests/pinterest/channels";
+import { setMiddleware } from "./middleware";
 
 export const setChannels = (list) => ({
     type: "SET_CHANNELS",
@@ -21,6 +22,10 @@ export const startSetChannels = () => {
                 .then((response) => {
                     dispatch(setChannels(response));
                     localStorage.setItem("channels", JSON.stringify(response));
+                    if(Array.isArray(response) && response.length < 1){
+                        dispatch(setMiddleware("channels"));
+                    }
+                    
                     dispatch(setChannelsLoading(false));
                     return response;
                 }).catch(error => {
