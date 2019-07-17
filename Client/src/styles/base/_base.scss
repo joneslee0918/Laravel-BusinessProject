@@ -106,9 +106,11 @@ input {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-y: auto
 }
 
 .middleware h2 {
+    text-align:center;
     font-family: open-sansSemiBold, arial, sans-serif;
     font-size: 4rem;
     letter-spacing: 1px;
@@ -133,7 +135,7 @@ input {
     background: blue;
     border: none;
     color: white;
-    width: 300px;
+    width: 100%;
     padding: 13px 20px;
     text-align: left;
     border-radius: 5px;
@@ -148,10 +150,7 @@ input {
 .middleware .box{
     background:white;
     padding:50px;
-    max-width:1060px;
-}
-
-.middleware .box {
+    width: 65%;
     text-align: center;
 }
 
@@ -3605,6 +3604,26 @@ vertical-align: middle;
         height: 100%;
     }
 }
+
+@media screen and (max-width: 900px) { 
+
+    .middleware{
+        display: block;
+    }
+
+    .middleware .box{
+        width:100%;
+        padding: 10px;
+        margin: 10px auto;
+    }
+
+    .middleware h2{
+        font-size: 3rem;
+        margin-top:20px;
+    }
+}
+
+
 
 @media only screen and (max-width: 425px) {
     .vertical-menu {
