@@ -137,6 +137,7 @@ class RecentUnfollowers extends React.Component{
                     showSortOption={true}
                     fetchData={this.fetchData}
                     perform={this.perform}
+                    page="recent-unfollowers"
                 />
                 <BottomScrollListener onBottom={this.loadMore} />
                 {this.state.loading && <Loader />}

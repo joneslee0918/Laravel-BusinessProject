@@ -89,6 +89,7 @@ class UserList extends React.Component{
 
 
     render(){
+        console.log(this.props);
         const {   
             userItems = [],
             loading = false,
@@ -101,7 +102,8 @@ class UserList extends React.Component{
             showSortOption = false,
             actionType = "follow",
             actions = 0,
-            fetchData = (order = 'desc') => {}           
+            fetchData = (order = 'desc') => {} ,
+            page          
         } = this.props;
 
         const targetSearchView = (
@@ -173,6 +175,7 @@ class UserList extends React.Component{
                                             reply={this.reply}
                                             dm={this.dm}
                                             actionType={this.props.actionType}
+                                            page={page}
                                          />
                                         ))}
                                         
@@ -337,7 +340,7 @@ class UserItem extends React.Component{
     };
 
     render(){
-        const { userItem } = this.props;
+        const { userItem, page } = this.props;
 
         return (
             
@@ -366,6 +369,7 @@ class UserItem extends React.Component{
                         setReplyState={this.setReplyState}
                         DMState={this.state.DMState}
                         setDMState={this.setDMState}
+                        page={page}
                         />
                     </div>
                     
@@ -411,7 +415,7 @@ class UserItem extends React.Component{
     }
 }
 
-const UserActionButtons = ({actionButton, perform, replyState, setReplyState, setDMState, DMState, userItem }) => (
+const UserActionButtons = ({actionButton, perform, replyState, setReplyState, setDMState, DMState, userItem, page }) => (
         <div className="item-actions pull-right">
             <ul className="v-center-align">
 
@@ -442,8 +446,8 @@ const UserActionButtons = ({actionButton, perform, replyState, setReplyState, se
                         {!!actionButton && <button  onClick={perform} className={`${actionButton.disabled ? 'disabled-btn' : ''}`}>
                             <i className={`fa ${actionButton.actionSymbol}`}></i>{actionButton.action == "add" ? "Follow" : "Unfollow"}
                         </button>}
-                        <button onClick={() => setDMState({disabled: !DMState.disabled, content: ``})}>DM</button>
-                        <button onClick={() => setReplyState({disabled: !replyState.disabled, content: `@${userItem.screen_name} `})}>Reply</button>
+                        {(actionButton.action == "add" || page == "following") && <button onClick={() => setDMState({disabled: !DMState.disabled, content: ``})}>DM</button>}
+                        {(actionButton.action == "add" || page == "following") && <button onClick={() => setReplyState({disabled: !replyState.disabled, content: `@${userItem.screen_name} `})}>Reply</button>}
                     </div>
                 )}
                 </Popup>

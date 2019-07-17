@@ -158,6 +158,7 @@ class KeywordTargets extends React.Component{
                     actions={this.state.actions}
                     loading={this.state.loading}
                     perform={this.perform}
+                    page="keyword-targets"
                 />
                 <BottomScrollListener onBottom={this.loadMore} />
                 {this.state.loading && <Loader />}

@@ -135,6 +135,7 @@ class NonFollowers extends React.Component{
                     showSortOption={true}
                     fetchData={this.fetchData}
                     perform={this.perform}
+                    page="non-followers"
                 />
                 <BottomScrollListener onBottom={this.loadMore} />
                 {this.state.loading && <Loader />}

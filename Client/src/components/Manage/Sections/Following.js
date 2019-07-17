@@ -134,6 +134,7 @@ class Following extends React.Component{
                     showSortOption={true}
                     fetchData={this.fetchData}
                     perform={this.perform}
+                    page="following"
                 />
                 <BottomScrollListener onBottom={this.loadMore} />
                 {this.state.loading && <Loader />}

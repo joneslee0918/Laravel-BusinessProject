@@ -136,6 +136,7 @@ class InactiveFollowing extends React.Component{
                     showSortOption={true}
                     fetchData={this.fetchData}
                     perform={this.perform}
+                    page="inactive-following"
                 />
                 <BottomScrollListener onBottom={this.loadMore} />
                 {this.state.loading && <Loader />}

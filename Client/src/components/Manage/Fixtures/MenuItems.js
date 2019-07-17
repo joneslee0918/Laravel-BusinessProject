@@ -4,11 +4,11 @@ const MenuItems = [
         displayName: "Dashboard",
         uri: "/manage/dashboard" 
     },
-    {   
-        id: "manage_account_targets",
-        displayName: "Account Targets",
-        uri: "/manage/account-targets" 
-    },
+    // {   
+    //     id: "manage_account_targets",
+    //     displayName: "Account Targets",
+    //     uri: "/manage/account-targets" 
+    // },
     {   
         id: "manage_keyword_targets",
         displayName: "Keyword Targets",
