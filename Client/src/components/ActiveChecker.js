@@ -141,7 +141,9 @@ class ActiveChecker extends React.Component{
                     autoLoad={false}
                     fields={fbFields}
                     scope={fbScope}
-                    callback={this.onFacebookSuccess} />
+                    callback={this.onFacebookSuccess} 
+                    disableMobileRedirect={true}
+                    />
                );
             }else if(selectedChannel.type == "linkedin"){
                 return (
@@ -177,6 +179,7 @@ class ActiveChecker extends React.Component{
                             fields={fbFields}
                             scope={fbScope}
                             callback={this.onFacebookSuccess} 
+                            disableMobileRedirect={true}
                         />
                         <LinkedInButton 
                             clientId={linkedinAppId}

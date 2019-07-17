@@ -10,7 +10,9 @@ const FacebookButton = ({appId, onSuccess, icon=undefined, cssClass=undefined, t
         callback={onSuccess}
         icon={icon}
         cssClass={cssClass}
-        textButton={textButton} />
+        textButton={textButton} 
+        disableMobileRedirect={true}
+        />
 );
 
 export const fbFields = "name,email,picture";

@@ -251,6 +251,7 @@ class Middleware extends React.Component{
                                 icon={<i className="fa fa-facebook"></i>}
                                 textButton="Facebook"
                                 ref={this.facebookRef}
+                                disableMobileRedirect={true}
                             />
                         </div>
                         <div className="col-md-4 col-xs-12">
