@@ -9,12 +9,12 @@ const TopMenu = ({setComposerModal}) => (
         <a href={backendUrl} className="brand"><img src="/images/uniclix.png"/></a>
 
         <ul className="top-menu">
-            <li><NavLink to="/home" activeClassName="active">HOME</NavLink></li> 
-            <li><NavLink to="/manage" activeClassName="active">MANAGE</NavLink></li> 
-            <li><NavLink to="/scheduled" activeClassName="active">PUBLISH</NavLink></li>  
-            <li><NavLink to="/streams" activeClassName="active">STREAMS</NavLink></li>  
-            <li><NavLink to="/accounts" activeClassName="active">ACCOUNTS</NavLink></li>
+            <li><NavLink to="/scheduled" activeClassName="active">PUBLISH</NavLink></li>
+            <li><NavLink to="/streams" activeClassName="active">STREAMS</NavLink></li> 
+            <li><NavLink to="/content-finder" activeClassName="active">CONTENT FINDER</NavLink></li> 
             <li><NavLink to="/analytics" activeClassName="active">ANALYTICS</NavLink></li> 
+            <li><NavLink to="/twitter-booster" activeClassName="active">TWITTER BOOSTER</NavLink></li> 
+            <li><NavLink to="/accounts" activeClassName="active">ACCOUNTS</NavLink></li>
         </ul>
 
         <ul className="nav-buttons">

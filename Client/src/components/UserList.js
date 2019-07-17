@@ -3,8 +3,8 @@ import Popup from "reactjs-popup";
 import SweetAlert from 'sweetalert2-react';
 import { ToastContainer } from "react-toastr";
 import Loader from '../components/Loader';
-import AccountTargetSearchList from './Manage/AccountTargetSearchList';
-import KeywordTargetSearchList from './Manage/KeywordTargetSearchList';
+import AccountTargetSearchList from './TwitterBooster/AccountTargetSearchList';
+import KeywordTargetSearchList from './TwitterBooster/KeywordTargetSearchList';
 import {abbrNum} from "../utils/numberFormatter";
 import {tweet, dm} from "../requests/twitter/channels";
 
