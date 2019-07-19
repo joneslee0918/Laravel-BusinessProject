@@ -126,6 +126,11 @@ input {
     text-align:left;
 }
 
+.middleware .channel-buttons{
+    width:100%;
+    overflow:hidden;
+}
+
 .middleware .channel-buttons button > i {
     font-size: 3.5rem;
     width: 55px;
@@ -225,6 +230,23 @@ input {
     width: auto;
     margin-right: 20px;
     border-radius: 5px;
+}
+
+.ReactModal__Content.ReactModal__Content--after-open.info-modal-container {
+    background: white;
+    width: 500px;
+    text-align: center;
+    padding: 35px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.ReactModal__Content.ReactModal__Content--after-open.info-modal-container button {
+    margin-top: 20px;
+}
+
+.ReactModal__Content.ReactModal__Content--after-open.info-modal-container h3 {
+    font-family: open-sansBold, sans-serif, arial;
 }
 
 .login-container{

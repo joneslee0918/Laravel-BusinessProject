@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Admin\Post;
 use App\Models\Admin\PostCategory;
 use App\Models\Admin\PostTag;
+use App\Models\Role;
+use App\Models\RoleAddon;
 
 class PagesController extends Controller
 {
@@ -41,8 +43,11 @@ class PagesController extends Controller
      * Show learning page
      */
     public function pricing()
-    {
-    	return view('frontend.pricing');
+    {   
+        $allPlans = Role::formattedForDisplay();
+        $paidPlans = Role::where("name", "!=", "free")->formattedForDisplay();
+        $addon = RoleAddon::first();
+    	return view('frontend.pricing', compact('allPlans', 'paidPlans', 'addon'));
     }
 
      /**

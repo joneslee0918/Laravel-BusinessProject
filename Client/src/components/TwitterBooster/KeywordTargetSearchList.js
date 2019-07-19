@@ -5,6 +5,7 @@ import {startSetChannels} from '../../actions/channels';
 import channelSelector from "../../selectors/channels";
 import {addKeywordTarget, destroyKeywordTarget} from '../../requests/twitter/channels';
 import Loader from '../../components/Loader';
+import InfoModal from '../InfoModal';
 
 class KeywordTargetSearchList extends React.Component{
     constructor(props){
@@ -14,7 +15,8 @@ class KeywordTargetSearchList extends React.Component{
     state = {
         target: "",
         location: "",
-        loading: false
+        loading: false,
+        infoModal: localStorage.getItem('twitterBoosterInfoModal') !== 'seen'
     };
 
     onChange = (e) => {
@@ -67,6 +69,11 @@ class KeywordTargetSearchList extends React.Component{
         }));
     }
 
+    rememberInfoModal = () => {
+        localStorage.setItem('twitterBoosterInfoModal', 'seen');
+        this.setState(() => ({infoModal: false}));
+    };
+
     removeTarget = (target) => {
         this.setLoading(true);
         destroyKeywordTarget(target)
@@ -90,6 +97,14 @@ class KeywordTargetSearchList extends React.Component{
     render(){
         return (
             <div className="row">
+
+                <InfoModal
+                    isOpen={this.state.infoModal}
+                    title={"Welcome to Uniclix Twitter Booster"}
+                    body={"Start by setting up your targeted audience"}
+                    action={this.rememberInfoModal}
+                />
+
                 <div className="col-xs-12">
                     <div className="item-list shadow-box">
                         <div className="item-header">

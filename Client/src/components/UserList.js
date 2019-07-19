@@ -89,7 +89,6 @@ class UserList extends React.Component{
 
 
     render(){
-        console.log(this.props);
         const {   
             userItems = [],
             loading = false,

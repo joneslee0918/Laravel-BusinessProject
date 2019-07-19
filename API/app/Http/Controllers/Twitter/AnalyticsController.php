@@ -42,7 +42,7 @@ class AnalyticsController extends Controller
      */
     public function pageInsightsByType($type, Request $request)
     {
-        if(!$this->user->hasPermission("advanced-analytics")) return response()->json(["error" => "You need to upgrade to unlock this feature."], 403);
+        if(!$this->user->hasPermission("advanced-analytics") && !$this->user->hasAddon("twitter_growth")) return response()->json(["error" => "You need to upgrade to unlock this feature."], 403);
         $user = $this->user;
         $channel = $user->getChannel($request->id);
 

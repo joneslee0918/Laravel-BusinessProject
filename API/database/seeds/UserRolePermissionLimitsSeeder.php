@@ -26,39 +26,54 @@ class UserRolePermissionLimitsSeeder extends Seeder
             [
                 "name" => "free",
                 "trial_days" => 0,
-                "description" => "Free features"
+                "description" => "Free features",
+                "monthly_price" => 0,
+                "annual_price" => 0
             ],
             [
                 "name" => "basic",
                 "trial_days" => 30,
-                "description" => "Basic features"
+                "description" => "Basic features",
+                "monthly_price" => 10,
+                "annual_price" => 100
             ],
             [
                 "name" => "plus",
                 "trial_days" => 30,
-                "description" => "Plus features"
+                "description" => "Plus features",
+                "monthly_price" => 15,
+                "annual_price" => 150
             ],
             [
                 "name" => "premium",
                 "trial_days" => 0,
-                "description" => "Premium features"
+                "description" => "Premium features",
+                "monthly_price" => 50,
+                "annual_price" => 500
             ],
             [
                 "name" => "pro",
                 "trial_days" => 0,
-                "description" => "Pro features"
+                "description" => "Pro features",
+                "monthly_price" => 90,
+                "annual_price" => 900
             ],
             [
                 "name" => "agency",
                 "trial_days" => 0,
-                "description" => "Agency features"
+                "description" => "Agency features",
+                "monthly_price" => 180,
+                "annual_price" => 1800
             ]
         ]);
 
         DB::table("role_addons")->insert([
             [
                 "name" => "twitter_growth",
-                "description" => "Twitter growth features"
+                "description" => "Twitter growth features",
+                "trial_days" => 30,
+                "monthly_price" => 10,
+                "annual_price" => 100
             ]
         ]);
 
@@ -124,6 +139,10 @@ class UserRolePermissionLimitsSeeder extends Seeder
                 "description" => "Scheduled posts at best time"
             ],
             [
+                "name" => "draft-posts",
+                "description" => "Scheduled posts at best time"
+            ],
+            [
                 "name" => "accounts",
                 "description" => "Accounts management"
             ],
@@ -163,7 +182,7 @@ class UserRolePermissionLimitsSeeder extends Seeder
         $twitterGrowth = RoleAddon::where("name", "twitter_growth")->first();
 
         $freePerm = Permission::whereIn("name", ["articles", "compose", "scheduling", "analytics", "accounts"])->pluck("id");
-        $permissions = Permission::whereIn("name", [
+        $basicPlusPermissions = Permission::whereIn("name", [
                 "articles",
                 "compose",
                 "scheduling",
@@ -172,6 +191,17 @@ class UserRolePermissionLimitsSeeder extends Seeder
                 "advanced-analytics",
                 "streams",
                 "mentions"])->pluck("id");
+        
+        $allPermissions = Permission::whereIn("name", [
+            "articles",
+            "compose",
+            "scheduling",
+            "schedule-best-time",
+            "analytics",
+            "advanced-analytics",
+            "streams",
+            "draft-posts",
+            "mentions"])->pluck("id");
 
         $twitterGrowthPerm = Permission::whereIn("name",
             ["manage",
@@ -189,11 +219,11 @@ class UserRolePermissionLimitsSeeder extends Seeder
             "manage-blacklist"])->pluck("id");
 
         $free->permissions()->attach($freePerm);
-        $basic->permissions()->attach($permissions);
-        $plus->permissions()->attach($permissions);
-        $premium->permissions()->attach($permissions);
-        $pro->permissions()->attach($permissions);
-        $agency->permissions()->attach($permissions);
+        $basic->permissions()->attach($basicPlusPermissions);
+        $plus->permissions()->attach($basicPlusPermissions);
+        $premium->permissions()->attach($allPermissions);
+        $pro->permissions()->attach($allPermissions);
+        $agency->permissions()->attach($allPermissions);
 
         $twitterGrowth->permissions()->attach($twitterGrowthPerm);
 

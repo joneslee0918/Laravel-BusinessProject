@@ -1,19 +1,23 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import { setMiddleware } from '../actions/middleware';
 import TwitterLogin from 'react-twitter-auth';
 import SelectAccountsModal from './Accounts/SelectAccountsModal';
 import {startSetChannels, startAddFacebookChannel, startAddLinkedinChannel, startAddPinterestChannel, startAddTwitterChannel} from "../actions/channels";
+import { startSetProfile } from "../actions/profile";
 import {getAccounts, saveAccounts} from "../requests/facebook/channels";
 import FacebookLogin from 'react-facebook-login';
 import {twitterRequestTokenUrl, twitterAccessTokenUrl, backendUrl, facebookAppId, linkedinAppId, pinterestAppId} from "../config/api";
 import LinkedInButton from "./LinkedInButton";
+import { changePlan, activateAddon, cancelAddon } from '../requests/billing';
 import PinterestButton from "./PinterestButton";
 import channelSelector, {findAccounts} from "../selectors/channels";
 import {fbFields, fbScope} from "./FacebookButton";
 import {destroyChannel} from "../requests/channels";
 import Loader, {LoaderWithOverlay} from './Loader';
 import UpgradeAlert from "./UpgradeAlert";
+import {getParameterByName} from "../utils/helpers";
 
 class Middleware extends React.Component{
 
@@ -21,6 +25,7 @@ class Middleware extends React.Component{
         continueBtn: this.props.channels.length > 0,
         facebookPagesModal: false,
         facebookPages: [],
+        twitterBooster: this.props.location.search.indexOf('twitter-booster') != -1,
         loading: false,
         forbidden: false
     }
@@ -50,6 +55,44 @@ class Middleware extends React.Component{
         this.setState(() => ({
             forbidden
         }));
+    };
+
+    setRole = () => {
+        let plan = getParameterByName("plan", this.props.location.search);
+        let addon = getParameterByName("addon", this.props.location.search);
+        this.setState(() => ({loading: true}));
+        new Promise(function(resolve, reject) {
+            if(plan){
+                changePlan(plan).then(response => {
+                    //this.props.startSetProfile();
+                }).then()
+                    .catch(error => {
+                        if (error.response.status === 403) {
+                            this.setState(() => ({
+                                forbidden: true,
+                                error: error.response.data.error,
+                                redirect: error.response.data.redirect  
+                            }))
+                        } else {
+                            this.setError("Something went wrong!");
+                        }
+                    });
+            }
+    
+            if(addon){
+                activateAddon(addon).then(response => {
+                    //this.props.startSetProfile();
+                });
+            }
+            return resolve(true);
+        }).then(() => {
+            this.props.startSetProfile().then(() => {
+                this.setState(() => ({loading: false}));
+                this.props.setMiddleware(false);
+            });
+            
+        });
+
     };
 
     onTwitterSuccess = (response) => {
@@ -199,7 +242,7 @@ class Middleware extends React.Component{
 
     render(){
         const {middleware, channels} = this.props;
-        const {continueBtn, loading} = this.state;
+        const {continueBtn, loading, twitterBooster} = this.state;
         return (
             <div className="middleware">
                 <UpgradeAlert isOpen={this.state.forbidden} text={"Your current plan does not support more accounts."} setForbidden={this.setForbidden}/>
@@ -240,7 +283,7 @@ class Middleware extends React.Component{
                     </div>
                     
                     <div className="channel-buttons">
-                        <div className="col-md-4 col-xs-12">
+                        {!twitterBooster && <div className="col-md-4 col-xs-12">
                             <FacebookLogin
                                 appId={facebookAppId}
                                 autoLoad={false}
@@ -253,11 +296,12 @@ class Middleware extends React.Component{
                                 ref={this.facebookRef}
                                 disableMobileRedirect={true}
                             />
-                        </div>
+                        </div>}
                         <div className="col-md-4 col-xs-12">
                             <button className="twitter_bg col-xs-12" onClick={(e) => this.twitterRef.current.onButtonClick(e)}> <i className="fa fa-twitter"></i> Twitter</button>
                         </div>
-                        <div className="col-md-4 col-xs-12">
+
+                        {!twitterBooster && <div className="col-md-4 col-xs-12">
                             
                             <LinkedInButton 
                                 clientId={linkedinAppId}
@@ -270,7 +314,7 @@ class Middleware extends React.Component{
                                 ref={this.linkedinRef}
                             />
 
-                        </div>
+                        </div>}
 
                         <TwitterLogin loginUrl={twitterAccessTokenUrl}
                             onFailure={this.onFailure} onSuccess={this.onTwitterSuccess}
@@ -285,7 +329,7 @@ class Middleware extends React.Component{
 
                     {   
                         continueBtn ?
-                        <button className="magento-btn mt50" onClick={() => this.props.setMiddleware(false)}>Continue to Uniclix</button>
+                        <button className="magento-btn mt50" onClick={this.setRole}>Continue to Uniclix</button>
                         :
                         <button className="magento-btn mt50 disabled-btn">Continue to Uniclix</button>
                     }
@@ -324,7 +368,8 @@ const mapDispatchToProps = (dispatch) => ({
     startAddFacebookChannel: (token) => dispatch(startAddFacebookChannel(token)),
     startAddTwitterChannel: (token, secret) => dispatch(startAddTwitterChannel(token, secret)),
     startAddLinkedinChannel: (token) => dispatch(startAddLinkedinChannel(token)),
-    startAddPinterestChannel: (token) => dispatch(startAddPinterestChannel(token))
+    startAddPinterestChannel: (token) => dispatch(startAddPinterestChannel(token)),
+    startSetProfile: () => dispatch(startSetProfile())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Middleware);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Middleware));
