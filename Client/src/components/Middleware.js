@@ -26,6 +26,9 @@ class Middleware extends React.Component{
         facebookPagesModal: false,
         facebookPages: [],
         twitterBooster: this.props.location.search.indexOf('twitter-booster') != -1,
+        billingPeriod: getParameterByName("period", this.props.location.search) || "annually",
+        plan: getParameterByName("plan", this.props.location.search),
+        addon: getParameterByName("addon", this.props.location.search),
         loading: false,
         forbidden: false
     }
@@ -35,8 +38,17 @@ class Middleware extends React.Component{
     linkedinRef = React.createRef();
 
     componentDidMount(){
-       const middleware = this.props.channels.length < 1;
-       if(!middleware) this.props.setMiddleware(false);
+
+        // if(this.state.plan || this.state.addon){
+        //         this.props.setMiddleware("billing");
+        //         return;
+        // }
+
+        const middleware = this.props.channels.length < 1;
+
+        if(!middleware){
+            this.props.setMiddleware(false);
+        }
     }
 
     componentDidUpdate(prevProps){
@@ -218,6 +230,10 @@ class Middleware extends React.Component{
         }
     };
 
+    setBillingPeriod = () => {
+        this.setState(() => ({billingPeriod: this.state.billingPeriod === "annually" ? "monthly" : "annually"}));
+    };
+
     remove = (id) => {
         this.setState(() => ({loading: true}));
         return destroyChannel(id)
@@ -337,13 +353,42 @@ class Middleware extends React.Component{
                 }
 
                 {middleware == "billing" &&
-                <div className="box channels-box">
-                    <h5>Select Your Billing Cycle</h5>
-                    <div className="plan-box">
-                    
+                <div className="box billing channels-box">
+
+                    <div className="col-md-12">
+                        <h5>Select Your Billing Cycle</h5>
                     </div>
-                    <div className="plan-box"></div>
                     
+                    <div className="plan-box col-md-6 col-xs-12">
+                        <div className={`billingPeriodSelection col-md-12 ${this.state.billingPeriod === 'annually' && 'selected'}`}>
+
+                            <label className="custom-radio-container">Annually
+                                
+                                <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "annually" ? "checked" : false} onChange={this.setBillingPeriod}/>
+                            
+                                <span className="checkmark"></span>
+                            </label>
+
+                            <p>$35.00 / month</p>
+                            <p>Billing annually for $400.00</p>
+                        </div>
+                    </div>
+                    <div className="plan-box col-md-6 col-xs-12">
+                        <div className={`billingPeriodSelection col-md-12 ${this.state.billingPeriod === 'monthly' && 'selected'}`}>
+
+                            <label className="custom-radio-container">Monthly
+                                
+                                <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "monthly" ? "checked" : false} onChange={this.setBillingPeriod}/>
+                            
+                                <span className="checkmark"></span>
+                            </label>
+
+                            <p>$50.00 / month</p>
+                            <p>Billing monthly for $50.00</p> 
+                        </div>
+                    </div>
+
+                    <button className="magento-btn mt50 disabled-btn">Proceed to Checkout</button>
                 </div>
                 }
             </div>
