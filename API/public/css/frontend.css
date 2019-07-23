@@ -1547,9 +1547,67 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     font-size: 15px !important;
 }
 
+.mobile-nav{
+    display: none;
+}
+
 
 /** Media Queries */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 990px) {
+
+    .navbar-default{
+        display:none;
+    }
+
+    .mobile-nav{
+        display: block;
+        height: 85px;
+        background: linear-gradient(to left, #48BBB8, #438AF1);
+    }
+
+    .mobile-nav nav#nav {
+        position: absolute;
+        z-index: 99;
+        left: 0;
+        right: 0;
+        top: 0;
+    }
+
+    .mobile-nav ul{
+        list-style: none;
+        padding:0;
+        margin: 0;
+        text-align:center;
+    }
+
+    .mobile-nav #logo{
+        max-width: 50px;
+        position: absolute;
+        z-index: 999;
+        margin: 17px;
+    }
+
+    .mobile-nav .nav__link.active{
+        text-decoration: none;
+        font-family: open-sansSemiBold, arial, sans-serif !important;
+        color: white;
+        opacity:1 !important;
+    }
+
+    .mobile-nav ul.submenu li a {
+        font-size: 1.3rem;
+    }
+
+    .mobile-nav ul.submenu {
+        border-bottom: 2px solid white;
+        max-width: 150px;
+        margin: auto;
+    }
+
+    .mobile-nav .signin-btn{
+        margin-left:0;
+        margin-right:0;
+    }
 
     .navbar-default .navbar-brand{
         width: 70px;
@@ -1603,7 +1661,12 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     }
 }
 
-@media only screen and (max-width: 737px) {
+@media only screen and (max-width: 770px) {
+
+    .navbar-default{
+        display:none;
+    }
+
     .navbar-default .navbar-collapse {
         border-color: #ffffff;
         background: white;
@@ -1716,7 +1779,7 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     }
 
     #home-banner {
-        padding-top: 40px;
+        padding-top: 70px;
         text-align: center;
     }
     .home-gradient-bg {
