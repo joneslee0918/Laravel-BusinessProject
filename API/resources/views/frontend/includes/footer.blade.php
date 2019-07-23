@@ -19,6 +19,7 @@
                     </div>
             </div>
 
+            <div>
             <div class="col-md-2 col-xs-12 mb20">
                 <div class="col-md-12">
                     <div class="footer-h">Products</div>
@@ -58,6 +59,7 @@
                         <li><a target="_blank" href="/privacy-policy">Privacy Policy</a></li>
                     </ul>
                 </div>
+            </div>
             </div>
 
         </div>

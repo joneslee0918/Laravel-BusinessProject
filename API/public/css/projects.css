@@ -253,6 +253,10 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
   display: none;
 }
 
+.draft-images{
+    margin: 15px 0 !important;
+}
+
 .tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
 .tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
 .tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
@@ -354,10 +358,53 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
    transform: translate3d(25%, 0, 0);
 }
 
+.projects-menu .projects_menu_mobile{
+    display:none;
+}
+
+@media only screen and (max-width:990px){
+    .p-first-section h1 {
+        padding-top: 0px;
+    }
+    .product-pages h1 {
+        font-size: 3.5rem;
+        line-height: 50px;
+    }
+}
+
 @media only screen and (max-width: 737px)  {
     .p-container {
         padding: 0 10px;
     }
+
+    .projects-menu .projects_menu{
+        display:none;
+    }
+
+    .projects-menu .projects_menu_mobile{
+        display:block;
+        text-align: left;
+    }
+
+    .projects-menu .projects_menu_mobile > li {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 15px;
+        background: #1c1c1c;
+    }
+
+    .projects-menu .projects_menu_mobile > li > a{
+        padding: 15px 0;
+    }
+
+    .projects-menu .projects_menu_mobile .projects_submenu.open{
+        display: block;
+    }
+
+    .standard-padding.included-section{
+        padding:20px;
+    }
+
     .standard-padding {
         display:block;
         text-align:center;
@@ -374,6 +421,11 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
     .margin-center {
         margin:0 auto;
     }
+
+    .draft-images{
+        margin:15px auto !important;
+    }
+    
     .projects-menu-container .navbar-nav {
         margin:0;
         width:100%;
@@ -383,8 +435,8 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
         padding:0;
     }
     .product-pages h1 {
-        font-size: 34px;
-        line-height: 46px;
+        font-size: 2.8rem;
+        line-height: 33px;
     }
     .p-first-section h1 {
         padding-top: 0px;

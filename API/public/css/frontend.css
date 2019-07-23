@@ -1555,6 +1555,48 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 /** Media Queries */
 @media only screen and (max-width: 990px) {
 
+    #home-banner{
+        padding-top:70px;
+        text-align:center;
+    }
+
+    .intro-section .draft-section{
+        text-align:center;
+    }
+
+    .pl-none{
+        padding-right: 0 !important;
+    }
+
+    .light-heading{
+        font-size: 2.3rem;
+    }
+
+    #home-banner h1 {
+        font-size: 3.2rem;
+    }
+
+    .intro-banner{
+        display:flex;
+        flex-direction: column-reverse;
+    }
+
+    .intro-section{
+        text-align:center;
+    }
+
+    .intro-section h3{
+        font-size: 2.3rem;
+        text-align: center;
+        margin: 15px auto;
+    }
+
+    .ready-section h3{
+        text-align:center;
+        text-align: center;
+        margin: 15px auto;
+    }
+
     .navbar-default{
         display:none;
     }
@@ -1567,7 +1609,7 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 
     .mobile-nav nav#nav {
         position: absolute;
-        z-index: 99;
+        /* z-index: 99; */
         left: 0;
         right: 0;
         top: 0;
@@ -1609,6 +1651,37 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
         margin-right:0;
     }
 
+    .intro-box .profile-box{
+        height: 100px !important;
+        max-width: 100px !important;
+        margin: 0 auto !important;
+    }
+
+    .intro-box .text-content{
+        text-align:center;
+    }
+
+    .intro-box{
+        min-height: 370px;
+        margin-top: 10px;
+    }
+
+    #footer {
+        text-align: center;
+    }
+
+    #footer .mt100{
+        margin-top: 50px !important;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #footer .mb80{
+        margin-bottom: 0 !important;
+    }
+
     .navbar-default .navbar-brand{
         width: 70px;
     }
@@ -1617,7 +1690,7 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     }
 
     .laptop-img {
-        width: 70%;
+        width: 55%;
         margin:0 auto;
     }
     .bg-white-radius {
@@ -1662,6 +1735,48 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 }
 
 @media only screen and (max-width: 770px) {
+
+    #home-banner{
+        padding-top:70px;
+        text-align:center;
+    }
+
+    .intro-section .draft-section{
+        text-align:center;
+    }
+
+    .pl-none{
+        padding-right: 0 !important;
+    }
+
+    .light-heading{
+        font-size: 2.3rem;
+    }
+
+    #home-banner h1 {
+        font-size: 3.2rem;
+    }
+
+    .intro-banner{
+        display:flex;
+        flex-direction: column-reverse;
+    }
+
+    .intro-section{
+        text-align:center;
+    }
+
+    .intro-section h3{
+        font-size: 2.3rem;
+        text-align: center;
+        margin: 15px auto;
+    }
+
+    .ready-section h3{
+        text-align:center;
+        text-align: center;
+        margin: 15px auto;
+    }
 
     .navbar-default{
         display:none;
@@ -1712,6 +1827,10 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
         margin: 50px 0 !important;
     }
 
+    #footer .mt100{
+        margin-top: 50px !important;
+    }
+
     .join-business .text-right{
         text-align:center;
     }
@@ -1734,10 +1853,6 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 
 @media only screen and (max-width: 425px) {
 
-    .intro-section .draft-section{
-        text-align:center;
-    }
-
     .collaborate-section .container, .people-talking .container{
         display: flex;
         flex-direction: column-reverse;
@@ -1746,6 +1861,10 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     .intro-box{
         min-height: 0;
         margin-top:20px;
+    }
+
+    #home-banner .pb50{
+        padding-bottom: 30px !important;
     }
 
     .intro-section{
@@ -1779,9 +1898,10 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
     }
 
     #home-banner {
-        padding-top: 70px;
+        padding-top: 30px;
         text-align: center;
     }
+
     .home-gradient-bg {
         text-align: center;
     }

@@ -8,7 +8,7 @@
 @section('content')
 <div id="home-banner">
     <div class="container">
-        <div class="row pb50">           
+        <div class="row pb50 intro-banner">           
             <div class="col-md-7 col-xs-12 pb50">
                 <img src="{{ asset('images/imac.png') }}" class="img-responsive laptop-img">
             </div>

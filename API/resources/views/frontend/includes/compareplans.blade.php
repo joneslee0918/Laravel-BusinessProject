@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<div class="container standard-padding">
+<div class="container standard-padding included-section">
     <div class="row">
         <div class="col-xs-12 text-center">
             <h2>Learn more about twitter booster</h2>

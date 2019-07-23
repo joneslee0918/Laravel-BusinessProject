@@ -77,22 +77,22 @@
 
             <div class="row standard-padding">
                 <div class="col-md-3 col-xs-12">
-                    <img class="img-responsive margin-center" src="{{asset('/images/pr-draft-img.svg')}}">
+                    <img class="img-responsive draft-images" src="{{asset('/images/pr-draft-img.svg')}}">
                     <div class="subtitle">Draft posts</div>
                     <p>Create drafts, get feedback, and refine content as a team</p>
                 </div>
                 <div class="col-md-3 col-xs-12">
-                    <img class="img-responsive margin-center" src="{{asset('/images/pr-approvals-img.svg')}}">
+                    <img class="img-responsive draft-images" src="{{asset('/images/pr-approvals-img.svg')}}">
                     <div class="subtitle">Approvals</div>
                     <p>Review posts for quality and brand before hitting publish</p>
                 </div>
                 <div class="col-md-3 col-xs-12">
-                    <img class="img-responsive margin-center" src="{{asset('/images/pr-sync-img.svg')}}">
+                    <img class="img-responsive draft-images" src="{{asset('/images/pr-sync-img.svg')}}">
                     <div class="subtitle">Stay in sync</div>
                     <p>Everyone’s posts will be shared within your preset schedule</p>
                 </div>
                 <div class="col-md-3 col-xs-12">
-                    <img class="img-responsive margin-center" src="{{asset('/images/pr-setup-img.svg')}}">
+                    <img class="img-responsive draft-images" src="{{asset('/images/pr-setup-img.svg')}}">
                     <div class="subtitle">Account management</div>
                     <p>Easily share and manage access to each social account</p>
                 </div>

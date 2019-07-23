@@ -26,7 +26,7 @@
     &__toggle {
       display:inline-block;
       position:absolute;
-      z-index:10;
+      z-index:99;
       padding:0;
       border:0;
       background:transparent;
@@ -50,7 +50,7 @@
     //   height:var(--screen-height);
       margin-top:85px !important;
       position:relative;
-      z-index:5;
+      z-index:99;
       visibility:hidden;
     }
     
@@ -127,6 +127,7 @@
     right:40px;
     width: 1px;
     height: 1px;
+    z-index: 98;
     
     &::after {
       content:"";
