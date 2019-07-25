@@ -6,6 +6,7 @@ import ManageRouter from "../../routes/ManageRouter";
 import channelSelector from "../../selectors/channels";
 import { setTwitterChannel } from '../../actions/channels';
 import { NavLink } from 'react-router-dom';
+import SocialAccountsPrompt from '../SocialAccountsPrompt';
 
 const Manage = ({channels, selectedChannel, selectChannel}) => { 
     const hasChannel = typeof(selectedChannel.username) !== "undefined"; 
@@ -24,9 +25,14 @@ const Manage = ({channels, selectedChannel, selectChannel}) => {
                     </div>
                 </div>
             </div>:
-            <div className="no-data">
-                This feature requires a twitter account.
-                <div><NavLink to="/accounts">Connect to Twitter</NavLink></div>
+            <div className="mt100">
+                <SocialAccountsPrompt 
+                    image = "/images/connect_twitter_accounts.svg"
+                    title = "Prove the impact of your social media initiatives"
+                    description = "Track your social growth, and get meaningful stats"
+                    buttonTitle = "Connect your Twitter Account"
+                    buttonLink = "/accounts/twitter"
+                />
             </div>
             }
 

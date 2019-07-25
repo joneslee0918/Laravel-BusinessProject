@@ -9,6 +9,7 @@ import {addStream} from '../../requests/streams';
 import Loader from '../Loader';
 import {isEmptyObject} from '../../utils/helpers';
 import AutoCompleteSearch from '../AutoCompleteSearch';
+import SocialAccountsPrompt from '../SocialAccountsPrompt';
 
 class StreamCreator extends React.Component{
 
@@ -132,10 +133,15 @@ class StreamCreator extends React.Component{
         return (this.state.loading ? <Loader /> : 
                 isEmptyObject(this.state.selectedAccount) || typeof(this.state.selectedAccount) === "undefined" ? 
                     <div className="streams-default-container">
-                        <div className="no-account-message">
-                            <div>You need to connect a public social network account or page in order to track streams.</div>
-                            <div><NavLink to="/accounts">Add Social Network</NavLink></div>
-                        </div>
+                        <div className="p20">
+                            <SocialAccountsPrompt 
+                                image = "/images/connect_linkedin_accounts.svg"
+                                title = "Prove the impact of your social media initiatives"
+                                description = "Track your social growth, and get meaningful stats"
+                                buttonTitle = "Connect your Social Accounts"
+                                buttonLink = "/accounts"
+                            />
+                        </div>  
                     </div>
                     :
                     <div className={`streams-default-container ${this.state.verticalDisplay && 'streams-default-container-new'}`}>

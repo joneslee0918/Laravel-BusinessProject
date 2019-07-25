@@ -266,7 +266,7 @@ export class StreamMaker extends React.Component{
                 </div>  
 
                 {!!intro && <div className="stream-intro">
-                    <img src="/images/hello_bubble_smiley.png" />
+                    <img src="/images/hello_bubble_smiley.svg" />
                     <h3>Welcome to Streams: </h3>
                     <h5>People are talking, make sure your listening.</h5>
                     <p>A great way to manage mentions and monitor keywords and hashtags.</p>

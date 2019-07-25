@@ -10,11 +10,11 @@ import EngagementChart from './Cards/EngagementChart';
 import PostsTable from './Cards/PostsTable';
 import { DateRangePicker } from 'react-dates';
 import { isInclusivelyBeforeDay } from 'react-dates';
-import UpgradeAlert from '../../UpgradeAlert';
+import UpgradeIntro from '../../UpgradeIntro';
+import SocialAccountsPrompt from '../../SocialAccountsPrompt';
 import channelSelector, {channelById} from '../../../selectors/channels';
 import Select from 'react-select';
 import { isEmptyObject } from '../../../utils/helpers';
-import { NavLink } from 'react-router-dom';
 
 class FacebookOverview extends React.Component {
 
@@ -61,7 +61,6 @@ class FacebookOverview extends React.Component {
         }
         return (
             <div>
-            <UpgradeAlert isOpen={this.state.forbidden && !this.state.loading} goBack={true} setForbidden={this.setForbidden}/>
                 {!this.state.forbidden && !isEmptyObject(this.state.selectedAccount) ? <div>
                 <div className="row">            
                     <div className="col-xs-12">
@@ -190,7 +189,40 @@ class FacebookOverview extends React.Component {
                             {...propData}/>
                         </div>
                 </div>
-                </div> : <div><div className="no-data">There is no Facebook page!<div><NavLink to="/accounts">Add Facebook page</NavLink></div></div></div>}
+                </div> : 
+                <div>
+                    {this.state.forbidden ? 
+                    <UpgradeIntro 
+                        title="A simpler way to measure performance"
+                        description = "Track your social growth, and get meaningful stats on your social media accounts."
+                        infoData = {[
+                            {
+                                title: "Social Snapshot",
+                                description: "Get a meaningful and concise snapshot of your key Twitter, Facebook, and LinkedIn activities."
+                            },
+                            {
+                                title: "Engagement Metrics",
+                                description: "Get a clear view of engagement for each of your social media accounts."
+                            },
+                            {
+                                title: "Post Performance Metrics",
+                                description: "Track engagement for all of your individual post in one platform."
+                            }
+                        ]}
+                        image = "/images/analytic_intro.svg"
+                        buttonLink = "/settings/billing"
+                    /> :
+                    
+                        <SocialAccountsPrompt 
+                            image = "/images/connect_facebook_pages.svg"
+                            title = "Prove the impact of your social media initiatives"
+                            description = "Track your social growth, and get meaningful stats"
+                            buttonTitle = "Connect your Facebook Pages"
+                            buttonLink = "/accounts/facebook"
+                        />
+                    }                 
+                </div>
+                }
             </div>
         );
     }

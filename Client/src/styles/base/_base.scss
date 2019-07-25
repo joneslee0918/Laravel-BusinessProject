@@ -2131,6 +2131,74 @@ button.streammaker-btn:hover {
     outline: none;
 }
 
+
+.upgrade-intro {
+    font-family: Quicksand, 'sans-serif';
+}
+
+.upgrade-intro .heading-group {
+    text-align: center;
+}
+
+.upgrade-intro .heading-group h1 {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.upgrade-intro h4 {
+    font-weight: 700;
+    font-size: 1.6rem;
+}
+
+.upgrade-intro p {
+    font-size: 1.5rem;
+}
+
+.upgrade-intro .body-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+}
+
+.upgrade-intro .body-group .info .info-section {
+    margin: 0 0 50px;
+    width: 450px;
+    margin-right: 50px;
+}
+
+.upgrade-intro .body-group .image {
+    width: 400px;
+    border: 1px solid #eaeaea;
+    padding: 20px;
+}
+
+.upgrade-intro .body-group .image img {
+    width: 100%;
+}
+
+.upgrade-intro .footer-group {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.social-account-prompt h5 {
+    margin-top: 50px;
+}
+.social-account-prompt h1, .social-account-prompt h5 {
+    font-weight: bold;
+}
+.social-account-prompt h1 {
+    font-size: 2.8rem;
+}
+.social-account-prompt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: Quicksand, 'sans-serif';
+}
+
 #draftEditor{
     height: 250px;
     overflow-y: auto;
@@ -2588,12 +2656,20 @@ button.streammaker-btn:hover {
     margin-top:50px !important;
 }
 
+.mt100{
+    margin-top:100px !important;
+}
+
 .mt15{
     margin-top:15px !important;
 }
 
 .ptb20{
     padding:20px 0 !important;
+}
+
+.p20{
+    padding:20px !important;
 }
 
 .t-reply-modal{
