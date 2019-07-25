@@ -5,7 +5,6 @@ import MenuItems from "./Fixtures/MenuItems";
 import ManageRouter from "../../routes/ManageRouter";
 import channelSelector from "../../selectors/channels";
 import { setTwitterChannel } from '../../actions/channels';
-import { NavLink } from 'react-router-dom';
 import SocialAccountsPrompt from '../SocialAccountsPrompt';
 
 const Manage = ({channels, selectedChannel, selectChannel}) => { 

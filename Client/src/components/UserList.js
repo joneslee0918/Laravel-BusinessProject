@@ -7,6 +7,7 @@ import AccountTargetSearchList from './TwitterBooster/AccountTargetSearchList';
 import KeywordTargetSearchList from './TwitterBooster/KeywordTargetSearchList';
 import {abbrNum} from "../utils/numberFormatter";
 import {tweet, dm} from "../requests/twitter/channels";
+import SocialAccountsPrompt from "./SocialAccountsPrompt";
 
 let toastContainer;
 
@@ -102,7 +103,8 @@ class UserList extends React.Component{
             actionType = "follow",
             actions = 0,
             fetchData = (order = 'desc') => {} ,
-            page          
+            page,
+            noData          
         } = this.props;
 
         const targetSearchView = (
@@ -147,9 +149,14 @@ class UserList extends React.Component{
     
                         :
     
-                        <div className="no-data">
-                            No data, nothing to do... :(
-                        </div>
+                        <SocialAccountsPrompt 
+                            image = "/images/connect_twitter_accounts.svg"
+                            title = {noData.title}
+                            description = {noData.description}
+                            text = {noData.text}
+                            buttonTitle = "Engage by setting your keywords"
+                            buttonLink = "/twitter-booster/keyword-targets"
+                        />
                         )
                     ) :
                     

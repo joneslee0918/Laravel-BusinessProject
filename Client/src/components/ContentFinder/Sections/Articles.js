@@ -10,6 +10,7 @@ import {startSetProfile} from '../../../actions/profile';
 import {setPost} from '../../../actions/posts';
 import {ArticleLoader} from '../../Loader';
 import TailoredPostModal from '../../TailoredPostModal';
+import SocialAccountsPrompt from '../../SocialAccountsPrompt';
 
 class Articles extends React.Component {
 
@@ -240,10 +241,13 @@ class Articles extends React.Component {
                         <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3"><ArticleLoader /></div>
                     </div>}
                         {!this.state.loading &&
-                            <div>
-                                <p>Please set your topics to view articles of your interest.</p>
-                                <button className="upgrade-btn" onClick={this.toggleTopicsModal}>Set Topics</button>
-                            </div> 
+                            <SocialAccountsPrompt 
+                                image = "/images/hello_bubble_smiley.svg"
+                                title = "Be the first to know your industry’s trending news"
+                                description = "Curate articles from thousands of sources that can base shared on the fly."
+                                buttonTitle = "Lest start  by selecting relevant keywords"
+                                action = {this.toggleTopicsModal}
+                            />
                         }
 
                     </div>

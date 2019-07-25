@@ -208,11 +208,8 @@ class ActiveChecker extends React.Component{
                         {this.state.loading && <Loader />}
                         {this.props.channels.length ?
                             <div>
-                                <h3>Login required!</h3>
-                                <p> It seems like your <strong>{selectedChannel.type}</strong> account <strong>{selectedChannel.name}</strong> has been disconnected. 
-                                Please reconnect and continue your progress by pressing the button below.
-                                <br/><br/>
-                                <strong>Important: Please make sure that you are logged out from any other {selectedChannel.type} account first!</strong>
+                                <h3>Reconnect Social Networks</h3>
+                                <p> Social networks need to be reconnected in UniClix for a variety of reasons, such as software updates or password changes. Reconnect your {selectedChannel.type} Account
                                 </p>
                             </div>
                             :

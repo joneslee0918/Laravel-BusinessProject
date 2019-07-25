@@ -2187,15 +2187,31 @@ button.streammaker-btn:hover {
 .social-account-prompt h1, .social-account-prompt h5 {
     font-weight: bold;
 }
+
 .social-account-prompt h1 {
     font-size: 2.8rem;
 }
+
+.social-account-prompt p {
+    font-size: 1.6rem !important;
+}
+
 .social-account-prompt {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+    font-family: Quicksand, 'sans-serif';
+}
+
+.target-info h4{
+    font-weight:bold;
+}
+
+.target-info {
+    margin-left: 15px;
+    color: #666;
     font-family: Quicksand, 'sans-serif';
 }
 

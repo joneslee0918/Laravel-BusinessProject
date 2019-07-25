@@ -105,6 +105,11 @@ class KeywordTargetSearchList extends React.Component{
                     action={this.rememberInfoModal}
                 />
 
+                <div className="target-info">                
+                    <h4>Find relevant users: track users who use your #hashtags of interest.</h4> 
+                    <p>Please add at least 4 #hashtags, this will help UniClix find enough results and suggestions.</p> 
+                </div>
+
                 <div className="col-xs-12">
                     <div className="item-list shadow-box">
                         <div className="item-header">

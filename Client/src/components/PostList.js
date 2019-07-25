@@ -5,6 +5,7 @@ import SweetAlert from 'sweetalert2-react';
 import {setPost} from '../actions/posts';
 import Loader from './Loader';
 import {setComposerModal} from "../actions/composer";
+import SocialAccountsPrompt from "./SocialAccountsPrompt";
 
 export const PostList = ({
     action, 
@@ -62,10 +63,16 @@ export const PostList = ({
 
                 <h2>{title}</h2>
                 {(posts.length < 1 && !loading) && 
-                <div className="no-data">
-                    No posts have been scheduled or published yet.
-                    <div><a onClick={() => setComposerModal(true)} className="btn compose-btn">Schedule a post</a></div>
-                </div>}
+
+                <SocialAccountsPrompt 
+                    image = "/images/connect_twitter_accounts.svg"
+                    title = {type !== "past-scheduled" ? "Save time with scheduled post" : "You have no old posts"}
+                    description = {type == "unapproved-posts" ? "You have no post in approval queue" : "Use Compose box to schedule posts and publish automatically throughout the day or week"}
+                    buttonTitle = "Publish now and get started"
+                    action = {() => setComposerModal(true)}
+                />  
+                
+                }
 
                 {loading && <Loader />}
 
