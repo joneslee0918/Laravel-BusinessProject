@@ -10,7 +10,7 @@ import LinkedinOverview from '../components/Analytics/Linkedin/LinkedinOverview'
 const ManageRouter = () => (
     <div>
         <Switch>
-            <Route exact path={`/analytics`} render={() => <Redirect to="/analytics/overview"/>} />
+            <Route exact path={`/analytics`} render={() => <Redirect to="/analytics/facebook-overview"/>} />
             <Route path={`/analytics/overview`} component={Overview} />
             <Route path={`/analytics/advanced`} component={Advanced} />
             <Route path={`/analytics/facebook-overview`} component={FacebookOverview} />

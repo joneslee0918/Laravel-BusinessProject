@@ -6,11 +6,11 @@ import { setGlobalChannel } from '../../actions/channels';
 import AnalyticsRouter from '../../routes/AnalyticsRouter';
 
 const menuItems = [
-    {   
-        id: "overview",
-        displayName: "Overview",
-        uri: "/analytics/overview" 
-    },
+    // {   
+    //     id: "overview",
+    //     displayName: "Overview",
+    //     uri: "/analytics/overview" 
+    // },
     {   
         id: "facebook_overview",
         displayName: "Facebook Overview",
