@@ -31,13 +31,18 @@
 }
 
 html, body {
-    background-color: #fff;
+    background-color: transparent;
     color: #2B2B2B;
     font-family: 'Quicksand', sans-serif !important;
     font-weight: 100;
     height: 100vh;
     margin: 0;
 }
+
+body{
+    background-color: transparent !important;
+}
+
 h1, h2, h3, h4, h5, h6, a, span {
     font-family: 'Quicksand', sans-serif !important;
 }
@@ -82,6 +87,12 @@ p, span { font-family: 'Open Sans', Arial, sans-serif; }
 #header-wrap .navbar-default {
     background: transparent;
     border-color: transparent;
+}
+
+.navbar-default{
+    position: relative;
+    overflow:hidden;
+    z-index:9;
 }
 
 #header-wrap .navbar-nav {
