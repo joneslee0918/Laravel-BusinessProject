@@ -1,5 +1,17 @@
 @extends('layouts.homepage')
 
+@section('title')
+Get Uniclix Twitter Unfollow Tool
+@endsection
+
+@section('description')
+Join other influencers and small businesses who trust our easy to use Twitter Unfollow tool to unfollow inactive users, egg profiles, unwanted avatars and undesirable users.
+@endsection
+
+@section('image')
+{{config('app.url')}}/images/tg-image-2.png
+@endsection
+
 @section('content')
 
 <div id="page-banner"></div>
@@ -23,13 +35,13 @@
                 <p>Quickly and easily find users you currently follow and find who to unfollow.</p>
             </div>
             <div class="col-md-6 col-xs-12">
-                <img class="img-responsive" src="{{asset('/images/tg-image-2.png')}}">
+                <img class="img-responsive" src="{{asset('/images/tg-image-2.png')}}" title="Find inactive  and undesirable users & unfollowers" alt="Quickly and easily find users you currently follow and find who to unfollow.">
             </div>
         </div>
 
         <div class="row standard-padding column-reverse">
             <div class="col-md-6 col-xs-12">
-                <img class="img-responsive" src="{{asset('/images/tg-image-3.png')}}">
+                <img class="img-responsive" src="{{asset('/images/tg-image-3.png')}}" title="Quickly, unfollow them" alt="Uniclix enables you to unfollow unwanted users fast.">
             </div>
             <div class="col-md-6 col-xs-12">
                 <h2>Quickly, unfollow them</h2>
@@ -43,7 +55,7 @@
                 <p>Twitter has limits on following users, Hence use Uniclix to stay within those limits by unfollowing extra followers that are inactive.</p>
             </div>
             <div class="col-md-6 col-xs-12">
-                <img class="img-responsive" src="{{asset('/images/tg-image-4.png')}}">
+                <img class="img-responsive" src="{{asset('/images/tg-image-4.png')}}" title="Stay within limits" alt="Twitter has limits on following users, Hence use Uniclix to stay within those limits by unfollowing extra followers that are inactive.">
             </div>
         </div>
     </div>

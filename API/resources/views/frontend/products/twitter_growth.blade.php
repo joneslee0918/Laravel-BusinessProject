@@ -1,5 +1,17 @@
 @extends('layouts.homepage')
 
+@section('title')
+Grow your Twitter audience and expand your Influence
+@endsection
+
+@section('description')
+Grow your community on Twitter by targeting the right audience. Think of our Booster tool as a matchmaker that connects you with people most interested in what you have to offer.
+@endsection
+
+@section('image')
+{{config('app.url')}}/images/tg-image-2.png
+@endsection
+
 @section('content')
 
 <div id="page-banner"></div>
@@ -22,13 +34,13 @@
                 <p>Find users by interest, hashtags, location, and channels. Just set your target and we will find you most relevant active users to follow.</p>
             </div>
             <div class="col-md-6 col-xs-12">
-                <img class="img-responsive" src="{{asset('/images/tg-image-2.png')}}">
+                <img class="img-responsive" src="{{asset('/images/tg-image-2.png')}}" title="Follow relevant users only" alt="Find users by interest, hashtags, location, and channels. Just set your target and we will find you most relevant active users to follow.">
             </div>
         </div>
 
         <div class="row standard-padding column-reverse">
             <div class="col-md-6 col-xs-12">
-                <img class="img-responsive" src="{{asset('/images/tg-image-3.png')}}">
+                <img class="img-responsive" src="{{asset('/images/tg-image-3.png')}}" title="Unfollow Inactive users" alt="Find inactive or non-engaging users that you follow. With few clix a day clear your follow list and get rid of spammers.">
             </div>
             <div class="col-md-6 col-xs-12">
                 <h2>Unfollow Inactive users</h2>
@@ -42,7 +54,7 @@
                 <p>Track engagement for all of your individual post in one platform.</p>
             </div>
             <div class="col-md-6 col-xs-12">
-                <img class="img-responsive" src="{{asset('/images/tg-image-4.png')}}">
+                <img class="img-responsive" src="{{asset('/images/tg-image-4.png')}}" title="Unfollow undesirable users" alt="Track engagement for all of your individual post in one platform.">
             </div>
         </div>
     </div>

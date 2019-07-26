@@ -5,7 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="{{config('seo-indexing.value')}}">
-    <title>{{config('app.name')}}</title>
+    <title>{{config('app.name')}} - @yield('title')</title>
+
+    <meta name="title" content="@yield('title')" >
+    <meta name="description" content="@yield('description')" >
+
+    <!--Facebook meta -->
+    <meta property="og:title" content="@yield('title')" >
+    <meta property="og:description" content="@yield('description')">
+    <meta property="og:image" content="@yield('image')">
+
+    <!--Twitter meta -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@uniclix">
+    <meta name="twitter:title" content="@yield('title')">
+    <meta name="twitter:description" content="@yield('description')" >
+    <meta name="twitter:image" content="@yield('image')" class="next-head">
 
     <!-- Scripts -->
     <script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>

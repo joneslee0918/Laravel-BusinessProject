@@ -1,4 +1,15 @@
 @extends('layouts.homepage')
+@section('title')
+Pricing
+@endsection
+
+@section('description')
+See the pricing of Uniclix social media service and pick a plan that fits your business needs. With our set of tools, you will be able to publish in all social media accounts, track and analyze social data, listen to social media streams and much more.
+@endsection
+
+@section('image')
+{{config('app.url')}}/images/tg-image-2.png
+@endsection
 
 @section('content')
 <div id="page-banner">

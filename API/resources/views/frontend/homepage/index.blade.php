@@ -4,13 +4,23 @@
     <link href="{{ asset('css/slick.css') }}" rel="stylesheet">
     <link href="{{ asset('css/slick-theme.css') }}" rel="stylesheet">
 @endpush
+@section('title')
+Social Media Management Simplified
+@endsection
 
+@section('description')
+Uniclix helps you centralize, manage and grow your social media accounts with just a couple of clicks.
+@endsection
+
+@section('image')
+{{config('app.url')}}/images/imac.png
+@endsection
 @section('content')
 <div id="home-banner">
     <div class="container">
         <div class="row pb50 intro-banner">           
             <div class="col-md-7 col-xs-12 pb50">
-                <img src="{{ asset('images/imac.png') }}" class="img-responsive laptop-img">
+                <img src="{{ asset('images/imac.png') }}" class="img-responsive laptop-img" title="Social Media Management Simplified" alt="Uniclix helps you centralize, manage and grow your social media accounts with just a couple of clicks">
             </div>
             <div class="col-md-5 col-xs-12 pb50">
                 <h1>Social Media Management<br>Simplified</h1>
@@ -37,7 +47,7 @@
             <div class="col-md-3 col-xs-12">
                 <div class="col-md-12 text-center intro-box intro-box">
                     <div class="profile-box schedule-bg">
-                        <img src="{{ asset('images/calendar.svg') }}">
+                        <img src="{{ asset('images/calendar.svg') }}" title="Scheduled posts" alt="How do I post to all of my SM channels at once? What is the best time to post to reach the most customers?">
                     </div>
                     <div class="text-content">
                         <h4>Scheduled posts</h4>
@@ -54,7 +64,7 @@
             <div class="col-md-3 col-xs-12">
                 <div class="col-md-12 text-center intro-box">
                     <div class="profile-box search-bg">
-                        <img src="{{ asset('images/search.svg') }}">
+                        <img src="{{ asset('images/search.svg') }}" title="Auto-curated content" alt="How do I find content to share with my audience without spending hours digging on the internet?">
                     </div>
                      <div class="text-content">
                         <h4>Auto-curated content</h4>
@@ -71,7 +81,7 @@
             <div class="col-md-3 col-xs-12">
                 <div class="text-center intro-box">
                     <div class="profile-box target-bg">
-                        <img src="{{ asset('images/target.svg') }}">
+                        <img src="{{ asset('images/target.svg') }}" title="Twitter Boost" alt="How do I find people who are interested in my channel? How do I increase my followers on Twitter?">
                     </div>
                     <div class="text-content">
                         <h4>Twitter Boost</h4>
@@ -87,7 +97,7 @@
             <div class="col-md-3 col-xs-12">
                 <div class="text-center intro-box">
                     <div class="profile-box hashtag-bg">
-                        <img src="{{ asset('images/hashtag.svg') }}">
+                        <img src="{{ asset('images/hashtag.svg') }}" title = "Social listening" alt="How do I monitor what people are saying about me? How do I monitor what people are saying about the topics I’m interested in?">
                     </div>
                     <div class="text-content">
                         <h4>Social listening</h4>
@@ -120,7 +130,7 @@
         </div>
         <div class="col-md-6 col-xs-12">
             <div class="col-md-12">
-                <img src="{{asset('images/post_crafting.png')}}" />
+                <img src="{{asset('images/post_crafting.png')}}" title="Publishing" alt="Craft the perfect post for each social network, all in few clix" />
             </div>
         </div>
     </div>
@@ -130,7 +140,7 @@
     <div class="container">
         <div class="col-md-6 col-xs-12">
             <div class="col-md-12">
-                <img src="{{asset('images/collaborate_with_team.png')}}" />
+                <img src="{{asset('images/collaborate_with_team.png')}}" title="Collaborate on content with your team" alt="Work together with your team to create content that’s high quality, on-brand, and that your audience is going to love." />
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
@@ -144,7 +154,7 @@
                 <div class="col-md-12 pl-none">
                     <div class="col-md-6 col-xs-12 pl-none">
                         <div class="draft-section">
-                            <img src="{{asset('images/plan.svg')}}" />
+                            <img src="{{asset('images/plan.svg')}}" title="Draft posts" alt="Create drafts, get feedback, and refine content as a team" />
                             <h5>Draft posts</h5>
                             <p class="description">
                                 Create drafts, get feedback, and refine content as a team 
@@ -154,7 +164,7 @@
 
                     <div class="col-md-6 col-xs-12 pl-none">
                         <div class="draft-section">
-                            <img src="{{asset('images/shield.svg')}}" />
+                            <img src="{{asset('images/shield.svg')}}" title="Approvals" alt="Review posts for quality and brand before hitting publish"/>
                             <h5>Approvals</h5>
                             <p class="description">
                                 Review posts for quality and brand before hitting publish
@@ -166,7 +176,7 @@
                 <div class="col-md-12 pl-none">
                     <div class="col-md-6 col-xs-12 pl-none">
                         <div class="draft-section">
-                            <img src="{{asset('images/sync.svg')}}" />
+                            <img src="{{asset('images/sync.svg')}}" title="Stay in sync" alt="Everyone’s posts will be shared within your preset schedule" />
                             <h5>Stay in sync </h5>
                             <p class="description">
                                 Everyone’s posts will be shared within your preset schedule 
@@ -176,7 +186,7 @@
 
                     <div class="col-md-6 col-xs-12 pl-none">
                         <div class="draft-section">
-                            <img src="{{asset('images/setup.svg')}}" />
+                            <img src="{{asset('images/setup.svg')}}" title="Account management" alt="Easily share and manage access to each social account"/>
                             <h5>Account management </h5>
                             <p class="description">
                                 Easily share and manage access to each social account 
@@ -213,7 +223,9 @@
         </div>
         <div class="col-md-6 col-xs-12">
             <div class="col-md-12">
-                <img src="{{asset('images/simplify_your_social.png')}}" />
+                <img src="{{asset('images/simplify_your_social.png')}}" title="Simplify Your Social Content Curation" alt="ind & share content on the fly. 
+                    Uniclix auto-suggests content relevant to your 
+                    topics of interest so that you don’t have to spend hours searching on the internet."/>
             </div>
         </div>
     </div>
@@ -224,7 +236,7 @@
         
         <div class="col-md-6 col-xs-12">
             <div class="col-md-12">
-                <img src="{{asset('images/people_talking.png')}}" />
+                <img src="{{asset('images/people_talking.png')}}" title="People are talking, make sure your listening" alt="A great way to manage mentions and Monitor keywords and hashtags"/>
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
