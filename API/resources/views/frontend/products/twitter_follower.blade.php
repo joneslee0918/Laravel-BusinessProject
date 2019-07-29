@@ -25,7 +25,7 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
     <div class="container">
         <div class="row pb50 intro-banner">           
             <div class="col-md-7 col-xs-12 pb50">
-                <img src="{{ asset('images/imac.png') }}" class="img-responsive laptop-img" title="Social Media Management Simplified" alt="Uniclix helps you centralize, manage and grow your social media accounts with just a couple of clicks">
+                <img src="{{ asset('images/imac.png') }}" class="img-responsive laptop-img" title="Twitter follower app" alt="Grow Your Twitter Brand with the Power of Artificial Intelligence">
             </div>
             <div class="col-md-5 col-xs-12 pb50">
                 <h1>GROW YOUR AUDIENCE EXPAND YOUR INFLUENCE</h1>
@@ -43,13 +43,13 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
 
         <div class="col-md-6 col-xs-12">
             <div class="col-md-12">
-                <img src="{{asset('images/cr-image-1.svg')}}" title="Collaborate on content with your team" alt="Work together with your team to create content that’s high quality, on-brand, and that your audience is going to love." />
+                <img src="{{asset('images/cr-image-1.svg')}}" title="Twitter follower" alt="The most affordable and simple to use Twitter growth platform - all features included for only $10/month" />
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
             <div class="col-md-12"> 
 
-                <h3>Affordable and simple to use</h3>
+                <h3>Twitter follower app</h3>
 
                 <p class="description">The most affordable and simple to use Twitter growth platform - all features included for only $10/month. </p>
                 <p class="description">For the price of cappuccino, you can grow your Twitter brand. </p>
@@ -74,7 +74,8 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
         </div>
         <div class="col-md-6 col-xs-12">
             <div class="col-md-12">
-                <img src="{{asset('images/post_crafting.png')}}" title="Publishing" alt="Craft the perfect post for each social network, all in few clix" />
+                <img src="{{asset('images/post_crafting.png')}}" title="Follow relevant twitter users only" alt="Grow your community on Twitter by targeting the right audience. Think of our Booster tool as a matchmaker that connects you with people most interested in what you have to offer. 
+<br><br>Find users by interest, hashtags, location, and channels. Just set your target and we will find you most relevant active users to follow." />
             </div>
         </div>
     </div>
@@ -84,7 +85,8 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
     <div class="container">
         <div class="col-md-6 col-xs-12">
             <div class="col-md-12">
-                <img src="{{asset('images/collaborate_with_team.png')}}" title="Collaborate on content with your team" alt="Work together with your team to create content that’s high quality, on-brand, and that your audience is going to love." />
+                <img src="{{asset('images/collaborate_with_team.png')}}" title="Twitter unfollow app" alt="Quickly and easily find users you currently follow and find who to unfollow. Join other influencers and small businesses who trust our easy to use 
+                    Twitter Unfollow tool to unfollow inactive users, egg profiles, unwanted avatars and undesirable users." />
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
