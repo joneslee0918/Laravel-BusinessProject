@@ -52,7 +52,7 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
                 <h3>Affordable and simple to use</h3>
 
                 <p class="description">The most affordable and simple to use Twitter growth platform - all features included for only $10/month. </p>
-                <p class="description">For the price of cappuccino, you can grow you grow your Twitter brand. </p>
+                <p class="description">For the price of cappuccino, you can grow your Twitter brand. </p>
 
             </div>
         </div>
