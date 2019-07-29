@@ -38,20 +38,23 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
         </div>
     </div>
 </div>
-<div class="home-section-1 mtb100">
+<div class="home-section-1 intro-section">
     <div class="container">
-        <div class="row text-center">
-            <div class="col-xs-12">
-                <h3 class="light-heading">The most affordable and simple to use Twitter growth platform - all features included for only $10/month.
 
-                <br> <br>For the price of cappuccino, you can grow you grow your Twitter brand.
-                </h3>
-                <!-- <h2>Optimize your Social Media Accounts</h2>
-                <p>The most affordable & easy to use platform for managing all things Social. Uniclix connects you with real people that care about your product. Publish content from your sites and schedule your posts in advance with Uniclix.</p> -->
+        <div class="col-md-6 col-xs-12">
+            <div class="col-md-12">
+                <img src="{{asset('images/cr-image-1.svg')}}" title="Collaborate on content with your team" alt="Work together with your team to create content that’s high quality, on-brand, and that your audience is going to love." />
             </div>
-            <!-- <div class="col-xs-12 pt50 pb50 border-bottom-grey">
-                <img src="{{ asset('images/home-img-1.png') }}" class="img-responsive center-img">
-            </div> -->
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="col-md-12"> 
+
+                <h3>Affordable and simple to use</h3>
+
+                <p class="description">The most affordable and simple to use Twitter growth platform - all features included for only $10/month. </p>
+                <p class="description">For the price of cappuccino, you can grow you grow your Twitter brand. </p>
+
+            </div>
         </div>
     
     </div>
