@@ -105,7 +105,7 @@
                 "twitter_growth" => [
                     "name" => "Twitter Booster",
                     "description" => "Grow your Twitter audience and expand your Influence",
-                    "url" => route('products.twitter_growth'),
+                    "url" => route('products.twitter_booster'),
                     "active" => Request::is("twitter-followers-app") ? 'active' : '',
                     "id" => "twitter_growth"
                 ]
@@ -147,7 +147,11 @@
                     </a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <a href="{{config('frontendclient.client_url')}}?register" class="btn pull-right signin-btn nav-btn nav-btn-white">Get Started Now</a>
+                @if (!empty($__env->yieldContent('get-started')))
+                <a href="@yield('get-started')" class="btn pull-right signin-btn nav-btn nav-btn-white">Get Started Now</a>
+                @else
+                <a href="{{config('frontendclient.client_url')}}?register" class="btn pull-right signin-btn nav-btn nav-btn-white">Get Started Now</a>
+                @endif
                     <a href="{{config('frontendclient.client_url')}}" class="btn pull-right signin-btn nav-btn">Sign in</a>
                     
                     <nav>

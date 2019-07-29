@@ -29,7 +29,8 @@
                         <li><a href="{{route('products.content_curation')}}">Content Curation</a></li>
                         <li><a href="{{route('products.social_listening')}}" >Monitoring</a></li>
                         <li><a href="{{route('products.analytics')}}" >Analytics</a></li>
-                        <li><a href="{{route('products.twitter_growth')}}" >Twitter Booster</a></li>
+                        <li><a href="{{route('products.twitter_booster')}}" >Twitter Booster</a></li>
+                        <li><a href="{{route('products.twitter_growth')}}" >Twitter Follower</a></li>
                         <li><a href="{{route('products.twitter_unfollow')}}">Twitter Unfollow</a></li>
                         <li><a href="{{route('products.management_tools')}}">Social Media Tools</a></li>
                         <li><a href="{{route('pricing')}}" >Pricing</a></li>

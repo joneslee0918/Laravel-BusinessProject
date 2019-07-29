@@ -37,7 +37,8 @@ Route::get('/social-media-calendar', ['as' => 'products.publisher', 'uses' => 'P
 Route::get('/content-curation-tool', ['as' => 'products.content_curation', 'uses' => 'PagesController@content_curation']);
 Route::get('/social-listening-tool', ['as' => 'products.social_listening', 'uses' => 'PagesController@social_listening']);
 Route::get('/social-media-analytics', ['as' => 'products.analytics', 'uses' => 'PagesController@analytics']);
-Route::get('/twitter-followers-app', ['as' => 'products.twitter_growth', 'uses' => 'PagesController@twitter_growth']);
+Route::get('/twitter-booster-app', ['as' => 'products.twitter_booster', 'uses' => 'PagesController@twitter_growth']);
+Route::get('/twitter-follower-app', ['as' => 'products.twitter_growth', 'uses' => 'PagesController@twitter_follower']);
 Route::get('/twitter-unfollow-app', ['as' => 'products.twitter_unfollow', 'uses' => 'PagesController@twitter_unfollow']);
 Route::get('/social-media-management-tools', ['as' => 'products.management_tools', 'uses' => 'PagesController@management_tools']);
 Route::get('/article/{id}', ['as' => 'article', 'uses' => 'PagesController@article']);

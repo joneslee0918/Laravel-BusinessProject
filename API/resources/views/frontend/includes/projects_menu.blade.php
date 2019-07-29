@@ -35,8 +35,8 @@
         "twitter_growth" => [
             "name" => "Twitter Booster",
             "description" => "Grow your Twitter audience and expand your Influence",
-            "url" => route('products.twitter_growth'),
-            "active" => Request::is("twitter-followers-app") ? 'active' : '',
+            "url" => route('products.twitter_booster'),
+            "active" => Request::is("twitter-booster-app") ? 'active' : '',
             "id" => "twitter_growth"
         ]
     ];

@@ -108,6 +108,15 @@ class PagesController extends Controller
 
     /**
      *
+     * Show Twitter follower page
+     */
+    public function twitter_follower()
+    {
+        return view('frontend.products.twitter_follower');
+    }
+
+    /**
+     *
      * Show Twitter unfollow page
      */
     public function twitter_unfollow()
