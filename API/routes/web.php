@@ -47,11 +47,16 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $team = User::find(1);
-//     $channel = $team->channels()->first();
-//    // $channel->select($team);
+    $user = App\Models\User::find(3);
 
-    return response()->json($team->teamMembers()->count());
+    Mail::to($user)->send(new App\Mail\OneDayAfterSignUp());
+
+    // return response()->json($team->teamMembers()->count());
+});
+
+Route::get('mailable', function () {
+
+    return new App\Mail\DependOnSocialAccountsSecond();
 });
 
 Route::get('/jobs', function(){
