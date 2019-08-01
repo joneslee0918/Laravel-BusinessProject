@@ -206,8 +206,10 @@ class Profile extends React.Component{
                 <Modal
                     isOpen={this.state.isTopicsModalOpen}
                     ariaHideApp={false}
+                    className="topicsModal"
                 >       
                     <form onSubmit={(e) => this.addTopic(e)}>  
+                        <h3>Add Topics</h3>
                         <div className="form-group flex_container-center">
                             <div>
                                 {this.state.topics.length >= 15 ?
@@ -217,9 +219,6 @@ class Profile extends React.Component{
                                 }
                                 
                             </div>
-                            <div>
-                                <button className="btn btn-default right-radius">Add</button>
-                            </div>
                         </div>
                     </form>
 
@@ -228,8 +227,8 @@ class Profile extends React.Component{
                           <div key={index} className="addedItemLabels">{topic} <span className="fa fa-times link-cursor" onClick={() => this.removeTopic(index)}></span></div>  
                         ))}
                         
-                        <div className="center-inline top-border p10 m10-top">
-                            <button className="upgrade-btn" onClick={this.toggleTopicsModal}>Save</button>
+                        <div className="right-inline top-border p10 m10-top">
+                            <button className="magento-btn small-btn" onClick={this.toggleTopicsModal}>Add</button>
                         </div>
                 </Modal>
 
@@ -237,8 +236,10 @@ class Profile extends React.Component{
                 <Modal
                     isOpen={this.state.isLocationsModalOpen}
                     ariaHideApp={false}
+                    className="topicsModal"
                 >       
                     <form onSubmit={(e) => this.addLocation(e)}>  
+                        <h3>Add Locations</h3>
                         <div className="form-group flex_container-center">
                             <div>
                                 <GeoSuggest 
@@ -246,9 +247,6 @@ class Profile extends React.Component{
                                     initialValue={this.state.location && this.state.location.label}
                                     disabled={this.state.locations.length >= 5 ? true : false}
                                 />
-                            </div>
-                            <div>
-                                <button className="btn btn-default right-radius">Add</button>
                             </div>
                         </div>
                     </form>
@@ -258,8 +256,8 @@ class Profile extends React.Component{
                         <div key={index} className="addedItemLabels">{location.label} <span className="fa fa-times link-cursor" onClick={() => this.removeLocation(index)}></span></div>  
                         ))}
                         
-                        <div className="center-inline top-border p10 m10-top">
-                            <button className="upgrade-btn" onClick={this.toggleLocationsModal}>Save</button>
+                        <div className="right-inline top-border p10 m10-top">
+                            <button className="magento-btn small-btn" onClick={this.toggleLocationsModal}>Add</button>
                         </div>
                 </Modal>
 
