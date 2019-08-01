@@ -11,27 +11,57 @@ class SelectChannelsModal extends React.Component{
         pinterestSelect: false
     }
 
+    componentDidMount() {
+        const {channels} = this.props;
+        const twitterChannels = channelSelector(channels, {selected: undefined, provider: "twitter"});
+        const facebookChannels = channelSelector(channels, {selected: undefined, provider: "facebook"});
+        const linkedinChannels = channelSelector(channels, {selected: undefined, provider: "linkedin"});
+        const pinterestChannels = channelSelector(channels, {selected: undefined, provider: "pinterest"});
+
+        if(twitterChannels.length > 0){
+            this.toggleTwitterSelect();
+        }else if(facebookChannels.length > 0){
+            this.toggleFacebookSelect();
+        }else if(linkedinChannels.length > 0){
+            this.toggleLinkedinSelect();
+        }else if(pinterestChannels.length > 0){
+            this.togglePinterestSelect();
+        }
+    }
+
     toggleTwitterSelect = () => {
         this.setState(() => ({
-            twitterSelect: !this.state.twitterSelect
+            twitterSelect: !this.state.twitterSelect,
+            pinterestSelect: false,
+            facebookSelect: false,
+            linkedinSelect: false
         }));
     };
 
     toggleFacebookSelect = () => {
         this.setState(() => ({
-            facebookSelect: !this.state.facebookSelect
+            facebookSelect: !this.state.facebookSelect,
+            pinterestSelect: false,
+            linkedinSelect: false,
+            twitterSelect: false
         }));
     };
 
     toggleLinkedinSelect = () => {
         this.setState(() => ({
-            linkedinSelect: !this.state.linkedinSelect
+            linkedinSelect: !this.state.linkedinSelect,
+            pinterestSelect: false,
+            facebookSelect: false,
+            twitterSelect: false
         }));
     };
 
     togglePinterestSelect = () => {
         this.setState(() => ({
-            pinterestSelect: !this.state.pinterestSelect
+            pinterestSelect: !this.state.pinterestSelect,
+            linkedinSelect: false,
+            facebookSelect: false,
+            twitterSelect: false
         }));
     };
 
@@ -51,82 +81,101 @@ class SelectChannelsModal extends React.Component{
         const pinterestChannels = channelSelector(channels, {selected: undefined, provider: "pinterest"});
 
         return (
-            <div className="modal-content">
-                <button className="upgrade-btn m10" onClick={this.onAddAccountsClick}><i className="fa fa-plus"></i> Add accounts</button>
+            <div className="modal-content main-modal-style">
+                <div className="modal-header-container">
+                    <h3>Select social accounts</h3>
+                    <button className="default-white-btn" onClick={this.onAddAccountsClick}><span className="cus-plus-icon">+</span> Add accounts</button>
+                </div>
+                
                 <div className="modal-body scrollable-400 scrollbar">
-                    
-                    {!!twitterChannels.length &&
-                        <h3 className="bg-heading" onClick={this.toggleTwitterSelect}>
-                        <i className="fa fa-twitter"> </i> Twitter
-                        {this.state.twitterSelect ? <i className="fa fa-minus pull-right"> </i> : <i className="fa fa-plus pull-right"> </i> }
-                        </h3>
-                    }
-                    {!!twitterChannels.length && this.state.twitterSelect &&
-                        
-                        twitterChannels.map((channel) => (
-                                <label key={channel.id} className="channel-item selection-container">
-                                    <input type={twitterSelectType} onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="twitter_channel" />
-                                    <span className={`checkmark ${twitterSelectType == 'radio' ? 'round' : ''}`}></span>
-                                    <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
-                                </label>
-                        )
-                    )}
-        
-                    {!!facebookChannels.length &&
-                        <h3 className="bg-heading" onClick={this.toggleFacebookSelect}>
-                        <i className="fa fa-facebook"> </i> Facebook
-                        {this.state.facebookSelect ? <i className="fa fa-minus pull-right"> </i> : <i className="fa fa-plus pull-right"> </i> }
-                        </h3>
-                    }
-                    {!!facebookChannels.length && this.state.facebookSelect &&
-                        
-                        facebookChannels.map((channel) => (
-                                <label key={channel.id} className="channel-item selection-container">
-                                    <input type="checkbox" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="facebook_channel" />
-                                    <span className="checkmark"></span>
-                                    <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
-                                </label>
-                        )
-                    )}
 
-                    {!!linkedinChannels.length &&
-                        <h3 className="bg-heading" onClick={this.toggleLinkedinSelect}>
-                        <i className="fa fa-linkedin"> </i> Linkedin
-                        {this.state.linkedinSelect ? <i className="fa fa-minus pull-right"> </i> : <i className="fa fa-plus pull-right"> </i> }
-                        </h3>
-                    }
-                    {!!linkedinChannels.length && this.state.linkedinSelect &&
-                        
-                        linkedinChannels.map((channel) => (
-                                <label key={channel.id} className="channel-item selection-container">
-                                    <input type="checkbox" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="linkedin_channel" />
-                                    <span className="checkmark"></span>
-                                    <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
-                                </label>
-                        )
-                    )}
+                    <div className="modal-menu col-md-4">
 
-                    {!!pinterestChannels.length &&
-                        <h3 className="bg-heading" onClick={this.togglePinterestSelect}>
-                        <i className="fa fa-pinterest"> </i> Pinterest
-                        {this.state.pinterestSelect ? <i className="fa fa-minus pull-right"> </i> : <i className="fa fa-plus pull-right"> </i> }
-                        </h3>
-                    }
-                    {!!pinterestChannels.length &&                                                                                                                                                                          this.state.pinterestSelect &&
+                        <ul>
+                            {!!twitterChannels.length &&
+                                <li onClick={this.toggleTwitterSelect} className={this.state.twitterSelect && 'selected'}>
+                                 <i className="fa fa-twitter twitter_color"> </i> <p>Twitter</p>
+                                </li>
+                            }
+
+                            {!!facebookChannels.length &&
+                                <li onClick={this.toggleFacebookSelect} className={this.state.facebookSelect && 'selected'}>
+                                <i className="fa fa-facebook facebook_color"> </i> Facebook
+                                </li>
+                            }
+
+                            {!!linkedinChannels.length &&
+                                <li onClick={this.toggleLinkedinSelect} className={this.state.linkedinSelect && 'selected'}>
+                                <i className="fa fa-linkedin linkedin_color"> </i> Linkedin
+                                </li>
+                            }
+
+                            {!!pinterestChannels.length &&
+                                <li onClick={this.togglePinterestSelect} className={this.state.pinterestSelect && 'selected'}>
+                                <i className="fa fa-pinterest pinterest_color"> </i> Pinterest
+                                </li>
+                            }
+                            
+                        </ul>
+                    </div>
+                    <div className="modal-results col-md-8">
+                        {!!twitterChannels.length && this.state.twitterSelect &&
                         
-                        pinterestChannels.map((channel) => (
-                                <label key={channel.id} className="channel-item selection-container">
-                                    <input type="checkbox" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="pinterest_channel" />
-                                    <span className="checkmark"></span>
-                                    <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
-                                </label>
-                        )
-                    )}
+                            twitterChannels.map((channel) => (
+                                <div className={`channel-selection-container ${channel.selected && 'selected'}` }>
+                                    <label key={channel.id} className="channel-item selection-container">
+                                        <input type={twitterSelectType} onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="twitter_channel" />
+                                        <span className={`checkmark ${twitterSelectType == 'radio' ? 'round' : ''}`}></span>
+                                        <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
+                                    </label>
+                                </div>    
+                            )
+                        )}
+
+                        {!!facebookChannels.length && this.state.facebookSelect &&
+                        
+                            facebookChannels.map((channel) => (
+                                <div className={`channel-selection-container ${channel.selected && 'selected'}` }>
+                                    <label key={channel.id} className="channel-item selection-container">
+                                        <input type="checkbox" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="facebook_channel" />
+                                        <span className="checkmark"></span>
+                                        <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
+                                    </label>
+                                </div>    
+                            )
+                        )}
+
+                        {!!linkedinChannels.length && this.state.linkedinSelect &&
+                        
+                            linkedinChannels.map((channel) => (
+                                <div className={`channel-selection-container ${channel.selected && 'selected'}` }>
+                                    <label key={channel.id} className="channel-item selection-container">
+                                        <input type="checkbox" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="linkedin_channel" />
+                                        <span className="checkmark"></span>
+                                        <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
+                                    </label>
+                                </div>    
+                            )
+                        )}
+
+                        {!!pinterestChannels.length &&                                                                                                                                                                          this.state.pinterestSelect &&
+                            
+                            pinterestChannels.map((channel) => (
+                                <div className={`channel-selection-container ${channel.selected && 'selected'}` }>
+                                    <label key={channel.id} className="channel-item selection-container">
+                                        <input type="checkbox" onChange={() => onChange(channel)} defaultChecked={channel.selected ? "checked" : ""} name="pinterest_channel" />
+                                        <span className="checkmark"></span>
+                                        <img className="avatar-box" onError={(e) => e.target.src='/images/dummy_profile.png'} src={channel.avatar} /> {channel.name}
+                                    </label>
+                                </div>
+                            )
+                        )}
+                    </div>
                 </div>
         
                 <div className="modal-footer">
-                    <div onClick={toggle} className="publish-btn-group gradient-background-teal-blue link-cursor pull-right">
-                        <button className="publish-btn naked-button">Done</button>
+                    <div onClick={toggle}>
+                        <button className="magento-btn small-btn">Done</button>
                     </div>
                 </div>
             </div>

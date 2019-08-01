@@ -1476,7 +1476,6 @@ button.streammaker-btn:hover {
 
 .ReactModalPortal .ReactModal__Content{
     position: static !important;
-    width: 300px;
 }
 
 .team-modal{
@@ -3835,6 +3834,7 @@ vertical-align: middle;
     font-size: 1.8rem;
     font-weight: 700;
 }
+
 .ReactModal__Content.ReactModal__Content--after-open.topicsModal {
     background: white;
     border-radius: 5px;
@@ -3850,9 +3850,143 @@ vertical-align: middle;
     padding-right: 0;
 }
 
-.ReactModal__Content.ReactModal__Content--after-open.topicsModal .small-btn{
+.small-btn{
     width: auto;
     padding: 10px 30px;
+}
+
+.modal-header-container h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.modal-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e1e1e1;
+    padding-bottom: 15px;
+}
+
+.main-modal-style {
+    padding: 15px;
+    width: 700px;
+}
+
+.main-modal-style .modal-body, .main-modal-style .modal-footer{
+    padding: 20px 0 5px 0;
+}
+
+.modal-menu {
+    padding: 0;
+    border-right: 1px solid #e1e1e1;
+}
+
+.modal-menu li > i {
+    display: block;
+    font-size: 2.5rem;
+    width: 30px;
+}
+
+.modal-menu li > p{
+    margin: 0;
+}
+
+.modal-menu ul li {
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.modal-menu li.selected {
+    background: #e5e5e5;
+    box-sizing: border-box;
+    border-left: 3px solid #747D95;
+    padding: 10px 7px;
+}
+
+.modal-menu li:hover {
+    background: #eee;
+    box-sizing: border-box;
+}
+
+.modal-results .selection-container input:checked ~ .checkmark {
+    background-color: #485576;
+}
+
+.modal-results .checkmark {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+}
+
+.modal-results .selection-container .checkmark:after {
+    top: 6px;
+    left: 6px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+}
+
+.modal-results .channel-selection-container {
+    border: 1px solid #e1e1e1;
+    align-items: center;
+    padding: 5px 5px;
+    margin-bottom: 10px;
+    display: flex;
+    border-radius: 5px;
+}
+
+.modal-results .channel-selection-container.selected {
+    border: 1px solid #485576;
+}
+
+.modal-results .channel-selection-container label {
+    margin-bottom: 0;
+    font-size: 1.3rem;
+    font-family: open-sansLight, sans-serif;
+    color: #485576;
+}
+
+.modal-results .channel-selection-container label > img {
+    border: 1px solid #e5e5e5;
+    border-radius: 100px;
+    margin-right: 5px;
+}
+
+.modal-dialog.modal-dialog-centered.compose-dialog .main-modal-style {
+    margin-left: -80px;
+}
+
+.cus-plus-icon {
+    font-size: 1.9rem;
+    margin-right: 5px;
+    font-family: open-sansLight, arial, sans-serif;
+}
+
+button.default-white-btn {
+    background: none;
+    border: 1px solid #e1e1e1;
+    padding: 3px 15px;
+    border-radius: 100px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #485576;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+button.default-white-btn:hover{
+    border: 1px solid #485576;
 }
 
 
