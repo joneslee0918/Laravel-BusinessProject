@@ -1481,7 +1481,7 @@ button.streammaker-btn:hover {
 .team-modal{
     width:inherit !important;
     background: white;
-    padding: 20px;
+    border-radius: 5px;
     max-height: 90vh;
     overflow: auto !important;
 }
@@ -1974,7 +1974,7 @@ button.streammaker-btn:hover {
 
 .compose-btn, .compose-btn:link, .compose-btn:hover, .compose-btn:active, .compose-btn:visited {
     background: linear-gradient(to right, #48BBB8, #438AF1);
-    color: white;
+    color: white !important;
     padding: 6px 20px;
     border-radius: 20px;
     text-decoration: none;
@@ -2641,25 +2641,22 @@ button.streammaker-btn:hover {
     color: #777;
 }
 
-.t-action-menu {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
 .t-action-menu > button, .t-action-menu > a{
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 5px;
+    text-align: left;
     border: none;
-    padding: 5px 15px;
+    padding: 10px 25px;
+    width: 100%;
     outline: none;
-    background: #47b9ba;
+    background:white;
+    color: #a8a8a8;
+    font-family: open-sansLight, Arial;
+}
+
+.t-action-menu > button:hover, .t-action-menu > a:hover{
+    background: #485576;
     color: white;
-    border-radius: 5px;
-    font-family: open-sansSemiBold, Arial;
 }
 
 .menu-with-icons > button, .menu-with-icons > a{
@@ -3874,8 +3871,68 @@ vertical-align: middle;
     width: 700px;
 }
 
+.main-modal-style .custom-control {
+    display: flex;
+    align-items: center;
+}
+
 .main-modal-style .modal-body, .main-modal-style .modal-footer{
     padding: 20px 0 5px 0;
+}
+
+.main-modal-style .seperator {
+    border-top: 1px solid #e1e1e1;
+    margin: 20px 0;
+}
+
+.mb20{
+    margin-bottom: 20px;
+}
+
+.mb15 {
+    margin-bottom: 15px;
+}
+
+.bolden{
+    font-weight: bold !important;
+}
+
+.main-modal-style .btn-link {
+    color: #212121;
+}
+
+.main-modal-style .custom-control label {
+    padding: 0;
+    margin: 0;
+}
+
+.clearer{
+    overflow:hidden;
+    clear: both;
+}
+
+.main-modal-style input {
+    background: none;
+    box-shadow: none;
+    border: 1px solid #c5c5c5;
+    color: #212121;
+    font-family: open-sansLight, arial, sans-serif;
+    outline: none;
+}
+
+.main-modal-style label {
+    font-family: open-sansLight, sans-serif;
+    text-transform: capitalize;
+    color: #212121;
+}
+
+.main-modal-style [class ^= "col-"] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.main-modal-style [class ^= "col-"]:not(:last-child) {
+    padding-right: 10px;
 }
 
 .modal-menu {
@@ -3974,8 +4031,7 @@ vertical-align: middle;
 
 button.default-white-btn {
     background: none;
-    border: 1px solid #e1e1e1;
-    padding: 3px 15px;
+    border: 1px solid #e1e1e1;    padding: 3px 15px;
     border-radius: 100px;
     font-size: 1.2rem;
     font-weight: bold;
