@@ -223,7 +223,7 @@ class UpdateTeamMember extends React.Component{
                     <div className="form-group">
 
                         <div class="mb20 clearer">
-                            <button onClick={this.toggleSelectChannelsModal} className="default-white-btn pull-right" > <span className="cus-plus-icon"></span>Select Social Accounts</button>
+                            <button onClick={this.toggleSelectChannelsModal} className="default-white-btn pull-right" ><span className="cus-plus-icon">+</span>Select Social Accounts</button>
                         </div>
                         
                         <div className="clearer team-form scrollbar">
