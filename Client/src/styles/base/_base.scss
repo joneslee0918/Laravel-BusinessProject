@@ -3852,10 +3852,14 @@ vertical-align: middle;
     padding: 10px 30px;
 }
 
-.modal-header-container h3 {
+.modal-header-container h3, .main-content-style h3 {
     font-size: 1.8rem;
     font-weight: bold;
     margin: 0;
+}
+
+.main-content-style h3{
+    margin: 10px 0 30px;
 }
 
 .modal-header-container {
@@ -3871,18 +3875,32 @@ vertical-align: middle;
     width: 700px;
 }
 
-.main-modal-style .custom-control {
+.main-content-style {
+    padding: 15px;
+    width: 1200px;
+    margin: 30px auto;
+}
+
+.main-modal-style .custom-control, .main-content-style .custom-control {
     display: flex;
     align-items: center;
 }
 
-.main-modal-style .modal-body, .main-modal-style .modal-footer{
+.main-modal-style .modal-body, .main-modal-style .modal-footer {
     padding: 20px 0 5px 0;
 }
 
-.main-modal-style .seperator {
+.main-modal-style .seperator, .main-content-style .seperator {
     border-top: 1px solid #e1e1e1;
-    margin: 20px 0;
+    margin: 30px 0;
+    overflow: hidden;
+    clear: both;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 .mb20{
@@ -3897,11 +3915,11 @@ vertical-align: middle;
     font-weight: bold !important;
 }
 
-.main-modal-style .btn-link {
+.main-modal-style .btn-link, .main-content-style .btn-link {
     color: #212121;
 }
 
-.main-modal-style .custom-control label {
+.main-modal-style .custom-control label, .main-content-style .custom-control label {
     padding: 0;
     margin: 0;
 }
@@ -3911,28 +3929,28 @@ vertical-align: middle;
     clear: both;
 }
 
-.main-modal-style input {
+.main-modal-style input, .main-content-style input, .main-modal-style select, .main-content-style select {
     background: none;
     box-shadow: none;
     border: 1px solid #c5c5c5;
     color: #212121;
     font-family: open-sansLight, arial, sans-serif;
-    outline: none;
+    outline: none !important;
 }
 
-.main-modal-style label {
+.main-modal-style label, .main-content-style label {
     font-family: open-sansLight, sans-serif;
     text-transform: capitalize;
     color: #212121;
 }
 
-.main-modal-style [class ^= "col-"] {
+.main-modal-style [class ^= "col-"], .main-content-style [class ^= "col-"] {
     padding-right: 0;
     padding-left: 0;
 }
 
-.main-modal-style [class ^= "col-"]:not(:last-child) {
-    padding-right: 10px;
+.main-modal-style [class ^= "col-"]:not(:last-child), .main-content-style [class ^= "col-"]:not(:last-child) {
+    padding-right: 20px;
 }
 
 .modal-menu {
