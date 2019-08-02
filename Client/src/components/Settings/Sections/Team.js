@@ -7,6 +7,7 @@ import {getTeamMembers, getTeams} from '../../../requests/team';
 import {LoaderWithOverlay} from "../../Loader";
 import SweetAlert from 'sweetalert2-react';
 import {removeMember} from '../../../requests/team';
+import SocialAccountsPrompt from '../../SocialAccountsPrompt';
 
 class Team extends React.Component{
 
@@ -214,10 +215,14 @@ class Team extends React.Component{
 
                     </div>
                     :
-                    <div className="no-data">
-                        You don't have any member in your team.
-                        <div><button onClick={this.toggleAddOrUpdateMember} className="btn compose-btn">Add New Team Member</button></div>
-                    </div>)
+
+                    <SocialAccountsPrompt 
+                        image = "/images/hello_bubble_smiley.svg"
+                        title = "Let's start by adding new members!"
+                        description = "To add members to your team, click the button below."
+                        buttonTitle = "Add new member"
+                        action = {this.toggleAddOrUpdateMember}
+                    /> )
                 }
             </div>
         );
