@@ -163,7 +163,7 @@ class UpdateTeamMember extends React.Component{
 
     render(){
         return (
-            <div className="main-modal-style">
+            <div>
             <Modal isOpen={this.state.selectChannelsModal} closeTimeoutMS={300} ariaHideApp={false} className="flex-center modal-no-radius no-outline">
                 <SelectChannelsModal 
                 channels={this.state.publishChannels} 
@@ -174,13 +174,10 @@ class UpdateTeamMember extends React.Component{
                 />
             </Modal>
 
-            <div className="modal-header-container">
-                <h3>Add new team member</h3>   
-            </div>
 
+                <h2 className="blend-title">ADD NEW MEMBER</h2>   
                 {this.state.loading && <LoaderWithOverlay/>}
 
-            <div className="modal-body">
                 {this.state.error && 
                     <div className="alert alert-danger">{this.state.error}</div>
                 }
@@ -190,21 +187,19 @@ class UpdateTeamMember extends React.Component{
                 }
 
                 <div className="profile-form">
-                    <div className="team-form scrollbar">
+                    <div className="form-group shadow-box team-form scrollbar">
     
                         <div className="col-6 col-md-6 form-field">
-                            <label htmlFor="name">Name</label>
+                            <label htmlFor="name">NAME</label>
                             <input type="text" className="form-control" onChange={(e) => this.onFieldChange(e)} id="name" value={this.state.name} placeholder="John Doe" />
                         </div>
         
                         <div className="col-6 col-md-6 form-field">
-                            <label htmlFor="email">Email</label>
+                            <label htmlFor="email">EMAIL</label>
                             <input type="email" className="form-control" id="email" onChange={(e) => this.onFieldChange(e)} value={this.state.email} placeholder="johndoe@example.com" />
                         </div>
-                    </div>
 
-                    <div class="clearer">
-                        <div className="col-6 col-md-6">
+                        <div className="col-6 col-md-6 form-field">
                             <div className="custom-control custom-switch">
                                 {
                                    !!this.state.admin ?
@@ -216,44 +211,27 @@ class UpdateTeamMember extends React.Component{
                                 <label className="custom-control-label" htmlFor="admin">&nbsp;Make Admin</label>
                             </div>
                         </div>
+
                     </div>
 
-                    <div className="seperator"></div>
+                    <div className="form-group shadow-box">
 
-                    <div className="form-group">
-
-                        <div class="mb20 clearer">
-                            <button onClick={this.toggleSelectChannelsModal} className="default-white-btn pull-right" ><span className="cus-plus-icon">+</span>Select Social Accounts</button>
+                        <div>
+                            <button onClick={this.toggleSelectChannelsModal} className="btn compose-btn" >Add/Remove Social Accounts</button>
                         </div>
                         
-                        <div className="clearer team-form scrollbar">
-
-                            {!!this.state.assignedChannels.length && <div>
-                                
-                                <div className="col-6 col-md-6 mb15">
-                                    
-                                    <label class="bolden">Assign Social Account</label>
-
-                                </div>
-
-                                
-                                <div className="col-6 col-md-6 mb15">
-                                
-                                    <label class="bolden">Permission Level</label>
-
-                                </div>
-
-                            </div>}
+                        <div className="team-form scrollbar">
+                            <br />
 
                             {this.state.assignedChannels.map((channel, index) => (
                             <div key={index}>
                                 <div className="col-6 col-md-6 form-field">
-                                    
+                                    <label htmlFor={`channel-${channel.id}`}>ASSIGN SOCIAL ACCOUNT</label>
                                     <input type="text" value={`${channel.name} - ${channel.type}`} className="form-control whiteBg" onClick={this.toggleSelectChannelsModal} readOnly id={`channel-${channel.id}`} placeholder="Name of the social account" />
                                 </div>
 
                                 <div className="col-6 col-md-6 form-field">
-                                    
+                                    <label htmlFor={`permission-${channel.id}`}>PERMISSION LEVEL</label>
                                     <select id={`permission-${channel.id}`} onChange={(e) => this.setPermissionLevel(e, channel.id)} value={channel.permissionLevel} className="form-control">
                                         <option value="member">Approval Required</option>
                                         <option value="publisher">Publisher</option>
@@ -264,15 +242,11 @@ class UpdateTeamMember extends React.Component{
 
         
                     </div>
-                </div>
-                                
-                <div className="modal-footer">
+        
                     <div>
-                        <button className="magento-btn small-btn pull-right" onClick={this.onSubmit}>Submit</button>
+                        <button className="upgrade-btn pull-right" onClick={this.onSubmit}>Submit</button>
                         <button onClick={this.props.close} className="btn btn-link pull-right">Cancel</button>
                     </div>
-                </div>
-
                 </div>
             </div>
         );

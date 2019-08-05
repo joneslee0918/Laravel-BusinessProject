@@ -36,13 +36,6 @@ export const getPlans = () => {
         });
 }
 
-export const getPlanData = () => {
-    return axios.get(`${apiUrl}/billing/plan-data`)
-        .then((response) => {
-            return response.data;
-        });
-}
-
 export const cancelSubscription = () => {
     return axios.post(`${apiUrl}/billing/subscription/cancel`)
         .then((response) => {

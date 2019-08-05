@@ -450,7 +450,7 @@ const UserActionButtons = ({actionButton, perform, replyState, setReplyState, se
                 close => ( 
                     <div className="t-action-menu">
                         {!!actionButton && <button  onClick={perform} className={`${actionButton.disabled ? 'disabled-btn' : ''}`}>
-                        {actionButton.action == "add" ? "Follow" : "Unfollow"}
+                            <i className={`fa ${actionButton.actionSymbol}`}></i>{actionButton.action == "add" ? "Follow" : "Unfollow"}
                         </button>}
                         {(actionButton.action == "add" || page == "following") && <button onClick={() => setDMState({disabled: !DMState.disabled, content: ``})}>DM</button>}
                         {(actionButton.action == "add" || page == "following") && <button onClick={() => setReplyState({disabled: !replyState.disabled, content: `@${userItem.screen_name} `})}>Reply</button>}

@@ -54,13 +54,6 @@ class BillingController extends Controller
         return ["plans"=>$plans, "subscription"=>$subscription, "addon"=>$addon];
     }
 
-    public function getPlanData() {
-        $allPlans = Role::formattedForDisplay();
-        $paidPlans = Role::where("name", "!=", "free")->formattedForDisplay();
-        $addon = RoleAddon::first();
-    	return compact('allPlans', 'paidPlans', 'addon');
-    }
-
     public function createSubscription(Request $request)
     {
         $token = $request->input('token');

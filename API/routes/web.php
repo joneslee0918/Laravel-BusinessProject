@@ -1,6 +1,7 @@
 <?php
 use function GuzzleHttp\json_decode;
 use App\Model\User;
+use DeepCopy\f006\A;
 
 set_time_limit (200);
 /*
@@ -47,11 +48,16 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $team = User::find(1);
-//     $channel = $team->channels()->first();
-//    // $channel->select($team);
+    $user = App\Models\User::find(12);
 
-    return response()->json($team->teamMembers()->count());
+    $user->notify(new \App\Notifications\User\UserSignUp());
+
+    // return response()->json($team->teamMembers()->count());
+});
+
+Route::get('mailable', function () {
+
+    return new App\Mail\DependOnSocialAccountsSecond();
 });
 
 Route::get('/jobs', function(){
