@@ -3938,6 +3938,14 @@ vertical-align: middle;
     outline: none !important;
 }
 
+.main-content-style h5{
+    font-weight:bold;
+}
+
+.magento-color {
+    color: #B358B3;
+}
+
 .main-modal-style label, .main-content-style label {
     font-family: open-sansLight, sans-serif;
     text-transform: capitalize;
@@ -4063,6 +4071,130 @@ button.default-white-btn:hover{
     border: 1px solid #485576;
 }
 
+.included-feature p {
+    margin-bottom: 0;
+}
+.included-feature img {
+    margin-right: 10px;
+    width: 20px;
+    display: block;
+}
+
+.included-feature {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    height: 30px;
+}
+
+.billing-toggle {
+    font-size: 16px;
+    font-weight: 700;
+}
+.pricing-plans {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.plan {
+    flex: 1 1 auto;
+    margin: 5px;
+}
+.plan-name-container {
+    padding: 40px 0;
+}
+.plan-name {
+    font-size: 20px;
+    font-weight:700;
+}
+.plan-price-container {
+    padding: 20px 0;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+}
+.plan-price {
+    font-size:34px;
+    font-weight: 700;
+}
+.billed-period {
+    font-size: 16px;
+}
+.plan-content-container {
+    padding: 40px 10px;
+}
+.plan-items {
+    padding: 8px 0;
+    text-align: left;
+    font-weight: 700;
+}
+.plan-button-container {
+    padding: 0px 10px 50px 10px;
+}
+.plan-see-more {
+    font-size: 16px;
+    padding-top: 20px;
+}
+.plan-see-more a {
+    color: #489FD7;
+    text-decoration: none;
+}
+.plan-shadow {
+    -webkit-box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
+-moz-box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
+box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
+}
+.plan-price-btn {
+    background: #b358b3;
+    color: #fff;
+    border-radius: 30px;
+    font-size: 16px;
+    width: 100%;
+    font-weight: 500;
+}
+.color-theme-btn {
+    background: #b358b3;
+    color:#ffffff;
+}
+.color-theme-btn:hover {
+    background: #b358b3;
+    color:#ffffff;
+}
+.plan-price-btn:hover, .plan-price-btn:focus {
+    color: #FFFFFF;
+}
+.text-box {
+    margin-top:20px;
+    font-size: 16px;
+    padding: 40px 15px;
+}
+.text-box a {
+    color: #489FD7;
+    text-decoration: none;
+}
+.compare-plans-container {
+    margin-top: 100px;
+}
+.compare-plans-table th{
+   padding: 15px;
+   text-align: center;
+}
+.compare-plans-table tr td {
+    padding: 20px 10px;
+    font-size: 20px;
+    font-weight: 700;
+}
+.grey-tr {
+    background-color: #F1F2F4;
+}
+.plan-table-text {
+    font-size: 14px!important;
+    font-weight: 500!important;
+}
+
+table.compare-plans-table {
+    margin: 0 auto;
+    text-align: center;
+}
 
 @keyframes lds-ripple {
     0% {
