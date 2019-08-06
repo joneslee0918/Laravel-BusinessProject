@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\Role;
 use App\Models\User;
-use App\Mail\UserSignUp;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -66,15 +64,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'role_id' => Role::first()->id,
             'password' => Hash::make($data['password']),
         ]);
-
-        $user->notify(new \App\Notifications\User\UserSignUp());
-
-        return $user;
     }
 }

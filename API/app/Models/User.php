@@ -7,7 +7,6 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
-use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -159,36 +158,36 @@ class User extends Authenticatable
     }
 
     public function selectedChannel()
-    {
+    {   
         if($selectedChannelModel = $this->selectedChannelModel()->where("network", "global")->first()){
             $channel = $this->getChannel($selectedChannelModel->channel_id);
             if($channel) return $channel;
         }
-
+        
         $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
         return Channel::whereIn("id", $channelIds)->first();
     }
 
     public function twitterChannels()
-    {
+    {   
         $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
         return Twitter\Channel::whereIn("channel_id", $channelIds);
     }
 
     public function facebookChannels()
-    {
+    {   
         $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
         return Facebook\Channel::whereIn("channel_id", $channelIds);
     }
 
     public function linkedinChannels()
-    {
+    {   
         $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
         return Linkedin\Channel::whereIn("channel_id", $channelIds);
     }
 
     public function pinterestChannels()
-    {
+    {   
         $channelIds = $this->memberChannels()->pluck("channel_id")->merge($this->channels()->pluck("id"));
         return Pinterest\Channel::whereIn("channel_id", $channelIds);
     }
@@ -260,10 +259,5 @@ class User extends Authenticatable
     public function roleAddons()
     {
         return $this->belongsToMany(RoleAddon::class, "user_role_addons", "user_id", "addon_id");
-    }
-
-    public function isOld($hours)
-    {
-        return strtotime($this->created_at) <= strtotime(Carbon::now()->subHours($hours));
     }
 }
