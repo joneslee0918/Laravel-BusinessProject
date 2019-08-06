@@ -9,7 +9,8 @@ import Loader from '../../Loader';
 class BillingProfile extends React.Component {
     
     state = {
-        allPlans: []
+        allPlans: [],
+        billingPeriod: "annually"
     }
 
     componentDidMount() {
@@ -30,6 +31,10 @@ class BillingProfile extends React.Component {
         cancelAddon(addon).then(response => {
             this.props.startSetProfile();
         });
+    };
+
+    setBillingPeriod = () => {
+        this.setState(() => ({billingPeriod: this.state.billingPeriod === "annually" ? "monthly" : "annually"}));
     };
 
     render(){
@@ -61,7 +66,7 @@ class BillingProfile extends React.Component {
                         </div>
                     </div>
 
-                    <div className="col-md-12">
+                    <div className="clearer clearfix">
                         <h5>What's included</h5>
 
                         <div className="col-md-3">
@@ -158,6 +163,46 @@ class BillingProfile extends React.Component {
                             </div>
                         </div>}
                     </div>
+
+                    {planData["Name"] !== "Free" &&<div className="seperator"></div>}
+
+                    {planData["Name"] !== "Free" && <div className="">
+                        <div className="box billing channels-box">
+
+                            <div className="col-md-12 mb20">
+                                <h5>Billing Cycle</h5>
+                            </div>
+                            
+                            <div className="plan-box col-md-6 col-xs-12">
+                                <div className={`billingPeriodSelection col-md-12 ${this.state.billingPeriod === 'annually' && 'selected'}`}>
+
+                                    <label className="custom-radio-container">Annually
+                                        
+                                        <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "annually" ? "checked" : false} onChange={this.setBillingPeriod}/>
+                                    
+                                        <span className="checkmark"></span>
+                                    </label>
+
+                                    <p>${parseFloat(planData["Annual Billing"] / 12).toFixed(1)} / month</p>
+                                    <p>Billing annually for $400.00</p>
+                                </div>
+                            </div>
+                            <div className="plan-box col-md-6 col-xs-12">
+                                <div className={`billingPeriodSelection col-md-12 ${this.state.billingPeriod === 'monthly' && 'selected'}`}>
+
+                                    <label className="custom-radio-container">Monthly
+                                        
+                                        <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "monthly" ? "checked" : false} onChange={this.setBillingPeriod}/>
+                                    
+                                        <span className="checkmark"></span>
+                                    </label>
+
+                                    <p>${parseFloat(planData["Monthly"]).toFixed(1)} / month</p>
+                                    <p>Billing monthly for $50.00</p> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>}
 
                     {planData["Name"] !== "Free" && 
                     <div className="col-md-12">
