@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class DependOnSocialAccounts extends Notification implements ShouldQueue
+class AfterFourtyEightHours extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -33,8 +33,8 @@ class DependOnSocialAccounts extends Notification implements ShouldQueue
     public function via($notifiable)
     {
         if (
-            $this->user->exits()
-            && !\App\Models\Notification::existsForUser($this->user->id, "App\Notifications\User\DependOnSocialAccounts")
+            $this->user->isOld(48)
+            && !\App\Models\Notification::existsForUser($this->user->id, "App\Notifications\User\AfterFourtyEightHours")
         ) {
             return ['database', 'mail'];
         } else {
@@ -51,8 +51,8 @@ class DependOnSocialAccounts extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                ->view('emails.user.depend_on_social_accounts')
-                ->subject('Getting started is easy!');
+            ->view('emails.user.depend_on_social_accounts_second')
+            ->subject('Start building an awesome brand by connecting your social networks.');
     }
 
     /**

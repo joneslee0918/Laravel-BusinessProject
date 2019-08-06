@@ -7,12 +7,13 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class DependOnSocialAccountsSecond extends Notification implements ShouldQueue
+class AfterTenDays extends Notification implements ShouldQueue
 {
     use Queueable;
 
     private $user;
     public $tries = 3;
+
     /**
      * Create a new notification instance.
      *
@@ -32,8 +33,8 @@ class DependOnSocialAccountsSecond extends Notification implements ShouldQueue
     public function via($notifiable)
     {
         if (
-            $this->user->exits()
-            && !\App\Models\Notification::existsForUser($this->user->id, "App\Notifications\User\DependOnSocialAccountsSecond")
+            $this->user->isOld(10 * 24)
+            && !\App\Models\Notification::existsForUser($this->user->id, "App\Notifications\User\AfterTenDays")
         ) {
             return ['database', 'mail'];
         } else {
@@ -50,8 +51,8 @@ class DependOnSocialAccountsSecond extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                ->view('emails.user.depend_on_social_accounts_second')
-                ->subject('Start building an awesome brand by connecting your social networks.');
+            ->view('emails.user.depend_on_social_accounts_second')
+            ->subject('Start building an awesome brand by connecting your social networks.');
     }
 
     /**

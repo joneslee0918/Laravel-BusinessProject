@@ -5,8 +5,16 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use App\Models\User;
+use App\Models\Channel;
 use App\Notifications\User\AccountDisconnected;
-use App\Notifications\User\DependOnSocialAccounts;
+use App\Notifications\User\AfterFourteenDays;
+use App\Notifications\User\AfterSevenDays;
+use App\Notifications\User\AfterThirtyOneDays;
+use App\Notifications\User\AfterTwelveHours;
+use App\Notifications\User\AfterFourtyEightHours;
+use App\Notifications\User\AfterTenDays;
+use App\Notifications\User\AfterThirtyDays;
+use App\Notifications\User\AfterTwentyDays;
 use App\Notifications\User\DependOnSocialAccountsSecond;
 use App\Notifications\User\FiveHoursAfterSignUp;
 use App\Notifications\User\OneDayAfterSignUp;
@@ -47,11 +55,23 @@ class Notifier extends Command
         Command::info("Fetching channels...");
         if ($users = User::all()) {
             foreach ($users as $user) {
-                $user->notify((new AccountDisconnected($user)));
-                $user->notify((new DependOnSocialAccounts($user)));
-                $user->notify((new DependOnSocialAccountsSecond($user)));
-                $user->notify((new FiveHoursAfterSignUp($user)));
-                $user->notify((new OneDayAfterSignUp($user)));
+                $user->notify(new AfterFourteenDays($user));
+                $user->notify(new AfterSevenDays($user));
+                $user->notify(new AfterThirtyOneDays($user));
+                $user->notify(new AfterTwelveHours($user));
+                $user->notify(new DependOnSocialAccountsSecond($user));
+                $user->notify(new FiveHoursAfterSignUp($user));
+                $user->notify(new OneDayAfterSignUp($user));
+                $user->notify(new AfterFourtyEightHours($user));
+                $user->notify(new AfterTenDays($user));
+                $user->notify(new AfterThirtyDays($user));
+                $user->notify(new AfterTwentyDays($user));
+            }
+        }
+
+        if ($channels = Channel::all()) {
+            foreach ($channels as $channel) {
+                $user->notify((new AccountDisconnected($channel)));
             }
         }
 

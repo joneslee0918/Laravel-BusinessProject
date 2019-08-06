@@ -48,9 +48,9 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $user = App\Models\User::find(12);
+    $user = App\Models\User::find(11);
 
-    $user->notify(new \App\Notifications\User\UserSignUp());
+    return response()->json($user->isOld(12));
 
     // return response()->json($team->teamMembers()->count());
 });

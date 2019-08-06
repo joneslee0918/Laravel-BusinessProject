@@ -11,7 +11,7 @@ class AccountDisconnected extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private $user;
+    private $channel;
     public $tries = 3;
 
     /**
@@ -19,9 +19,9 @@ class AccountDisconnected extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($channel)
     {
-        $this->user = $user;
+        $this->channel = $channel;
     }
 
     /**
@@ -33,7 +33,7 @@ class AccountDisconnected extends Notification implements ShouldQueue
     public function via($notifiable)
     {
         if (
-            $this->user->exists()
+            $this->channel->active == 0
         ) {
             return ['database', 'mail'];
         } else {
