@@ -24,7 +24,6 @@ Route::middleware('auth:api')->group(function(){
 
     Route::post('/billing/change/plan', 'BillingController@changePlan');
     Route::get('/billing/plans', 'BillingController@getPlans');
-    Route::get('/billing/plan-data', 'BillingController@getPlanData');
     Route::post('/billing/activate/addon', 'BillingController@activateAddon');
     Route::post('/billing/cancel/addon', 'BillingController@cancelAddon');
     Route::post('/billing/subscription/create', 'BillingController@createSubscription');
