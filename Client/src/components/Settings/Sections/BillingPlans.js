@@ -3,14 +3,18 @@ import { connect } from 'react-redux';
 import { startSetProfile } from "../../../actions/profile";
 import { changePlan, getPlanData } from '../../../requests/billing';
 import UpgradeAlert from '../../UpgradeAlert';
-import Loader from '../../Loader';
+import SweetAlert from "sweetalert2-react";
+import Checkout from './Checkout';
+import Loader, {LoaderWithOverlay} from '../../Loader';
 
 class BillingPlans extends React.Component {
     state = {
         allPlans: [],
         error: 'Please delete some accounts to correspond to the limits of your new plan.',
         redirect: '/accounts',
-        billingPeriod: "annually"
+        billingPeriod: this.props.profile.subscription.annual ? "annually" : "monthly",
+        planChange: false,
+        loading: false
     }
 
     componentDidMount() {
@@ -22,10 +26,18 @@ class BillingPlans extends React.Component {
     }
 
     onPlanClick = (plan) => {
+
+        this.setState(() => ({
+            planChange: false,
+            loading: true
+        }));
+
         changePlan(plan).then(response => {
             this.props.startSetProfile();
+            this.setLoading();
         }).then()
             .catch(error => {
+                this.setLoading();
                 if (error.response.status === 403) {
                     this.setState(() => ({
                         forbidden: true,
@@ -48,9 +60,53 @@ class BillingPlans extends React.Component {
         }));
     };
 
+    setPlanChange = (planName) => {
+        this.setState(() => ({
+            planChange: planName
+        }));
+    };
+
+    setLoading = (loading = false) => {
+        this.setState(() => ({
+          loading
+        }));
+    };
+
     render() {
         const {allPlans} = this.state;
         const {profile} = this.props;
+        const planHeading = allPlans.map((plan, index) => {
+            const btnText = plan["Name"] === "Free" ? "Get for free" : "Start Trial";
+            const planName = this.state.billingPeriod === "annually" ? plan["Name"].toLowerCase() + "_annual" : plan["Name"].toLowerCase();
+
+            let planButton = "";
+                if(profile.role.name === plan["Name"].toLowerCase()){
+                    planButton = <a className="btn plan-price-btn disabled-btn" data-period="annually" href="javascript:void(0);">Current Plan</a>;
+                }else if(plan["Name"] == "Free" && profile.role.name !== "free"){
+                    planButton = <a className="btn plan-price-btn" onClick={() => this.onPlanClick("free")} href="javascript:void(0);">{btnText}</a>; 
+                }else if(profile.role.name !== "free"){
+                    planButton = <a className="btn plan-price-btn" onClick={() => this.setPlanChange(planName)} href="javascript:void(0);">Change plan</a>;
+                }else{
+                    planButton = (
+                    <Checkout 
+                        plan={planName} 
+                        subType="main" 
+                        trialDays={30} 
+                        setLoading={this.setLoading} 
+                        setProfile={this.props.startSetProfile} 
+                        text={btnText}>
+                        <a className="btn plan-price-btn" data-period="annually" href="javascript:void(0);">{btnText}</a>    
+                    </Checkout>);
+                }
+            
+            return (
+                <th key={`${index}-1`}>
+                    <h5>{plan["Name"]}</h5>
+                    {planButton}
+                </th>
+            );
+        });
+
         return (
             <div>
                 <UpgradeAlert
@@ -62,6 +118,23 @@ class BillingPlans extends React.Component {
                     type="info"
                     redirectUri={this.state.redirect}
                 />
+
+                
+                <SweetAlert
+                    show={!!this.state.planChange}
+                    title={`You are about to change to ${this.state.planChange}`}
+                    text="Do you wish to proceed with this change?"
+                    showCancelButton
+                    type="info"
+                    confirmButtonText="Yes"
+                    cancelButtonText="No"
+                    onConfirm={() => {
+                        this.onPlanClick(this.state.planChange);
+                    }}
+                    onCancel={() => this.setPlanChange(false)}
+                />
+
+                {this.state.loading && <LoaderWithOverlay />}
                 {allPlans.length > 0 ? 
                 <div className="container">
 
@@ -88,18 +161,7 @@ class BillingPlans extends React.Component {
 
                                     <th>
                                     </th>
-                                    {allPlans.map((plan, index) => {
-                                        return (
-                                            <th key={`${index}-1`}>
-                                                <h5>{plan["Name"]}</h5>
-                                                {   profile.role.name === plan["Name"].toLowerCase() ?
-                                                    <a className="btn plan-price-btn disabled-btn" data-period="annually" href="javascript:void();">Start trial</a>
-                                                    :
-                                                    <a className="btn plan-price-btn" data-period="annually" onClick={() => this.onPlanClick(plan["Name"].toLowerCase())} href="javascript:void();">Start trial</a>
-                                                }
-                                            </th>
-                                        );
-                                    })}
+                                    {planHeading}
 
                                 </tr>
                             </thead>
@@ -108,9 +170,9 @@ class BillingPlans extends React.Component {
                                     <td className="fs14 text-left">Monthly</td>
                                     {allPlans.map((plan, index) => {
                                         if(plan["Monthly"] > 0)
-                                        return <td key={`${index}-2`} className={`${profile.role.name === plan["Name"].toLowerCase() && "disabled-btn"}`}>${plan["Monthly"]}</td>
+                                            return <td key={`${index}-2`} className={`${profile.role.name === plan["Name"].toLowerCase() && "disabled-btn"}`}>${plan["Monthly"]}</td>
                                         else
-                                        return <td key={`${index}-2`} className={`${profile.role.name === plan["Name"].toLowerCase() && "disabled-btn"}`}></td>
+                                            return <td key={`${index}-2`} className={`${profile.role.name === plan["Name"].toLowerCase() && "disabled-btn"}`}></td>
                                     })}
                                     
                                 </tr>
@@ -237,18 +299,7 @@ class BillingPlans extends React.Component {
                                 <tr>
                                     <th>
                                     </th>
-
-                                    {allPlans.map((plan, index) => {
-                                        return (
-                                            <th key={`${index}-16`}>
-                                                <h5>{plan["Name"]}</h5>
-                                                {   profile.role.name === plan["Name"].toLowerCase() ?
-                                                    <a className="btn plan-price-btn disabled-btn" data-period="annually" href="javascript:void();">Start trial</a>
-                                                    :
-                                                    <a className="btn plan-price-btn" data-period="annually" onClick={() => this.onPlanClick(plan["Name"].toLowerCase())} href="javascript:void();">Start trial</a>
-                                                }
-                                            </th>)
-                                    })}
+                                    {planHeading}
                                     
                                 </tr>
                             </thead>

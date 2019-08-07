@@ -2,15 +2,23 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startSetProfile } from "../../../actions/profile";
-import { changePlan, activateAddon, cancelAddon, getPlanData } from '../../../requests/billing';
-import Loader from '../../Loader';
+import { changePlan, activateAddon, cancelAddon, getPlanData, resumeSubscription, cancelSubscription } from '../../../requests/billing';
+import SweetAlert from "sweetalert2-react";
+import UpgradeAlert from '../../UpgradeAlert';
+import Checkout from './Checkout';
+import Loader, {LoaderWithOverlay} from '../../Loader';
 
 
 class BillingProfile extends React.Component {
     
     state = {
         allPlans: [],
-        billingPeriod: "annually"
+        billingPeriod: this.props.profile.subscription.annual ? "annually" : "monthly",
+        loading: false,
+        forbidden: false,
+        planChange: false,
+        planCancel: false,
+        planResume: false
     }
 
     componentDidMount() {
@@ -21,6 +29,31 @@ class BillingProfile extends React.Component {
         });
     }
 
+    onPlanClick = (plan) => {
+
+        this.setState(() => ({
+            planChange: false,
+            loading: true
+        }));
+
+        changePlan(plan).then(response => {
+            this.props.startSetProfile();
+            this.setLoading();
+        }).then()
+            .catch(error => {
+                this.setLoading();
+                if (error.response.status === 403) {
+                    this.setState(() => ({
+                        forbidden: true,
+                        error: error.response.data.error,
+                        redirect: error.response.data.redirect  
+                    }))
+                } else {
+                    this.setError("Something went wrong!");
+                }
+            });
+    };
+
     onAddonClick = (addon) => {
         activateAddon(addon).then(response => {
             this.props.startSetProfile();
@@ -28,8 +61,26 @@ class BillingProfile extends React.Component {
     };
 
     onAddonCancel = (addon) => {
+        this.setLoading(true);
         cancelAddon(addon).then(response => {
+            this.setLoading(false);
             this.props.startSetProfile();
+        });
+    };
+
+    cancelPlan = () => {
+        this.setLoading(true);
+        cancelSubscription().then(response => {
+          this.props.startSetProfile();
+          this.setLoading(false);
+        });
+    };
+    
+    resumePlan = (type) => {
+        this.setLoading(true);
+        resumeSubscription(type).then(response => {
+            this.props.startSetProfile();
+            this.setLoading(false);
         });
     };
 
@@ -37,15 +88,101 @@ class BillingProfile extends React.Component {
         this.setState(() => ({billingPeriod: this.state.billingPeriod === "annually" ? "monthly" : "annually"}));
     };
 
+    setForbidden = (forbidden = false) => {
+        this.setState(() => ({
+          forbidden
+        }));
+    };
+    
+    setLoading = (loading = false) => {
+        this.setState(() => ({
+            loading
+        }));
+    };
+
+    setPlanChange = (planName) => {
+        this.setState(() => ({
+            planChange: planName
+        }));
+    };
+
+    setPlanCancel = (cancel = true) => {
+        this.setState(() => ({
+            planCancel: cancel
+        }));
+    };
+
+    setPlanResume = (resume = true) => {
+        this.setState(() => ({
+            planResume: resume
+        }));
+    };
+
     render(){
        const {allPlans} = this.state;
        const {profile} = this.props;
        let planData = allPlans.filter(plan => plan["Name"].toLowerCase() === profile.role.name);
        planData = planData.length > 0 ? planData[0] : false;
-       console.log(planData);
 
        return (
             <div>
+                {this.state.loading && <LoaderWithOverlay />}
+
+                <UpgradeAlert
+                    isOpen={this.state.forbidden}
+                    setForbidden={this.setForbidden}
+                    title="Change required"
+                    confirmBtn="Accounts"
+                    text={this.state.error}
+                    type="info"
+                    redirectUri={this.state.redirect}
+                />
+
+                <SweetAlert
+                    show={!!this.state.planChange}
+                    title={`You are about to change your billing period`}
+                    text={`Do you wish to proceed with this change for ${this.state.planChange}?`}
+                    showCancelButton
+                    type="info"
+                    confirmButtonText="Yes"
+                    cancelButtonText="No"
+                    onConfirm={() => {
+                        this.onPlanClick(this.state.planChange);
+                        this.setBillingPeriod();
+                    }}
+                    onCancel={() => this.setPlanChange(false)}
+                />
+
+                <SweetAlert
+                    show={!!this.state.planCancel}
+                    title={`You are about to cancel your subscription`}
+                    text={`Do you really wish to cancel your current subscription?`}
+                    showCancelButton
+                    type="info"
+                    confirmButtonText="Yes"
+                    cancelButtonText="No"
+                    onConfirm={() => {
+                        this.cancelPlan();
+                        this.setPlanCancel(false);
+                    }}
+                    onCancel={() => this.setPlanCancel(false)}
+                />
+
+                <SweetAlert
+                    show={!!this.state.planResume}
+                    title={`You are about to continue your subscription`}
+                    text={`Do you wish to proceed with your current subscription?`}
+                    showCancelButton
+                    type="info"
+                    confirmButtonText="Yes"
+                    cancelButtonText="No"
+                    onConfirm={() => {
+                        this.resumePlan("main");
+                        this.setPlanResume(false);
+                    }}
+                    onCancel={() => this.setPlanResume(false)}
+                />
+
                 {!!planData ? <div className="shadow-box main-content-style">
                     <h3>Plan Type</h3>
 
@@ -178,13 +315,13 @@ class BillingProfile extends React.Component {
 
                                     <label className="custom-radio-container">Annually
                                         
-                                        <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "annually" ? "checked" : false} onChange={this.setBillingPeriod}/>
+                                        <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "annually" ? "checked" : false} onChange={() => this.setPlanChange(planData["Name"].toLowerCase()+"_annual")}/>
                                     
                                         <span className="checkmark"></span>
                                     </label>
 
                                     <p>${parseFloat(planData["Annual Billing"] / 12).toFixed(1)} / month</p>
-                                    <p>Billing annually for $400.00</p>
+                                    <p>Billing annually for ${parseFloat(planData["Annual Billing"]).toFixed(1)}</p>
                                 </div>
                             </div>
                             <div className="plan-box col-md-6 col-xs-12">
@@ -192,13 +329,13 @@ class BillingProfile extends React.Component {
 
                                     <label className="custom-radio-container">Monthly
                                         
-                                        <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "monthly" ? "checked" : false} onChange={this.setBillingPeriod}/>
+                                        <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "monthly" ? "checked" : false} onChange={() => this.setPlanChange(planData["Name"].toLowerCase())}/>
                                     
                                         <span className="checkmark"></span>
                                     </label>
 
                                     <p>${parseFloat(planData["Monthly"]).toFixed(1)} / month</p>
-                                    <p>Billing monthly for $50.00</p> 
+                                    <p>Billing monthly for ${parseFloat(planData["Monthly"]).toFixed(1)}</p> 
                                 </div>
                             </div>
                         </div>
@@ -206,7 +343,11 @@ class BillingProfile extends React.Component {
 
                     {planData["Name"] !== "Free" && 
                     <div className="col-md-12">
-                        <button className="magento-btn mt20 small-btn">Cancel plan</button>
+                        {   profile.subscription.onGracePeriod ?
+                            <button className="magento-btn mt20 small-btn" onClick={() => this.setPlanResume()}>Resume plan</button>
+                            :
+                            <button className="magento-btn mt20 small-btn" onClick={() => this.setPlanCancel()}>Cancel plan</button>
+                        }
                     </div>}
                     
                 </div>                
@@ -264,10 +405,23 @@ class BillingProfile extends React.Component {
                     </div>
 
                     <div className="col-md-12">
-                        {   profile.roleAddons.length > 0 && profile.roleAddons[0].name === "twitter_growth" ?
+                        {   profile.addon.activeAddon && !profile.addon.addonOnGracePeriod ?
                             <button className="magento-btn mt20 small-btn" onClick={() => this.onAddonCancel('twitter_growth')}>Cancel addon</button>
                             :
-                            <button className="magento-btn mt20 small-btn" onClick={() => this.onAddonClick('twitter_growth')}>Purchase addon</button>
+                            
+                            (profile.addon.addonOnGracePeriod ?
+                            <button className="magento-btn mt20 small-btn" onClick={() => this.resumePlan('addon')}>Resume addon</button>
+                            :
+                            <Checkout 
+                                plan="twitter_growth" 
+                                subType="addon" 
+                                trialDays={0} 
+                                setLoading={this.setLoading} 
+                                setProfile={this.props.startSetProfile} 
+                                text="">
+                                <button className="magento-btn mt20 small-btn">Purchase addon</button>   
+                            </Checkout>)
+                            
                         }
                     </div>
                     

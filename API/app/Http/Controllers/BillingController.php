@@ -78,8 +78,10 @@ class BillingController extends Controller
                 $user->newSubscription($subType, $plan)->create($id);
             }
 
+            $roleName = explode("_", $plan)[0];
+
             if($subType == "main"){
-                $role = Role::where("name", $plan)->first();
+                $role = Role::where("name", $roleName)->first();
                 if (!$role) return response()->json(["error" => "Plan not found"], 404);
 
                 $user->role_id = $role->id;
@@ -131,7 +133,8 @@ class BillingController extends Controller
     {
 
         $plan = $request->input('plan');
-        $role = Role::where("name", $plan)->first();
+        $roleName = explode("_", $plan)[0];
+        $role = Role::where("name", $roleName)->first();
         if(!$role) return response()->json(["error" => "Plan not found"], 404);
 
         $user = $this->user;
@@ -141,7 +144,7 @@ class BillingController extends Controller
         if($user->teamMembers()->count() + 1 > $role->roleLimit->team_accounts) 
             return response()->json(["error" => 'Please delete some team accounts to correspond to the limits of your new plan.', "redirect" => "/settings/team"], 403);
 
-        // $user->subscription('main')->swap($plan);
+        $user->subscription('main')->swap($plan);
 
         $user->role_id = $role->id;
         $user->save();
@@ -166,7 +169,7 @@ class BillingController extends Controller
         try {
             $user = $this->user;
 
-            //$user->subscription('addon')->cancel();
+            $user->subscription('addon')->cancel();
 
             $addon = $request->input('addon');
             $roleAddon = RoleAddon::where("name", $addon)->first();

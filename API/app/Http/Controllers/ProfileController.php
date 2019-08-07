@@ -41,6 +41,7 @@ class ProfileController extends Controller
             "currentPlan" => $currentPLan,
             "activeSubscription" => $activeSubscription,
             "onGracePeriod" => $onGracePeriod,
+            "annual" => $activeSubscription ? strrpos($this->user->subscription("main")->stripe_plan, "annual") !== false : false
         ];
 
         $addon = [
