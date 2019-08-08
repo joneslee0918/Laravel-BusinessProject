@@ -32,13 +32,7 @@ class AccountDisconnected extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        if (
-            $this->channel->active == 0
-        ) {
-            return ['database', 'mail'];
-        } else {
-            return [];
-        }
+        return ['database', 'mail'];
     }
 
     /**
@@ -50,7 +44,7 @@ class AccountDisconnected extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                ->view('emails.user.account_disconnected')
+                ->view('emails.user.account_disconnected', ['channel' => $this->channel])
                 ->subject('Action required: Social networks disconnected');
     }
 

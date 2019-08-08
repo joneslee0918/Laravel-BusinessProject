@@ -135,24 +135,24 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><img align="center" alt="Image" border="0" class="center autowidth" src="images/email-img-1.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 592px; display: block;" title="Image" width="592"/>
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 50px; padding-bottom: 10px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#555555;font-family:'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif;line-height:150%;padding-top:50px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 18px; color: #555555;">
-<p style="font-size: 14px; line-height: 21px; text-align: center; margin: 0;"><strong><span style="font-family:'Quicksand'!important; font-size: 34px; line-height: 51px;">Welcome to UniClix</span></strong></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 50px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#555555;font-family Verdana, Segoe, sans-serif;line-height:150%;padding-top:50px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 18px; color: #555555;">
+<p style="font-size: 14px; line-height: 21px; text-align: center; margin: 0;"><strong><span style="font-size: 34px; line-height: 51px;">Welcome to UniClix</span></strong></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#555555;font-family:'Quicksand   ', 'Quicksand', Verdana, Segoe, sans-serif;line-height:150%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 18px; color: #555555;">
-<p style="font-size: 14px; line-height: 27px; text-align: center; margin: 0;"><span style="font-family:'Quicksand'; font-size: 18px;">Welcome to UniClix—the social media management platform used by over 16 million professionals and the world’s most loved brands.</span></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:150%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 18px; color: #555555;">
+<p style="font-size: 14px; line-height: 27px; text-align: center; margin: 0;"><span style=" font-size: 18px;">Welcome to UniClix—the social media management platform used by over 16 million professionals and the world’s most loved brands.</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 20px; padding-bottom: 40px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#555555;font-family:'Quicksand   ', 'Quicksand', Verdana, Segoe, sans-serif;line-height:120%;padding-top:20px;padding-right:10px;padding-bottom:40px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 19px; text-align: center; margin: 0;"><span style="font-family:'Quicksand'; font-size: 16px;">Follow these steps to get your dashboard set up without breaking a sweat.</span></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 20px; padding-bottom: 40px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:20px;padding-right:10px;padding-bottom:40px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
+<p style="font-size: 14px; line-height: 19px; text-align: center; margin: 0;"><span style=" font-size: 16px;">Follow these steps to get your dashboard set up without breaking a sweat.</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
@@ -176,24 +176,24 @@
 <!--[if (!mso)&(!IE)]><!-->
 <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
 <!--<![endif]-->
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#555555;font-family:'Quicksand   ', 'Quicksand', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 16px; margin: 0;"><strong><span style="font-family:'Quicksand'; font-size: 20px; line-height: 24px;">Add your social networks</span></strong></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
+<p style="font-size: 14px; line-height: 16px; margin: 0;"><strong><span style=" font-size: 20px; line-height: 24px;">Add your social networks</span></strong></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#555555;font-family:'Quicksand   ', 'Quicksand', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 21px; margin: 0;"><span style="font-family:'Quicksand'; font-size: 18px;">Add up to 10 social networks to the Hootsuite dashboard to start managing your social media in one place.</span></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
+<p style="font-size: 14px; line-height: 21px; margin: 0;"><span style=" font-size: 18px;">Add up to 10 social networks to the Hootsuite dashboard to start managing your social media in one place.</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#555555;font-family:'Quicksand   ', 'Quicksand', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style="font-family:'Quicksand'; text-decoration: underline; font-size: 14px; line-height: 16px;">Follow these simple steps.</span></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
+<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style=" text-decoration: underline; font-size: 14px; line-height: 16px;">Follow these simple steps.</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
@@ -249,24 +249,24 @@
 <!--[if (!mso)&(!IE)]><!-->
 <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:40px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
 <!--<![endif]-->
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#555555;font-family:'Quicksand   ', 'Quicksand', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 16px; margin: 0;"><strong><span style="font-family:'Quicksand'; font-size: 20px; line-height: 24px;">Schedule a message</span></strong></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
+<p style="font-size: 14px; line-height: 16px; margin: 0;"><strong><span style=" font-size: 20px; line-height: 24px;">Schedule a message</span></strong></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#555555;font-family:'Quicksand   ', 'Quicksand', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 21px; margin: 0;"><span style="font-family:'Quicksand'; font-size: 18px;">Save time and avoid interruptions by scheduling social media posts in advance.</span></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
+<p style="font-size: 14px; line-height: 21px; margin: 0;"><span style=" font-size: 18px;">Save time and avoid interruptions by scheduling social media posts in advance.</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#555555;font-family:'Quicksand   ', 'Quicksand', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style="font-family:'Quicksand'; text-decoration: underline; font-size: 14px; line-height: 16px;">Schedule your first message.</span></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
+<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style=" text-decoration: underline; font-size: 14px; line-height: 16px;">Schedule your first message.</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
@@ -294,24 +294,24 @@
 <!--[if (!mso)&(!IE)]><!-->
 <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:40px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
 <!--<![endif]-->
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#555555;font-family:'Quicksand   ', 'Quicksand', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 24px; margin: 0;"><span style="font-family:'Quicksand'; font-size: 20px; font-weight:700;">Create a stream</span></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
+<p style="font-size: 14px; line-height: 24px; margin: 0;"><span style=" font-size: 20px; font-weight:700;">Create a stream</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#555555;font-family:'Quicksand   ', 'Quicksand', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 21px; margin: 0;"><span style="font-family:'Quicksand'; font-size: 18px;">Streams let you monitor keywords and social media activity that are relevant to your business in real time.</span></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
+<p style="font-size: 14px; line-height: 21px; margin: 0;"><span style=" font-size: 18px;">Streams let you monitor keywords and social media activity that are relevant to your business in real time.</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#555555;font-family:'Quicksand   ', 'Quicksand', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style="font-family:'Quicksand'; text-decoration: underline; font-size: 14px; line-height: 16px;">Start listening.</span></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
+<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style=" text-decoration: underline; font-size: 14px; line-height: 16px;">Start listening.</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
@@ -351,10 +351,10 @@
 <!--[if (!mso)&(!IE)]><!-->
 <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:30px; padding-bottom:30px; padding-right: 0px; padding-left: 0px;">
 <!--<![endif]-->
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#485576;font-family:'Quicksand   ', 'Quicksand', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #485576;">
-<p style="font-size: 14px; line-height: 21px; text-align: center; margin: 0;"><span style="font-family:'Quicksand'; font-size: 18px;">P.S. Visit our <span style="text-decoration: underline; font-size: 18px; line-height: 21px;">Help Center</span> if you have any questions.</span></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#485576;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #485576;">
+<p style="font-size: 14px; line-height: 21px; text-align: center; margin: 0;"><span style=" font-size: 18px;">P.S. Visit our <span style="text-decoration: underline; font-size: 18px; line-height: 21px;">Help Center</span> if you have any questions.</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
@@ -395,10 +395,10 @@
 </tr>
 </tbody>
 </table>
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 20px; padding-bottom: 45px; font-family: 'Quicksand', Verdana, sans-serif"><![endif]-->
-<div style="color:#555555;font-family:'Quicksand   ', 'Quicksand', Verdana, Segoe, sans-serif;line-height:150%;padding-top:20px;padding-right:10px;padding-bottom:45px;padding-left:10px;">
-<div style="font-family: 'Quicksand', 'Quicksand', Verdana, Segoe, sans-serif; font-size: 12px; line-height: 18px; color: #555555;">
-<p style="font-size: 14px; line-height: 21px; text-align: center; margin: 0;"><span style="font-family:'Quicksand'; color: #ffffff; font-size: 14px; line-height: 21px;">This account notification was sent to you because you are a Hootsuite user. To update your email subscription please visit our email preference centre. Please note that you will continue to receive account notifications regardless of preference settings. View our privacy notice</span></p>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 20px; padding-bottom: 45px; font-family: Verdana, sans-serif"><![endif]-->
+<div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:150%;padding-top:20px;padding-right:10px;padding-bottom:45px;padding-left:10px;">
+<div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 18px; color: #555555;">
+<p style="font-size: 14px; line-height: 21px; text-align: center; margin: 0;"><span style=" color: #ffffff; font-size: 14px; line-height: 21px;">This account notification was sent to you because you are a Hootsuite user. To update your email subscription please visit our email preference centre. Please note that you will continue to receive account notifications regardless of preference settings. View our privacy notice</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->

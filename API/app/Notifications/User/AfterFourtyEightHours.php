@@ -34,6 +34,7 @@ class AfterFourtyEightHours extends Notification implements ShouldQueue
     {
         if (
             $this->user->isOld(48)
+            && $this->user->channels->count() <= 2
             && !\App\Models\Notification::existsForUser($this->user->id, "App\Notifications\User\AfterFourtyEightHours")
         ) {
             return ['database', 'mail'];

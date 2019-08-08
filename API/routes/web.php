@@ -48,9 +48,14 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $user = App\Models\User::find(13);
+    try {
+    $channel = \App\Models\Channel::first();
+    $channel->user->notify(new \App\Notifications\User\AccountDisconnected($channel));
+        //code...
+    } catch (\Exception $e) {
+        return response()->json($e);
+    }
 
-    $user->notify(new App\Notifications\User\UserSignUp());
 });
 
 Route::get('mailable', function () {

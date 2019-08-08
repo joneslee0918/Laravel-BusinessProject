@@ -15,9 +15,9 @@ use App\Notifications\User\AfterFourtyEightHours;
 use App\Notifications\User\AfterTenDays;
 use App\Notifications\User\AfterThirtyDays;
 use App\Notifications\User\AfterTwentyDays;
-use App\Notifications\User\DependOnSocialAccountsSecond;
 use App\Notifications\User\FiveHoursAfterSignUp;
 use App\Notifications\User\OneDayAfterSignUp;
+use App\Notifications\User\UserSignUp;
 
 class Notifier extends Command
 {
@@ -52,7 +52,7 @@ class Notifier extends Command
      */
     public function handle()
     {
-        Command::info("Fetching channels...");
+        Command::info("Fetching users...");
         if ($users = User::all()) {
             foreach ($users as $user) {
                 $user->notify(new AfterFourteenDays($user));
@@ -68,11 +68,11 @@ class Notifier extends Command
             }
         }
 
-        if ($channels = Channel::all()) {
-            foreach ($channels as $channel) {
-                $user->notify((new AccountDisconnected($channel)));
-            }
-        }
+        // if ($channels = Channel::all()) {
+        //     foreach ($channels as $channel) {
+        //         $channel->user->notify((new AccountDisconnected($channel)));
+        //     }
+        // }
 
         Command::info("DONE");
     }
