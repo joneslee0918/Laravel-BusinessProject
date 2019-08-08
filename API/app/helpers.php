@@ -35,20 +35,21 @@ function formatBigNums($input){
 
 function getErrorResponse($e, $channel = false){
     $error = strtolower($e->getMessage());
-    if(str_contains($error, "log in") 
-    || str_contains($error, "token") 
-    || str_contains($error, "session") 
-    || str_contains($error, "denied") 
+    if(str_contains($error, "log in")
+    || str_contains($error, "token")
+    || str_contains($error, "session")
+    || str_contains($error, "denied")
     || str_contains($error, "permission")
     || str_contains($error, "authorization")
     || str_contains($error, "authentication")){
 
-        if($channel){
+        if($channel && $channel->active==1){
             $channel->active = 0;
             // $channel->select();
             $channel->save();
+            $channel->user->notify(new \App\Notifications\User\AccountDisconnected($channel));
         }
-        
+
         $username = $channel->details->name;
         $type = $channel->type;
         return response()->json(['error' => $error, 'message' => "Your $type account \"$username\" needs to be reconnected.", "network" => $type], 401);
@@ -57,12 +58,12 @@ function getErrorResponse($e, $channel = false){
 }
 
 function exchangeFBToken($accessToken)
-{   
+{
     try {
 
         $fb = app(\SammyK\LaravelFacebookSdk\LaravelFacebookSdk::class);
         $fb->setDefaultAccessToken($accessToken);
-        
+
         $oauthClient = $fb->getOAuth2Client();
         $token = $oauthClient->getLongLivedAccessToken($accessToken);
 

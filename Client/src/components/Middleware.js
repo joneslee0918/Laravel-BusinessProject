@@ -299,7 +299,7 @@ class Middleware extends React.Component{
                     onSave={this.onFacebookPagesSave}
                     error={this.state.error}
                 />
-                {middleware !== "loading" && <h2>{middleware === "channels" ? "Connect your social profiles." : "Start Your Free Trial"}</h2>}
+                {middleware !== "loading" && <h2>{middleware === "channels" ? "Connect your social profiles." : ((!(!!addon) && addonTrial) || !!planParam ? "Start Your Free Trial" : "Boost Your Twitter")}</h2>}
                 {middleware !== "channels" && middleware !== "billing" && <Loader />}
                 {loading && <LoaderWithOverlay />}
                 
