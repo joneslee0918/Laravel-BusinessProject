@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\RoleAddon;
+use Carbon\Carbon;
 
 class BillingController extends Controller
 {
@@ -160,6 +161,12 @@ class BillingController extends Controller
 
         $user = $this->user;
         $user->roleAddons()->attach($roleAddon->id);
+
+        $userAddon = \DB::table('user_role_addons')->where("addon_id", $roleAddon->id)->where("user_id", $user->id)->first();
+
+        if($userAddon && is_null($userAddon->trial_ends_at) && !$user->subscribed("addon")){
+            \DB::table('user_role_addons')->where("addon_id", $roleAddon->id)->where("user_id", $user->id)->update(["trial_ends_at" => Carbon::now()->addDays($roleAddon->trial_days)]);
+        }
 
         return response()->json(["success" => true], 200);
     }

@@ -47,8 +47,6 @@ class OAuthController extends Controller
             'password' => Hash::make($request->input('password')),
         ]);
 
-        $user->notify(new \App\Notifications\User\UserSignUp());
-
         return response()->json($user->createToken("Password Token"));
     }
 
@@ -59,7 +57,7 @@ class OAuthController extends Controller
 
         $user = User::where('email', $email)->first();
 
-        if(!$user || !Hash::check($password, $user->password)) return response()->json(["error" => "Incorrect email or password."], 404);
+        if(!$user || !Hash::check($password, $user->password)) return response()->json(["error" => "Incorrect email or password."], 404); 
 
         return response()->json($user->createToken("Password Token"));
     }

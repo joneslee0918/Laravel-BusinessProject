@@ -1,7 +1,5 @@
 <?php
 use function GuzzleHttp\json_decode;
-use App\Model\User;
-use DeepCopy\f006\A;
 
 set_time_limit (200);
 /*
@@ -48,19 +46,11 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    try {
-    $channel = \App\Models\Channel::first();
-    $channel->user->notify(new \App\Notifications\User\AccountDisconnected($channel));
-        //code...
-    } catch (\Exception $e) {
-        return response()->json($e);
-    }
+    $team = App\Models\User::first();
+//     $channel = $team->channels()->first();
+//    // $channel->select($team);
 
-});
-
-Route::get('mailable', function () {
-
-    return new App\Mail\DependOnSocialAccountsSecond();
+    return response()->json($team->hasRole("twitter_growth"));
 });
 
 Route::get('/jobs', function(){
