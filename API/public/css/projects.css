@@ -362,6 +362,12 @@ box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
     display:none;
 }
 
+.montly-annual.text-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 @media only screen and (max-width:990px){
     .p-first-section h1 {
         padding-top: 0px;

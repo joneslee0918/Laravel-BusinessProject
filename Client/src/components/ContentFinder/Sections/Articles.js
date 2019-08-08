@@ -170,8 +170,10 @@ class Articles extends React.Component {
                     isOpen={this.state.isTopicsModalOpen}
                     ariaHideApp={false}
                     closeTimeoutMS={300}
+                    className="topicsModal"
                     >       
-                    <form onSubmit={(e) => this.addTopic(e)}>  
+                    <form onSubmit={(e) => this.addTopic(e)}> 
+                        <h3>Add Topics</h3>
                         <div className="form-group flex_container-center">
                             <div>
                                 {this.state.topics.length >= 15 ?
@@ -181,9 +183,6 @@ class Articles extends React.Component {
                                 }
                                 
                             </div>
-                            <div>
-                                <button className="btn btn-default right-radius">Add</button>
-                            </div>
                         </div>
                     </form>
 
@@ -192,8 +191,8 @@ class Articles extends React.Component {
                         <div key={index} className="addedItemLabels">{topic} <span className="fa fa-times link-cursor" onClick={() => this.removeTopic(index)}></span></div>  
                         ))}
                         
-                        <div className="center-inline top-border p10 m10-top">
-                            <button className="upgrade-btn" onClick={this.onTopicsSave}>Save</button>
+                        <div className="right-inline top-border p10 m10-top">
+                            <button className="magento-btn small-btn" onClick={this.onTopicsSave}>Add</button>
                         </div>
                 </Modal>
                 

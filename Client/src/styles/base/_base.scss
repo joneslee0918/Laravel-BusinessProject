@@ -262,6 +262,7 @@ input {
     padding:10px 15px;
     text-align:left;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .plan-box .billingPeriodSelection.selected{
@@ -482,13 +483,38 @@ input {
     border-bottom: 1px solid #e2e2e2;
 }
 
-.addedItemLabels{
-    display: inline-block;
-    background: #48b6be;
+.addedItemLabels > span {
+    display:none;
+}
+
+.addedItemLabels:hover > span {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: -1px;
+    top: -1px;
     color: white;
-    padding: 5px;
+    background: #485576;
+    font-size: 7px;
+    text-align: center;
+    border-radius: 100px;
+    vertical-align: middle;
+    line-height: 1.6;
+    width: 11px;
+    height: 11px;
+}
+
+.addedItemLabels {
+    display: inline-block;
+    background: #efefef;
+    color: #485576;
+    padding: 5px 20px;
     font-weight: bold;
+    font-size: 1.2rem;
     margin: 5px;
+    border-radius: 5px;
+    position: relative;
 }
 
 .v-center-align{
@@ -1451,13 +1477,12 @@ button.streammaker-btn:hover {
 
 .ReactModalPortal .ReactModal__Content{
     position: static !important;
-    width: 300px;
 }
 
 .team-modal{
     width:inherit !important;
     background: white;
-    padding: 20px;
+    border-radius: 5px;
     max-height: 90vh;
     overflow: auto !important;
 }
@@ -1950,7 +1975,7 @@ button.streammaker-btn:hover {
 
 .compose-btn, .compose-btn:link, .compose-btn:hover, .compose-btn:active, .compose-btn:visited {
     background: linear-gradient(to right, #48BBB8, #438AF1);
-    color: white;
+    color: white !important;
     padding: 6px 20px;
     border-radius: 20px;
     text-decoration: none;
@@ -2617,25 +2642,22 @@ button.streammaker-btn:hover {
     color: #777;
 }
 
-.t-action-menu {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
 .t-action-menu > button, .t-action-menu > a{
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 5px;
+    text-align: left;
     border: none;
-    padding: 5px 15px;
+    padding: 10px 25px;
+    width: 100%;
     outline: none;
-    background: #47b9ba;
+    background:white;
+    color: #a8a8a8;
+    font-family: open-sansLight, Arial;
+}
+
+.t-action-menu > button:hover, .t-action-menu > a:hover{
+    background: #485576;
     color: white;
-    border-radius: 5px;
-    font-family: open-sansSemiBold, Arial;
 }
 
 .menu-with-icons > button, .menu-with-icons > a{
@@ -3784,6 +3806,468 @@ display: inline-block;
 text-align: left;
 vertical-align: middle;
 }
+
+.ReactModal__Content.ReactModal__Content--after-open.topicsModal .form-group{
+    margin-bottom: 0;
+}
+
+.ReactModal__Content.ReactModal__Content--after-open.topicsModal .form-group > div {
+    width: 100%;
+}
+.ReactModal__Content.ReactModal__Content--after-open.topicsModal input {
+    border-radius: 100px;
+    width: 100%;
+    padding: 15px;
+    height: 38px;
+    box-shadow: none;
+    outline: none;
+    margin: 10px 0;
+    border: 1px solid #e1e1e1;
+}
+
+.ReactModal__Content.ReactModal__Content--after-open.topicsModal h3 {
+    border-bottom: 1px solid #e1e1e1;
+    margin-top: 0;
+    padding-bottom: 10px;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.ReactModal__Content.ReactModal__Content--after-open.topicsModal {
+    background: white;
+    border-radius: 5px;
+    max-width: 500px;
+    width: 500px;
+    padding: 15px;
+}
+
+.ReactModal__Content.ReactModal__Content--after-open.topicsModal .right-inline{
+    border-top:1px solid #e1e1e1;
+    text-align: right;
+    padding-bottom: 0;
+    padding-right: 0;
+}
+
+.small-btn{
+    width: auto;
+    padding: 10px 30px;
+}
+
+.modal-header-container h3, .main-content-style h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.main-content-style h3{
+    margin: 10px 0 30px;
+}
+
+.modal-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e1e1e1;
+    padding-bottom: 15px;
+}
+
+.main-modal-style {
+    padding: 15px;
+    width: 700px;
+}
+
+.main-content-style {
+    padding: 15px;
+    width: 1200px;
+    margin: 30px auto;
+}
+
+.main-modal-style .custom-control, .main-content-style .custom-control {
+    display: flex;
+    align-items: center;
+}
+
+.main-modal-style .modal-body, .main-modal-style .modal-footer {
+    padding: 20px 0 5px 0;
+}
+
+.main-modal-style .seperator, .main-content-style .seperator {
+    border-top: 1px solid #e1e1e1;
+    margin: 30px 0;
+    overflow: hidden;
+    clear: both;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.mb20{
+    margin-bottom: 20px;
+}
+
+.mb15 {
+    margin-bottom: 15px;
+}
+
+.bolden{
+    font-weight: bold !important;
+}
+
+.main-modal-style .btn-link, .main-content-style .btn-link {
+    color: #212121;
+}
+
+.main-modal-style .custom-control label, .main-content-style .custom-control label {
+    padding: 0;
+    margin: 0;
+}
+
+.clearer{
+    overflow:hidden;
+    clear: both;
+}
+
+.main-modal-style input, .main-content-style input, .main-modal-style select, .main-content-style select {
+    background: none;
+    box-shadow: none;
+    border: 1px solid #c5c5c5;
+    color: #212121;
+    font-family: open-sansLight, arial, sans-serif;
+    outline: none !important;
+}
+
+.main-content-style h5{
+    font-weight:bold;
+}
+
+.magento-color {
+    color: #B358B3;
+}
+
+.main-modal-style label, .main-content-style label {
+    font-family: open-sansLight, sans-serif;
+    text-transform: capitalize;
+    color: #212121;
+}
+
+.main-modal-style [class ^= "col-"], .main-content-style [class ^= "col-"] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.main-modal-style [class ^= "col-"]:not(:last-child), .main-content-style [class ^= "col-"]:not(:last-child) {
+    padding-right: 20px;
+}
+
+.modal-menu {
+    padding: 0;
+    border-right: 1px solid #e1e1e1;
+}
+
+.modal-menu li > i {
+    display: block;
+    font-size: 2.5rem;
+    width: 30px;
+}
+
+.modal-menu li > p{
+    margin: 0;
+}
+
+.modal-menu ul li {
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.modal-menu li.selected {
+    background: #e5e5e5;
+    box-sizing: border-box;
+    border-left: 3px solid #747D95;
+    padding: 10px 7px;
+}
+
+.modal-menu li:hover {
+    background: #eee;
+    box-sizing: border-box;
+}
+
+.modal-results .selection-container input:checked ~ .checkmark {
+    background-color: #485576;
+}
+
+.modal-results .checkmark {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+}
+
+.modal-results .selection-container .checkmark:after {
+    top: 6px;
+    left: 6px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+}
+
+.modal-results .channel-selection-container {
+    border: 1px solid #e1e1e1;
+    align-items: center;
+    padding: 5px 5px;
+    margin-bottom: 10px;
+    display: flex;
+    border-radius: 5px;
+}
+
+.modal-results .channel-selection-container.selected {
+    border: 1px solid #485576;
+}
+
+.modal-results .channel-selection-container label {
+    margin-bottom: 0;
+    font-size: 1.3rem;
+    font-family: open-sansLight, sans-serif;
+    color: #485576;
+}
+
+.modal-results .channel-selection-container label > img {
+    border: 1px solid #e5e5e5;
+    border-radius: 100px;
+    margin-right: 5px;
+}
+
+.modal-dialog.modal-dialog-centered.compose-dialog .main-modal-style {
+    margin-left: -80px;
+}
+
+.cus-plus-icon {
+    font-size: 1.9rem;
+    margin-right: 5px;
+    font-family: open-sansLight, arial, sans-serif;
+}
+
+button.default-white-btn {
+    background: none;
+    border: 1px solid #e1e1e1;    padding: 3px 15px;
+    border-radius: 100px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #485576;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+button.default-white-btn:hover{
+    border: 1px solid #485576;
+}
+
+.included-feature p {
+    margin-bottom: 0;
+}
+.included-feature img {
+    margin-right: 10px;
+    width: 20px;
+    display: block;
+}
+
+.included-feature {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    height: 30px;
+}
+
+.billing-toggle {
+    font-size: 16px;
+    font-weight: 700;
+}
+.pricing-plans {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.plan {
+    flex: 1 1 auto;
+    margin: 5px;
+}
+.plan-name-container {
+    padding: 40px 0;
+}
+.plan-name {
+    font-size: 20px;
+    font-weight:700;
+}
+.plan-price-container {
+    padding: 20px 0;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+}
+.plan-price {
+    font-size:34px;
+    font-weight: 700;
+}
+.billed-period {
+    font-size: 16px;
+}
+.plan-content-container {
+    padding: 40px 10px;
+}
+.plan-items {
+    padding: 8px 0;
+    text-align: left;
+    font-weight: 700;
+}
+.plan-button-container {
+    padding: 0px 10px 50px 10px;
+}
+.plan-see-more {
+    font-size: 16px;
+    padding-top: 20px;
+}
+.plan-see-more a {
+    color: #489FD7;
+    text-decoration: none;
+}
+.plan-shadow {
+    -webkit-box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
+-moz-box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
+box-shadow: 0px 0px 20px 1px rgba(235,235,235,1);
+}
+.plan-price-btn {
+    background: #b358b3;
+    color: #fff;
+    border-radius: 30px;
+    font-size: 16px;
+    width: 100%;
+    font-weight: 500;
+}
+.color-theme-btn {
+    background: #b358b3;
+    color:#ffffff;
+}
+.color-theme-btn:hover {
+    background: #b358b3;
+    color:#ffffff;
+}
+.plan-price-btn:hover, .plan-price-btn:focus {
+    color: #FFFFFF;
+}
+.text-box {
+    margin-top:20px;
+    font-size: 16px;
+    padding: 40px 15px;
+}
+.text-box a {
+    color: #489FD7;
+    text-decoration: none;
+}
+.compare-plans-container {
+    margin-top: 100px;
+}
+.compare-plans-table th{
+   padding: 15px;
+   text-align: center;
+}
+.compare-plans-table tr td {
+    padding: 20px 10px;
+    font-size: 20px;
+    font-weight: 700;
+}
+.grey-tr {
+    background-color: #F1F2F4;
+}
+.plan-table-text {
+    font-size: 14px!important;
+    font-weight: 500!important;
+}
+
+table.compare-plans-table {
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+
+.main-content-style .plan-box {
+    padding: 0;
+}
+
+.main-content-style .plan-box:not(:last-child) {
+    padding: 0 20px 0 0;
+}
+
+.label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .label-text {
+    margin-left: 8px;
+  }
+  
+  .toggle {
+    isolation: isolate;
+    position: relative;
+    height: 24px;
+    width: 48px;
+    border-radius: 15px;
+    background: #d6d6d6;
+    overflow: hidden;
+  }
+  
+  .toggle-inner {
+    z-index: 2;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    height: 22px;
+    width: 46px;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+  
+  .active-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 200%;
+    background: #b358b3;
+    transform: translate3d(-100%, 0, 0);
+    transition: transform 0.05s linear 0.17s;
+  }
+  
+  .toggle-state {
+    display: none;
+  }
+  
+  .indicator {
+    height: 100%;
+    width: 200%;
+    background: white;
+    border-radius: 13px;
+    transform: translate3d(-75%, 0, 0);
+    transition: transform 0.35s cubic-bezier(0.85, 0.05, 0.18, 1.35);
+  }
+  
+  .toggle-state:checked ~ .active-bg {
+     transform: translate3d(-50%, 0, 0);
+  }
+  
+  .toggle-state:checked ~ .toggle-inner .indicator {
+     transform: translate3d(25%, 0, 0);
+  }
 
 @keyframes lds-ripple {
     0% {

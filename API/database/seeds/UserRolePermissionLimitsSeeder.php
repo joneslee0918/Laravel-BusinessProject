@@ -46,21 +46,21 @@ class UserRolePermissionLimitsSeeder extends Seeder
             ],
             [
                 "name" => "premium",
-                "trial_days" => 0,
+                "trial_days" => 30,
                 "description" => "Premium features",
                 "monthly_price" => 50,
                 "annual_price" => 500
             ],
             [
                 "name" => "pro",
-                "trial_days" => 0,
+                "trial_days" => 30,
                 "description" => "Pro features",
                 "monthly_price" => 90,
                 "annual_price" => 900
             ],
             [
                 "name" => "agency",
-                "trial_days" => 0,
+                "trial_days" => 30,
                 "description" => "Agency features",
                 "monthly_price" => 180,
                 "annual_price" => 1800
@@ -71,7 +71,7 @@ class UserRolePermissionLimitsSeeder extends Seeder
             [
                 "name" => "twitter_growth",
                 "description" => "Twitter growth features",
-                "trial_days" => 30,
+                "trial_days" => 3,
                 "monthly_price" => 10,
                 "annual_price" => 100
             ]

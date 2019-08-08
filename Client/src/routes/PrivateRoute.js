@@ -6,6 +6,12 @@ import Composer from "../components/Compose";
 import EmailChecker from "../components/EmailChecker";
 import ActiveChecker from "../components/ActiveChecker";
 import Middleware from "../components/Middleware";
+import SocialAccountsPrompt from "../components/SocialAccountsPrompt";
+
+import {
+    BrowserView,
+    MobileView
+  } from "react-device-detect";
 
 export const PrivateRoute = ({
     isAuthenticated, 
@@ -21,11 +27,25 @@ export const PrivateRoute = ({
             </div>
             :
             <div>
-                <TopMenu />
-                <Component {...props} />
-                <Composer />
-                <EmailChecker />
-                <ActiveChecker />
+                <BrowserView>
+                    <TopMenu />
+                    <Component {...props} />
+                    <Composer />
+                    <EmailChecker />
+                    <ActiveChecker />
+                </BrowserView>
+
+                <MobileView>
+                    <div className="p20">                    
+                        <SocialAccountsPrompt 
+                            image = "/images/hello_bubble_smiley.svg"
+                            title = "Please switch to desktop version!"
+                            description = "We support only the desktop version at the moment. Please hang in there, our mobile app is coming soon."
+                        />
+                    </div>
+  
+                </MobileView>
+
             </div>
         ) : (
             <Redirect to="/" />

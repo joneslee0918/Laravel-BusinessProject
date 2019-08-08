@@ -18,3 +18,5 @@ export const linkedinAppId = process.env.LINKEDIN_APP_ID ? process.env.LINKEDIN_
 
 export const pinterestAppId = process.env.PINTEREST_APP_ID ? process.env.PINTEREST_APP_ID : '5005154042182128975';
 
+export const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY ? process.env.STRIPE_PUBLISHABLE_KEY : "";
+
