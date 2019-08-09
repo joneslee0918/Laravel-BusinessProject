@@ -7,34 +7,20 @@ use App\Models\Role;
 use App\Models\RoleLimit;
 use App\Models\RoleAddon;
 
-trait NewPermissible
+trait Permissible
 {
     public function hasRole($roleName)
-    {  
-        if($roleName=="free") return true;
-
-        if ($this->subscribedToPlan($roleName, 'main')) {
-           return Role::where("id", $this->role_id)->where("name", strtolower($roleName))->exists() || $this->hasAddon($roleName);
-        }
-
-        if(!$this->subscribed('main')) {
-            $this->setRole("free");
-        }
-
-        return false;
+    {
+        return true; //Temporary
+        return Role::where("id", $this->role_id)->where("name", strtolower($roleName))->exists() || $this->hasAddon($roleName);
     }
 
     public function hasPermission($permission)
     {
-        $role = Role::where("id", $this->role_id)->first();
-
-        if ($role && $this->subscribedToPlan($role->name, 'main')) {
+        return true; //Temporary
+        if ($role = Role::where("id", $this->role_id)->first()) {
 
             return $role->permissions()->where("name", strtolower($permission))->exists() || $this->hasAddonPermission($permission);
-        }
-
-        if(!$this->subscribed('main')) {
-            $this->setRole("free");
         }
 
         return false;
@@ -42,15 +28,17 @@ trait NewPermissible
 
     public function hasAddon($addon)
     {
-        return $this->roleAddons()->where("name", strtolower($addon))->exists() && $this->subscribedToPlan($addon, 'addon');
+        return true; //Temporary
+        return $this->roleAddons()->where("name", strtolower($addon))->exists();
     }
 
     public function hasAddonPermission($permission)
     {
+        return true; //Temporary
         $addons = $this->roleAddons()->get();
 
-        foreach($addons as $addon){
-            if($addon->permissions()->where("name", strtolower($permission))->exists() && $this->subscribedToPlan($addon->name, 'addon')) return true;
+        foreach ($addons as $addon) {
+            if ($addon->permissions()->where("name", strtolower($permission))->exists()) return true;
         }
 
         return false;
@@ -70,14 +58,15 @@ trait NewPermissible
     {
         $addonName = strtolower($addonName);
 
-        if($addon = RoleAddon::where("name", $addonName)->first()){
+        if ($addon = RoleAddon::where("name", $addonName)->first()) {
             $this->roleAddons()->attach($addon->id);
         }
     }
 
     public function getLimit($type)
     {
-        if($limit = RoleLimit::where("role_id", $this->role_id)->first()){
+        return 999; //Temporary
+        if ($limit = RoleLimit::where("role_id", $this->role_id)->first()) {
             return $limit->{$type};
         }
 

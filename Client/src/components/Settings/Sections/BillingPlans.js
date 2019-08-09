@@ -76,15 +76,15 @@ class BillingPlans extends React.Component {
         const {allPlans} = this.state;
         const {profile} = this.props;
         const planHeading = allPlans.map((plan, index) => {
-            const btnText = plan["Name"] === "Free" ? "Get for free" : "Start Trial";
+            const btnText = plan["Name"] === "Free" ? "Get for free" : "Purchase plan";
             const planName = this.state.billingPeriod === "annually" ? plan["Name"].toLowerCase() + "_annual" : plan["Name"].toLowerCase();
 
             let planButton = "";
-                if(profile.role.name === plan["Name"].toLowerCase()){
+                if((profile.role.name === plan["Name"].toLowerCase() && profile.subscription.activeSubscription) || (profile.role.name === "free" && plan["Name"].toLowerCase() === "free")){
                     planButton = <a className="btn plan-price-btn disabled-btn" data-period="annually" href="javascript:void(0);">Current Plan</a>;
                 }else if(plan["Name"] == "Free" && profile.role.name !== "free"){
                     planButton = <a className="btn plan-price-btn" onClick={() => this.onPlanClick("free")} href="javascript:void(0);">{btnText}</a>; 
-                }else if(profile.role.name !== "free"){
+                }else if(profile.role.name !== "free" && profile.subscription.activeSubscription){
                     planButton = <a className="btn plan-price-btn" onClick={() => this.setPlanChange(planName)} href="javascript:void(0);">Change plan</a>;
                 }else{
                     planButton = (

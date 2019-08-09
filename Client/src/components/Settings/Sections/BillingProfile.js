@@ -123,6 +123,10 @@ class BillingProfile extends React.Component {
        const {profile} = this.props;
        let planData = allPlans.filter(plan => plan["Name"].toLowerCase() === profile.role.name);
        planData = planData.length > 0 ? planData[0] : false;
+       let planName = "";
+       if(planData){
+           planName = this.state.billingPeriod === "annually" ? planData["Name"].toLowerCase() + "_annual" : planData["Name"].toLowerCase();
+       }
 
        return (
             <div>
@@ -314,9 +318,11 @@ class BillingProfile extends React.Component {
                                 <div className={`billingPeriodSelection col-md-12 ${this.state.billingPeriod === 'annually' && 'selected'}`}>
 
                                     <label className="custom-radio-container">Annually
-                                        
-                                        <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "annually" ? "checked" : false} onChange={() => this.setPlanChange(planData["Name"].toLowerCase()+"_annual")}/>
-                                    
+                                        {profile.subscription.activeSubscription ?
+                                            <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "annually" ? "checked" : false} onChange={() => this.setPlanChange(planData["Name"].toLowerCase()+"_annual")}/>
+                                            :
+                                            <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "monthly" ? "checked" : false} onChange={() => this.setBillingPeriod("annually")}/>
+                                        }
                                         <span className="checkmark"></span>
                                     </label>
 
@@ -329,7 +335,11 @@ class BillingProfile extends React.Component {
 
                                     <label className="custom-radio-container">Monthly
                                         
-                                        <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "monthly" ? "checked" : false} onChange={() => this.setPlanChange(planData["Name"].toLowerCase())}/>
+                                        {profile.subscription.activeSubscription ?
+                                            <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "monthly" ? "checked" : false} onChange={() => this.setPlanChange(planData["Name"].toLowerCase())}/>
+                                            :
+                                            <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "monthly" ? "checked" : false} onChange={() => this.setBillingPeriod("monthly")}/>
+                                        }
                                     
                                         <span className="checkmark"></span>
                                     </label>
@@ -346,7 +356,19 @@ class BillingProfile extends React.Component {
                         {   profile.subscription.onGracePeriod ?
                             <button className="magento-btn mt20 small-btn" onClick={() => this.setPlanResume()}>Resume plan</button>
                             :
-                            <button className="magento-btn mt20 small-btn" onClick={() => this.setPlanCancel()}>Cancel plan</button>
+                            (profile.subscription.activeSubscription ?
+                                <button className="default-white-btn mt20" onClick={() => this.setPlanCancel()}>Cancel plan</button>
+                                :
+                                <Checkout 
+                                    plan={planName}
+                                    subType="main" 
+                                    trialDays={0} 
+                                    setLoading={this.setLoading} 
+                                    setProfile={this.props.startSetProfile} 
+                                    text="">
+                                    <button className="magento-btn mt20 small-btn">Purchase plan</button> 
+                                </Checkout>
+                            )   
                         }
                     </div>}
                     
@@ -405,14 +427,14 @@ class BillingProfile extends React.Component {
                     </div>
 
                     <div className="col-md-12">
-                        {   profile.addon.activeAddon && !profile.addon.addonOnGracePeriod ?
-                            <button className="magento-btn mt20 small-btn" onClick={() => this.onAddonCancel('twitter_growth')}>Cancel addon</button>
+                        {   profile.addon.activeAddon && !profile.addon.addonOnGracePeriod && !profile.addon.addonTrial ?
+                            <button className="default-white-btn mt20" onClick={() => this.onAddonCancel('twitter_growth')}>Cancel addon</button>
                             :
                             
                             (profile.addon.addonOnGracePeriod ?
                             <button className="magento-btn mt20 small-btn" onClick={() => this.resumePlan('addon')}>Resume addon</button>
                             :
-                            <Checkout 
+                            (<Checkout 
                                 plan="twitter_growth" 
                                 subType="addon" 
                                 trialDays={0} 
@@ -421,6 +443,8 @@ class BillingProfile extends React.Component {
                                 text="">
                                 <button className="magento-btn mt20 small-btn">Purchase addon</button>   
                             </Checkout>)
+                            
+                            )
                             
                         }
                     </div>
