@@ -132,7 +132,7 @@
 <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
 <!--<![endif]-->
 <div align="center" class="img-container center autowidth" style="padding-right: 0px;padding-left: 0px;">
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><img align="center" alt="Image" border="0" class="center autowidth" src="{{config('app.url')}}/images/email-img-1.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 10%; max-width: 592px; display: block;" title="Image" width="592"/>
+<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><img align="center" alt="Image" border="0" class="center autowidth" src="{{config('app.url')}}/images/email-img-1.png" style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; max-width: 592px; display: block;" title="Image" width="592"/>
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 50px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
