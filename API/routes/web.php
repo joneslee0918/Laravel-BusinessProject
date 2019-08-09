@@ -58,10 +58,6 @@ Route::get('/test', function(){
     return response()->json($team->hasRole("twitter_growth"));
 });
 
-Route::get('/mailable', function() {
-    return new App\Mail\UserSignUp();
-});
-
 Route::get('/jobs', function(){
     return view("frontend.jobs");
 });

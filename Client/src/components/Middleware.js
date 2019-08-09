@@ -121,13 +121,22 @@ class Middleware extends React.Component{
                         this.setError("Something went wrong!");
                     }
                 });
+            
+            return;
         }
 
         if(addon){
             activateAddon(addon).then(response => {
                 this.props.startSetProfile();
             });
+
+            return;
         }
+
+        this.props.startSetProfile().then(() => {
+            this.setState(() => ({loading: false}));
+            this.props.setMiddleware(false);
+        });
     };
 
     onTwitterSuccess = (response) => {
