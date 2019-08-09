@@ -17,7 +17,7 @@
             <div class="card panel-shadow mt50">
                 <h5>Twitter Booster</h5>
                 <p>Grow your community on Twitter by targeting the right audience.</p>
-                <a href="{{ route('products.twitter_growth') }}">Learn more</a>
+                <a href="{{config('frontendclient.client_url')}}?register&addon={{strtolower($addon['name'])}}&redirect=twitter-booster&period=monthly&addontrial=true">Learn more</a>
             </div>
         </div>
     </div>

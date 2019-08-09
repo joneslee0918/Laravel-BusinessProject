@@ -17,6 +17,11 @@ Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
 Route::post('/login/admin', 'Auth\LoginController@adminLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
 
+Route::post(
+    'stripe/webhook',
+    '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook'
+);
+
 Route::prefix("admin")->middleware(["auth:admin"])->group(function(){
     Route::get('dashboard', ['as'=>'admin.dashboard', 'uses'=>'Admin\AdminController@dashboard']);
     Route::get('post/create', ['as'=>'admin.post.create', 'uses'=>'Admin\AdminController@createPost']);

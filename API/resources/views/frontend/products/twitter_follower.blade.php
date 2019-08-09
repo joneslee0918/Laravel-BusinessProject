@@ -32,7 +32,7 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
                 <p class="mt20">With the right tool, Twitter  Marketing is Easy!</p>
                 <p class="mt20"><strong>Grow Your Twitter Brand with the Power of Artificial Intelligence</strong></p>
                 <p class="mt20">Now you can Save Time and Work Smarter, not harder.</p>
-                <a class="btn theme-btn mt30" href="{{config('frontendclient.client_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly&addontrial=true" target="_blank">Start 3 day free trial </a>
+                <a class="btn theme-btn mt30" href="{{config('frontendclient.client_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly" target="_blank">Start 3 day free trial </a>
                 <!-- <a href="/pricing" class="btn theme-btn mt30">Learn more</a> -->
             </div>
         </div>
