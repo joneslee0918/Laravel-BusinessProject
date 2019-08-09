@@ -145,14 +145,14 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:150%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 18px; color: #555555;">
-<p style="font-size: 14px; line-height: 27px; text-align: center; margin: 0;"><span style=" font-size: 18px;">Welcome to UniClix—the social media management platform used by over 16 million professionals and the world’s most loved brands.</span></p>
+<p style="font-size: 14px; line-height: 27px; text-align: center; margin: 0;"><span style=" font-size: 18px;">Welcome to UniClix - the social media management platform made for small business and influencers. Uniclix offers the most affordable packages in the industry suitable for small businesses and individuals. Take advantage of the introductory offer.</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 20px; padding-bottom: 40px; font-family: Verdana, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:20px;padding-right:10px;padding-bottom:40px;padding-left:10px;">
 <div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 19px; text-align: center; margin: 0;"><span style=" font-size: 16px;">Follow these steps to get your dashboard set up without breaking a sweat.</span></p>
+<p style="font-size: 14px; line-height: 19px; text-align: center; margin: 0;"><span style=" font-size: 16px;">Follow these steps to get your dashboard setup without breaking a sweat.</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
@@ -186,14 +186,14 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 21px; margin: 0;"><span style=" font-size: 18px;">Add up to 10 social networks to the Hootsuite dashboard to start managing your social media in one place.</span></p>
+<p style="font-size: 14px; line-height: 21px; margin: 0;"><span style=" font-size: 18px;">Add your social networks ( up to 150 ) to the UniClix dashboard to start managing your social media all in one place.</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style=" text-decoration: underline; font-size: 14px; line-height: 16px;">Follow these simple steps.</span></p>
+<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style=" text-decoration: underline; font-size: 14px; line-height: 16px;">Follow these simple steps...</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
@@ -252,21 +252,21 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 16px; margin: 0;"><strong><span style=" font-size: 20px; line-height: 24px;">Schedule a message</span></strong></p>
+<p style="font-size: 14px; line-height: 16px; margin: 0;"><strong><span style=" font-size: 20px; line-height: 24px;">Schedule Posts</span></strong></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 21px; margin: 0;"><span style=" font-size: 18px;">Save time and avoid interruptions by scheduling social media posts in advance.</span></p>
+<p style="font-size: 14px; line-height: 21px; margin: 0;"><span style=" font-size: 18px;">Save time and avoid interruptions by scheduling social media post in advance</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style=" text-decoration: underline; font-size: 14px; line-height: 16px;">Schedule your first message.</span></p>
+<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style=" text-decoration: underline; font-size: 14px; line-height: 16px;">Schedule your first post...</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
@@ -311,7 +311,7 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Verdana, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style=" text-decoration: underline; font-size: 14px; line-height: 16px;">Start listening.</span></p>
+<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style=" text-decoration: underline; font-size: 14px; line-height: 16px;">Start listening...</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->

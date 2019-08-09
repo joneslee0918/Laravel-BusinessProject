@@ -71,7 +71,7 @@ See the pricing of Uniclix social media service and pick a plan that fits your b
                                 <div class="plan-items"><img src="{{asset('/images/plan-tick.svg')}}"> {{$plan["Users"]}} user</div>
                             </div>
                             <div class="plan-button-container">
-                                <a class="btn plan-price-btn" href="{{config('frontendclient.client_url')}}?register&plan={{strtolower($plan['Name'])}}&period=annually">Start 30 days free trial</a>
+                                <a class="btn plan-price-btn" href="{{config('frontendclient.client_url')}}?register&plan={{strtolower($plan['Name'])}}&period=annually">Start free trial</a>
                                 <div class="plan-see-more">or <a href="#compareplans">see more features</a></div>
                             </div>
                         </div>
@@ -92,7 +92,7 @@ See the pricing of Uniclix social media service and pick a plan that fits your b
                             @foreach($allPlans as $plan)
                             <th>
                                 <h5>{{$plan["Name"]}}</h5>
-                                <a class="btn plan-price-btn" data-url="{{config('frontendclient.client_url')}}" data-addon="" data-plan="{{strtolower($plan['Name'])}}" data-period="annually" href="{{config('frontendclient.client_url')}}?register&plan={{strtolower($plan['Name'])}}&period=annually">Start 30 days trial</a>
+                                <a class="btn plan-price-btn" data-url="{{config('frontendclient.client_url')}}" data-addon="" data-plan="{{strtolower($plan['Name'])}}" data-period="annually" href="{{config('frontendclient.client_url')}}?register&plan={{strtolower($plan['Name'])}}&period=annually">Start trial</a>
                             </th>
                             @endforeach
                         </tr>
@@ -231,7 +231,7 @@ See the pricing of Uniclix social media service and pick a plan that fits your b
                             @foreach($allPlans as $plan)
                             <th>
                                 <h5>{{$plan["Name"]}}</h5>
-                                <a class="btn plan-price-btn" data-url="{{config('frontendclient.client_url')}}" data-addon="" data-plan="{{strtolower($plan['Name'])}}" data-period="annually" href="{{config('frontendclient.client_url')}}?register&plan={{strtolower($plan['Name'])}}&period=annually">Start 30 days trial</a>
+                                <a class="btn plan-price-btn" data-url="{{config('frontendclient.client_url')}}" data-addon="" data-plan="{{strtolower($plan['Name'])}}" data-period="annually" href="{{config('frontendclient.client_url')}}?register&plan={{strtolower($plan['Name'])}}&period=annually">Start trial</a>
                             </th>
                             @endforeach
                             
