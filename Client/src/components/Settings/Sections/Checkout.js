@@ -18,10 +18,13 @@ export default class Checkout extends React.Component {
   }
 
   render() {
+    const {amount} = this.props;
     return (
       <StripeCheckout
         stripeKey={stripePublishableKey}
         token={this.onToken}
+        amount={amount}
+        currency={'USD'}
       >
       {this.props.children}
       </StripeCheckout>
