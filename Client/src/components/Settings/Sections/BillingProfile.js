@@ -357,7 +357,7 @@ class BillingProfile extends React.Component {
                             <button className="magento-btn mt20 small-btn" onClick={() => this.setPlanResume()}>Resume plan</button>
                             :
                             (profile.subscription.activeSubscription ?
-                                <button className="magento-btn mt20 small-btn" onClick={() => this.setPlanCancel()}>Cancel plan</button>
+                                <button className="default-white-btn mt20" onClick={() => this.setPlanCancel()}>Cancel plan</button>
                                 :
                                 <Checkout 
                                     plan={planName}
@@ -428,7 +428,7 @@ class BillingProfile extends React.Component {
 
                     <div className="col-md-12">
                         {   profile.addon.activeAddon && !profile.addon.addonOnGracePeriod && !profile.addon.addonTrial ?
-                            <button className="magento-btn mt20 small-btn" onClick={() => this.onAddonCancel('twitter_growth')}>Cancel addon</button>
+                            <button className="default-white-btn mt20" onClick={() => this.onAddonCancel('twitter_growth')}>Cancel addon</button>
                             :
                             
                             (profile.addon.addonOnGracePeriod ?
