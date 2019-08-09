@@ -398,7 +398,7 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 20px; padding-bottom: 45px; font-family: Verdana, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:'Quicksand   ', Verdana, Segoe, sans-serif;line-height:150%;padding-top:20px;padding-right:10px;padding-bottom:45px;padding-left:10px;">
 <div style="font-family: Verdana, Segoe, sans-serif; font-size: 12px; line-height: 18px; color: #555555;">
-<p style="font-size: 14px; line-height: 21px; text-align: center; margin: 0;"><span style=" color: #ffffff; font-size: 14px; line-height: 21px;">This account notification was sent to you because you are a Hootsuite user. To update your email subscription please visit our email preference centre. Please note that you will continue to receive account notifications regardless of preference settings. View our privacy notice</span></p>
+<p style="font-size: 14px; line-height: 21px; text-align: center; margin: 0;"><span style=" color: #ffffff; font-size: 14px; line-height: 21px;">This account notification was sent to you because you are a UniClix user. To update your email subscription please visit our email preference centre. Please note that you will continue to receive account notifications regardless of preference settings. View our privacy notice</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
