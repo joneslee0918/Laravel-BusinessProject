@@ -47,7 +47,7 @@ class OAuthController extends Controller
             'password' => Hash::make($request->input('password')),
         ]);
 
-        $user->notify(new \App\Notifications\User\UserSignUp());
+        // $user->notify(new \App\Notifications\User\UserSignUp());
 
         return response()->json($user->createToken("Password Token"));
     }

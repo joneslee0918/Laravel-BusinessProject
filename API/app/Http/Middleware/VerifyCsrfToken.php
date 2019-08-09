@@ -21,7 +21,6 @@ class VerifyCsrfToken extends Middleware
         'twitter/unfollow',
         'admin/post/image/upload',
         'sync/facebook/posts',
-        'facebook/chatbot',
-        'stripe/*'
+        'facebook/chatbot'
     ];
 }

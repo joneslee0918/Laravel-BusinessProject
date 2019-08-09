@@ -1,5 +1,7 @@
 <?php
 use function GuzzleHttp\json_decode;
+use App\Model\User;
+use DeepCopy\f006\A;
 
 set_time_limit (200);
 /*
@@ -16,11 +18,6 @@ set_time_limit (200);
 Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
 Route::post('/login/admin', 'Auth\LoginController@adminLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
-
-Route::post(
-    'stripe/webhook',
-    '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook'
-);
 
 Route::prefix("admin")->middleware(["auth:admin"])->group(function(){
     Route::get('dashboard', ['as'=>'admin.dashboard', 'uses'=>'Admin\AdminController@dashboard']);
@@ -51,11 +48,19 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $team = App\Models\User::first();
-//     $channel = $team->channels()->first();
-//    // $channel->select($team);
+    try {
+    $channel = \App\Models\Channel::first();
+    $channel->user->notify(new \App\Notifications\User\AccountDisconnected($channel));
+        //code...
+    } catch (\Exception $e) {
+        return response()->json($e);
+    }
 
-    return response()->json($team->hasRole("twitter_growth"));
+});
+
+Route::get('mailable', function () {
+
+    return new App\Mail\UserSignUp();
 });
 
 Route::get('/jobs', function(){

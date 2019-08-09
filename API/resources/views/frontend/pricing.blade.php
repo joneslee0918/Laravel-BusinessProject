@@ -249,7 +249,7 @@ See the pricing of Uniclix social media service and pick a plan that fits your b
                             </th>
                             <th>
                                 <h5>Twitter Growth</h5>
-                                <a class="btn plan-price-btn" href="{{config('frontendclient.client_url')}}?register&addon={{strtolower($addon['name'])}}&redirect=twitter-booster&period=monthly">Buy now</a>
+                                <a class="btn plan-price-btn" href="{{config('frontendclient.client_url')}}?register&addon={{strtolower($addon['name'])}}&redirect=twitter-booster&period=monthly">Start trial</a>
                             </th>
                         </tr>
                         <tr>
@@ -280,7 +280,7 @@ See the pricing of Uniclix social media service and pick a plan that fits your b
                             <th style="width:80%">
                             </th>
                             <th>
-                                <a class="btn plan-price-btn" data-url="{{config('frontendclient.client_url')}}" data-addon="{{strtolower($addon['name'])}}" data-plan="" data-period="monthly" href="{{config('frontendclient.client_url')}}?register&addon={{strtolower($addon['name'])}}&redirect=twitter-booster&period=monthly">Buy now</a>
+                                <a class="btn plan-price-btn" data-url="{{config('frontendclient.client_url')}}" data-addon="{{strtolower($addon['name'])}}" data-plan="" data-period="monthly" href="{{config('frontendclient.client_url')}}?register&addon={{strtolower($addon['name'])}}&redirect=twitter-booster&period=monthly">Start trial</a>
                                 <h5>Twitter Growth</h5>
                             </th>
                         </tr>

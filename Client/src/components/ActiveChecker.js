@@ -199,9 +199,8 @@ class ActiveChecker extends React.Component{
 
         return (
             <div className="active-checker">
-                {this.props.channels.length > 0 && 
                 <Modal
-                isOpen={!!this.state.active == false && !this.state.loading && !this.state.channelsLoading}
+                isOpen={!!this.state.active == false && !this.state.loading}
                 ariaHideApp={false}
                 >       
 
@@ -228,7 +227,7 @@ class ActiveChecker extends React.Component{
                         {!!this.props.loading && <Loader />}
                     </div>
 
-                </Modal>}
+                </Modal>
             </div>
         );
     }

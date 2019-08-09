@@ -47,7 +47,7 @@ function getErrorResponse($e, $channel = false){
             $channel->active = 0;
             // $channel->select();
             $channel->save();
-            $channel->user->notify(new \App\Notifications\User\AccountDisconnected($channel));
+            // $channel->user->notify(new \App\Notifications\User\AccountDisconnected($channel));
         }
 
         $username = $channel->details->name;

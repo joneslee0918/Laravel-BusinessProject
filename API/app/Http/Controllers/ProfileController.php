@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class ProfileController extends Controller
 {
@@ -35,8 +34,7 @@ class ProfileController extends Controller
         $activeSubscription = $this->user->subscribed('main');
         $onGracePeriod = $this->user->subscribed('main') ? $this->user->subscription('main')->onGracePeriod() : false;
         $addon = $this->user->subscribed('addon') ? $this->user->subscription('addon') : null;
-        $addonTrial = $this->user->roleAddons()->where("trial_ends_at", ">", Carbon::now())->whereNotNull("trial_ends_at")->exists();
-        $activeAddon = $this->user->subscribed('addon') || $addonTrial;
+        $activeAddon = $this->user->subscribed('addon');
         $addonOnGracePeriod = $this->user->subscribed('addon') ? $this->user->subscription('addon')->onGracePeriod() : false;
 
         $subscription = [
@@ -49,8 +47,7 @@ class ProfileController extends Controller
         $addon = [
             "addon" => $addon,
             "activeAddon" => $activeAddon,
-            "addonOnGracePeriod" => $addonOnGracePeriod,
-            "addonTrial" => $addonTrial
+            "addonOnGracePeriod" => $addonOnGracePeriod
         ];
 
         return response()->json([

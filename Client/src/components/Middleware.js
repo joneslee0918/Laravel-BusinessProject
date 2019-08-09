@@ -10,7 +10,7 @@ import {getAccounts, saveAccounts} from "../requests/facebook/channels";
 import FacebookLogin from 'react-facebook-login';
 import {twitterRequestTokenUrl, twitterAccessTokenUrl, backendUrl, facebookAppId, linkedinAppId, pinterestAppId} from "../config/api";
 import LinkedInButton from "./LinkedInButton";
-import { changePlan, activateAddon, cancelAddon, getPlanData } from '../requests/billing';
+import { changePlan, activateAddon, cancelAddon } from '../requests/billing';
 import PinterestButton from "./PinterestButton";
 import channelSelector, {findAccounts} from "../selectors/channels";
 import {fbFields, fbScope} from "./FacebookButton";
@@ -18,7 +18,6 @@ import {destroyChannel} from "../requests/channels";
 import Loader, {LoaderWithOverlay} from './Loader';
 import UpgradeAlert from "./UpgradeAlert";
 import {getParameterByName} from "../utils/helpers";
-import Checkout from "./Settings/Sections/Checkout";
 
 class Middleware extends React.Component{
 
@@ -30,8 +29,6 @@ class Middleware extends React.Component{
         billingPeriod: getParameterByName("period", this.props.location.search) || "annually",
         plan: getParameterByName("plan", this.props.location.search),
         addon: getParameterByName("addon", this.props.location.search),
-        addonTrial: getParameterByName("addontrial", this.props.location.search),
-        allPlans: [],
         loading: false,
         forbidden: false
     }
@@ -41,17 +38,11 @@ class Middleware extends React.Component{
     linkedinRef = React.createRef();
 
     componentDidMount(){
-        const {profile} = this.props;
 
-        if((this.state.plan || this.state.addon) && !!profile && !profile.subscription.activeSubscription && !profile.addon.activeAddon){
-                this.props.setMiddleware("billing");
-                getPlanData().then(response => {
-                    this.setState({
-                        allPlans: response.allPlans
-                    });
-                });
-                return;
-        }
+        // if(this.state.plan || this.state.addon){
+        //         this.props.setMiddleware("billing");
+        //         return;
+        // }
 
         const middleware = this.props.channels.length < 1;
 
@@ -66,20 +57,6 @@ class Middleware extends React.Component{
                 continueBtn: this.props.channels.length > 0
             }));
         }
-
-        if(prevProps.profile.subscription !== this.props.profile.subscription || prevProps.profile.addon !== this.props.profile.addon){
-            if((this.state.plan || this.state.addon) && !this.props.profile.subscription.activeSubscription && !this.props.profile.addon.activeAddon && !this.state.addonTrial){
-                this.props.setMiddleware("billing");
-                return;
-            }else{
-                if(this.props.channels.length < 1) {
-                    this.props.setMiddleware("channels");
-                    return;
-                }
-                
-                this.props.setMiddleware(false);
-            }
-        }
     }
 
     onFailure = (response) => {
@@ -92,42 +69,42 @@ class Middleware extends React.Component{
         }));
     };
 
-    setLoading = (loading = false) => {
-        this.setState(() => ({
-            loading
-        }));
-    };
-
     setRole = () => {
         let plan = getParameterByName("plan", this.props.location.search);
         let addon = getParameterByName("addon", this.props.location.search);
         this.setState(() => ({loading: true}));
-        
-        if(plan){
-            changePlan(plan).then(response => {
-                this.props.startSetProfile().then(() => {
-                    this.setState(() => ({loading: false}));
-                    this.props.setMiddleware(false);
+        new Promise(function(resolve, reject) {
+            if(plan){
+                changePlan(plan).then(response => {
+                    //this.props.startSetProfile();
+                }).then()
+                    .catch(error => {
+                        if (error.response.status === 403) {
+                            this.setState(() => ({
+                                forbidden: true,
+                                error: error.response.data.error,
+                                redirect: error.response.data.redirect  
+                            }))
+                        } else {
+                            this.setError("Something went wrong!");
+                        }
+                    });
+            }
+    
+            if(addon){
+                activateAddon(addon).then(response => {
+                    //this.props.startSetProfile();
                 });
-            }).then()
-                .catch(error => {
-                    if (error.response.status === 403) {
-                        this.setState(() => ({
-                            forbidden: true,
-                            error: error.response.data.error,
-                            redirect: error.response.data.redirect  
-                        }))
-                    } else {
-                        this.setError("Something went wrong!");
-                    }
-                });
-        }
-
-        if(addon){
-            activateAddon(addon).then(response => {
-                this.props.startSetProfile();
+            }
+            return resolve(true);
+        }).then(() => {
+            this.props.startSetProfile().then(() => {
+                this.setState(() => ({loading: false}));
+                this.props.setMiddleware(false);
             });
-        }
+            
+        });
+
     };
 
     onTwitterSuccess = (response) => {
@@ -281,15 +258,7 @@ class Middleware extends React.Component{
 
     render(){
         const {middleware, channels} = this.props;
-        const {continueBtn, loading, twitterBooster, allPlans, addon, addonTrial} = this.state;
-        let planParam = getParameterByName("plan", this.props.location.search);
-        let planData = allPlans.filter(plan => plan["Name"].toLowerCase() === planParam);
-        planData = planData.length > 0 ? planData[0] : false;
-        let planName = "";
-        if(planData){
-            planName = this.state.billingPeriod === "annually" ? planData["Name"].toLowerCase() + "_annual" : planData["Name"].toLowerCase();
-        }
-            
+        const {continueBtn, loading, twitterBooster} = this.state;
         return (
             <div className="middleware">
                 <UpgradeAlert isOpen={this.state.forbidden} text={"Your current plan does not support more accounts."} setForbidden={this.setForbidden}/>
@@ -299,7 +268,7 @@ class Middleware extends React.Component{
                     onSave={this.onFacebookPagesSave}
                     error={this.state.error}
                 />
-                {middleware !== "loading" && <h2>{middleware === "channels" ? "Connect your social profiles." : ((!(!!addon) && addonTrial) || !!planParam ? "Start Your Free Trial" : "Boost Your Twitter")}</h2>}
+                {middleware !== "loading" && <h2>{middleware === "channels" ? "Connect your social profiles." : "Start Your Free Trial"}</h2>}
                 {middleware !== "channels" && middleware !== "billing" && <Loader />}
                 {loading && <LoaderWithOverlay />}
                 
@@ -383,7 +352,7 @@ class Middleware extends React.Component{
                 </div>
                 }
 
-                {middleware == "billing" && !!planData ?
+                {middleware == "billing" &&
                 <div className="box billing channels-box">
 
                     <div className="col-md-12">
@@ -395,13 +364,13 @@ class Middleware extends React.Component{
 
                             <label className="custom-radio-container">Annually
                                 
-                                <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "annually" ? "checked" : false} onChange={() => this.setBillingPeriod("annually")}/>
+                                <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "annually" ? "checked" : false} onChange={this.setBillingPeriod}/>
                             
                                 <span className="checkmark"></span>
                             </label>
 
-                            <p>${parseFloat(planData["Annual Billing"] / 12).toFixed(1)} / month</p>
-                            <p>Billing annually for ${parseFloat(planData["Annual Billing"]).toFixed(1)}</p>
+                            <p>$35.00 / month</p>
+                            <p>Billing annually for $400.00</p>
                         </div>
                     </div>
                     <div className="plan-box col-md-6 col-xs-12">
@@ -409,66 +378,18 @@ class Middleware extends React.Component{
 
                             <label className="custom-radio-container">Monthly
                                 
-                                <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "monthly" ? "checked" : false} onChange={() => this.setBillingPeriod("monthly")}/>
+                                <input type="radio" name="billingPeriod" checked={this.state.billingPeriod === "monthly" ? "checked" : false} onChange={this.setBillingPeriod}/>
                             
                                 <span className="checkmark"></span>
                             </label>
 
-                            <p>${parseFloat(planData["Monthly"]).toFixed(1)} / month</p>
-                            <p>Billing monthly for ${parseFloat(planData["Monthly"]).toFixed(1)}</p> 
+                            <p>$50.00 / month</p>
+                            <p>Billing monthly for $50.00</p> 
                         </div>
                     </div>
 
-                    {!!planData && 
-                    <Checkout 
-                        plan={planName} 
-                        subType="main" 
-                        trialDays={30} 
-                        setLoading={this.setLoading} 
-                        setProfile={this.props.startSetProfile} 
-                        text="">
-                        <button className="magento-btn mt50">Proceed to Checkout</button>    
-                    </Checkout>}
-                    
+                    <button className="magento-btn mt50 disabled-btn">Proceed to Checkout</button>
                 </div>
-                : this.state.loading && <LoaderWithOverlay />
-                }
-
-                {middleware == "billing" && addon ?
-                <div className="box billing channels-box">
-
-                    <div className="col-md-12">
-                        <h5>Twitter Growth</h5>
-                    </div>
-                    <div className="plan-box col-md-12 col-xs-12">
-                        <div className={`billingPeriodSelection col-md-12 ${this.state.billingPeriod === 'monthly' && 'selected'}`}>
-
-                            <label className="custom-radio-container">{`${!!addonTrial ? 'Free trial period of 3 days' : 'Monthly'}`}
-                                
-                                <input type="radio" name="billingPeriod" checked={true} onChange={() => this.setBillingPeriod("monthly")}/>
-                            
-                                <span className="checkmark"></span>
-                            </label>
-
-                            <p>{`${!!addonTrial ? '3 days free trial' : '$10.0 / month'}`}</p>
-                            <p>Billing monthly for {!!addonTrial ? '$0.0 (3 days free trial)' : '$10.0'}</p> 
-                        </div>
-                    </div>
-
-                    {!!addon && !(!!addonTrial) ? 
-                        <Checkout 
-                            plan="twitter_growth" 
-                            subType="addon" 
-                            trialDays={3} 
-                            setLoading={this.setLoading} 
-                            setProfile={this.props.startSetProfile} 
-                            text="">
-                            <button className="magento-btn mt50">Proceed to Checkout</button>    
-                        </Checkout> : <button className="magento-btn mt50" onClick={this.setRole}>Continue</button>  
-
-                    }
-                </div> : this.state.loading && <LoaderWithOverlay />
-
                 }
             </div>
         );
@@ -482,7 +403,6 @@ const mapStateToProps = (state) => {
     return {
         middleware: state.middleware.step,
         channels: state.channels.list,
-        profile: state.profile,
         selectedChannel
     }
 };
