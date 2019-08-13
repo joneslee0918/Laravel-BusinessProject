@@ -193,7 +193,7 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:'Ubuntu', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style="color: #555555; font-size: 14px; line-height: 16px;"><a href="#" rel="noopener" style="text-decoration: none; color: #555555;" target="_blank">Follow these steps...</a></span></p>
+<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style="color: #555555; font-size: 14px; line-height: 16px;"><a href="{{route('accounts')}}" rel="noopener" style="text-decoration: none; color: #555555;" target="_blank">Follow these steps...</a></span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
@@ -266,7 +266,7 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:'Ubuntu', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style="color: #555555; font-size: 14px; line-height: 16px;"><a href="#" rel="noopener" style="text-decoration: none; color: #555555;" target="_blank">Schedule your first post...</a></span></p>
+<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style="color: #555555; font-size: 14px; line-height: 16px;"><a href="{{route('scheduled.schedule')}}" rel="noopener" style="text-decoration: none; color: #555555;" target="_blank">Schedule your first post...</a></span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
@@ -307,7 +307,7 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:'Ubuntu', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style="color: #555555; line-height: 16px; font-size: 14px;">Start listening...</span></p>
+<p style="font-size: 14px; line-height: 16px; margin: 0;"><span style="color: #555555; line-height: 16px; font-size: 14px;"><a href="/streams" rel="noopener" style="text-decoration: none; color: #555555;" target="_blank">Start listening...</a></span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
