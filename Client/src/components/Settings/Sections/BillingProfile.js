@@ -365,7 +365,6 @@ class BillingProfile extends React.Component {
                                     trialDays={0} 
                                     setLoading={this.setLoading} 
                                     setProfile={this.props.startSetProfile} 
-                                    amount={ this.state.billingPeriod === "annually" ? (planData["Annual Billing"] * 100) : (planData["Monthly"] * 100) }
                                     text="">
                                     <button className="magento-btn mt20 small-btn">Purchase plan</button> 
                                 </Checkout>
@@ -441,7 +440,6 @@ class BillingProfile extends React.Component {
                                 trialDays={0} 
                                 setLoading={this.setLoading} 
                                 setProfile={this.props.startSetProfile} 
-                                amount={10 * 100}
                                 text="">
                                 <button className="magento-btn mt20 small-btn">Purchase addon</button>   
                             </Checkout>)

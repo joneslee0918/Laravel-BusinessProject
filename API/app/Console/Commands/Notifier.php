@@ -65,14 +65,15 @@ class Notifier extends Command
                 $user->notify(new AfterTenDays($user));
                 $user->notify(new AfterThirtyDays($user));
                 $user->notify(new AfterTwentyDays($user));
+                $user->notify(new UserSignUp());
             }
         }
 
-        // if ($channels = Channel::all()) {
-        //     foreach ($channels as $channel) {
-        //         $channel->user->notify((new AccountDisconnected($channel)));
-        //     }
-        // }
+        if ($channels = Channel::all()) {
+            foreach ($channels as $channel) {
+                $channel->user->notify((new AccountDisconnected($channel)));
+            }
+        }
 
         Command::info("DONE");
     }

@@ -94,7 +94,6 @@ class BillingPlans extends React.Component {
                         trialDays={30} 
                         setLoading={this.setLoading} 
                         setProfile={this.props.startSetProfile} 
-                        amount={ this.state.billingPeriod === "annually" ? (plan["Annual Billing"] * 100) : (plan["Monthly"] * 100) }
                         text={btnText}>
                         <a className="btn plan-price-btn" data-period="annually" href="javascript:void(0);">{btnText}</a>    
                     </Checkout>);
