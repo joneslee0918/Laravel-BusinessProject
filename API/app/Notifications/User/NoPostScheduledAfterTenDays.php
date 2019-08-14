@@ -32,8 +32,13 @@ class NoPostScheduledAfterTenDays extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
+        $userWithoutPosts = $user->has('channels')->whereHas('channels', function ($unit) {
+            return $unit->has('scheduledPosts');
+        })->get();
+
         if (
             $this->user->isOld(10 * 24)
+            && $userWithoutPosts->count() == 0;
             && !\App\Models\Notification::existsForUser($this->user->id, "App\Notifications\User\NoPostScheduledAfterTenDays")
         ) {
             return ['database', 'mail'];

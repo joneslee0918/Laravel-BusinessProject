@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class NoPostScheduledAfterThreeDays extends Notification implements ShouldQueue
+class TwitterBoosterAfterThirtyFiveDays extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -32,14 +32,9 @@ class NoPostScheduledAfterThreeDays extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        $userWithoutPosts = $user->has('channels')->whereHas('channels', function($unit) {
-            return $unit->has('scheduledPosts');
-        })->get();
-
         if (
-            $this->user->isOld(3 * 24)
-            && $userWithoutPosts->count() == 0;
-            && !\App\Models\Notification::existsForUser($this->user->id, "App\Notifications\User\NoPostScheduledAfterThreeDays")
+            $this->user->isOld(35 * 24)
+            && !\App\Models\Notification::existsForUser($this->user->id, "App\Notifications\User\TwitterBoosterAfterThirtyFiveDays")
         ) {
             return ['database', 'mail'];
         } else {
@@ -56,9 +51,9 @@ class NoPostScheduledAfterThreeDays extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->view('emails.user.no_posts_scheduled')
-            ->from('lumi@uniclixapp.com')
-            ->subject('Getting started is easy!');
+            ->view('emails.user.twitter_booster')
+            ->from('info@uniclixapp.com')
+            ->subject('Have you tried UniClix Twitter Booster yet?');
     }
 
     /**
