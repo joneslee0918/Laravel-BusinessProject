@@ -32,7 +32,7 @@ class NoPostScheduledAfterTenDays extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        $userWithoutPosts = $user->has('channels')->whereHas('channels', function ($unit) {
+        $userWithoutPosts = $this->user->has('channels')->whereHas('channels', function ($unit) {
             return $unit->has('scheduledPosts');
         })->get();
 
