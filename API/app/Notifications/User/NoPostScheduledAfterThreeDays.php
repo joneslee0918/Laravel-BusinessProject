@@ -38,7 +38,7 @@ class NoPostScheduledAfterThreeDays extends Notification implements ShouldQueue
 
         if (
             $this->user->isOld(3 * 24)
-            && $userWithoutPosts->count() == 0;
+            && $userWithoutPosts->count() == 0
             && !\App\Models\Notification::existsForUser($this->user->id, "App\Notifications\User\NoPostScheduledAfterThreeDays")
         ) {
             return ['database', 'mail'];

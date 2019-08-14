@@ -38,7 +38,7 @@ class NoPostScheduledAfterTenDays extends Notification implements ShouldQueue
 
         if (
             $this->user->isOld(10 * 24)
-            && $userWithoutPosts->count() == 0;
+            && $userWithoutPosts->count() == 0
             && !\App\Models\Notification::existsForUser($this->user->id, "App\Notifications\User\NoPostScheduledAfterTenDays")
         ) {
             return ['database', 'mail'];
