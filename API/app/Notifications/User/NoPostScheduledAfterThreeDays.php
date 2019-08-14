@@ -58,7 +58,7 @@ class NoPostScheduledAfterThreeDays extends Notification implements ShouldQueue
         return (new MailMessage)
             ->view('emails.user.no_posts_scheduled')
             ->from('lumi@uniclixapp.com')
-            ->subject('Getting started is easy!');
+            ->subject('Create Your First Post with UniClix');
     }
 
     /**
