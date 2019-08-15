@@ -142,15 +142,15 @@
 <p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;"> </span></p>
 <p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;">Jump In, and schedule a FREE 30-minute demo with our social media experts. They will walk you through the platform, help you set up the accounts, and put your social media strategy on auto-pilot. </span></p>
 <p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;"> </span></p>
-<p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;">Schedule your 30-minute free demo.</span></p>
+<p style="font-size: 12px; line-height: 16px; margin: 0;"><a href="https://calendly.com/uniclix/30min" target="_blank"><span style="font-size: 14px;">Schedule your 30-minute free demo.</span></a></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;">Cheers!</span></p>
-<p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;">- Your pals from Team UniClix</span></p>
+<p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;">Cheers!</span></p><p></p>
+<p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;">- Your pals from Team UniClix</span></p><p></p>
 <p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;">P.S. If you're ready to take the plunge and need ANY help getting started, just hit REPLY on this email. A friendly UniClixer will write you back personally!</span></p>
 <p style="font-size: 12px; line-height: 14px; margin: 0;"> </p>
 </div>
@@ -159,7 +159,7 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 14px; text-align: left; margin: 0;"><span style="font-size: 12px; background-color: #99ccff;">This account notification was sent to you because you are a UniClix user. To update your email subscription please visit our email preference centre. Please note that you will continue to receive account notifications regardless of preference settings. View our privacy notice</span></p>
+<p style="font-size: 14px; line-height: 14px; text-align: left; margin: 0;"><span style="font-size: 12px;">This account notification was sent to you because you are a UniClix user. To update your email subscription please visit our email preference centre. Please note that you will continue to receive account notifications regardless of preference settings. View our <a href="{{config('app.url')}}/privacy-policy">privacy notice</a></span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
