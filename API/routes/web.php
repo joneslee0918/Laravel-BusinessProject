@@ -51,24 +51,11 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $user = App\Models\User::first();
-
-    $channels = $user->with('channels.scheduledPosts')->get();
-
-$userWithoutPosts = $user->has('channels')->whereHas('channels', function($unit) {
-    return $unit->has('scheduledPosts');
-})->get();
-
-return $userWithoutPosts->count();
-
+    $team = App\Models\User::first();
 //     $channel = $team->channels()->first();
 //    // $channel->select($team);
 
-    // return response()->json($team->hasRole("twitter_growth"));
-});
-
-Route::get('/mailable', function() {
-    return new App\Mail\UserSignUp();
+    return response()->json($team->hasRole("twitter_growth"));
 });
 
 Route::get('/jobs', function(){

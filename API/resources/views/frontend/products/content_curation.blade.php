@@ -30,7 +30,7 @@ Find & share content on the fly. Uniclix auto-suggests content relevant to your 
             <div class="row standard-padding">
                 <div class="col-md-6 col-xs-12">
                     <h2>Discover Content</h2>
-                    <p>Curate articles from thousands of sources that can base shared on the fly.</p>
+                    <p>Curate articles from thousands of sources that can be shared on the fly.</p>
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <img class="img-responsive" title="Discover Content" alt="Curate articles from thousands of sources that can base shared on the fly." src="{{asset('/images/cr-image-2.png')}}">
@@ -43,7 +43,7 @@ Find & share content on the fly. Uniclix auto-suggests content relevant to your 
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <h2>Schedule Content</h2>
-                    <p>Simply search streams by keyword to find curated content that you can share on the fly. No need to spends hours across the web searching for content</p>
+                    <p>Simply search streams by keyword to find curated content that you can share on the fly. No need to spend hours across the web searching for content</p>
                 </div>
             </div>
 

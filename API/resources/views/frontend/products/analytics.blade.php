@@ -50,7 +50,7 @@ Track your social growth, and get meaningful stats on your social media accounts
             <div class="row standard-padding">
                 <div class="col-md-6 col-xs-12">
                     <h2>Post Performance Metrics</h2>
-                    <p>Track engagement for all of your individual post in one platform.</p>
+                    <p>Track engagement for all of your individual posts in one platform.</p>
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <img class="img-responsive" src="{{asset('/images/anl-image-4.png')}}" title="Post Performance Metrics" alt="Track engagement for all of your individual post in one platform.">

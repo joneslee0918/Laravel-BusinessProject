@@ -21,7 +21,7 @@ Publish & schedule posts for multiple social media networks & accounts with a co
         <div class="container">
             <div class="row standard-padding">
                 <div class="col-md-7 col-xs-12">
-                    <h1 class="mb30">Craft the perfect post for each social network, all in few clix</h1>
+                    <h1 class="mb30">Craft the perfect post for each social network, all in a few clix</h1>
                     <a href="{{config('frontendclient.client_url')}}" class="btn theme-btn fw700 color-theme-btn">Get started now</a>
                 </div>
                 <div class="col-md-5 col-xs-12">
@@ -40,20 +40,21 @@ Publish & schedule posts for multiple social media networks & accounts with a co
             <div class="row standard-padding">
                 <div class="col-md-6 col-xs-12">
                     <h2>Auto Scheduling</h2>
-                    <p>Keep your social presence active 24/7 by automatically scheduling a post for all of your social accounts at once with unified Clix, and UniClix will publish them automatically for you.</p>
+                    <p>Keep your social presence active 24/7 by automatically scheduling a post for all of your social accounts at once with unified clix, 
+                        and Uniclix will publish them automatically for you.</p>
                 </div>
                 <div class="col-md-6 col-xs-12">
-                    <img class="img-responsive" src="{{asset('/images/pr-schedule.png')}}" title="Auto Scheduling" alt="Keep your social presence active 24/7 by automatically scheduling a post for all of your social accounts at once with unified Clix, and UniClix will publish them automatically for you.">
+                    <img class="img-responsive" src="{{asset('/images/pr-schedule.png')}}" title="Auto Scheduling" alt="Keep your social presence active 24/7 by automatically scheduling a post for all of your social accounts at once with unified Clix, and Uniclix will publish them automatically for you.">
                 </div>
             </div>
 
             <div class="row standard-padding column-reverse">
                 <div class="col-md-6 col-xs-12">
-                    <img class="img-responsive" src="{{asset('/images/accounts-images.png')}}" title="Publish in all Social Media Accounts" alt="Schedule and publish content to Twitter, Facebook Pages and Groups, LinkedIn from one place with UniClix.">
+                    <img class="img-responsive" src="{{asset('/images/accounts-images.png')}}" title="Publish in all Social Media Accounts" alt="Schedule and publish content to Twitter, Facebook Pages and Groups, LinkedIn from one place with Uniclix.">
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <h2>Publish in all Social Media Accounts</h2>
-                    <p>Schedule and publish content to Twitter, Facebook Pages and Groups, LinkedIn from one place with UniClix.</p>
+                    <p>Schedule and publish content to Twitter, Facebook Pages and Groups, LinkedIn from one place with Uniclix.</p>
                 </div>
             </div>
 

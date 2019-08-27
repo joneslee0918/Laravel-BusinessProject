@@ -55,8 +55,8 @@ Join other influencers and small businesses who trust our easy to use Twitter Un
 
         <div class="row standard-padding">
             <div class="col-md-6 col-xs-12">
-                <h2>Stay within limits</h2>
-                <p>Twitter has limits on following users, Hence use Uniclix to stay within those limits by unfollowing extra followers that are inactive.</p>
+                <h2>Stay within guidelines</h2>
+                <p>Twitter has limits on following users. Therefore use Uniclix to stay within those limits by unfollowing extra followers that are inactive.</p>
             </div>
             <div class="col-md-6 col-xs-12">
                 <img class="img-responsive" src="{{asset('/images/tg-image-4.png')}}" title="Stay within limits" alt="Twitter has limits on following users, Hence use Uniclix to stay within those limits by unfollowing extra followers that are inactive.">

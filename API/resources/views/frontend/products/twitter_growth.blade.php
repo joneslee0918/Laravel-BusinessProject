@@ -24,7 +24,7 @@ Grow your community on Twitter by targeting the right audience. Think of our Boo
         <div class="container">
             <div class="row standard-padding text-center">
                 <div class="col-xs-12">
-                    <h2>Grow your Twitter audience and expand your Influence</h2>
+                    <h2>Grow your Twitter audience and expand your influence</h2>
                     <p>Grow your community on Twitter by targeting the right audience. Think of our Booster tool as a matchmaker that connects you with people most interested in what you have to offer.</p>
                 </div>
             </div>
@@ -48,14 +48,14 @@ Grow your community on Twitter by targeting the right audience. Think of our Boo
             </div>
             <div class="col-md-6 col-xs-12">
                 <h2>Unfollow Inactive users</h2>
-                <p>Find inactive or non-engaging users that you follow. With few clix a day clear your follow list and get rid of spammers.</p>
+                <p>Find inactive or non-engaging users that you follow. With a few clix a day, clear your follow list and get rid of spammers.</p>
             </div>
         </div>
 
         <div class="row standard-padding">
             <div class="col-md-6 col-xs-12">
                 <h2>Unfollow undesirable users</h2>
-                <p>Track engagement for all of your individual post in one platform.</p>
+                <p>Track engagement for all of your individual posts in one platform.</p>
             </div>
             <div class="col-md-6 col-xs-12">
                 <img class="img-responsive" src="{{asset('/images/tg-image-4.png')}}" title="Unfollow undesirable users" alt="Track engagement for all of your individual post in one platform.">
@@ -67,7 +67,7 @@ Grow your community on Twitter by targeting the right audience. Think of our Boo
         <div class="container">
             <div class="row mt30 mb30">
                 <div class="col-xs-12 text-center">
-                    <h2>SignUp and see the difference.</h2>
+                    <h2>Sign up and see the difference.</h2>
                     <a href="{{config('frontendclient.client_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly" class="signin-btn">Get Started</a>
                 </div>
             </div>

@@ -79,7 +79,7 @@ See the pricing of Uniclix social media service and pick a plan that fits your b
         
                 </div>
                 <div class="text-box plan-shadow">
-                    Try our basic free plan. 1 social accounts, 10 posts per account, 1 user. <a href="{{config('frontendclient.client_url')}}?register&plan=basic&period=annually">Get started now</a>
+                    Try our basic free plan. 2 social accounts, 10 posts per account, 1 user. <a href="{{config('frontendclient.client_url')}}?register&plan=basic&period=annually">Get started now</a>
                 </div>
                 <div class="compare-plans-container text-left" id="compareplans">
                     <h1>Compare plans</h1>

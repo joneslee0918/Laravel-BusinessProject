@@ -9,7 +9,14 @@
                     <div class="col-md-12 col-xs-12">
                         <div id="about" class="footer-h">About Us</div>
                         <div class="footer-p">
-                        Uniclix is a social media management web application that supports Twitter, Facebook, Pinterest and LinkedIn. Our vision is to create a social media management platform that is affordable and easy-to-use so that small businesses and individuals can grow online presence by taking advantage of the same powerful tools used by large corporations. As a Uniclix subscriber you can schedule social posts to your multiple accounts at the most effective times of the day and to easily share content that we auto-suggest based on topics relevant to your audience. Twitter users can take advantage of our smart audience booster tool that helps grow Twitter followers by connecting you with like-minded people and organizations.
+                        Uniclix is a social media management web application that supports Twitter, Facebook, Pinterest and LinkedIn. 
+                        Our vision is to create a social media management platform that is affordable and easy-to-use so that small businesses and individuals 
+                        can grow online presence by taking advantage of the same powerful tools used by large corporations. 
+                        
+                        As a Uniclix subscriber, you can schedule social posts to your multiple accounts at the most effective times 
+                        of the day and easily share content that we auto-suggest based on topics relevant to your audience. 
+                        Twitter users can take advantage of our smart audience booster tool that helps grow Twitter followers by 
+                        connecting you with like-minded people and organizations.
                         </div>
                         <ul class="list-inline footer-social">
                             <li><a target="_blank" href="https://web.facebook.com/UniClixApp/"><i class="fa fa-facebook fa-2x"></i></a></li>

@@ -28,10 +28,10 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
                 <img src="{{ asset('images/imac.png') }}" class="img-responsive laptop-img" title="Twitter follower app" alt="Grow Your Twitter Brand with the Power of Artificial Intelligence">
             </div>
             <div class="col-md-5 col-xs-12 pb50">
-                <h1>GROW YOUR AUDIENCE EXPAND YOUR INFLUENCE</h1>
-                <p class="mt20">With the right tool, Twitter  Marketing is Easy!</p>
+                <h1>GROW YOUR AUDIENCE, EXPAND YOUR INFLUENCE</h1>
+                <p class="mt20">With the Right Tool, Twitter Marketing is Easy!</p>
                 <p class="mt20"><strong>Grow Your Twitter Brand with the Power of Artificial Intelligence</strong></p>
-                <p class="mt20">Now you can Save Time and Work Smarter, not harder.</p>
+                <p class="mt20">Now you can Save Time and Work Smarter, not Harder.</p>
                 <a class="btn theme-btn mt30" href="{{config('frontendclient.client_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly&addontrial=true" target="_blank">Start 3 day free trial </a>
                 <!-- <a href="/pricing" class="btn theme-btn mt30">Learn more</a> -->
             </div>
@@ -52,7 +52,7 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
                 <h3>Twitter follower app</h3>
 
                 <p class="description">The most affordable and simple to use Twitter growth platform - all features included for only $10/month. </p>
-                <p class="description">For the price of cappuccino, you can grow your Twitter brand. </p>
+                <p class="description">For the price of a cappuccino, you can grow your Twitter brand. </p>
 
             </div>
         </div>

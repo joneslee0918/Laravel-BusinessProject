@@ -3,8 +3,8 @@
 @section('content')
 <div id="banner">
     <div class="container">
-        <h1>Join the UniClix journey</h1>
-        <p>Working at UniClix is more than just a job.</p>
+        <h1>Join the Uniclix journey</h1>
+        <p>Working at Uniclix is more than just a job.</p>
         <p>Want to come along for the ride?</p>
     </div>
 </div>

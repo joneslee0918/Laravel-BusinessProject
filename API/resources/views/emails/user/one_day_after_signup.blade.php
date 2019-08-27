@@ -146,15 +146,15 @@
 <p style="font-size: 12px; line-height: 14px; margin: 0;"><strong><span style="font-size: 14px; line-height: 16px;">Twitter Booster:</span></strong></p>
 <p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;">Grow your community on Twitter by targeting the right audience. </span></p>
 <p style="font-size: 12px; line-height: 16px; margin: 0;"><br/><span style="font-size: 14px;">I'm so excited to help, that im offering a FREE 30 minute product demo. Schedule a demo at the link below. </span></p>
-<p style="font-size: 12px; line-height: 16px; margin: 0;"><br/><span style="font-size: 14px;">Schedule a 30-minute demo with me, and I will personally walk you through the platform and help you set up your accounts and get you rolling. <a href="https://calendly.com/uniclix/30min" target="_blank"><strong>Available schedule</strong></a></span></p>
+<p style="font-size: 12px; line-height: 16px; margin: 0;"><br/><span style="font-size: 14px;">Schedule a 30-minute demo with me, and I will personally walk you through the platform and help you set up your accounts and get you rolling. <strong>Available schedule</strong></span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;">Cheers!</span></p><p></p>
-<p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;">- Your pals from Team UniClix</span></p><p></p>
+<p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;">Cheers!</span></p>
+<p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;">- Your pals from Team UniClix</span></p>
 <p style="font-size: 12px; line-height: 16px; margin: 0;"><span style="font-size: 14px;">P.S. If you're ready to take the plunge and need ANY help getting started, just hit REPLY on this email. A friendly UniClixer will write you back personally!</span></p>
 <p style="font-size: 12px; line-height: 14px; margin: 0;"> </p>
 </div>
@@ -163,7 +163,7 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif"><![endif]-->
 <div style="color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 <div style="font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-<p style="font-size: 14px; line-height: 14px; text-align: left; margin: 0;"><span style="font-size: 12px;">This account notification was sent to you because you are a UniClix user. To update your email subscription please visit our email preference centre. Please note that you will continue to receive account notifications regardless of preference settings. View our <a href="{{config('app.url')}}/privacy-policy" target="_blank">privacy notice</a></span></p>
+<p style="font-size: 14px; line-height: 14px; text-align: left; margin: 0;"><span style="font-size: 12px; background-color: #99ccff;">This account notification was sent to you because you are a UniClix user. To update your email subscription please visit our email preference centre. Please note that you will continue to receive account notifications regardless of preference settings. View our privacy notice</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->

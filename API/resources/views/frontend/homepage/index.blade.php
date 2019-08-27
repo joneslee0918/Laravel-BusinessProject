@@ -51,7 +51,7 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
                     </div>
                     <div class="text-content">
                         <h4>Scheduled posts</h4>
-                        <p class="question">How do I post to all of my SM channels at once? What is the best time to post to reach the most customers?</p>
+                        <p class="question">How do I post to all of my SM channels at once? What is the best time to reach the maximum number of customers?</p>
 
                         <div class="seperator"></div>
 
@@ -72,7 +72,7 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
 
                         <div class="seperator"></div>
                         
-                        <p class="answer">Uniclix helps users to find and share content on the fly. 
+                        <p class="answer">Uniclix helps users find and share content on the fly. 
                             Uniclix allows users to set topics of interest and auto-suggests relevant articles so they don’t have to spend hours searching on the internet.</p>
                     </div>
                 </div>
@@ -149,7 +149,7 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
 
                 <h3>Collaborate on content with your team</h3>
 
-                <p class="description">Work together with your team to create content that’s high quality, on-brand, and that your audience is going to love.</p>
+                <p class="description">Work together with your team to create content that’s high quality, on-brand, and what your audience is going to love.</p>
                 
                 <div class="col-md-12 pl-none">
                     <div class="col-md-6 col-xs-12 pl-none">
@@ -167,7 +167,7 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
                             <img src="{{asset('images/shield.svg')}}" title="Approvals" alt="Review posts for quality and brand before hitting publish"/>
                             <h5>Approvals</h5>
                             <p class="description">
-                                Review posts for quality and brand before hitting publish
+                                Review posts for quality and on-brand value before hitting publish
                             </p>
                         </div>
                     </div>
@@ -203,7 +203,7 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
 
 <div class="join-business intro-section">
     <div class="container">
-        <h3>Join small and large business that use Uniclix to build their brands</h3>
+        <h3>Join small and large businesses that use Uniclix to build their brands</h3>
         <a href="{{config('frontendclient.client_url')}}?register" class="btn signin-btn get-started-btn">Get Started Now</a>
     </div>
 </div>
@@ -245,11 +245,11 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
 
                 <h3>People are talking, make sure your listening.</h3>
 
-                <p class="description">A great way to manage mentions and Monitor keywords and hashtags</p>
+                <p class="description">A salient way to manage mentions and monitor keywords and hashtags</p>
 
                 <h5>Create custom social streams</h5>
                 
-                <p class="description" >Setup and track custom streams of social content ,all organized by tabs so you can monitor them by category.
+                <p class="description" >Setup and track custom streams of social content, all organized by tabs so you can monitor them by category.
                     Respond & comment directly on the content of your interest from the streams.</p>
             </div>
         </div>
