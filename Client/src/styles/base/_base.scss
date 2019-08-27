@@ -714,7 +714,7 @@ input {
 }
 
 .disabled-btn{
-    opacity:0.2 !important;
+    opacity:0.5 !important;
     cursor:default;
 }
 
@@ -2512,13 +2512,26 @@ button.streammaker-btn:hover {
     margin: 0;
 }
 
-.item-actions li {
-    display: inline-block;
+.item-actions li > i {
     margin: 50px 10px 0 10px;
+    border: 1px solid #e1e1e1;
+    border-radius: 100px;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #485576;
 }
 
 .item-actions li a {
     color: #48b6be;
+}
+
+.item-actions li.text-links{
+    margin-top:46px;
 }
 
 .link-inactive a{

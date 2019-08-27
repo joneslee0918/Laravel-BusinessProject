@@ -347,17 +347,18 @@ class UserItem extends React.Component{
 
     render(){
         const { userItem, page } = this.props;
+        const { buttonState, replyState, DMState } = this.state;
 
         return (
             
             <div>    
-                <div className="item-row">
+                <div className={`item-row ${buttonState.disabled && 'disabled-btn'}`}>
         
                     <div>
                         <div className="profile-info pull-left">
                             <img className="pull-left" src={userItem.profile_image_url} />
                             <div className="pull-left">
-                                <p className="profile-name">{ userItem.name } <span className="profile-username">{ userItem.screen_name }</span></p>
+                                <p className="profile-name">{ userItem.name } <span className="profile-username">{ userItem.screen_name }</span> <span className="profile-state"></span></p>
                                 <p className="profile-title">{ userItem.description }</p>
                                 <ul className="bottom-info">
                                     <li><p>{ abbrNum(userItem.statuses_count, 1) } tweets</p></li>
@@ -368,12 +369,12 @@ class UserItem extends React.Component{
                         </div>
         
                         <UserActionButtons 
-                        actionButton={ this.state.buttonState } 
+                        actionButton={ buttonState } 
                         perform={this.perform} 
                         userItem={userItem} 
-                        replyState={this.state.replyState} 
+                        replyState={replyState} 
                         setReplyState={this.setReplyState}
-                        DMState={this.state.DMState}
+                        DMState={DMState}
                         setDMState={this.setDMState}
                         page={page}
                         />
@@ -441,8 +442,8 @@ const UserActionButtons = ({actionButton, perform, replyState, setReplyState, se
 
                 <Popup
                     trigger={<i className="fa fa-ellipsis-v"></i>}
-                    on="hover"
-                    position="left"
+                    on="click"
+                    position="left center"
                     arrow={true}
                     closeOnDocumentClick={true}
                 >
