@@ -39,7 +39,7 @@ Publish & schedule posts for multiple social media networks & accounts with a co
 
             <div class="row standard-padding">
                 <div class="col-md-6 col-xs-12">
-                    <h2>Auto Scheduling</h2>
+                    <h2>Auto scheduling</h2>
                     <p>Keep your social presence active 24/7 by automatically scheduling a post for all of your social accounts at once with unified clix, 
                         and Uniclix will publish them automatically for you.</p>
                 </div>
@@ -53,14 +53,14 @@ Publish & schedule posts for multiple social media networks & accounts with a co
                     <img class="img-responsive" src="{{asset('/images/accounts-images.png')}}" title="Publish in all Social Media Accounts" alt="Schedule and publish content to Twitter, Facebook Pages and Groups, LinkedIn from one place with Uniclix.">
                 </div>
                 <div class="col-md-6 col-xs-12">
-                    <h2>Publish in all Social Media Accounts</h2>
+                    <h2>Publish in all social media accounts</h2>
                     <p>Schedule and publish content to Twitter, Facebook Pages and Groups, LinkedIn from one place with Uniclix.</p>
                 </div>
             </div>
 
             <div class="row standard-padding">
                 <div class="col-md-6 col-xs-12">
-                    <h2>Tailored Posts</h2>
+                    <h2>Tailored posts</h2>
                     <p>Tailor each post for each social network and preview the posts before publishing.</p>
                 </div>
                 <div class="col-md-6 col-xs-12">
@@ -73,7 +73,7 @@ Publish & schedule posts for multiple social media networks & accounts with a co
                     <img class="img-responsive" src="{{asset('/images/pr-compose-calendar.png')}}" title="Optimal Send Times" alt="Customize the best time to post and maximize the engagement with the recommended time for each account.">
                 </div>
                 <div class="col-md-6 col-xs-12">
-                    <h2>Optimal Send Times</h2>
+                    <h2>Optimal send times</h2>
                     <p>Customize the best time to post and maximize the engagement with the recommended time for each account.</p>
                 </div>
             </div>

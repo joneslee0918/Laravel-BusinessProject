@@ -214,7 +214,7 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
             <div class="col-md-12 text-content">
                 <p class="title-description">Content Curation</p>
 
-                <h3>Simplify Your Social Content Curation</h3>
+                <h3>Simplify your social content curation</h3>
                 
                 <p class="description">Find & share content on the fly. 
                     Uniclix auto-suggests content relevant to your 

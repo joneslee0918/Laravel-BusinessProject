@@ -2645,14 +2645,14 @@ button.streammaker-btn:hover {
 }
 
 .btn-links > .fa-ellipsis-v{
-    font-size: 1.5em;
-    color: #999;
+    font-size: 1.1em;
+    color: #485576;
     cursor: pointer;
     padding: 10px;
 }
 
 .btn-links > .fa-ellipsis-v:hover{
-    color: #777;
+    border: 1px solid #485576;
 }
 
 .t-action-menu > button, .t-action-menu > a{
@@ -2664,8 +2664,8 @@ button.streammaker-btn:hover {
     width: 100%;
     outline: none;
     background:white;
-    color: #a8a8a8;
-    font-family: open-sansLight, Arial;
+    color: #485576;
+    font-family: open-sansBold, Arial;
 }
 
 .t-action-menu > button:hover, .t-action-menu > a:hover{

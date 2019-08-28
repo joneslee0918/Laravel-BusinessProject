@@ -145,7 +145,8 @@ class BillingController extends Controller
         if($user->teamMembers()->count() + 1 > $role->roleLimit->team_accounts) 
             return response()->json(["error" => 'Please delete some team accounts to correspond to the limits of your new plan.', "redirect" => "/settings/team"], 403);
 
-        $user->subscription('main')->swap($plan);
+        if($plan !== 'free') $user->subscription('main')->swap($plan);
+        else $user->subscription('main')->cancel();
 
         $user->role_id = $role->id;
         $user->save();
