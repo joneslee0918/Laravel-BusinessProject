@@ -445,16 +445,16 @@ const UserActionButtons = ({actionButton, perform, replyState, setReplyState, se
                     on="click"
                     position="left center"
                     arrow={true}
-                    closeOnDocumentClick={true}
+                    closeOnDocumentClick
                 >
                 {
                 close => ( 
                     <div className="t-action-menu">
-                        {!!actionButton && <button  onClick={perform} className={`${actionButton.disabled ? 'disabled-btn' : ''}`}>
+                        {!!actionButton && <button  onClick={() => {perform(); close();}} className={`${actionButton.disabled ? 'disabled-btn' : ''}`}>
                         {actionButton.action == "add" ? "Follow" : "Unfollow"}
                         </button>}
-                        {(actionButton.action == "add" || page == "following") && <button onClick={() => setDMState({disabled: !DMState.disabled, content: ``})}>DM</button>}
-                        {(actionButton.action == "add" || page == "following") && <button onClick={() => setReplyState({disabled: !replyState.disabled, content: `@${userItem.screen_name} `})}>Reply</button>}
+                        {(actionButton.action == "add" || page == "following") && <button onClick={() => {setDMState({disabled: !DMState.disabled, content: ``}); close();}}>DM</button>}
+                        {(actionButton.action == "add" || page == "following") && <button onClick={() => {setReplyState({disabled: !replyState.disabled, content: `@${userItem.screen_name} `}); close();}}>Reply</button>}
                     </div>
                 )}
                 </Popup>
