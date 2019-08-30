@@ -22,6 +22,7 @@ class UserController extends Controller
     {
         $channelId = $request->input("channelId");
         $id = $request->input("id");
+        $simple = $request->input("simple");
 
         if(!$channelId || !$id) return response()->json(["error" => "Required fields missing."], 400);
 
@@ -30,7 +31,7 @@ class UserController extends Controller
         if(!$channel) return response()->json(["error" => "Channel not found."], 404);
 
         $channel = $channel->details;
-        $info = $channel->getInfoById($id);
+        $info = $simple ? $channel->getSimpleInfoById($id) : $channel->getInfoById($id);
 
         if(empty($info)) return response()->json(["error" => "No info found for $id"], 404);
 

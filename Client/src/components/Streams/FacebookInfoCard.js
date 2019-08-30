@@ -13,11 +13,11 @@ class FacebookInfoCard extends React.Component{
     }
 
     fetchInfo = () => {
-        const {channelId, accountId} = this.props;
+        const {channelId, accountId, simple=false} = this.props;
         this.setState(() => ({
             loading: true
         })); 
-        getInfoById(channelId, accountId)
+        getInfoById(channelId, accountId, simple)
         .then(response => {
             this.setState(() => ({
                 user: response,

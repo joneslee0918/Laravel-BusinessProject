@@ -132,6 +132,7 @@ Route::prefix("facebook")->group(function(){
         Route::post('post/unlike', 'Facebook\Actions\LikeController@unlike');
 
         Route::post('post/comment', 'Facebook\Actions\CommentController@comment');
+        Route::get('get/comments', 'Facebook\CommentsController@get');
 
         Route::post('message/send', 'Facebook\Actions\MessageController@send');
 

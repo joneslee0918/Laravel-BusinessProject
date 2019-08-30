@@ -16,8 +16,8 @@ export const getAccounts = () => {
             });
 };
 
-export const getInfoById = (channelId, id) => {
-    return axios.get(`${apiUrl}/facebook/user/info?channelId=${channelId}&id=${id}`)
+export const getInfoById = (channelId, id, simple=false) => {
+    return axios.get(`${apiUrl}/facebook/user/info?channelId=${channelId}&id=${id}&simple=${simple}`)
     .then((response) => {
                 return response.data;
             });
@@ -83,6 +83,12 @@ export const comment = (objectId, channelId, message, image = "") => {
         message,
         image
     }).then((response) => {
+        return response.data;
+    });
+}
+
+export const getComments = (objectId, channelId) => {
+    return axios.get(`${apiUrl}/facebook/get/comments?objectId=${objectId}&channelId=${channelId}`).then((response) => {
         return response.data;
     });
 }

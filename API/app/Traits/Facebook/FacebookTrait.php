@@ -43,6 +43,17 @@ trait FacebookTrait
         });
     }
 
+    public function getSimpleInfoById($id){
+        $key = "$id-facebookDetails2";
+        $minutes = 1;
+        return Cache::remember($key, $minutes, function () use ($id){
+            $fb = $this->setAsCurrentUser();
+            $response = $fb->get("/$id?fields=about,picture,name,cover");
+    
+            return $response->getDecodedBody();
+        });
+    }
+
     public function getPages(){
         $fb = $this->setAsCurrentUser();
         $response = $fb->get('/me/accounts?fields=access_token,picture,name');
@@ -197,13 +208,22 @@ trait FacebookTrait
         return $response->getDecodedBody();
     }
 
-
-
     public function getComments($postId){
         $fb = $this->setAsCurrentUser();
-        $response = $fb->get("/{$postId}/comments?summary=1&filter=toplevel");
+        $comments = $fb->get("/{$postId}/comments?summary=1&filter=toplevel");
+        $comments = $comments->getDecodedBody();
+        $comments = isset($comments['data']) ? $comments['data'] : [];
 
-        return $response->getDecodedBody();
+        //if(count($comments) && !isset($comments[0]['from'])) return [];
+
+        $response = array_map(function($comment){
+            //$comment['replies'] = $this->getComments($comment['id']);
+            if(!isset($comment['from'])) return $comment;
+            $comment['from'] = $this->getSimpleInfoById($comment['from']['id']);
+            return $comment;
+        }, $comments);
+
+        return $response;
     }
 
     public function postComment($postId, $comment){

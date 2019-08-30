@@ -51,11 +51,11 @@ Route::get('/privacy-policy', function(){
 });
 
 Route::get('/test', function(){
-    $team = App\Models\User::first();
-//     $channel = $team->channels()->first();
-//    // $channel->select($team);
+    $user = App\Models\User::first();
+    $channel = $user->facebookChannels()->latest()->first();
+//    // $channel->select($user);
 
-    return response()->json($team->hasRole("twitter_growth"));
+    return response()->json($channel->getComments("484752311605825_829275380486848"));
 });
 
 Route::get('/jobs', function(){

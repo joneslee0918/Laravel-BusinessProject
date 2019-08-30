@@ -4282,6 +4282,50 @@ table.compare-plans-table {
      transform: translate3d(25%, 0, 0);
   }
 
+  .show-comments{
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+  }
+
+  .commenter__profile__pic {
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border-radius: 100px;
+  }
+
+.comments__commenter.comments__reply .commenter__profile__pic {
+    width: 20px;
+    height: 20px;
+}
+
+.comments__commenter.comments__reply {
+    margin-left: 40px;
+}
+
+.comments__commenter {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.commenter__profile__pic img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.view-replies{
+    margin-left:12px;
+}
+
+.commenter_message {
+    margin-left: 10px;
+    background: #f5f5f5;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
 @keyframes lds-ripple {
     0% {
         top: 28px;

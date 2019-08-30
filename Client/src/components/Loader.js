@@ -50,5 +50,22 @@ export const PostLoader = () => (
   </ContentLoader>
   );
 
+export const AvatarWithText = () => (
+  <ContentLoader 
+    height={100}
+    width={400}
+    speed={2}
+    primaryColor="#f9f9f9"
+    secondaryColor="#ecebeb"
+  >
+    <circle cx="24" cy="23" r="18" /> 
+    <rect x="48" y="16" rx="0" ry="0" width="332" height="7" /> 
+    <rect x="48" y="29" rx="0" ry="0" width="245" height="7" /> 
+    <circle cx="60" cy="64" r="13" /> 
+    <rect x="85" y="51" rx="0" ry="0" width="255" height="9" /> 
+    <rect x="85" y="68" rx="0" ry="0" width="185" height="6" />
+  </ContentLoader>
+  )
+
 //export const UniclixLoader
 export default Loader;

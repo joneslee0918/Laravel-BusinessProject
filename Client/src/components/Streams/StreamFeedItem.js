@@ -3,6 +3,7 @@ import TwitterActions from './TwitterActions';
 import StreamPost from './StreamPost';
 import FacebookActions from './FacebookActions';
 import FacebookMessagesFeed from './FacebookMessagesFeed';
+import FacebookComments from './FacebookComments';
 
 const StreamFeedItem = ({feedItem, streamItem, channel, setImages, updateItem}) => {
     try{
@@ -181,12 +182,16 @@ const FacebookPostsFeed = ({feedItem, setImages, channel, updateItem}) => {
 
         return (
             <StreamPost {...postData} >
-                <FacebookActions 
-                    updateItem={updateItem} 
-                    channel={channel} 
-                    feedItem={feedItem}
-                    postData={postData}
-                />
+                <div>
+                    <FacebookActions 
+                        updateItem={updateItem} 
+                        channel={channel} 
+                        feedItem={feedItem}
+                        postData={postData}
+                    />
+                    
+                    <FacebookComments post={feedItem} channel={channel}/>
+                </div>
             </StreamPost>
         )
     }catch(e){
