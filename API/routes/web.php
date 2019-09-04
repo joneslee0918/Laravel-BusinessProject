@@ -52,10 +52,14 @@ Route::get('/privacy-policy', function(){
 
 Route::get('/test', function(){
     $user = App\Models\User::first();
-    $channel = $user->facebookChannels()->latest()->first();
-//    // $channel->select($user);
+    $channel = $user->twitterChannels()->latest()->first();
+    return $channel->getStatusReplies("pcgamer", "1169144818884329476");
 
-    return response()->json($channel->getComments("484752311605825_829275380486848"));
+    // return response()->json($team->hasRole("twitter_growth"));
+});
+
+Route::get('/mailable', function() {
+    return new App\Mail\UserSignUp();
 });
 
 Route::get('/jobs', function(){

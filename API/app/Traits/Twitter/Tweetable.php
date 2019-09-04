@@ -497,9 +497,10 @@ trait Tweetable
     public function getSearch($params = []){
 
         if(!isset($params["q"])) return [];
+        $sinceId = isset($params["since_id"]) ? $params["since_id"] : "";
 
         try {
-            $key = $this->id . "-search-{$params['q']}-Timeline";
+            $key = $this->id . "-search-{$params['q']}-{$sinceId}-Timeline";
             $minutes = 1;
             return Cache::remember($key, $minutes, function () use ($params){
                 $this->setAsCurrentUser();
@@ -513,6 +514,14 @@ trait Tweetable
         } catch (\Exception $e) {
             throw $e;
         }
+    }
+
+    public function getStatusReplies($username, $tweetId){
+        $results = $this->getSearch(["q"=>"@$username", "since_id"=>$tweetId, "count"=>100]);
+        if(count($results) < 1) return [];
+        $results = collect($results)->where("in_reply_to_status_id_str", $tweetId)->values()->toArray();
+
+        return $results;
     }
 
 

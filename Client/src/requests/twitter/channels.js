@@ -134,6 +134,13 @@ export const getUserInfo = (channelId, username) => {
 }
 
 
+export const getStatusReplies = (channelId, username, tweetId) => {
+    return axios.get(`${apiUrl}/twitter/tweet/replies?channelId=${channelId}&username=${username}&tweetId=${tweetId}`)
+    .then((response) => {
+        return response.data;
+    });
+}
+
 export const follow = (userId) => {
     return axios.patch(`${apiUrl}/twitter/follow/${userId}`)
     .then((response) => {

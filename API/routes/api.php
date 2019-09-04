@@ -102,6 +102,7 @@ Route::prefix("twitter")->group(function(){
         Route::patch('retweet/post', 'Twitter\Actions\RetweetController@retweetPost');
 
         Route::post('tweet', 'Twitter\Actions\StatusController@tweet');
+        Route::get('tweet/replies', 'Twitter\RepliesController@replies');
         Route::post('tweet/delete', 'Twitter\Actions\StatusController@delete');
         Route::post('dm', 'Twitter\Actions\DMController@DM');
 

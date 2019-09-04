@@ -18,6 +18,10 @@ use App\Notifications\User\AfterTwentyDays;
 use App\Notifications\User\FiveHoursAfterSignUp;
 use App\Notifications\User\OneDayAfterSignUp;
 use App\Notifications\User\UserSignUp;
+use App\Notifications\User\NoPostScheduledAfterTenDays;
+use App\Notifications\User\NoPostScheduledAfterThreeDays;
+use App\Notifications\User\TwitterBoosterAfterFiveDays;
+use App\Notifications\User\TwitterBoosterAfterThirtyFiveDays;
 
 class Notifier extends Command
 {
@@ -65,14 +69,19 @@ class Notifier extends Command
                 $user->notify(new AfterTenDays($user));
                 $user->notify(new AfterThirtyDays($user));
                 $user->notify(new AfterTwentyDays($user));
+                $user->notify(new UserSignUp());
+                $user->notify(new NoPostScheduledAfterThreeDays($user));
+                $user->notify(new NoPostScheduledAfterTenDays($user));
+                $user->notify(new TwitterBoosterAfterFiveDays($user));
+                $user->notify(new TwitterBoosterAfterThirtyFiveDays($user));
             }
         }
 
-        // if ($channels = Channel::all()) {
-        //     foreach ($channels as $channel) {
-        //         $channel->user->notify((new AccountDisconnected($channel)));
-        //     }
-        // }
+        if ($channels = Channel::all()) {
+            foreach ($channels as $channel) {
+                $channel->user->notify((new AccountDisconnected($channel)));
+            }
+        }
 
         Command::info("DONE");
     }

@@ -5,6 +5,7 @@ import Popup from "reactjs-popup";
 import {like, unlike, retweet, deleteTweet} from '../../requests/twitter/tweets';
 import {abbrNum} from '../../utils/numberFormatter';
 import TwitterReply from './TwitterReply';
+import TwitterReplies from './TwitterReplies';
 import { ToastContainer } from "react-toastr";
 import { setComposerModal } from "../../actions/composer";
 import { setPost } from '../../actions/posts';
@@ -17,7 +18,8 @@ class TwitterActions extends React.Component{
     state = {
         liked: this.props.feedItem.favorited,
         retweeted: this.props.feedItem.retweeted,
-        replyBox: false
+        replyBox: false,
+        repliesBox: false
     }
 
     likePost = () => {
@@ -133,6 +135,13 @@ class TwitterActions extends React.Component{
         });
     };
 
+    toggleRepliesBox = () => {
+
+        this.setState(() => ({
+            repliesBox: !this.state.repliesBox
+        }));
+    };
+
     render(){
         const {feedItem, postData, channel} = this.props;
         const {liked, retweeted} = this.state;
@@ -154,6 +163,15 @@ class TwitterActions extends React.Component{
                     isOpen={this.state.replyBox}
                 >
                     <TwitterReply close={this.toggleReplyBox} postData={postData} channel={channel}/>
+                </Modal>}
+
+                {this.state.repliesBox && 
+                <Modal
+                    ariaHideApp={false}
+                    className="t-reply-modal"
+                    isOpen={this.state.repliesBox}
+                >
+                    <TwitterReplies close={this.toggleRepliesBox} postData={postData} channel={channel}/>
                 </Modal>
                 }
 
@@ -198,6 +216,9 @@ class TwitterActions extends React.Component{
                         </div>
                     )}
                     </Popup>
+                </div>
+                <div className="comments">
+                    <a href="javascript:void(0)" className="show-comments" onClick={this.toggleRepliesBox}>Show Conversation</a>
                 </div>
             </div>
             )
