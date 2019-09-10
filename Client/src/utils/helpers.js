@@ -1,3 +1,4 @@
+import React from 'react';
 import moment from "moment";
 import timeFormats from './timeFormats';
 
@@ -41,11 +42,12 @@ export function truncate(string, length){
 
 export function hashLink(text){
     if(typeof(text) === "undefined") return;
-    return text.replace(/([@#])([a-z\d_]+)/ig, function(_, marker, tag) {
+    return text.replace(/([@#])([a-z\d_]+)/ig, (function(_, marker, tag){
         if (marker === "@")
             return '<a href="https://twitter.com/'+tag+'" target="_blank">@' + tag + '</a>';
+             
         return '<a href="https://twitter.com/hashtag/'+tag+'" target="_blank">#' + tag+'</a>';
-    });
+    }));
 }
 
 export function parseTextWithLinks(text){

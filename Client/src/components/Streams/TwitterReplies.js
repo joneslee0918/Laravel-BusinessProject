@@ -1,43 +1,62 @@
 import React from 'react';
 import StreamPost from './StreamPost';
 import {getStatusReplies} from '../../requests/twitter/channels';
+import {getStreamFeed} from '../../requests/streams';
 import {AvatarWithText} from '../Loader';
 
 
 class TwitterReplies extends React.Component{
     state = {
         replies: [],
+        items: [],
         loading: false
     }
 
     componentDidMount(){
-        const {postData, channel} = this.props;
+        const {postData, channel, keyword = false} = this.props;
         this.setState(() => ({
             loading: true
         }));
 
-        getStatusReplies(channel.id, postData.username, postData.statusId)
-        .then(response => {
-            this.setState(() => ({
-                replies: response,
-                loading: false
-            }));
-        }).catch(error => {
-            this.setState(() => ({
-                loading: false
-            }));
-            console.log(error);
-        });
+        if(!keyword){
+            getStatusReplies(channel.id, postData.username, postData.statusId)
+            .then(response => {
+                this.setState(() => ({
+                    replies: response,
+                    loading: false
+                }));
+            }).catch(error => {
+                this.setState(() => ({
+                    loading: false
+                }));
+                console.log(error);
+            });
+        }else{
+            getStreamFeed("search", "twitter", channel.id, keyword, "").then((response) => {
+            
+                const items = typeof response["data"] !== "undefined" ? response["data"] : response;
+    
+                this.setState(() => ({
+                    items: items.length ? items : this.state.items,
+                    loading: false
+                }));
+                
+                if(!items.length) return;
+            }).catch(e => {
+                this.setState(() => ({loading: false}));  
+            });
+        }
+
     }
 
     render(){
-        const {close, postData} = this.props;
-        const {replies, loading} = this.state;
+        const {close, postData, keyword} = this.props;
+        const {replies, loading, items} = this.state;
 
         return (
             <div className="t-reply-container">
                 <div className="t-reply-heading">
-                    <h3>Twitter Replies</h3>
+                    <h3>Twitter {keyword ? keyword + ' results' : 'Replies'}</h3>
                     <i onClick={close} className="fa fa-close link-cursor"></i>
                 </div>
                 <div className="t-reply-body">
@@ -47,6 +66,10 @@ class TwitterReplies extends React.Component{
                     {loading && <AvatarWithText />}
                     {replies.map((reply, index) => {
                         return <TwitterStatusReply key={index} reply={reply} parentPostData={postData}/>
+                    })}
+
+                    {items.map((item, index) => {
+                        return <TwitterStatusReply key={index} reply={item} parentPostData={postData}/>
                     })}
                 </div>
             </div>

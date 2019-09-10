@@ -188,7 +188,7 @@ class StreamsController extends Controller
             "index" => ($latestStream ? $latestStream->index + 1 : 0),
             "channel_id" => $channelId,
             "search_query" => $searchTerm ? $searchTerm : null,
-            "title" => $type["label"],
+            "title" => $searchTerm ? $searchTerm : $type["label"],
             "type" => $type["value"],
             "network" => $network
         ]);
