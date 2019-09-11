@@ -5,25 +5,25 @@ import FacebookActions from './FacebookActions';
 import FacebookMessagesFeed from './FacebookMessagesFeed';
 import FacebookComments from './FacebookComments';
 
-const StreamFeedItem = ({feedItem, streamItem, channel, setImages, updateItem}) => {
+const StreamFeedItem = ({feedItem, streamItem, channel, setImages, updateItem, reload, selectedTab}) => {
     try{
         if(streamItem.type == "scheduled"){
-            return <ScheduledFeed feedItem={feedItem} setImages={setImages} channel={channel}/>
+            return <ScheduledFeed reload={reload} feedItem={feedItem} setImages={setImages} channel={channel} selectedTab={selectedTab} />
         }
 
         if(streamItem.network === "twitter"){
             if(streamItem.type === "followers"){
-                return <TwitterFollowersFeed feedItem={feedItem} setImages={setImages} channel={channel} updateItem={updateItem}/>;
+                return <TwitterFollowersFeed reload={reload} feedItem={feedItem} setImages={setImages} channel={channel} updateItem={updateItem} selectedTab={selectedTab} />;
             }else{
-                return <TwitterDefaultFeed feedItem={feedItem} setImages={setImages} channel={channel} updateItem={updateItem}/>;
+                return <TwitterDefaultFeed reload={reload} feedItem={feedItem} setImages={setImages} channel={channel} updateItem={updateItem} selectedTab={selectedTab} />;
             }
         }
         else if(streamItem.network === "facebook"){
 
             if(streamItem.type === "conversations"){
-                return <FacebookMessagesFeed feedItem = {feedItem} channel={channel} setImages={setImages} updateItem={updateItem}/>
+                return <FacebookMessagesFeed reload={reload} feedItem = {feedItem} channel={channel} setImages={setImages} updateItem={updateItem} selectedTab={selectedTab} />
             }else{
-                return <FacebookPostsFeed feedItem = {feedItem} setImages={setImages} channel={channel} updateItem={updateItem}/>
+                return <FacebookPostsFeed reload={reload} feedItem = {feedItem} setImages={setImages} channel={channel} updateItem={updateItem} selectedTab={selectedTab} />
             }
             
         }else{
@@ -34,7 +34,7 @@ const StreamFeedItem = ({feedItem, streamItem, channel, setImages, updateItem}) 
     }
 };
 
-const TwitterDefaultFeed = ({feedItem, setImages, channel, updateItem}) => {
+const TwitterDefaultFeed = ({feedItem, setImages, channel, updateItem, reload, selectedTab}) => {
     try{
         const text = feedItem.text ? feedItem.text : "";
         const profileImg = feedItem.user.profile_image_url_https;
@@ -53,7 +53,7 @@ const TwitterDefaultFeed = ({feedItem, setImages, channel, updateItem}) => {
         const postData = {profileImg, username, text, date, media, setImages, statusId, sharedStatus, networkType, channel, accountId};
 
         return (
-            <StreamPost {...postData} >
+            <StreamPost {...postData} reload={reload} selectedTab={selectedTab} >
                 <TwitterActions 
                     updateItem={updateItem} 
                     channel={channel} 
@@ -69,7 +69,7 @@ const TwitterDefaultFeed = ({feedItem, setImages, channel, updateItem}) => {
     }
 }
 
-const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem}) => {
+const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem, reload, selectedTab}) => {
     try{
         const text = typeof feedItem.status !== "undefined" && typeof feedItem.status["text"] !== "undefined" ? feedItem.status["text"] : "";
         const date = typeof feedItem.status !== "undefined" && typeof feedItem.status["created_at"] !== "undefined" ? feedItem.status["created_at"] : "";
@@ -89,7 +89,7 @@ const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem}) => {
         return(
             <div>
             {typeof feedItem.status != "undefined" && 
-                <StreamPost {...postData} >
+                <StreamPost {...postData} reload={reload} selectedTab={selectedTab} >
                     <TwitterActions 
                         updateItem={updateItem} 
                         channel={channel} 
@@ -107,7 +107,7 @@ const TwitterFollowersFeed = ({feedItem, setImages, channel, updateItem}) => {
 
 }
 
-const ScheduledFeed = ({feedItem, channel, setImages}) => {
+const ScheduledFeed = ({feedItem, channel, setImages, reload, selectedTab}) => {
     try{
         const text = feedItem.content ? feedItem.content : "";
         const profileImg = channel.avatar;
@@ -119,14 +119,14 @@ const ScheduledFeed = ({feedItem, channel, setImages}) => {
         media = media.map(file => ({src: file.absolutePath, type: "photo"}));
 
         return (
-            <StreamPost {...{profileImg, username, text, date, media, setImages, channel, accountId}} />
+            <StreamPost {...{profileImg, username, text, date, media, setImages, channel, accountId}} reload={reload} selectedTab={selectedTab} />
         )}catch(e){ 
             console.log(e);
             return <div></div>
         }
 };
 
-const FacebookPostsFeed = ({feedItem, setImages, channel, updateItem}) => {
+const FacebookPostsFeed = ({feedItem, setImages, channel, updateItem, reload, selectedTab}) => {
 
     try{    
         let text = feedItem.message ? feedItem.message : "";
@@ -181,7 +181,7 @@ const FacebookPostsFeed = ({feedItem, setImages, channel, updateItem}) => {
         const postData = {profileImg, username, text, attachmentData, date, media, setImages, statusId, networkType, channel, accountId};
 
         return (
-            <StreamPost {...postData} >
+            <StreamPost {...postData} reload={reload} selectedTab={selectedTab} >
                 <div>
                     <FacebookActions 
                         updateItem={updateItem} 

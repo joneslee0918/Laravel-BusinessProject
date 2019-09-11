@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Select from 'react-select';
 import Modal from 'react-modal';
-import { NavLink } from 'react-router-dom';
 import channelSelector, {streamChannels} from '../../selectors/channels';
 import streamTypes from './StreamTypesFixture';
 import {addStream} from '../../requests/streams';

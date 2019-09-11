@@ -40,18 +40,22 @@ export function truncate(string, length){
        return string;
 };
 
-export function hashLink(text){
+export function hashLink(text, onTagClick){
     if(typeof(text) === "undefined") return;
     return text.replace(/([@#])([a-z\d_]+)/ig, (function(_, marker, tag){
         if (marker === "@")
             return '<a href="https://twitter.com/'+tag+'" target="_blank">@' + tag + '</a>';
+
+        if(typeof onTagClick === 'function')
+            return '<a href="javascript:void(0)">#' + tag+'</a>';
+        
              
         return '<a href="https://twitter.com/hashtag/'+tag+'" target="_blank">#' + tag+'</a>';
     }));
 }
 
-export function parseTextWithLinks(text){
-    return hashLink(linkify(text));
+export function parseTextWithLinks(text, onTagClick = false){
+    return hashLink(linkify(text), onTagClick);
 }
 
 export function chunk(array, size) {

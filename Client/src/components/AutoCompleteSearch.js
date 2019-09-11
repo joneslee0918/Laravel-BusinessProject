@@ -57,7 +57,7 @@ class AutoCompleteSearch extends React.Component {
     // based on the clicked suggestion. Teach Autosuggest how to calculate the
     // input value for every given suggestion.
     getSuggestionValue = (suggestion) => {
-        this.props.setSelected(suggestion.id);
+        this.props.setSelected(suggestion);
         return suggestion.name;
     };
 

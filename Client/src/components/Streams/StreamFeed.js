@@ -160,7 +160,7 @@ class StreamFeed extends React.Component{
     };
 
     render(){
-        const {streamItem, channel, refreshRate} = this.props;
+        const {streamItem, channel, refreshRate, reload, selectedTab} = this.props;
         const {imageViewer, imageIndex, images} = this.state;
         return (
             <div ref={(ref) => this.scrollParentRef = ref} className="stream-feed scrollbar">
@@ -200,6 +200,8 @@ class StreamFeed extends React.Component{
                                 setImages={this.setImages} 
                                 updateItem={this.updateItem} 
                                 channel={channel}
+                                reload={reload}
+                                selectedTab={selectedTab} 
                             />
 
                     )) : this.state.loading ? 

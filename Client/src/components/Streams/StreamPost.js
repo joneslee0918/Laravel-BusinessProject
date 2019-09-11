@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux'
 import Modal from 'react-modal';
 import StreamFeedMedia from './StreamFeedMedia';
 import ReadMore from '../ReadMore';
@@ -7,6 +8,7 @@ import {toHumanTime} from '../../utils/helpers';
 import TwitterInfoCard from './TwitterInfoCard';
 import TwitterReplies from './TwitterReplies';
 import FacebookInfoCard from './FacebookInfoCard';
+import channelSelector from '../../selectors/channels';
 
 class StreamPost extends React.Component{
 
@@ -15,17 +17,33 @@ class StreamPost extends React.Component{
         keyword: false
     }
 
-    thisRepl = this;
-
-    toggleHashStreamModal = (args = false) => {
-        this.setState(() => ({
-            hashStreamModal: !this.hashStreamModal,
-            keyword: args
-        }));
+    toggleHashStreamModal = (arg = false) => {
+        
+        if(typeof arg === 'string' && arg.indexOf("#") !== -1){
+            this.setState(() => ({
+                hashStreamModal: !this.hashStreamModal,
+                keyword: arg
+            })); 
+        }
     };
 
     render(){
-        const {profileImg, username, date, text, media, setImages, children, statusId, attachmentData, sharedStatus, networkType, channel, accountId} = this.props;
+        const {profileImg, 
+                username, 
+                date, 
+                text, 
+                media, 
+                setImages, 
+                children, 
+                statusId, 
+                attachmentData, 
+                sharedStatus, 
+                networkType, 
+                channel, 
+                accountId, 
+                reload, 
+                selectedTab,
+            twitterChannel} = this.props;
         const postTime = date ? toHumanTime(date) : "";
         return (<div className="stream-feed-container">
 
@@ -34,7 +52,12 @@ class StreamPost extends React.Component{
                         className="t-reply-modal"
                         isOpen={this.state.hashStreamModal}
                     >
-                        <TwitterReplies close={this.toggleHashStreamModal} postData={{profileImg, username, date, text, media, setImages, children, statusId, attachmentData, sharedStatus, networkType, channel, accountId}} keyword={this.state.keyword} channel={channel}/>
+                        <TwitterReplies close={() => this.setState(() => ({hashStreamModal: false}))} 
+                        postData={this.props} 
+                        keyword={this.state.keyword} 
+                        channel={networkType == "facebook" && twitterChannel ? twitterChannel : channel} 
+                        reload={reload} 
+                        selectedTab={selectedTab} />
                     </Modal>
 
                     <div className="post-info">
@@ -59,7 +82,11 @@ class StreamPost extends React.Component{
                                         </div>
                                     </div>
                                     
-                                    <ReadMore>{sharedStatus.text}</ReadMore>
+                                    {twitterChannel ?
+                                        <ReadMore onTagClick={this.toggleHashStreamModal}>{sharedStatus.text}</ReadMore>
+                                        :
+                                        <ReadMore>{sharedStatus.text}</ReadMore>
+                                    }
 
                                     <StreamFeedMedia setImages={setImages} media={media}></StreamFeedMedia>
                                 </div>
@@ -68,6 +95,9 @@ class StreamPost extends React.Component{
                             (   !text && networkType === "facebook" ?
                                 
                                 <div>{username} shared a <a href={`https://www.facebook.com/${statusId.split('_')[0]}/posts/${statusId.split('_')[1]}`} target="_blank">post</a></div>
+                                :
+                                twitterChannel ? 
+                                <ReadMore onTagClick={this.toggleHashStreamModal}>{text}</ReadMore>
                                 :
                                 <ReadMore>{text}</ReadMore>
                             )
@@ -102,4 +132,12 @@ class StreamPost extends React.Component{
     }
 };
 
-export default StreamPost;
+
+const mapStateToProps = (state) => {
+    const twitterChannels = channelSelector(state.channels.list, {selected: undefined, provider: "twitter"});
+    return {
+        twitterChannel: twitterChannels.length > 0 ? twitterChannels[0] : false
+    }
+}
+
+export default connect(mapStateToProps)(StreamPost);

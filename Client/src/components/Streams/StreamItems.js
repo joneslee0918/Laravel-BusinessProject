@@ -224,6 +224,8 @@ class StreamItems extends Component {
                        <StreamFeed 
                         streamItem = {item} 
                         channel={channel} 
+                        reload={reload}
+                        selectedTab={selectedTab} 
                         refreshId={this.state.refresh} 
                         resetRefresh={this.refresh}
                         refreshRate={refreshRate} 

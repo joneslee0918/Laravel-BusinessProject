@@ -2732,6 +2732,11 @@ button.streammaker-btn:hover {
     max-height:95vh;
 }
 
+.t-reply-body-container{
+    max-height:75vh;
+    overflow:auto;
+}
+
 .t-reply-heading {
     background: white;
     display: flex;
@@ -4330,6 +4335,8 @@ table.compare-plans-table {
     padding: 5px 10px;
     border-radius: 5px;
 }
+
+
 
 @keyframes lds-ripple {
     0% {

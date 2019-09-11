@@ -1,7 +1,7 @@
 import React from 'react';
 import StreamPost from './StreamPost';
 import {getStatusReplies} from '../../requests/twitter/channels';
-import {getStreamFeed} from '../../requests/streams';
+import {getStreamFeed, addStream} from '../../requests/streams';
 import {AvatarWithText} from '../Loader';
 
 
@@ -49,35 +49,64 @@ class TwitterReplies extends React.Component{
 
     }
 
+    submitStream = () => {
+
+        this.setState(() => ({
+            loading: true
+        }));
+
+        const {channel, selectedTab, close, reload, keyword} = this.props;
+
+        const channelId = channel.id;
+        const network = "twitter";
+        const searchTerm = keyword;
+        const item = {label: searchTerm, value: 'search'}
+
+        return addStream(item, channelId, selectedTab, network, searchTerm).then(() => reload()).then(() => {
+            this.setState(() => ({
+                loading: false
+            }));
+           if(typeof close !== "undefined") close();
+        });
+    };
+
     render(){
-        const {close, postData, keyword} = this.props;
+        const {close, postData, keyword, reload} = this.props;
         const {replies, loading, items} = this.state;
 
         return (
-            <div className="t-reply-container">
-                <div className="t-reply-heading">
-                    <h3>Twitter {keyword ? keyword + ' results' : 'Replies'}</h3>
-                    <i onClick={close} className="fa fa-close link-cursor"></i>
+            <div>            
+                <div className="t-reply-container">
+                    <div className="t-reply-heading">
+                        <h3>Twitter {keyword ? keyword + ' results' : 'Replies'}</h3>
+                        <i onClick={close} className="fa fa-close link-cursor"></i>
+                    </div>
+                    <div className="t-reply-body-container">
+                        <div className="t-reply-body">
+                            {!keyword && <StreamPost {...postData} reload={reload}/>}
+                            {keyword && items.map((item, index) => {
+                                return <TwitterStatusReply key={index} reply={item} parentPostData={postData} reload={reload}/>
+                            })}
+                        </div>
+                    </div>                        
+                    <div className="comments twitter-convo">
+                        {loading && <AvatarWithText />}
+                        {replies.map((reply, index) => {
+                            return <TwitterStatusReply key={index} reply={reply} parentPostData={postData} reload={reload}/>
+                        })}
+                    </div>
+                {keyword && <div className="text-center m10">
+                    <button className="btn btn-primary" onClick={this.submitStream}>Save as new stream</button>
+                </div>}   
                 </div>
-                <div className="t-reply-body">
-                    <StreamPost {...postData} />
-                </div>
-                <div className="comments twitter-convo">
-                    {loading && <AvatarWithText />}
-                    {replies.map((reply, index) => {
-                        return <TwitterStatusReply key={index} reply={reply} parentPostData={postData}/>
-                    })}
 
-                    {items.map((item, index) => {
-                        return <TwitterStatusReply key={index} reply={item} parentPostData={postData}/>
-                    })}
-                </div>
             </div>
+
         );
     }
 }
 
-const TwitterStatusReply = ({reply, parentPostData}) => {
+const TwitterStatusReply = ({reply, parentPostData, reload}) => {
 
     const text = reply.text ? reply.text : "";
     const profileImg = reply.user.profile_image_url_https;
@@ -99,7 +128,7 @@ const TwitterStatusReply = ({reply, parentPostData}) => {
     const postData = {profileImg, username, text, date, media, setImages, statusId, sharedStatus, networkType, channel, accountId};
     return (
         <div>
-            <StreamPost {...postData} />
+            <StreamPost {...postData} reload={reload}/>
         </div>
     )
 }

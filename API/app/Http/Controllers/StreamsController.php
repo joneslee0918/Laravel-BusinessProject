@@ -187,8 +187,8 @@ class StreamsController extends Controller
         $stream = $tab->streams()->create([
             "index" => ($latestStream ? $latestStream->index + 1 : 0),
             "channel_id" => $channelId,
-            "search_query" => $searchTerm ? $searchTerm : null,
-            "title" => $searchTerm ? $searchTerm : $type["label"],
+            "search_query" => $searchTerm ? (isset($searchTerm["id"]) ? $searchTerm["id"] : $searchTerm) : null,
+            "title" => $searchTerm ? (isset($searchTerm["name"]) ? $searchTerm["name"] : $searchTerm) : $type["label"],
             "type" => $type["value"],
             "network" => $network
         ]);
