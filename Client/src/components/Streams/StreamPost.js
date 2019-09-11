@@ -55,7 +55,7 @@ class StreamPost extends React.Component{
                         <TwitterReplies close={() => this.setState(() => ({hashStreamModal: false}))} 
                         postData={this.props} 
                         keyword={this.state.keyword} 
-                        channel={networkType == "facebook" && twitterChannel ? twitterChannel : channel} 
+                        channel={networkType !== "twitter" && twitterChannel ? twitterChannel : channel} 
                         reload={reload} 
                         selectedTab={selectedTab} />
                     </Modal>
