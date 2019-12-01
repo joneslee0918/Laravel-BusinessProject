@@ -17,7 +17,7 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
 @endsection
 
 @section('get-started')
-{{config('frontendclient.client_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly
+{{config('frontendclient.client_twitter_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly
 @endsection
 
 @section('content')
@@ -32,7 +32,7 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
                 <p class="mt20">With the Right Tool, Twitter Marketing is Easy!</p>
                 <p class="mt20"><strong>Grow Your Twitter Brand with the Power of Artificial Intelligence</strong></p>
                 <p class="mt20">Now you can Save Time and Work Smarter, not Harder.</p>
-                <a class="btn theme-btn mt30" href="{{config('frontendclient.client_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly&addontrial=true" target="_blank">Start 3 day free trial </a>
+                <a class="btn theme-btn mt30" href="{{config('frontendclient.client_twitter_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly&addontrial=true" target="_blank">Start 3 day free trial </a>
                 <!-- <a href="/pricing" class="btn theme-btn mt30">Learn more</a> -->
             </div>
         </div>
@@ -107,7 +107,7 @@ Uniclix helps you centralize, manage and grow your social media accounts with ju
 <div class="join-business intro-section">
     <div class="container">
         <h3>Join small and large business that use Uniclix to build their brands</h3>
-        <a href="{{config('frontendclient.client_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly" class="btn signin-btn get-started-btn">Get Started Now</a>
+        <a href="{{config('frontendclient.client_twitter_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly" class="btn signin-btn get-started-btn">Get Started Now</a>
     </div>
 </div>
 

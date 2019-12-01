@@ -13,7 +13,7 @@ Join other influencers and small businesses who trust our easy to use Twitter Un
 @endsection
 
 @section('get-started')
-{{config('frontendclient.client_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly
+{{config('frontendclient.client_twitter_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly
 @endsection
 
 @section('content')
@@ -69,7 +69,7 @@ Join other influencers and small businesses who trust our easy to use Twitter Un
             <div class="row mt30 mb30">
                 <div class="col-xs-12 text-center">
                     <h2>Try Uniclix and see the difference.</h2>
-                    <a href="{{config('frontendclient.client_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly" class="signin-btn">Get Started</a>
+                    <a href="{{config('frontendclient.client_twitter_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly" class="signin-btn">Get Started</a>
                 </div>
             </div>
         </div>

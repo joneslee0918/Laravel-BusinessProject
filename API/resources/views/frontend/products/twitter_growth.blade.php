@@ -13,7 +13,7 @@ Grow your community on Twitter by targeting the right audience. Think of our Boo
 @endsection
 
 @section('get-started')
-{{config('frontendclient.client_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly
+{{config('frontendclient.client_twitter_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly
 @endsection
 
 @section('content')
@@ -68,7 +68,7 @@ Grow your community on Twitter by targeting the right audience. Think of our Boo
             <div class="row mt30 mb30">
                 <div class="col-xs-12 text-center">
                     <h2>Sign up and see the difference.</h2>
-                    <a href="{{config('frontendclient.client_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly" class="signin-btn">Get Started</a>
+                    <a href="{{config('frontendclient.client_twitter_url')}}?register&addon=twitter_growth&redirect=twitter-booster&period=monthly" class="signin-btn">Get Started</a>
                 </div>
             </div>
         </div>
