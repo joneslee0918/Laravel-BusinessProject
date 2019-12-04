@@ -151,17 +151,23 @@
                             <!-- <span class="logo-text">uniclix</span> -->
                         </a>
                     </div>
-                    
-                    <?php $route = Route::current(); ?>
-                    {{$route}}
+
                     <div class="navbar-collapse collapse">
+                        @if( Request::is("twitter-followers-app") || Request::is("twitter-booster-app") || Request::is("twitter-unfollow-app"))
+                        @if (!empty($__env->yieldContent('get-started')))
+                        <a href="@yield('get-started')" class="btn pull-right signin-btn nav-btn nav-btn-white">Get Started Now</a>
+                        @else
+                        <a href="{{config('frontendclient.client_twitter_url')}}?register" class="btn pull-right signin-btn nav-btn nav-btn-white">Get Started Now</a>
+                        @endif
+                        <a href="{{config('frontendclient.client_twitter_url')}}" class="btn pull-right signin-btn nav-btn">Sign in</a>
+                        @else
                         @if (!empty($__env->yieldContent('get-started')))
                         <a href="@yield('get-started')" class="btn pull-right signin-btn nav-btn nav-btn-white">Get Started Now</a>
                         @else
                         <a href="{{config('frontendclient.client_url')}}?register" class="btn pull-right signin-btn nav-btn nav-btn-white">Get Started Now</a>
                         @endif
                         <a href="{{config('frontendclient.client_url')}}" class="btn pull-right signin-btn nav-btn">Sign in</a>
-
+                        @endif
                         <nav>
                             <ul class="nav navbar-nav navbar-right">
                                 @foreach($menu as $item)
