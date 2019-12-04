@@ -151,6 +151,9 @@
                             <!-- <span class="logo-text">uniclix</span> -->
                         </a>
                     </div>
+                    
+                    <?php $route = Route::current(); ?>
+                    {{$route}}
                     <div class="navbar-collapse collapse">
                         @if (!empty($__env->yieldContent('get-started')))
                         <a href="@yield('get-started')" class="btn pull-right signin-btn nav-btn nav-btn-white">Get Started Now</a>
@@ -199,9 +202,7 @@
                             @endif
                         </li>
                         @endforeach
-                        <?php $route = Route::current(); ?>
-                        @if($route)
-                        <li class="nav__item"><a href="{{config('frontendclient.client_url')}}" class="btn signin-btn nav-btn {{$route}}">Sign in</a></li>
+                        <li class="nav__item"><a href="{{config('frontendclient.client_url')}}" class="btn signin-btn nav-btn">Sign in</a></li>
                         <li class="nav__item"><a href="{{config('frontendclient.client_url')}}?register" class="btn signin-btn nav-btn nav-btn-white">Get Started Now</a></li>
                     </ul>
 
